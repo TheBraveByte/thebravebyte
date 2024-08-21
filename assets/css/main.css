@@ -3467,6 +3467,10 @@ input, select, textarea {
 
 		/* Main */
 
+    .l-unit {
+      margin: auto;
+    }
+    
 		/* Header */
 
 			#header {
