@@ -114,6 +114,7 @@ func main() {
   <img alt="WebStorm" src="https://img.shields.io/badge/-WebStorm-000000?style=flat-square&logo=webstorm&logoColor=white" />
   <img alt="JupyterNotebook" src="https://img.shields.io/badge/-Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white" />
 </p>
+
 ## 📊 GitHub Stats
 <div align="center"> <img src="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=radical" alt="Yusuf's GitHub stats" /> <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=radical" alt="Top Languages" /> </div> <div align="center"> <img src="https://github-profile-trophy.vercel.app/?username=TheBraveByte&theme=onedark" alt="GitHub Trophies" /> </div> <div align="center"> <img src="https://github-readme-stats.vercel.app/api/wakatime?username=bravebyte_&theme=radical" alt="Yusuf's Wakatime Stats" /> </div> <div align="center"> <a href="https://wakatime.com/@bravebyte_"> <img src="https://wakatime.com/badge/user/7764c852-4772-48fb-8346-c61e1fd7eb38.svg" alt="Wakatime Badge" /> </a> </div>
 
@@ -130,7 +131,7 @@ func main() {
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=TheBraveByte&color=blue" alt="Profile views" />
 </p>
-
+<!--
 ## 🔍 Featured Projects
 
 * **Velofi** - Personal finance management system with secure transaction tracking
@@ -138,7 +139,8 @@ func main() {
 * **Machine-Learning Fire Detection** - Dual-node IoT system using ESP32 and Raspberry Pi for real-time fire detection
 * **GoRide** - Ride-hailing platform for 2,300+ concurrent campus users
 * **Wayg** - Digital gift card platform with a loyalty point system (at Volomn)
-
+-->
+  
 ## 📝 Latest Blog Posts
 <!-- BLOG-POST-LIST:START -->
 - [Understanding Fan-Out Concurrency Pattern in Go](https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go)
