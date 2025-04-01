@@ -114,9 +114,8 @@ func main() {
 ## 🔍 Featured Projects
 * **Numeris** - Invoice management system with JWT authentication and MongoDB
 * **Machine-Learning Fire Detection** - Dual-node IoT system using ESP32 and Raspberry Pi for real-time fire detection
-* **Bookwise** - E-commerce bookstore with Flutterwave payments and Open Library integration
 * **GoRide** - Ride-hailing platform for 2,300+ concurrent campus users
-* **Wayg** - Digital gift card platform with loyalty point system (at Volomn)
+* **Wayg** - Digital gift card platform with a loyalty point system (at Volomn)
 
 ## 💼 Professional Experience
 * **Backend Engineer** - Volomn (Jul 2024 - Oct 2024)
@@ -127,19 +126,14 @@ func main() {
 
 ## 📝 Latest Blog Posts
 <!-- BLOG-POST-LIST:START -->
-* [Building a Concurrent Mail Server API with Goroutines and Gmail Integration](https://hashnode.com/@YusufAkinleye)
-* [Implementing Efficient APIs with Go and MongoDB](https://hashnode.com/@YusufAkinleye)
-* [Scaling Applications with Docker and AWS Elastic Beanstalk](https://hashnode.com/@YusufAkinleye)
-* [Package-Oriented Design in Go: Best Practices](https://hashnode.com/@YusufAkinleye)
-* [Secure Authentication with JWT in Go Applications](https://hashnode.com/@YusufAkinleye)
+Here's the modified list based on the articles in the images:  
+
+- [Understanding Fan-Out Concurrency Pattern in Go](https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go)
+- [Concurrency Patterns in Go: A Practical Guide](https://ayaacodes.hashnode.dev/concurrency-patterns-in-go-a-practical-guide)
+- [Concurrency Patterns in Go: Wait for Results](https://ayaacodes.hashnode.dev/concurrency-patterns-in-go-a-practical-guide)
 <!-- BLOG-POST-LIST:END -->
 
-Visit my [Hashnode blog](https://hashnode.com/@YusufAkinleye) for more articles on Go development, API design, and backend engineering.
-
-## 🎓 Education
-* **B.Eng. Electrical and Electronics Engineering** - University of Ilorin, Nigeria (2018-2024)
-  * CGPA: 4.37/5.0
-  * Key Coursework: Digital Control Systems, Control Engineering
+Visit my [Hashnode blog](https://ayaacodes.hashnode.dev/) for more articles on Go development, API design, and backend engineering.
 
 ## 🔧 Skills Progress
 
