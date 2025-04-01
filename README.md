@@ -4,7 +4,7 @@
 
 With 4+ years of experience crafting reliable backend systems in Go and Python, I develop software that connects data with people. My work spans healthcare, financial technology, and distributed ledger projects where I've built responsive interfaces between applications and databases.
 
-I create fast, dependable APIs and design data solutions using PostgreSQL and MongoDB Atlas. My technical toolkit includes streamlining deployment processes and creating containerized applications that work consistently across development stages.
+I create fast, dependable APIs and design data solutions. My technical toolkit includes streamlining deployment processes and creating containerized applications that work consistently across development stages.
 
 **I build reliable software and applications**
 
@@ -15,7 +15,7 @@ Let's work together to transform your concepts into functional, efficient system
 * 🌱 I'm learning JavaScript for frontend development (Vue.js)
 * 💬 Ask me about backend development, API design, and Go/Python implementation
 * 📫 How to reach me: [ayaaakinleye@gmail.com](mailto:ayaaakinleye@gmail.com) | +2349068849124
-* ⚡ Fun fact: I've built a fire detection system using machine learning and I build and orchestrate little vectorization models for LLMs!
+* ⚡ Fun fact: I've built a fire detection system using machine learning and built and orchestrated little vectorization models for LLMs!
 
 ## 🛠️ Tech Stack
 
@@ -114,9 +114,19 @@ func main() {
   <img alt="WebStorm" src="https://img.shields.io/badge/-WebStorm-000000?style=flat-square&logo=webstorm&logoColor=white" />
   <img alt="JupyterNotebook" src="https://img.shields.io/badge/-Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white" />
 </p>
-
 ## 📊 GitHub Stats
-<div align="center"> <img src="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=radical" alt="Yusuf's GitHub stats" /> <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=radical" alt="Top Languages" /> </div> <div align="center"> <img src="https://github-profile-trophy.vercel.app/?username=TheBraveByte&theme=onedark" alt="GitHub Trophies" /> </div> <div align="center"> <img src="https://github-readme-stats.vercel.app/api/wakatime?username=bravebyte_&theme=radical" alt="Yusuf's Wakatime Stats" /> </div> <div align="center"> <a href="https://wakatime.com/@bravebyte_"> <img src="https://wakatime.com/badge/user/7764c852-4772-48fb-8346-c61e1fd7eb38.svg" alt="Wakatime Badge" /> </a> </div>
+<div align="center"> 
+    <img src="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=radical" alt="Yusuf's GitHub stats" /> 
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=radical" alt="Top Languages" /> 
+</div> 
+
+<div align="center"> <img src="https://github-profile-trophy.vercel.app/?username=TheBraveByte&theme=onedark" alt="GitHub Trophies" /> </div> 
+<div align="center"> <img src="https://github-readme-stats.vercel.app/api/wakatime?username=bravebyte_&theme=radical" alt="Yusuf's Wakatime Stats" /> </div> 
+<div align="center"> <a href="https://wakatime.com/@bravebyte_"> 
+    <a href="https://wakatime.com/@018bf172-272c-4d25-9859-84617c8d2e14">
+        <img src="https://wakatime.com/badge/user/018bf172-272c-4d25-9859-84617c8d2e14.svg" alt="Total time coded since Nov 21 2023" />
+    </a> 
+</div>
 
 <!-- ### 🏆 Coding Profiles
 
@@ -131,7 +141,8 @@ func main() {
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=TheBraveByte&color=blue" alt="Profile views" />
 </p>
-<!--
+
+<!-- 
 ## 🔍 Featured Projects
 
 * **Velofi** - Personal finance management system with secure transaction tracking
@@ -140,7 +151,7 @@ func main() {
 * **GoRide** - Ride-hailing platform for 2,300+ concurrent campus users
 * **Wayg** - Digital gift card platform with a loyalty point system (at Volomn)
 -->
-  
+
 ## 📝 Latest Blog Posts
 <!-- BLOG-POST-LIST:START -->
 - [Understanding Fan-Out Concurrency Pattern in Go](https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go)
@@ -155,4 +166,4 @@ Visit my [Hashnode blog](https://ayaacodes.hashnode.dev/) for more articles on G
     <img src="https://img.shields.io/badge/LinkedIn-%230A66C2.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /> </a> 
     <a href="https://x.com/TheBraveByte" target="_blank"> <img src="https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter" /> </a> 
     <a href="https://ayaacodes.hashnode.dev/" target="_blank"> <img src="https://img.shields.io/badge/Hashnode-2962FF?style=for-the-badge&logo=hashnode&logoColor=white" alt="Hashnode" /> </a> 
-</p>
+</p
