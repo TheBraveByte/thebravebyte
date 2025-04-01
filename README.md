@@ -114,21 +114,8 @@ func main() {
   <img alt="WebStorm" src="https://img.shields.io/badge/-WebStorm-000000?style=flat-square&logo=webstorm&logoColor=white" />
   <img alt="JupyterNotebook" src="https://img.shields.io/badge/-Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white" />
 </p>
-
-### 📊 GitHub Stats
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=radical" alt="Yusuf's GitHub stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=radical" alt="Top Languages" />
-</div>
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=TheBraveByte&theme=onedark" alt="GitHub Trophies" />
-</p>
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=bravebyte_&theme=radical" alt="Yusuf's wakatime stats" />
-</div>
+## 📊 GitHub Stats
+<div align="center"> <img src="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=radical" alt="Yusuf's GitHub stats" /> <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=radical" alt="Top Languages" /> </div> <div align="center"> <img src="https://github-profile-trophy.vercel.app/?username=TheBraveByte&theme=onedark" alt="GitHub Trophies" /> </div> <div align="center"> <img src="https://github-readme-stats.vercel.app/api/wakatime?username=bravebyte_&theme=radical" alt="Yusuf's Wakatime Stats" /> </div> <div align="center"> <a href="https://wakatime.com/@bravebyte_"> <img src="https://wakatime.com/badge/user/7764c852-4772-48fb-8346-c61e1fd7eb38.svg" alt="Wakatime Badge" /> </a> </div>
 
 <!-- ### 🏆 Coding Profiles
 
@@ -160,3 +147,10 @@ func main() {
 <!-- BLOG-POST-LIST:END -->
 
 Visit my [Hashnode blog](https://ayaacodes.hashnode.dev/) for more articles on Go development, API design, and backend engineering.
+
+## 🤝 Connect With Me
+<p align=""> <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank"> 
+    <img src="https://img.shields.io/badge/LinkedIn-%230A66C2.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /> </a> 
+    <a href="https://x.com/TheBraveByte" target="_blank"> <img src="https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter" /> </a> 
+    <a href="https://ayaacodes.hashnode.dev/" target="_blank"> <img src="https://img.shields.io/badge/Hashnode-2962FF?style=for-the-badge&logo=hashnode&logoColor=white" alt="Hashnode" /> </a> 
+</p>
