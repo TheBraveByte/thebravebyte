@@ -1,6 +1,6 @@
 # Hi, I'm Yusuf Akinleye 👋
 
-## 💻 Backend Engineer | Go & Python Developer 🌍
+## 💻 Software Engineer | Golang & Python Developer 🌍
 
 With 4+ years of experience crafting reliable backend systems in Go and Python, I develop software that connects data with people. My work spans healthcare, financial technology, and distributed ledger projects where I've built responsive interfaces between applications and databases.
 
