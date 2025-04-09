@@ -3,6 +3,7 @@
 ## 💻 Software Engineer | Backend Developer 🌍
 
 **I build reliable software and applications**
+
 With 4+ years of experience crafting reliable backend systems in Go and Python, I develop software that connects data with people. My work spans healthcare, financial technology, and distributed ledger projects where I've built responsive interfaces between applications and databases.
 
 I create fast, dependable APIs and design data solutions. My technical toolkit includes streamlining deployment processes and creating containerized applications that work consistently across development stages.
