@@ -32,7 +32,7 @@ func GetTechStack() map[string][]string {
 ## 📊 GitHub Stats
 
 [![GitHub Streak](https://streak-stats.demolab.com?user=TheBraveByte&theme=dark)](https://git.io/streak-stats)
-[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=vision-friendly-dark)](https://github.com/anuraghazra/github-readme-stats)
+[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=donut-vertical&theme=vision-friendly-dark)](https://github.com/anuraghazra/github-readme-stats)
 
 ## Coding Stats
 
