@@ -1,0 +1,27 @@
+# Nuxt dev/build outputs
+.output
+.nuxt
+.nitro
+.cache
+dist
+
+# Node
+node_modules
+*.log*
+
+# OS
+.DS_Store
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Temporary files
+*.tmp
+*.temp
