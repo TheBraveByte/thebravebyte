@@ -1,8 +1,10 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    // Simple check - in real app verify token with backend
-    const token = useCookie('auth_token');
-
-    if (!token.value && to.path.startsWith('/admin/editor')) {
-        return navigateTo('/admin/login');
+    // Verify token with backend (works for httpOnly cookies on client too)
+    if (to.path.startsWith('/admin/editor')) {
+        try {
+            await $fetch('/api/auth/me');
+        } catch (e) {
+            return navigateTo('/admin/login');
+        }
     }
 });

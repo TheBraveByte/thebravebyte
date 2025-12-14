@@ -9,7 +9,14 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/image",
     "@nuxtjs/google-fonts",
+    "@nuxtjs/color-mode",
   ],
+
+  colorMode: {
+    classSuffix: '',
+    preference: 'dark', // default value of $colorMode.preference
+    fallback: 'dark', // fallback value if not system preference found
+  },
 
   googleFonts: {
     families: {
@@ -27,8 +34,7 @@ export default defineNuxtConfig({
 
   css: [
     "~/assets/css/tailwind.css",
-    "~/assets/css/main.css",
-    "~/assets/css/animations.css"
+    "~/assets/css/main.css"
   ],
 
   runtimeConfig: {

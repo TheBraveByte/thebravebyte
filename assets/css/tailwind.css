@@ -1,1 +1,57 @@
 @import "tailwindcss";
+@import "./main.css";
+@import "./animations.css";
+
+@theme {
+    /* Background colors */
+    --color-bg: #0a0a0c;
+    --color-bg-dark: #0a0a0c;
+    --color-bg-secondary: #141419;
+    --color-bg-tertiary: #1e1e24;
+
+    /* Border colors */
+    --color-border: #27272a;
+    --color-border-dark: #27272a;
+
+    /* Text colors */
+    --color-text: #ffffff;
+    --color-text-dark: #ffffff;
+    --color-text-secondary: #a1a1aa;
+    --color-text-secondary-dark: #a1a1aa;
+    --color-text-muted: #52525b;
+
+    /* Accent colors */
+    --color-accent: #6366f1;
+    --color-accent-dark: #8b5cf6;
+    --color-accent-glow: rgba(99, 102, 241, 0.5);
+
+    /* Typography */
+    --font-sans: Outfit, sans-serif;
+    --font-mono: "Fira Code", monospace;
+}
+
+/* Base layer - ensure dark theme is applied */
+@layer base {
+    html {
+        background-color: #0a0a0c;
+        color: #ffffff;
+    }
+
+    body {
+        background-color: #0a0a0c;
+        color: #ffffff;
+        font-family: Outfit, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Custom utility classes for portfolio components */
+@layer utilities {
+    .font-mono-label {
+        font-family: "Fira Code", monospace;
+        font-size: 0.625rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+}
