@@ -1,30 +1,28 @@
-import { Article } from '~~/server/models/Article';
-import jwt from 'jsonwebtoken';
+import { Article } from '~/server/models/Article';
 
 export default defineEventHandler(async (event) => {
-    // Auth Check
     const token = getCookie(event, 'auth_token');
-    if (!token) {
+    if (token !== 'admin-session-token') {
         throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
     }
 
-    const config = useRuntimeConfig();
-    try {
-        jwt.verify(token, config.authSecret);
-    } catch (e) {
-        throw createError({ statusCode: 401, statusMessage: 'Invalid token' });
-    }
-
-    await connectToDatabase();
     const body = await readBody(event);
+
+    // Generate slug from title if not provided
+    if (!body.slug && body.title) {
+        body.slug = body.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)+/g, '');
+    }
 
     try {
         const article = await Article.create(body);
         return article;
-    } catch (error: any) {
+    } catch (e: any) {
         throw createError({
             statusCode: 400,
-            statusMessage: error.message || 'Failed to create article',
+            statusMessage: e.message
         });
     }
 });

@@ -4,42 +4,39 @@ const articleSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        trim: true,
+        trim: true
     },
     slug: {
         type: String,
         required: true,
         unique: true,
-        trim: true,
-        lowercase: true,
-    },
-    content: {
-        type: String,
-        required: true,
+        lowercase: true
     },
     excerpt: {
         type: String,
-        trim: true,
+        required: true
     },
-    image: {
+    content: {
+        type: Object, // Tiptap JSON content
+        required: true
+    },
+    coverImage: {
         type: String,
-        trim: true,
+        default: ''
     },
-    status: {
+    published: {
+        type: Boolean,
+        default: false
+    },
+    publishedAt: {
+        type: Date
+    },
+    author: {
         type: String,
-        enum: ['draft', 'published'],
-        default: 'draft',
-    },
-    tags: [{
-        type: String,
-        trim: true,
-    }],
-    views: {
-        type: Number,
-        default: 0,
-    },
+        default: 'Yusuf Akinleye'
+    }
 }, {
-    timestamps: true,
+    timestamps: true
 });
 
 export const Article = mongoose.models.Article || mongoose.model('Article', articleSchema);
