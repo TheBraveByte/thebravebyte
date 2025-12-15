@@ -14,8 +14,8 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: '',
-    preference: 'dark', // default value of $colorMode.preference
-    fallback: 'dark', // fallback value if not system preference found
+    preference: 'light', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
   },
 
   googleFonts: {

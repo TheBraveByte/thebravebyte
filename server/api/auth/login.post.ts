@@ -9,16 +9,20 @@ export default defineEventHandler(async (event) => {
   const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
   // Validate credentials
-  if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+  // Allow password-only login for admin convenience
+  if (password !== ADMIN_PASSWORD) {
     throw createError({
       statusCode: 401,
       message: 'Invalid credentials'
     });
   }
 
+  // Use the admin email for the session
+  const userEmail = email || ADMIN_EMAIL;
+
   // Generate JWT token
   const token = jwt.sign(
-    { email, role: 'admin' },
+    { email: userEmail, role: 'admin' },
     JWT_SECRET,
     { expiresIn: '7d' }
   );
