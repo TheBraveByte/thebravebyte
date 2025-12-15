@@ -1,4 +1,11 @@
-export default defineEventHandler((event) => {
-    deleteCookie(event, 'auth_token');
-    return { success: true };
+export default defineEventHandler(async (event) => {
+  // Clear the auth cookie
+  setCookie(event, 'auth_token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 0,
+    path: '/'
+  });
+
+  return { success: true };
 });

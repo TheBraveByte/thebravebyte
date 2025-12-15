@@ -1,57 +1,139 @@
 @import "tailwindcss";
-@import "./main.css";
-@import "./animations.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    /* Background colors */
-    --color-bg: #0a0a0c;
-    --color-bg-dark: #0a0a0c;
-    --color-bg-secondary: #141419;
-    --color-bg-tertiary: #1e1e24;
+  /* Typography */
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "Fira Code", monospace;
 
-    /* Border colors */
-    --color-border: #27272a;
-    --color-border-dark: #27272a;
+  /* Light Mode - Minimal Professional Palette */
+  --color-bg: #ffffff;
+  --color-text: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-accent: #4f46e5;
+  --color-border: #e2e8f0;
 
-    /* Text colors */
-    --color-text: #ffffff;
-    --color-text-dark: #ffffff;
-    --color-text-secondary: #a1a1aa;
-    --color-text-secondary-dark: #a1a1aa;
-    --color-text-muted: #52525b;
+  /* Dark Mode - Softened Engineering Palette */
+  --color-bg-dark: #0B1120;
+  --color-text-dark: #E2E8F0;
+  --color-text-secondary-dark: #94A3B8;
+  --color-accent-dark: #6366F1;
+  --color-border-dark: #1E293B;
 
-    /* Accent colors */
-    --color-accent: #6366f1;
-    --color-accent-dark: #8b5cf6;
-    --color-accent-glow: rgba(99, 102, 241, 0.5);
-
-    /* Typography */
-    --font-sans: Outfit, sans-serif;
-    --font-mono: "Fira Code", monospace;
+  /* Semantic aliases for easier usage */
+  --color-bg-secondary: #f8fafc;
+  --color-bg-secondary-dark: #1E293B;
 }
 
-/* Base layer - ensure dark theme is applied */
+/* Legacy CSS Variables for backward compatibility */
+:root {
+    /* Background colors - legacy naming */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    
+    /* Border colors - legacy naming */
+    --border-color: #e2e8f0;
+    
+    /* Text colors - legacy naming */
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    
+    /* Accent colors - legacy naming */
+    --accent-primary: #4f46e5;
+    --accent-secondary: #6366f1;
+    --accent-glow: rgba(79, 70, 229, 0.5);
+}
+
+.dark {
+    --bg-primary: #0B1120;
+    --bg-secondary: #1E293B;
+    --bg-tertiary: #334155;
+    
+    --border-color: #1E293B;
+    
+    --text-primary: #E2E8F0;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748b;
+    
+    --accent-primary: #6366F1;
+    --accent-secondary: #818CF8;
+    --accent-glow: rgba(99, 102, 241, 0.5);
+}
+
+/* Global Styles */
 @layer base {
-    html {
-        background-color: #0a0a0c;
-        color: #ffffff;
-    }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: background-color 0.2s, color 0.2s;
+    /* Technical Grid Background */
+    background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 
-    body {
-        background-color: #0a0a0c;
-        color: #ffffff;
-        font-family: Outfit, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+  .dark body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
+    /* Dark Mode Grid */
+    background-image: radial-gradient(var(--color-border-dark) 1px, transparent 1px);
+  }
+
+  /* Typography Overrides */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    font-weight: 300;
+    line-height: 1.6;
+  }
 }
 
-/* Custom utility classes for portfolio components */
+/* Technical Utilities */
 @layer utilities {
-    .font-mono-label {
-        font-family: "Fira Code", monospace;
-        font-size: 0.625rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
+  .font-mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+
+  .border-tech {
+    border: 1px solid var(--color-border);
+  }
+
+  .dark .border-tech {
+    border-color: var(--color-border-dark);
+  }
+
+  .text-accent-gradient {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Remove all decorative animations */
+  * {
+    transition-duration: 200ms !important;
+    transition-timing-function: ease-out !important;
+  }
+}
+
+/* Container utility */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header height */
+:root {
+  --header-height: 4rem;
 }

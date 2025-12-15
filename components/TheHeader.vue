@@ -1,98 +1,222 @@
 <template>
-  <header class="header">
-    <div class="container header-content">
-      <NuxtLink to="/" class="logo">
-        <span class="logo-text">The Brave Byte</span>
-        <span class="logo-dot">.</span>
-      </NuxtLink>
-      
-      <nav class="nav">
-        <NuxtLink to="/" class="nav-link">Blog</NuxtLink>
-        <NuxtLink to="/portfolio" class="nav-link">Portfolio</NuxtLink>
-        <NuxtLink to="/about" class="nav-link">About</NuxtLink>
-        <a href="https://github.com/iamyak" target="_blank" class="nav-link">GitHub</a>
-      </nav>
-
-      <div class="actions">
-        <NuxtLink to="/admin/login" class="btn btn-ghost btn-sm">
-          <Icon name="ph:user-circle" size="20" />
+  <header class="fixed top-0 left-0 right-0 z-50 bg-bg/90 dark:bg-bg-dark/90 backdrop-blur-xl border-b border-border dark:border-border-dark">
+    <div class="container mx-auto px-6">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo -->
+        <NuxtLink to="/" class="flex items-center gap-2 group">
+          <div class="flex items-center gap-1">
+            <span class="text-xl font-bold text-text dark:text-text-dark tracking-tight">The Brave Byte</span>
+            <span class="text-2xl text-accent dark:text-accent-dark font-bold leading-none">.</span>
+          </div>
         </NuxtLink>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-1">
+          <NuxtLink to="/" class="nav-link">
+            <span>Home</span>
+          </NuxtLink>
+          <NuxtLink to="/blog" class="nav-link">
+            <span>Blog</span>
+          </NuxtLink>
+          <NuxtLink to="/about" class="nav-link">
+            <span>About</span>
+          </NuxtLink>
+          <NuxtLink to="/process" class="nav-link">
+            <span>Process</span>
+          </NuxtLink>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <!-- Theme Toggle -->
+          <button 
+            @click="toggleTheme" 
+            class="p-2 rounded-lg text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark hover:bg-bg-secondary dark:hover:bg-bg-secondary-dark transition-colors"
+            aria-label="Toggle theme"
+          >
+            <Icon v-if="colorMode.value === 'dark'" name="lucide:sun" class="w-5 h-5" />
+            <Icon v-else name="lucide:moon" class="w-5 h-5" />
+          </button>
+
+          <!-- Admin Access -->
+          <NuxtLink 
+            v-if="!isAuthenticated"
+            to="/admin/login" 
+            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark hover:border-accent dark:hover:border-accent-dark transition-colors text-sm font-mono"
+          >
+            <Icon name="lucide:lock" class="w-4 h-4" />
+            <span>ADMIN</span>
+          </NuxtLink>
+
+          <div v-else class="hidden sm:flex items-center gap-2">
+            <NuxtLink 
+              to="/admin/dashboard"
+              class="px-4 py-2 rounded-lg bg-accent/10 dark:bg-accent-dark/10 border border-accent/30 dark:border-accent-dark/30 text-accent dark:text-accent-dark hover:bg-accent dark:hover:bg-accent-dark hover:text-white transition-colors text-sm font-mono"
+            >
+              DASHBOARD
+            </NuxtLink>
+            <button 
+              @click="logout"
+              class="p-2 rounded-lg text-text-secondary dark:text-text-secondary-dark hover:text-red-500 hover:bg-red-500/10 transition-colors"
+              aria-label="Logout"
+            >
+              <Icon name="lucide:log-out" class="w-5 h-5" />
+            </button>
+          </div>
+
+          <!-- Mobile Menu Toggle -->
+          <button 
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            class="md:hidden p-2 rounded-lg text-text dark:text-text-dark hover:bg-bg-secondary dark:hover:bg-bg-secondary-dark transition-colors"
+            aria-label="Toggle menu"
+          >
+            <Icon :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" class="w-6 h-6" />
+          </button>
+        </div>
       </div>
+
+      <!-- Mobile Menu -->
+      <transition name="slide-down">
+        <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-border dark:border-border-dark">
+          <nav class="flex flex-col gap-2">
+            <NuxtLink to="/" @click="mobileMenuOpen = false" class="mobile-nav-link">
+              <Icon name="lucide:home" class="w-5 h-5" />
+              <span>Home</span>
+            </NuxtLink>
+            <NuxtLink to="/blog" @click="mobileMenuOpen = false" class="mobile-nav-link">
+              <Icon name="lucide:book-open" class="w-5 h-5" />
+              <span>Blog</span>
+            </NuxtLink>
+            <NuxtLink to="/about" @click="mobileMenuOpen = false" class="mobile-nav-link">
+              <Icon name="lucide:user" class="w-5 h-5" />
+              <span>About</span>
+            </NuxtLink>
+            <NuxtLink to="/process" @click="mobileMenuOpen = false" class="mobile-nav-link">
+              <Icon name="lucide:git-branch" class="w-5 h-5" />
+              <span>Process</span>
+            </NuxtLink>
+            
+            <div class="border-t border-border dark:border-border-dark my-2"></div>
+            
+            <NuxtLink v-if="!isAuthenticated" to="/admin/login" @click="mobileMenuOpen = false" class="mobile-nav-link">
+              <Icon name="lucide:lock" class="w-5 h-5" />
+              <span>Admin Login</span>
+            </NuxtLink>
+            <NuxtLink v-else to="/admin/dashboard" @click="mobileMenuOpen = false" class="mobile-nav-link">
+              <Icon name="lucide:layout-dashboard" class="w-5 h-5" />
+              <span>Dashboard</span>
+            </NuxtLink>
+            <button v-if="isAuthenticated" @click="logout" class="mobile-nav-link text-left">
+              <Icon name="lucide:log-out" class="w-5 h-5" />
+              <span>Logout</span>
+            </button>
+          </nav>
+        </div>
+      </transition>
     </div>
   </header>
 </template>
 
+<script setup>
+const colorMode = useColorMode();
+const mobileMenuOpen = ref(false);
+const isAuthenticated = ref(false);
+
+const toggleTheme = () => {
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
+};
+
+const logout = async () => {
+  const token = useCookie('auth_token');
+  token.value = null;
+  await useFetch('/api/auth/logout', { method: 'POST' });
+  isAuthenticated.value = false;
+  await navigateTo('/');
+  mobileMenuOpen.value = false;
+};
+
+// Check authentication status
+onMounted(async () => {
+  const token = useCookie('auth_token');
+  if (token.value) {
+    try {
+      const { data } = await useFetch('/api/auth/me');
+      if (data.value) {
+        isAuthenticated.value = true;
+      }
+    } catch (err) {
+      isAuthenticated.value = false;
+    }
+  }
+});
+</script>
+
 <style scoped>
-.header {
-  height: var(--header-height);
-  border-bottom: 1px solid var(--border-color);
-  background: rgba(10, 10, 12, 0.8);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.header-content {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  display: flex;
-  align-items: baseline;
-}
-
-.logo-text {
-  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.logo-dot {
-  color: var(--accent-primary);
-  font-size: 2rem;
-  line-height: 0;
-  margin-left: 2px;
-}
-
-.nav {
-  display: flex;
-  gap: 2rem;
-}
-
 .nav-link {
-  color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 0.95rem;
   position: relative;
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  border-radius: 0.5rem;
 }
 
 .nav-link:hover {
   color: var(--text-primary);
+  background: var(--bg-secondary);
 }
 
-.nav-link::after {
+.nav-link.router-link-active {
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+.nav-link.router-link-active::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
   height: 2px;
   background: var(--accent-primary);
-  transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
-  width: 100%;
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
 }
 
-.btn-sm {
-  padding: 0.5rem;
+.mobile-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+.mobile-nav-link.router-link-active {
+  color: var(--accent-primary);
+  background: var(--bg-secondary);
+}
+
+/* Slide down animation */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

@@ -20,8 +20,8 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Outfit: [300, 400, 500, 600, 700],
-      "Fira Code": [400],
+      "Space Grotesk": [300, 400, 500, 600, 700],
+      "Fira Code": [400, 500],
     },
     display: "swap",
     prefetch: true,
@@ -33,8 +33,7 @@ export default defineNuxtConfig({
   },
 
   css: [
-    "~/assets/css/tailwind.css",
-    "~/assets/css/main.css"
+    "~/assets/css/tailwind.css"
   ],
 
   runtimeConfig: {

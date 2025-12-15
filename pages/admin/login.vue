@@ -1,112 +1,202 @@
 <template>
-  <div class="login-container animate-fade-in">
-    <div class="login-card">
-      <h1 class="title">Admin Login</h1>
-      <form @submit.prevent="handleLogin" class="form">
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input 
-            type="password" 
-            id="password" 
-            v-model="password" 
-            placeholder="Enter admin password"
-            required
-            class="input"
-          />
+  <div class="min-h-screen bg-gradient-to-br from-bg via-bg-secondary to-bg dark:from-bg-dark dark:via-bg-secondary-dark dark:to-bg-dark flex items-center justify-center px-6 relative overflow-hidden">
+    
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 dark:bg-accent-dark/5 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-dark/5 dark:bg-accent/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    </div>
+
+    <div class="w-full max-w-md relative z-10">
+      
+      <!-- Logo/Header -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center gap-3 mb-4">
+          <div class="w-2 h-2 bg-accent dark:bg-accent-dark animate-pulse"></div>
+          <span class="font-mono text-xl font-bold text-text dark:text-text-dark tracking-tight">
+            ADMIN_ACCESS
+          </span>
         </div>
-        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-          {{ loading ? 'Logging in...' : 'Login' }}
-        </button>
-        <p v-if="error" class="error-msg">{{ error }}</p>
-      </form>
+        <p class="text-text-secondary dark:text-text-secondary-dark font-mono text-sm">
+          [ AUTHENTICATION_REQUIRED ]
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <div class="bg-bg-secondary/90 dark:bg-bg-secondary-dark/90 backdrop-blur-xl border border-border dark:border-border-dark rounded-2xl p-8 shadow-2xl">
+        
+        <!-- Progress Bar -->
+        <div v-if="loading" class="mb-6 relative">
+          <div class="h-1 bg-bg dark:bg-bg-dark rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-accent to-accent-dark transition-all duration-300 ease-out" :style="{ width: `${progress}%` }"></div>
+          </div>
+          <p class="mt-2 text-xs text-center text-text-secondary dark:text-text-secondary-dark font-mono">
+            {{ loadingMessage }}
+          </p>
+        </div>
+
+        <form @submit.prevent="handleLogin" class="space-y-6">
+          
+          <!-- Email -->
+          <div>
+            <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+              EMAIL
+            </label>
+            <input 
+              v-model="credentials.email" 
+              type="email" 
+              required
+              placeholder="admin@thebravebyte.com"
+              class="w-full px-4 py-3 bg-bg dark:bg-bg-dark border border-border dark:border-border-dark text-text dark:text-text-dark focus:border-accent dark:focus:border-accent-dark outline-none transition-colors rounded-lg"
+            />
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+              PASSWORD
+            </label>
+            <input 
+              v-model="credentials.password" 
+              type="password" 
+              required
+              placeholder="••••••••"
+              class="w-full px-4 py-3 bg-bg dark:bg-bg-dark border border-border dark:border-border-dark text-text dark:text-text-dark focus:border-accent dark:focus:border-accent-dark outline-none transition-colors rounded-lg"
+            />
+          </div>
+
+          <!-- Error Message -->
+          <div v-if="errorMessage" class="p-3 bg-red-500/10 border border-red-500 text-red-500 text-sm font-mono rounded-lg">
+            {{ errorMessage }}
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            :disabled="loading"
+            class="w-full px-6 py-3 bg-gradient-to-r from-accent to-accent-dark text-white font-mono text-sm hover:shadow-lg hover:shadow-accent/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 rounded-lg relative overflow-hidden group"
+          >
+            <!-- Shimmer effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+            
+            <span v-if="loading" class="flex items-center gap-2 relative z-10">
+              <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              AUTHENTICATING
+            </span>
+            <span v-else class="flex items-center gap-2 relative z-10">
+              [ GRANT_ACCESS ]
+              <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </button>
+
+        </form>
+
+        <!-- Info -->
+        <div class="mt-6 pt-6 border-t border-border dark:border-border-dark">
+          <p class="text-xs text-text-secondary dark:text-text-secondary-dark font-mono text-center">
+            SYSTEM_VERSION: 4.0.2 | SECURITY: ENABLED
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Back to Site -->
+      <div class="mt-6 text-center">
+        <NuxtLink to="/" class="text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark font-mono text-sm">
+          ← RETURN_TO_SITE
+        </NuxtLink>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
-const password = ref('');
+definePageMeta({
+  layout: false
+});
+
+const credentials = ref({
+  email: '',
+  password: ''
+});
+
 const loading = ref(false);
-const error = ref('');
-const router = useRouter();
+const errorMessage = ref('');
+const progress = ref(0);
+const loadingMessage = ref('');
+
+// Progressive loading messages
+const loadingSteps = [
+  { progress: 20, message: 'Verifying credentials...' },
+  { progress: 40, message: 'Checking permissions...' },
+  { progress: 60, message: 'Establishing secure session...' },
+  { progress: 80, message: 'Loading dashboard...' },
+  { progress: 100, message: 'Access granted!' }
+];
 
 const handleLogin = async () => {
   loading.value = true;
-  error.value = '';
+  errorMessage.value = '';
+  progress.value = 0;
 
   try {
-    await $fetch('/api/auth/login', {
+    // Simulate progressive loading
+    for (let i = 0; i < loadingSteps.length; i++) {
+      const step = loadingSteps[i];
+      await new Promise(resolve => setTimeout(resolve, 300));
+      progress.value = step.progress;
+      loadingMessage.value = step.message;
+    }
+
+    const { data, error } = await useFetch('/api/auth/login', {
       method: 'POST',
-      body: { password: password.value }
+      body: credentials.value
     });
-    router.push('/admin/editor');
-  } catch (e) {
-    error.value = 'Invalid password';
+
+    if (error.value || !data.value?.success) {
+      errorMessage.value = error.value?.data?.message || 'Invalid credentials';
+      progress.value = 0;
+      loadingMessage.value = '';
+      loading.value = false;
+      return;
+    }
+
+    // Set auth cookie
+    const token = useCookie('auth_token');
+    token.value = data.value.token;
+
+    // Small delay to show success
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Redirect to dashboard using navigateTo for better Nuxt compatibility
+    await navigateTo('/admin/dashboard');
+
+  } catch (err) {
+    errorMessage.value = 'Login failed. Please try again.';
+    console.error('Login error:', err);
+    progress.value = 0;
+    loadingMessage.value = '';
   } finally {
     loading.value = false;
   }
 };
+
+// Check if already logged in
+onMounted(async () => {
+  const token = useCookie('auth_token');
+  if (token.value) {
+    try {
+      const { data } = await useFetch('/api/auth/me');
+      if (data.value) {
+        await navigateTo('/admin/dashboard');
+      }
+    } catch (err) {
+      // Continue to login page
+    }
+  }
+});
 </script>
-
-<style scoped>
-.login-container {
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-card {
-  background: var(--bg-secondary);
-  padding: 3rem;
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-}
-
-.title {
-  text-align: center;
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.input {
-  width: 100%;
-  padding: 0.75rem;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-family: inherit;
-  transition: border-color 0.3s ease;
-}
-
-.input:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-}
-
-.btn-block {
-  width: 100%;
-  justify-content: center;
-}
-
-.error-msg {
-  color: #ef4444;
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-</style>

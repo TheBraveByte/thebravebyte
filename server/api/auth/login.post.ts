@@ -1,21 +1,39 @@
+import jwt from 'jsonwebtoken';
+
 export default defineEventHandler(async (event) => {
-    const body = await readBody(event);
-    const config = useRuntimeConfig();
+  const { email, password } = await readBody(event);
 
-    // Simple admin check for now - can be expanded to DB users later
-    if (body.password === config.authSecret) {
-        // Set a cookie for the session
-        setCookie(event, 'auth_token', 'admin-session-token', {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 60 * 60 * 24 * 7, // 1 week
-            path: '/'
-        });
-        return { success: true };
-    }
+  // Get credentials from environment
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@thebravebyte.com';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+  const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
+  // Validate credentials
+  if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
     throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
+      statusCode: 401,
+      message: 'Invalid credentials'
     });
+  }
+
+  // Generate JWT token
+  const token = jwt.sign(
+    { email, role: 'admin' },
+    JWT_SECRET,
+    { expiresIn: '7d' }
+  );
+
+  // Set cookie
+  setCookie(event, 'auth_token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+    path: '/'
+  });
+
+  return {
+    success: true,
+    token,
+    user: { email, role: 'admin' }
+  };
 });

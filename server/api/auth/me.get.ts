@@ -1,50 +1,27 @@
 import jwt from 'jsonwebtoken';
-import { User } from '~~/server/models/User';
 
 export default defineEventHandler(async (event) => {
-    const token = getCookie(event, 'auth_token');
+  const token = getCookie(event, 'auth_token');
 
-    if (!token) {
-        throw createError({
-            statusCode: 401,
-            statusMessage: 'Not authenticated',
-        });
-    }
+  if (!token) {
+    throw createError({
+      statusCode: 401,
+      message: 'Not authenticated'
+    });
+  }
 
-    const config = useRuntimeConfig();
+  try {
+    const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
 
-    // Handle simple admin token
-    if (token === 'admin-session-token') {
-        return {
-            user: {
-                email: 'admin@thebravebyte.com',
-                role: 'admin',
-            },
-        };
-    }
-
-    try {
-        const decoded = jwt.verify(token, config.authSecret) as { userId: string };
-        await connectToDatabase();
-
-        const user = await User.findById(decoded.userId).select('-password');
-        if (!user) {
-            throw createError({
-                statusCode: 401,
-                statusMessage: 'User not found',
-            });
-        }
-
-        return {
-            user: {
-                email: user.email,
-                role: user.role,
-            },
-        };
-    } catch (error) {
-        throw createError({
-            statusCode: 401,
-            statusMessage: 'Invalid token',
-        });
-    }
+    return {
+      email: decoded.email,
+      role: decoded.role
+    };
+  } catch (error) {
+    throw createError({
+      statusCode: 401,
+      message: 'Invalid token'
+    });
+  }
 });
