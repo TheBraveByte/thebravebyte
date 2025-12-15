@@ -10,51 +10,51 @@
 
 /* ===== UNIFIED COLOR SYSTEM ===== */
 :root {
-  /* Background */
+  /* Background - Clean White */
   --color-bg: #ffffff;
   --color-bg-secondary: #f8fafc;
   --color-bg-tertiary: #f1f5f9;
   
-  /* Text */
+  /* Text - Rich Dark */
   --color-text: #0f172a;
-  --color-text-secondary: #64748b;
+  --color-text-secondary: #475569;
   --color-text-muted: #94a3b8;
   
   /* Borders */
   --color-border: #e2e8f0;
   
-  /* Accent */
+  /* Accent - Vibrant Indigo */
   --color-accent: #4f46e5;
-  --color-accent-hover: #6366f1;
-  --color-accent-glow: rgba(79, 70, 229, 0.3);
+  --color-accent-hover: #4338ca;
+  --color-accent-glow: rgba(79, 70, 229, 0.25);
   
   /* Status Colors */
-  --color-success: #22c55e;
+  --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 }
 
 .dark {
-  /* Background - Deep Navy/Slate */
-  --color-bg: #0a0f1a;
-  --color-bg-secondary: #111827;
-  --color-bg-tertiary: #1f2937;
+  /* Background - Rich Deep Navy */
+  --color-bg: #0c1222;
+  --color-bg-secondary: #151d2e;
+  --color-bg-tertiary: #1e293b;
   
-  /* Text - Light Slate */
-  --color-text: #f1f5f9;
-  --color-text-secondary: #94a3b8;
+  /* Text - High Contrast for Readability */
+  --color-text: #f8fafc;
+  --color-text-secondary: #cbd5e1;
   --color-text-muted: #64748b;
   
-  /* Borders */
-  --color-border: #1e293b;
+  /* Borders - Subtle but Visible */
+  --color-border: #334155;
   
-  /* Accent - Indigo */
+  /* Accent - Brighter Indigo for Dark Mode */
   --color-accent: #818cf8;
   --color-accent-hover: #a5b4fc;
-  --color-accent-glow: rgba(129, 140, 248, 0.3);
+  --color-accent-glow: rgba(129, 140, 248, 0.25);
   
-  /* Status Colors */
-  --color-success: #4ade80;
+  /* Status Colors - Brighter for Dark */
+  --color-success: #34d399;
   --color-warning: #fbbf24;
   --color-error: #f87171;
 }

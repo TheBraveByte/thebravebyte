@@ -14,7 +14,7 @@
       <ul class="hidden md:flex items-center gap-8">
         <li v-for="item in navItems" :key="item.id">
           <NuxtLink :to="`#${item.id}`"
-            class="font-mono text-xs text-text-accent hover:text-accent transition-colors uppercase tracking-wider">
+            class="font-mono text-xs text-text-secondary hover:text-accent transition-colors uppercase tracking-wider">
             [{{ item.label }}]
           </NuxtLink>
         </li>
@@ -45,7 +45,7 @@
         <li v-for="item in navItems" :key="item.id">
           <NuxtLink :to="`#${item.id}`"
             @click="mobileMenuOpen = false"
-            class="block py-3 font-mono text-xs text-text-accent hover:text-accent transition-colors uppercase tracking-wider border-b border-border/50 last:border-0">
+            class="block py-3 font-mono text-xs text-text-secondary hover:text-accent transition-colors uppercase tracking-wider border-b border-border/50 last:border-0">
             > {{ item.label }}
           </NuxtLink>
         </li>

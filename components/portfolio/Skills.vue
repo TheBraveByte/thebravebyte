@@ -5,7 +5,7 @@
             <!-- Section Header -->
             <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
                 <div>
-                    <h3 class="font-mono-label text-text-accent mb-2 flex items-center gap-2">
+                    <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
                         <span class="w-2 h-2 bg-accent"></span>
                         SYSTEM_TOOLKIT
                     </h3>
@@ -13,7 +13,7 @@
                         Core Stack
                     </h2>
                 </div>
-                <div class="hidden md:block font-mono text-xs text-text-accent text-right">
+                <div class="hidden md:block font-mono text-xs text-text-secondary text-right">
                     <div>MODULES_LOADED: {{ skills.length }}</div>
                     <div>OPTIMIZED_FOR: PERFORMANCE</div>
                 </div>
@@ -29,12 +29,12 @@
                     <div class="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
 
                     <div class="w-10 h-10 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300">
-                        <Icon :name="skill.icon" class="w-8 h-8 text-text-accent group-hover:text-accent transition-colors" />
+                        <Icon :name="skill.icon" class="w-8 h-8 text-text-secondary group-hover:text-accent transition-colors" />
                     </div>
                     
                     <div class="text-center">
                         <h3 class="font-mono text-xs text-text mb-1">{{ skill.name }}</h3>
-                        <p class="font-mono text-[10px] text-text-accent uppercase tracking-wider">{{ skill.category }}</p>
+                        <p class="font-mono text-[10px] text-text-secondary uppercase tracking-wider">{{ skill.category }}</p>
                     </div>
 
                     <!-- Status Indicator -->
@@ -48,11 +48,11 @@
             <div class="mt-16 border border-dashed border-border p-6 bg-bg-secondary">
                 <div class="flex items-start gap-4">
                     <div class="p-2 border border-border bg-bg">
-                        <Icon name="lucide:zap" class="w-5 h-5 text-accent text-accent" />
+                        <Icon name="lucide:zap" class="w-5 h-5 text-accent" />
                     </div>
                     <div>
                         <h3 class="font-mono text-sm text-text mb-2 uppercase tracking-wide">Future-Proof Engineering</h3>
-                        <p class="text-sm text-text-accent leading-relaxed font-light max-w-3xl">
+                        <p class="text-sm text-text-secondary leading-relaxed font-light max-w-3xl">
                             My commitment to the Edge ensures that all delivered solutions benefit from the latest
                             advancements in distributed systems and cloud architecture. I continuously integrate cutting-edge technologies to keep your infrastructure ahead of the curve.
                         </p>

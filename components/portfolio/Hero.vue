@@ -28,7 +28,7 @@
               </div>
               <div class="flex justify-between items-center border-b border-border pb-2">
                 <span class="font-mono-label text-text-secondary">ROLE</span>
-                <span class="font-mono text-sm text-text">BACKEND_ENGINEER</span>
+                <span class="font-mono text-sm text-text">SOFTWARE_ENGINEER</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="font-mono-label text-text-secondary">STATUS</span>
@@ -43,11 +43,11 @@
           <!-- Telemetry / Quick Stats -->
           <div class="grid grid-cols-2 gap-4">
             <div class="border border-border p-4 bg-bg">
-              <div class="font-mono-label text-text-accent mb-1">LOCATION</div>
+              <div class="font-mono-label text-text-secondary mb-1">LOCATION</div>
               <div class="font-mono text-sm text-text">LAGOS, NG</div>
             </div>
             <div class="border border-border p-4 bg-bg">
-              <div class="font-mono-label text-text-accent mb-1">TIMEZONE</div>
+              <div class="font-mono-label text-text-secondary mb-1">TIMEZONE</div>
               <div class="font-mono text-sm text-text">GMT+1</div>
             </div>
           </div>
@@ -59,21 +59,21 @@
           <div class="flex items-center gap-4 mb-8 font-mono text-xs text-text-secondary">
             <span>:: SYSTEM_INIT</span>
             <span class="flex-grow h-px bg-border"></span>
-            <span>V 2.0.4</span>
+            <span>V 3.0</span>
           </div>
 
           <!-- Main Headline -->
-          <h1 class="text-5xl md:text-7xl font-light text-text mb-8 leading-tight tracking-tight">
-            Architecting <br />
-            <span class="text-text-secondary">Intelligent Systems</span>
+          <h1 class="text-5xl md:text-7xl font-light mb-8 leading-tight tracking-tight">
+            <span class="text-accent">Architecting</span> <br />
+            <span class="text-text">Intelligent Systems</span>
           </h1>
 
           <!-- Terminal Description -->
           <div class="border-l-2 border-accent pl-6 mb-10">
             <p class="text-lg md:text-xl text-text font-light leading-relaxed max-w-2xl">
-              I build high-performance backend infrastructure that powers millions of transactions. 
+              I build high-performance backend infrastructure and AI-powered systems that power millions of transactions. 
               <span class="text-text-secondary">
-                Specializing in distributed architectures, scalable APIs, and production-grade AI integration.
+                Specializing in distributed architectures, scalable APIs, ML pipelines, and production-grade AI integration.
               </span>
             </p>
           </div>
@@ -81,29 +81,29 @@
           <!-- Action Modules -->
           <div class="flex flex-wrap gap-4 mb-16">
             <NuxtLink to="#projects"
-              class="group px-6 py-3 bg-text text-bg font-mono text-sm hover:bg-accent hover:text-white transition-colors duration-200 flex items-center gap-3">
+              class="group px-6 py-3 bg-accent text-white font-mono text-sm hover:bg-accent-hover transition-colors duration-200 flex items-center gap-3">
               <span>[ VIEW_PROJECTS ]</span>
               <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
             <NuxtLink to="#contact"
-              class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-accent transition-colors duration-200">
+              class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-accent hover:text-accent transition-colors duration-200">
               [ INITIATE_CONTACT ]
             </NuxtLink>
           </div>
 
           <!-- Tech Stack / Loaded Modules -->
         <div class="mb-12">
-          <div class="font-mono text-[10px] text-text-accent mb-4 uppercase tracking-widest flex items-center gap-2">
+          <div class="font-mono text-[10px] text-text-muted mb-4 uppercase tracking-widest flex items-center gap-2">
             <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse"></span>
             @ LOADED_MODULES
           </div>
           <div class="flex flex-wrap gap-6">
-            <Icon name="logos:go" class="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
-            <Icon name="logos:python" class="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
-            <Icon name="logos:docker-icon" class="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
-            <Icon name="logos:nuxt-icon" class="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
-            <Icon name="logos:postgresql" class="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
-            <Icon name="logos:mongodb-icon" class="w-6 h-6 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
+            <Icon name="logos:go" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />
+            <Icon name="logos:python" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />
+            <Icon name="logos:docker-icon" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />
+            <Icon name="logos:nuxt-icon" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />
+            <Icon name="logos:postgresql" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />
+            <Icon name="logos:mongodb-icon" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />
           </div>
         </div>
 

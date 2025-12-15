@@ -5,7 +5,7 @@
             <!-- Section Header -->
             <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
                 <div>
-                    <h3 class="font-mono-label text-text-accent mb-2 flex items-center gap-2">
+                    <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
                         <span class="w-2 h-2 bg-accent"></span>
                         SYSTEM_SPECS
                     </h3>
@@ -13,9 +13,9 @@
                         Technical Profile
                     </h2>
                 </div>
-                <div class="hidden md:block font-mono text-xs text-text-accent text-right">
-                    <div>KERNEL: BACKEND_ENG_V4</div>
-                    <div>UPTIME: 4+ YEARS</div>
+                <div class="hidden md:block font-mono text-xs text-text-secondary text-right">
+                    <div>KERNEL: SOFTWARE_ENG_V6</div>
+                    <div>UPTIME: 6+ YEARS</div>
                 </div>
             </div>
 
@@ -26,14 +26,14 @@
                     
                     <!-- Bio / Architecture Overview -->
                     <div>
-                        <div class="font-mono-label text-text-accent mb-4 border-b border-border pb-2">
+                        <div class="font-mono-label text-text-secondary mb-4 border-b border-border pb-2">
                             // ARCHITECTURE_OVERVIEW
                         </div>
                         <p class="text-lg text-text font-light leading-relaxed mb-6">
                             I engineer backend systems designed for <span class="text-accent font-normal">resilience</span> and <span class="text-accent font-normal">scale</span>. 
                             My approach treats infrastructure as code and failure as an expected state to be managed, not feared.
                         </p>
-                        <p class="text-text-accent font-light leading-relaxed">
+                        <p class="text-text-secondary font-light leading-relaxed">
                             Specializing in distributed architectures, I build the invisible engines that power seamless user experiences. 
                             From high-concurrency payment gateways to real-time AI inference pipelines, I focus on systems that remain performant under pressure.
                         </p>
@@ -41,7 +41,7 @@
 
                     <!-- Core Components (Capabilities) -->
                     <div>
-                        <div class="font-mono-label text-text-accent mb-6 border-b border-border pb-2">
+                        <div class="font-mono-label text-text-secondary mb-6 border-b border-border pb-2">
                             // CORE_COMPONENTS
                         </div>
                         <div class="grid sm:grid-cols-2 gap-6">
@@ -50,7 +50,7 @@
                                 <h4 class="text-base font-normal text-text mb-2 group-hover:text-accent transition-colors">
                                     {{ capability.title }}
                                 </h4>
-                                <p class="text-sm text-text-accent leading-relaxed font-light">
+                                <p class="text-sm text-text-secondary leading-relaxed font-light">
                                     {{ capability.description }}
                                 </p>
                             </div>
@@ -84,7 +84,7 @@
                         <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent"></div>
                         <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent"></div>
 
-                        <div class="font-mono-label text-text-accent mb-6 flex items-center gap-2">
+                        <div class="font-mono-label text-text-secondary mb-6 flex items-center gap-2">
                             <Icon name="lucide:bar-chart-2" class="w-4 h-4" />
                             PERFORMANCE_BENCHMARKS
                         </div>
@@ -98,7 +98,7 @@
                                 <div class="w-full h-1 bg-border overflow-hidden">
                                     <div class="h-full bg-accent w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                                 </div>
-                                <p class="text-xs text-text-accent mt-2 font-light leading-relaxed">
+                                <p class="text-xs text-text-secondary mt-2 font-light leading-relaxed">
                                     {{ metric.description }}
                                 </p>
                             </div>
@@ -111,7 +111,7 @@
                             <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
                             <span class="font-mono text-xs text-success">ALL_SYSTEMS_OPERATIONAL</span>
                         </div>
-                        <div class="font-mono text-[10px] text-text-accent space-y-1">
+                        <div class="font-mono text-[10px] text-text-secondary space-y-1">
                             <div>> CHECKING_DEPENDENCIES... OK</div>
                             <div>> VERIFYING_INTEGRITY... OK</div>
                             <div>> READY_FOR_PRODUCTION</div>
@@ -136,12 +136,12 @@ const capabilities = [
         description: 'Implement CI/CD pipelines and containerization strategies for reliable, zero-downtime deployments.'
     },
     {
-        title: 'Production Reliability',
-        description: 'Build systems that fail gracefully. Error handling, monitoring, and recovery are first-class concerns.'
+        title: 'AI & ML Integration',
+        description: 'Deploy machine learning models into production pipelines with optimized inference, real-time scoring, and intelligent automation.'
     },
     {
-        title: 'AI System Integration',
-        description: 'Deploying machine learning models into production pipelines with optimized inference latency.'
+        title: 'Production Reliability',
+        description: 'Build systems that fail gracefully. Error handling, monitoring, and recovery are first-class concerns.'
     }
 ];
 

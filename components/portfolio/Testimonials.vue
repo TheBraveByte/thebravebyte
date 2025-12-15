@@ -5,11 +5,11 @@
 
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-16">
-        <h3 class="font-mono-label text-text-accent mb-3 flex items-center gap-2">
+        <h3 class="font-mono-label text-text-secondary mb-3 flex items-center gap-2">
           <span class="w-2 h-2 bg-accent"></span>
           // TRUSTED_NETWORKS
         </h3>
-        <p class="font-mono text-xs text-text-accent max-w-xl">
+        <p class="font-mono text-xs text-text-secondary max-w-xl">
           ESTABLISHED_UPLINKS_WITH_VISIONARY_ENTITIES.
           <br>
           SCALING_SOLUTIONS_GLOBALLY.
@@ -41,7 +41,7 @@
                 ]" />
               </div>
               <span
-                class="font-mono text-sm font-bold text-text-accent group-hover:text-text transition-colors">
+                class="font-mono text-sm font-bold text-text-secondary group-hover:text-text transition-colors">
                 {{ company.name.toUpperCase() }}
               </span>
             </div>

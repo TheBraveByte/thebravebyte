@@ -8,7 +8,7 @@
           <h1 class="text-3xl font-light  mb-2">
             Admin Dashboard
           </h1>
-          <p class="text-text-accent font-mono text-sm">
+          <p class="text-text-secondary font-mono text-sm">
             Manage your articles and content
           </p>
         </div>
@@ -19,7 +19,7 @@
             NEW_ARTICLE
           </NuxtLink>
           <button @click="logout"
-            class="px-4 py-2 border border-border text-text-accent font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
+            class="px-4 py-2 border border-border text-text-secondary font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
             LOGOUT
           </button>
         </div>
@@ -28,7 +28,7 @@
       <!-- Stats -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class=" border border-border p-6">
-          <div class="font-mono-label text-text-accent mb-2">
+          <div class="font-mono-label text-text-secondary mb-2">
             TOTAL_ARTICLES
           </div>
           <div class="text-3xl font-light ">
@@ -36,15 +36,15 @@
           </div>
         </div>
         <div class=" border border-border p-6">
-          <div class="font-mono-label text-text-accent mb-2">
+          <div class="font-mono-label text-text-secondary mb-2">
             PUBLISHED
           </div>
-          <div class="text-3xl font-light text-accent text-accent">
+          <div class="text-3xl font-light text-accent">
             {{ stats.published }}
           </div>
         </div>
         <div class=" border border-border p-6">
-          <div class="font-mono-label text-text-accent mb-2">
+          <div class="font-mono-label text-text-secondary mb-2">
             DRAFTS
           </div>
           <div class="text-3xl font-light text-text-secondary">
@@ -77,11 +77,11 @@
 
       <!-- Articles List -->
       <div class="space-y-4">
-        <div v-if="pending" class="text-center py-12 text-text-accent font-mono">
+        <div v-if="pending" class="text-center py-12 text-text-secondary font-mono">
           LOADING...
         </div>
         
-        <div v-else-if="filteredArticles.length === 0" class="text-center py-12 text-text-accent font-mono">
+        <div v-else-if="filteredArticles.length === 0" class="text-center py-12 text-text-secondary font-mono">
           NO_ARTICLES_FOUND
         </div>
 
@@ -95,10 +95,10 @@
               <div class="flex items-center gap-3 mb-2">
                 <span :class="article.published ? 'bg-green-500' : 'bg-yellow-500'"
                   class="w-2 h-2 rounded-full"></span>
-                <span class="font-mono text-xs text-text-accent uppercase">
+                <span class="font-mono text-xs text-text-secondary uppercase">
                   {{ article.published ? 'PUBLISHED' : 'DRAFT' }}
                 </span>
-                <span class="text-text-accent text-sm">
+                <span class="text-text-secondary text-sm">
                   {{ formatDate(article.createdAt) }}
                 </span>
               </div>
@@ -107,7 +107,7 @@
                 {{ article.title }}
               </h3>
               
-              <p class="text-text-accent text-sm mb-3 line-clamp-2">
+              <p class="text-text-secondary text-sm mb-3 line-clamp-2">
                 {{ article.excerpt }}
               </p>
               
@@ -124,7 +124,7 @@
               </NuxtLink>
               
               <NuxtLink v-if="article.published" :to="`/article/${article.slug}`" target="_blank"
-                class="px-4 py-2 border border-border text-text-accent font-mono text-sm hover:border-accent transition-colors duration-200 text-center">
+                class="px-4 py-2 border border-border text-text-secondary font-mono text-sm hover:border-accent transition-colors duration-200 text-center">
                 VIEW
               </NuxtLink>
               

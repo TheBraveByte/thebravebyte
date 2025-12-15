@@ -8,7 +8,7 @@
           <h1 class="text-3xl font-light  mb-2">
             {{ isEditing ? 'Edit Article' : 'New Article' }}
           </h1>
-          <p class="text-sm text-text-accent font-mono">
+          <p class="text-sm text-text-secondary font-mono">
             {{ autoSaveStatus }}
           </p>
         </div>
@@ -29,7 +29,7 @@
         
         <!-- Title -->
         <div>
-          <label class="block font-mono-label text-text-accent mb-2">
+          <label class="block font-mono-label text-text-secondary mb-2">
             TITLE
           </label>
           <input 
@@ -42,7 +42,7 @@
 
         <!-- Slug -->
         <div>
-          <label class="block font-mono-label text-text-accent mb-2">
+          <label class="block font-mono-label text-text-secondary mb-2">
             SLUG (URL)
           </label>
           <input 
@@ -58,7 +58,7 @@
 
         <!-- Excerpt -->
         <div>
-          <label class="block font-mono-label text-text-accent mb-2">
+          <label class="block font-mono-label text-text-secondary mb-2">
             EXCERPT
           </label>
           <textarea 
@@ -71,7 +71,7 @@
 
         <!-- Cover Image -->
         <div>
-          <label class="block font-mono-label text-text-accent mb-2">
+          <label class="block font-mono-label text-text-secondary mb-2">
             COVER_IMAGE
           </label>
           <div class="flex gap-3">
@@ -94,7 +94,7 @@
 
         <!-- Content Editor -->
         <div>
-          <label class="block font-mono-label text-text-accent mb-2">
+          <label class="block font-mono-label text-text-secondary mb-2">
             CONTENT
           </label>
           <ArticleEditor v-model="article.content" />
@@ -104,12 +104,12 @@
 
       <!-- Actions Footer -->
       <div class="mt-8 pt-6 border-t border-border flex justify-between items-center">
-        <NuxtLink to="/admin/dashboard" class="text-text-accent hover:text-accent hover:text-accent font-mono text-sm">
+        <NuxtLink to="/admin/dashboard" class="text-text-secondary hover:text-accent font-mono text-sm">
           ← BACK_TO_DASHBOARD
         </NuxtLink>
         <div class="flex gap-3">
           <button v-if="isEditing && article.published" @click="unpublish"
-            class="px-4 py-2 border border-border text-text-accent font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
+            class="px-4 py-2 border border-border text-text-secondary font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
             UNPUBLISH
           </button>
           <button v-if="isEditing" @click="deleteArticle"

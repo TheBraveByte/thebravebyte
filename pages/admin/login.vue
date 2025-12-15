@@ -17,7 +17,7 @@
             ADMIN_ACCESS
           </span>
         </div>
-        <p class="text-text-accent font-mono text-sm">
+        <p class="text-text-secondary font-mono text-sm">
           [ AUTHENTICATION_REQUIRED ]
         </p>
       </div>
@@ -30,7 +30,7 @@
           <div class="h-1 bg-bg rounded-full overflow-hidden">
             <div class="h-full bg-gradient-to-r from-accent to-accent-dark transition-all duration-300 ease-out" :style="{ width: `${progress}%` }"></div>
           </div>
-          <p class="mt-2 text-xs text-center text-text-accent font-mono">
+          <p class="mt-2 text-xs text-center text-text-secondary font-mono">
             {{ loadingMessage }}
           </p>
         </div>
@@ -39,7 +39,7 @@
           
           <!-- Email -->
           <div>
-            <label class="block font-mono-label text-text-accent mb-2">
+            <label class="block font-mono-label text-text-secondary mb-2">
               EMAIL
             </label>
             <input 
@@ -53,7 +53,7 @@
 
           <!-- Password -->
           <div>
-            <label class="block font-mono-label text-text-accent mb-2">
+            <label class="block font-mono-label text-text-secondary mb-2">
               PASSWORD
             </label>
             <input 
@@ -96,7 +96,7 @@
 
         <!-- Info -->
         <div class="mt-6 pt-6 border-t border-border">
-          <p class="text-xs text-text-accent font-mono text-center">
+          <p class="text-xs text-text-secondary font-mono text-center">
             SYSTEM_VERSION: 4.0.2 | SECURITY: ENABLED
           </p>
         </div>
@@ -105,7 +105,7 @@
 
       <!-- Back to Site -->
       <div class="mt-6 text-center">
-        <NuxtLink to="/" class="text-text-accent hover:text-accent hover:text-accent font-mono text-sm">
+        <NuxtLink to="/" class="text-text-secondary hover:text-accent font-mono text-sm">
           ← RETURN_TO_SITE
         </NuxtLink>
       </div>

@@ -4,16 +4,16 @@
       
       <!-- Section Header -->
       <div class="mb-16 text-center">
-        <h3 class="font-mono-label text-text-accent mb-3 flex items-center justify-center gap-2">
+        <h3 class="font-mono-label text-text-secondary mb-3 flex items-center justify-center gap-2">
           <span class="w-2 h-2 bg-accent animate-pulse"></span>
           INITIATE_UPLINK
         </h3>
         <h2 class="text-3xl md:text-4xl font-light text-text mb-6">
           Establish Connection
         </h2>
-        <p class="text-lg text-text-accent font-light max-w-2xl mx-auto">
+        <p class="text-lg text-text-secondary font-light max-w-2xl mx-auto">
           Ready to architect systems that define reliability. 
-          <span class="font-mono text-xs text-accent text-accent">[ STATUS: OPEN_FOR_COLLABORATION ]</span>
+          <span class="font-mono text-xs text-accent">[ STATUS: OPEN_FOR_COLLABORATION ]</span>
         </p>
       </div>
 
@@ -27,7 +27,7 @@
           
           <Icon name="lucide:mail" class="w-8 h-8 text-text mb-4 mx-auto group-hover:text-accent transition-colors" />
           <h3 class="font-mono text-sm text-text mb-2">DIRECT_MESSAGE</h3>
-          <p class="text-sm text-text-accent font-light">Send encrypted transmission</p>
+          <p class="text-sm text-text-secondary font-light">Send encrypted transmission</p>
         </a>
 
         <!-- Contra Action -->
@@ -38,13 +38,13 @@
 
           <Icon name="lucide:briefcase" class="w-8 h-8 text-text mb-4 mx-auto group-hover:text-accent transition-colors" />
           <h3 class="font-mono text-sm text-text mb-2">CONTRACT_HIRE</h3>
-          <p class="text-sm text-text-accent font-light">Initiate project workflow</p>
+          <p class="text-sm text-text-secondary font-light">Initiate project workflow</p>
         </a>
       </div>
 
       <!-- Network Links -->
       <div class="border-t border-border pt-12">
-        <div class="font-mono-label text-center text-text-accent mb-8">
+        <div class="font-mono-label text-center text-text-secondary mb-8">
           // NETWORK_PROTOCOLS
         </div>
         <div class="flex flex-wrap justify-center gap-4">
@@ -52,7 +52,7 @@
             :rel="contact.rel"
             class="group flex items-center gap-3 px-6 py-3 border border-border hover:border-accent transition-colors duration-200 bg-bg">
             <Icon :name="contact.icon"
-              class="w-4 h-4 text-text-accent group-hover:text-accent transition-colors" />
+              class="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors" />
             <span
               class="font-mono text-xs text-text group-hover:text-accent transition-colors">
               {{ contact.name.toUpperCase() }}
@@ -62,7 +62,7 @@
       </div>
 
       <!-- Terminal Footer -->
-      <div class="mt-16 text-center font-mono text-[10px] text-text-accent opacity-60">
+      <div class="mt-16 text-center font-mono text-[10px] text-text-secondary opacity-60">
         <p>SECURE_CONNECTION_ESTABLISHED_V4.0</p>
         <p>END_OF_TRANSMISSION</p>
       </div>

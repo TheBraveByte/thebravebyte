@@ -22,6 +22,7 @@ export default {
         'text-muted': 'var(--color-text-muted)',
         'accent': 'var(--color-accent)',
         'accent-hover': 'var(--color-accent-hover)',
+        'accent-glow': 'var(--color-accent-glow)',
         'success': 'var(--color-success)',
         'warning': 'var(--color-warning)',
         'error': 'var(--color-error)',

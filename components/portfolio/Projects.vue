@@ -5,7 +5,7 @@
       <!-- Section Header -->
       <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
         <div>
-          <h3 class="font-mono-label text-text-accent mb-2 flex items-center gap-2">
+          <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
             <span class="w-2 h-2 bg-accent"></span>
             SYSTEM_MODULES
           </h3>
@@ -13,7 +13,7 @@
             Active Services
           </h2>
         </div>
-        <div class="hidden md:block font-mono text-xs text-text-accent text-right">
+        <div class="hidden md:block font-mono text-xs text-text-secondary text-right">
           <div>TOTAL_MODULES: {{ projects.length }}</div>
           <div>STATUS: ALL_SYSTEMS_OPERATIONAL</div>
         </div>
@@ -24,8 +24,8 @@
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
           'px-4 py-2 font-mono text-xs transition-colors duration-200 border',
           selectedCategory === cat
-            ? 'bg-text bg-text text-bg text-bg border-text border-text'
-            : 'bg-transparent border-border text-text-accent hover:border-accent'
+            ? 'bg-text bg-text text-bg text-bg border-text'
+            : 'bg-transparent border-border text-text-secondary hover:border-accent'
         ]">
           [{{ cat.toUpperCase() }}]
         </button>
@@ -43,7 +43,7 @@
           <!-- Project Header -->
           <div class="p-6 flex-grow">
             <div class="flex justify-between items-start mb-4">
-              <span class="font-mono-label text-accent text-accent">
+              <span class="font-mono-label text-accent">
                 [ SERVICE_{{ String(index + 1).padStart(2, '0') }} ]
               </span>
               <div class="flex items-center gap-2">
@@ -56,7 +56,7 @@
               {{ project.title }}
             </h3>
 
-            <p class="text-sm text-text-accent leading-relaxed mb-6 font-light border-l border-border pl-3">
+            <p class="text-sm text-text-secondary leading-relaxed mb-6 font-light border-l border-border pl-3">
               {{ project.description }}
             </p>
 
@@ -64,7 +64,7 @@
             <div class="bg-bg-secondary border border-border p-3 mb-4">
               <div class="grid grid-cols-2 gap-y-2 gap-x-4">
                 <div v-for="metric in project.metrics" :key="metric.label">
-                  <div class="font-mono text-[10px] text-text-accent uppercase">{{ metric.label }}</div>
+                  <div class="font-mono text-[10px] text-text-secondary uppercase">{{ metric.label }}</div>
                   <div class="font-mono text-xs text-text">{{ metric.value }}</div>
                 </div>
               </div>
@@ -89,14 +89,14 @@
           [ LOAD_MORE_DATA ]
         </button>
         <button v-if="visibleCount > 3" @click="showLess"
-          class="px-6 py-3 text-text-accent hover:text-text dark:hover:text-text transition-colors font-mono text-xs">
+          class="px-6 py-3 text-text-secondary hover:text-text dark:hover:text-text transition-colors font-mono text-xs">
           [ COLLAPSE_VIEW ]
         </button>
       </div>
 
       <!-- CTA -->
       <div class="text-center mt-20 border-t border-border pt-12">
-        <p class="font-mono text-xs text-text-accent mb-4">:: SYSTEM_READY_FOR_DEPLOYMENT</p>
+        <p class="font-mono text-xs text-text-secondary mb-4">:: SYSTEM_READY_FOR_DEPLOYMENT</p>
         <NuxtLink to="#contact"
           class="inline-flex items-center gap-3 px-8 py-4 bg-text bg-text text-bg text-bg hover:bg-accent hover:bg-accent hover:text-white transition-colors duration-200 font-mono text-sm group">
           <span>[ INITIATE_COLLABORATION ]</span>

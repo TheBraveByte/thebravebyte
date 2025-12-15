@@ -1,4 +1,3 @@
-```html
 <template>
   <section id="blogs" class="py-24 bg-bg relative overflow-hidden border-b border-border">
     <!-- Background Grid -->
@@ -6,14 +5,14 @@
 
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-16">
-        <h3 class="font-mono-label text-text-accent mb-3 flex items-center gap-2">
+        <h3 class="font-mono-label text-text-secondary mb-3 flex items-center gap-2">
           <span class="w-2 h-2 bg-accent"></span>
           // KNOWLEDGE_BASE
         </h3>
-        <p class="font-mono text-xs text-text-accent max-w-xl">
+        <p class="font-mono text-xs text-text-secondary max-w-xl">
           SYSTEM_LOGS_AND_TECHNICAL_DOCUMENTATION.
           <br>
-          DEEP_DIVES_INTO_BACKEND_ENGINEERING.
+          DEEP_DIVES_INTO_BACKEND_ENGINEERING_&_AI_SYSTEMS.
         </p>
       </div>
 
@@ -22,8 +21,8 @@
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
           'px-4 py-2 text-xs font-mono border transition-all duration-200 uppercase tracking-wide',
           selectedCategory === cat
-            ? 'bg-accent text-white border-accent border-accent'
-            : 'bg-bg text-text-accent border-border hover:border-accent hover:text-accent hover:text-accent'
+            ? 'bg-accent text-white border-accent'
+            : 'bg-bg text-text-secondary border-border hover:border-accent hover:text-accent'
         ]">
           [{{ cat }}]
         </button>
@@ -38,9 +37,14 @@
         <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
 
         <div class="grid md:grid-cols-2 gap-8 p-8">
+          <!-- Preview Image -->
+          <div v-if="filteredPosts[0]?.urlPreview" class="aspect-video bg-bg-secondary overflow-hidden">
+            <img :src="filteredPosts[0].urlPreview" :alt="filteredPosts[0].title" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+          </div>
+          
           <div class="space-y-6">
             <div class="flex items-center gap-3 font-mono text-xs">
-              <span class="text-accent text-accent">
+              <span class="text-accent">
                 [FEATURED_LOG]
               </span>
               <span class="text-text-secondary">
@@ -52,17 +56,23 @@
               {{ filteredPosts[0]?.title }}
             </h2>
 
-            <p class="text-sm text-text-accent leading-relaxed font-light">
+            <p class="text-sm text-text-secondary leading-relaxed font-light">
               {{ filteredPosts[0]?.excerpt }}
             </p>
 
+            <div class="flex items-center gap-4 font-mono text-xs text-text-secondary">
+              <span>{{ filteredPosts[0]?.date }}</span>
+              <span>•</span>
+              <span>{{ filteredPosts[0]?.readTime }}</span>
+            </div>
+
             <!-- Footer -->
             <div class="pt-6 border-t border-border flex items-center justify-between mt-auto">
-              <NuxtLink :to="`/blog/${filteredPosts[0]?.slug}`" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-text group-hover:text-accent uppercase tracking-wider transition-colors">
-                READ_PROTOCOL
-                <Icon name="lucide:arrow-right" class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
-              </NuxtLink>
-              <span class="font-mono text-[10px] text-text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+              <a :href="filteredPosts[0]?.externalUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-text group-hover:text-accent uppercase tracking-wider transition-colors">
+                READ_ON_HASHNODE
+                <Icon name="lucide:external-link" class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+              </a>
+              <span class="font-mono text-[10px] text-text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
                 ID: {{ filteredPosts[0]?.slug?.substring(0, 6) }}
               </span>
             </div>
@@ -70,9 +80,52 @@
         </div>
       </div>
 
+      <!-- Other Posts Grid -->
+      <div v-if="displayedPosts.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a v-for="post in displayedPosts" :key="post.slug" 
+           :href="post.externalUrl" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="group bg-bg border border-border hover:border-accent transition-colors duration-200 p-6 flex flex-col">
+          
+          <div class="flex items-center gap-3 font-mono text-xs mb-4">
+            <span class="text-accent">[{{ post.category.toUpperCase().replace(/ /g, '_') }}]</span>
+          </div>
+
+          <h3 class="text-lg font-light text-text group-hover:text-accent transition-colors mb-3">
+            {{ post.title }}
+          </h3>
+
+          <p class="text-sm text-text-secondary leading-relaxed font-light mb-4 flex-grow">
+            {{ post.excerpt.substring(0, 120) }}...
+          </p>
+
+          <div class="flex items-center justify-between pt-4 border-t border-border mt-auto">
+            <div class="flex items-center gap-3 font-mono text-xs text-text-secondary">
+              <span>{{ post.date }}</span>
+              <span>•</span>
+              <span>{{ post.readTime }}</span>
+            </div>
+            <Icon name="lucide:external-link" class="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors" />
+          </div>
+        </a>
+      </div>
+
+      <!-- Load More / Show Less -->
+      <div v-if="hasMorePosts || visibleCount > 3" class="flex justify-center gap-4 mt-12">
+        <button v-if="hasMorePosts" @click="loadMore"
+          class="px-6 py-3 border border-border text-text hover:border-accent hover:text-accent transition-colors duration-200 font-mono text-xs">
+          [ LOAD_MORE_LOGS ]
+        </button>
+        <button v-if="visibleCount > 3" @click="showLess"
+          class="px-6 py-3 text-text-secondary hover:text-accent transition-colors font-mono text-xs">
+          [ COLLAPSE_VIEW ]
+        </button>
+      </div>
+
       <!-- View All Link -->
       <div class="mt-16 text-center">
-        <NuxtLink to="/blog" class="inline-flex items-center gap-2 px-8 py-4 border border-text border-text text-text hover:bg-text hover:bg-text hover:text-bg hover:text-bg transition-all duration-300 font-mono text-xs font-bold uppercase tracking-wider group">
+        <NuxtLink to="/blog" class="inline-flex items-center gap-2 px-8 py-4 border border-text text-text hover:bg-text hover:text-bg transition-all duration-300 font-mono text-xs font-bold uppercase tracking-wider group">
           <span>ACCESS_FULL_ARCHIVE</span>
           <Icon name="lucide:arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
         </NuxtLink>
