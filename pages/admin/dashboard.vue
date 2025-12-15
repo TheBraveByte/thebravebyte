@@ -1,25 +1,25 @@
 <template>
-  <div class="min-h-screen bg-bg dark:bg-bg-dark py-8">
+  <div class="min-h-screen bg-bg py-8">
     <div class="container mx-auto px-6 max-w-6xl">
       
       <!-- Header -->
       <div class="mb-8 flex items-center justify-between">
         <div>
-          <h1 class="text-3xl font-light text-text dark:text-text-dark mb-2">
+          <h1 class="text-3xl font-light  mb-2">
             Admin Dashboard
           </h1>
-          <p class="text-text-secondary dark:text-text-secondary-dark font-mono text-sm">
+          <p class="text-text-accent font-mono text-sm">
             Manage your articles and content
           </p>
         </div>
         <div class="flex gap-3">
           <NuxtLink to="/admin/editor" 
-            class="px-4 py-2 bg-accent dark:bg-accent-dark text-white font-mono text-sm hover:opacity-90 transition-opacity duration-200 flex items-center gap-2">
+            class="px-4 py-2 bg-accent text-white font-mono text-sm hover:opacity-90 transition-opacity duration-200 flex items-center gap-2">
             <Icon name="lucide:plus" class="w-4 h-4" />
             NEW_ARTICLE
           </NuxtLink>
           <button @click="logout"
-            class="px-4 py-2 border border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
+            class="px-4 py-2 border border-border text-text-accent font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
             LOGOUT
           </button>
         </div>
@@ -27,27 +27,27 @@
 
       <!-- Stats -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark p-6">
-          <div class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+        <div class=" border border-border p-6">
+          <div class="font-mono-label text-text-accent mb-2">
             TOTAL_ARTICLES
           </div>
-          <div class="text-3xl font-light text-text dark:text-text-dark">
+          <div class="text-3xl font-light ">
             {{ stats.total }}
           </div>
         </div>
-        <div class="bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark p-6">
-          <div class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+        <div class=" border border-border p-6">
+          <div class="font-mono-label text-text-accent mb-2">
             PUBLISHED
           </div>
-          <div class="text-3xl font-light text-accent dark:text-accent-dark">
+          <div class="text-3xl font-light text-accent text-accent">
             {{ stats.published }}
           </div>
         </div>
-        <div class="bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark p-6">
-          <div class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+        <div class=" border border-border p-6">
+          <div class="font-mono-label text-text-accent mb-2">
             DRAFTS
           </div>
-          <div class="text-3xl font-light text-text-secondary dark:text-text-secondary-dark">
+          <div class="text-3xl font-light text-text-secondary">
             {{ stats.drafts }}
           </div>
         </div>
@@ -57,19 +57,19 @@
       <div class="mb-6 flex gap-4">
         <button 
           @click="filter = 'all'" 
-          :class="filter === 'all' ? 'bg-accent dark:bg-accent-dark text-white' : 'border border-border dark:border-border-dark text-text dark:text-text-dark'"
+          :class="filter === 'all' ? 'bg-accent text-white' : 'border border-border '"
           class="px-4 py-2 font-mono text-sm transition-colors duration-200">
           ALL ({{ stats.total }})
         </button>
         <button 
           @click="filter = 'published'" 
-          :class="filter === 'published' ? 'bg-accent dark:bg-accent-dark text-white' : 'border border-border dark:border-border-dark text-text dark:text-text-dark'"
+          :class="filter === 'published' ? 'bg-accent text-white' : 'border border-border '"
           class="px-4 py-2 font-mono text-sm transition-colors duration-200">
           PUBLISHED ({{ stats.published }})
         </button>
         <button 
           @click="filter = 'draft'" 
-          :class="filter === 'draft' ? 'bg-accent dark:bg-accent-dark text-white' : 'border border-border dark:border-border-dark text-text dark:text-text-dark'"
+          :class="filter === 'draft' ? 'bg-accent text-white' : 'border border-border '"
           class="px-4 py-2 font-mono text-sm transition-colors duration-200">
           DRAFTS ({{ stats.drafts }})
         </button>
@@ -77,16 +77,16 @@
 
       <!-- Articles List -->
       <div class="space-y-4">
-        <div v-if="pending" class="text-center py-12 text-text-secondary dark:text-text-secondary-dark font-mono">
+        <div v-if="pending" class="text-center py-12 text-text-accent font-mono">
           LOADING...
         </div>
         
-        <div v-else-if="filteredArticles.length === 0" class="text-center py-12 text-text-secondary dark:text-text-secondary-dark font-mono">
+        <div v-else-if="filteredArticles.length === 0" class="text-center py-12 text-text-accent font-mono">
           NO_ARTICLES_FOUND
         </div>
 
         <div v-else v-for="article in filteredArticles" :key="article._id"
-          class="bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark p-6 hover:border-accent dark:hover:border-accent-dark transition-colors duration-200">
+          class=" border border-border p-6 hover:border-accent transition-colors duration-200">
           
           <div class="flex items-start justify-between gap-6">
             
@@ -95,23 +95,23 @@
               <div class="flex items-center gap-3 mb-2">
                 <span :class="article.published ? 'bg-green-500' : 'bg-yellow-500'"
                   class="w-2 h-2 rounded-full"></span>
-                <span class="font-mono text-xs text-text-secondary dark:text-text-secondary-dark uppercase">
+                <span class="font-mono text-xs text-text-accent uppercase">
                   {{ article.published ? 'PUBLISHED' : 'DRAFT' }}
                 </span>
-                <span class="text-text-secondary dark:text-text-secondary-dark text-sm">
+                <span class="text-text-accent text-sm">
                   {{ formatDate(article.createdAt) }}
                 </span>
               </div>
               
-              <h3 class="text-xl font-light text-text dark:text-text-dark mb-2">
+              <h3 class="text-xl font-light  mb-2">
                 {{ article.title }}
               </h3>
               
-              <p class="text-text-secondary dark:text-text-secondary-dark text-sm mb-3 line-clamp-2">
+              <p class="text-text-accent text-sm mb-3 line-clamp-2">
                 {{ article.excerpt }}
               </p>
               
-              <div class="font-mono text-xs text-text-secondary dark:text-text-secondary-dark">
+              <div class="font-mono text-xs text-text-secondary">
                 /article/{{ article.slug }}
               </div>
             </div>
@@ -119,12 +119,12 @@
             <!-- Actions -->
             <div class="flex flex-col gap-2">
               <NuxtLink :to="`/admin/editor?id=${article._id}`"
-                class="px-4 py-2 border border-border dark:border-border-dark text-text dark:text-text-dark font-mono text-sm hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 text-center">
+                class="px-4 py-2 border border-border  font-mono text-sm hover:border-accent transition-colors duration-200 text-center">
                 EDIT
               </NuxtLink>
               
               <NuxtLink v-if="article.published" :to="`/article/${article.slug}`" target="_blank"
-                class="px-4 py-2 border border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark font-mono text-sm hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 text-center">
+                class="px-4 py-2 border border-border text-text-accent font-mono text-sm hover:border-accent transition-colors duration-200 text-center">
                 VIEW
               </NuxtLink>
               

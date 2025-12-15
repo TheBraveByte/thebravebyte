@@ -1,19 +1,19 @@
 <template>
-    <section id="about" class="py-24 bg-bg dark:bg-bg relative">
+    <section id="about" class="py-24 bg-bg relative">
         <div class="container mx-auto px-6 max-w-6xl relative z-10">
             
             <!-- Section Header -->
-            <div class="mb-16 flex items-end justify-between border-b border-border dark:border-border-dark pb-6">
+            <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
                 <div>
-                    <h3 class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-accent dark:bg-accent-dark"></span>
+                    <h3 class="font-mono-label text-text-accent mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-accent"></span>
                         SYSTEM_SPECS
                     </h3>
-                    <h2 class="text-3xl md:text-4xl font-light text-text dark:text-text">
+                    <h2 class="text-3xl md:text-4xl font-light text-text">
                         Technical Profile
                     </h2>
                 </div>
-                <div class="hidden md:block font-mono text-xs text-text-secondary dark:text-text-secondary-dark text-right">
+                <div class="hidden md:block font-mono text-xs text-text-accent text-right">
                     <div>KERNEL: BACKEND_ENG_V4</div>
                     <div>UPTIME: 4+ YEARS</div>
                 </div>
@@ -26,14 +26,14 @@
                     
                     <!-- Bio / Architecture Overview -->
                     <div>
-                        <div class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-4 border-b border-border dark:border-border-dark pb-2">
+                        <div class="font-mono-label text-text-accent mb-4 border-b border-border pb-2">
                             // ARCHITECTURE_OVERVIEW
                         </div>
-                        <p class="text-lg text-text dark:text-text font-light leading-relaxed mb-6">
-                            I engineer backend systems designed for <span class="text-accent dark:text-accent-dark font-normal">resilience</span> and <span class="text-accent dark:text-accent-dark font-normal">scale</span>. 
+                        <p class="text-lg text-text font-light leading-relaxed mb-6">
+                            I engineer backend systems designed for <span class="text-accent font-normal">resilience</span> and <span class="text-accent font-normal">scale</span>. 
                             My approach treats infrastructure as code and failure as an expected state to be managed, not feared.
                         </p>
-                        <p class="text-text-secondary dark:text-text-secondary-dark font-light leading-relaxed">
+                        <p class="text-text-accent font-light leading-relaxed">
                             Specializing in distributed architectures, I build the invisible engines that power seamless user experiences. 
                             From high-concurrency payment gateways to real-time AI inference pipelines, I focus on systems that remain performant under pressure.
                         </p>
@@ -41,16 +41,16 @@
 
                     <!-- Core Components (Capabilities) -->
                     <div>
-                        <div class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-6 border-b border-border dark:border-border-dark pb-2">
+                        <div class="font-mono-label text-text-accent mb-6 border-b border-border pb-2">
                             // CORE_COMPONENTS
                         </div>
                         <div class="grid sm:grid-cols-2 gap-6">
                             <div v-for="capability in capabilities" :key="capability.title"
-                                class="border-l-2 border-border dark:border-border-dark pl-4 hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 group">
-                                <h4 class="text-base font-normal text-text dark:text-text mb-2 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">
+                                class="border-l-2 border-border pl-4 hover:border-accent transition-colors duration-200 group">
+                                <h4 class="text-base font-normal text-text mb-2 group-hover:text-accent transition-colors">
                                     {{ capability.title }}
                                 </h4>
-                                <p class="text-sm text-text-secondary dark:text-text-secondary-dark leading-relaxed font-light">
+                                <p class="text-sm text-text-accent leading-relaxed font-light">
                                     {{ capability.description }}
                                 </p>
                             </div>
@@ -61,13 +61,13 @@
                     <div class="flex flex-wrap gap-4 pt-4">
                         <a href="https://drive.google.com/file/d/1bhKFxFhO2uey5Tojg3fYfJs17NmEScgy/view?usp=sharing"
                             target="_blank"
-                            class="px-6 py-3 bg-text dark:bg-white text-bg dark:text-black font-mono text-sm hover:bg-accent dark:hover:bg-accent-dark hover:text-white transition-colors duration-200 flex items-center gap-2">
+                            class="px-6 py-3 bg-text text-bg font-mono text-sm hover:bg-accent hover:text-white transition-colors duration-200 flex items-center gap-2">
                             <Icon name="lucide:file-text" class="w-4 h-4" />
                             [ VIEW_LOGS ]
                         </a>
                         <a href="https://drive.google.com/uc?export=download&id=1bhKFxFhO2uey5Tojg3fYfJs17NmEScgy"
                             download
-                            class="px-6 py-3 border border-border dark:border-border-dark text-text dark:text-text font-mono text-sm hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 flex items-center gap-2">
+                            class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-accent transition-colors duration-200 flex items-center gap-2">
                             <Icon name="lucide:download" class="w-4 h-4" />
                             [ DOWNLOAD_CONFIG ]
                         </a>
@@ -79,12 +79,12 @@
                 <div class="lg:col-span-5 space-y-8">
                     
                     <!-- Metrics Table -->
-                    <div class="bg-bg dark:bg-bg-dark border border-border dark:border-border-dark p-6 relative">
+                    <div class="bg-bg border border-border p-6 relative">
                         <!-- Technical Corners -->
-                        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent dark:border-accent-dark"></div>
-                        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent dark:border-accent-dark"></div>
+                        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent"></div>
+                        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent"></div>
 
-                        <div class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-6 flex items-center gap-2">
+                        <div class="font-mono-label text-text-accent mb-6 flex items-center gap-2">
                             <Icon name="lucide:bar-chart-2" class="w-4 h-4" />
                             PERFORMANCE_BENCHMARKS
                         </div>
@@ -92,13 +92,13 @@
                         <div class="space-y-6">
                             <div v-for="metric in metrics" :key="metric.label" class="group">
                                 <div class="flex justify-between items-end mb-2">
-                                    <span class="font-mono text-xs text-text-secondary dark:text-text-secondary-dark">{{ metric.label }}</span>
-                                    <span class="font-mono text-xl text-text dark:text-text group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">{{ metric.value }}</span>
+                                    <span class="font-mono text-xs text-text-secondary">{{ metric.label }}</span>
+                                    <span class="font-mono text-xl text-text group-hover:text-accent transition-colors">{{ metric.value }}</span>
                                 </div>
-                                <div class="w-full h-1 bg-border dark:bg-border-dark overflow-hidden">
-                                    <div class="h-full bg-accent dark:bg-accent-dark w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                                <div class="w-full h-1 bg-border overflow-hidden">
+                                    <div class="h-full bg-accent w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                                 </div>
-                                <p class="text-xs text-text-secondary dark:text-text-secondary-dark mt-2 font-light leading-relaxed">
+                                <p class="text-xs text-text-accent mt-2 font-light leading-relaxed">
                                     {{ metric.description }}
                                 </p>
                             </div>
@@ -106,12 +106,12 @@
                     </div>
 
                     <!-- System Status Box -->
-                    <div class="border border-dashed border-border dark:border-border-dark p-4 bg-gray-50 dark:bg-white/5">
+                    <div class="border border-dashed border-border p-4 bg-bg-secondary">
                         <div class="flex items-center gap-3 mb-2">
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span class="font-mono text-xs text-green-500">ALL_SYSTEMS_OPERATIONAL</span>
+                            <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                            <span class="font-mono text-xs text-success">ALL_SYSTEMS_OPERATIONAL</span>
                         </div>
-                        <div class="font-mono text-[10px] text-text-secondary dark:text-text-secondary-dark space-y-1">
+                        <div class="font-mono text-[10px] text-text-accent space-y-1">
                             <div>> CHECKING_DEPENDENCIES... OK</div>
                             <div>> VERIFYING_INTEGRITY... OK</div>
                             <div>> READY_FOR_PRODUCTION</div>

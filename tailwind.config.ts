@@ -12,22 +12,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        // All colors use CSS variables - automatically switch in dark mode
         'bg': 'var(--color-bg)',
-        'bg-dark': '#0B1120', // Main background (Deep Navy)
         'bg-secondary': 'var(--color-bg-secondary)',
-        'bg-secondary-dark': '#1e293b', // Secondary background (Slate 800)
-        'bg-tertiary': 'var(--bg-tertiary)',
-        'bg-tertiary-dark': '#334155', // Tertiary background (Slate 700)
+        'bg-tertiary': 'var(--color-bg-tertiary)',
         'border': 'var(--color-border)',
-        'border-dark': '#334155', // Border (Slate 700)
         'text': 'var(--color-text)',
-        'text-dark': '#f8fafc', // Text (Slate 50)
         'text-secondary': 'var(--color-text-secondary)',
-        'text-secondary-dark': '#cbd5e1', // Secondary Text (Slate 300)
-        'text-primary': 'var(--text-primary)',
-        'primary': 'var(--accent-primary)',
+        'text-muted': 'var(--color-text-muted)',
         'accent': 'var(--color-accent)',
-        'accent-dark': '#818cf8', // Accent (Indigo 400)
+        'accent-hover': 'var(--color-accent-hover)',
+        'success': 'var(--color-success)',
+        'warning': 'var(--color-warning)',
+        'error': 'var(--color-error)',
       },
       fontFamily: {
         sans: ['var(--font-sans)'],

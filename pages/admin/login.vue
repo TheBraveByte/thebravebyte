@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-bg via-bg-secondary to-bg dark:from-bg-dark dark:via-bg-secondary-dark dark:to-bg-dark flex items-center justify-center px-6 relative overflow-hidden">
+  <div class="min-h-screen bg-gradient-to-br from-bg via-bg-secondary to-bg flex items-center justify-center px-6 relative overflow-hidden">
     
     <!-- Animated Background Elements -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 dark:bg-accent-dark/5 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-dark/5 dark:bg-accent/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 bg-accent/5 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-dark/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     </div>
 
     <div class="w-full max-w-md relative z-10">
@@ -12,25 +12,25 @@
       <!-- Logo/Header -->
       <div class="text-center mb-8">
         <div class="inline-flex items-center gap-3 mb-4">
-          <div class="w-2 h-2 bg-accent dark:bg-accent-dark animate-pulse"></div>
-          <span class="font-mono text-xl font-bold text-text dark:text-text-dark tracking-tight">
+          <div class="w-2 h-2 bg-accent animate-pulse"></div>
+          <span class="font-mono text-xl font-bold  tracking-tight">
             ADMIN_ACCESS
           </span>
         </div>
-        <p class="text-text-secondary dark:text-text-secondary-dark font-mono text-sm">
+        <p class="text-text-accent font-mono text-sm">
           [ AUTHENTICATION_REQUIRED ]
         </p>
       </div>
 
       <!-- Login Form -->
-      <div class="bg-bg-secondary/90 dark:bg-bg-secondary-dark/90 backdrop-blur-xl border border-border dark:border-border-dark rounded-2xl p-8 shadow-2xl">
+      <div class="bg-bg-secondary/90 /90 backdrop-blur-xl border border-border rounded-2xl p-8 shadow-2xl">
         
         <!-- Progress Bar -->
         <div v-if="loading" class="mb-6 relative">
-          <div class="h-1 bg-bg dark:bg-bg-dark rounded-full overflow-hidden">
+          <div class="h-1 bg-bg rounded-full overflow-hidden">
             <div class="h-full bg-gradient-to-r from-accent to-accent-dark transition-all duration-300 ease-out" :style="{ width: `${progress}%` }"></div>
           </div>
-          <p class="mt-2 text-xs text-center text-text-secondary dark:text-text-secondary-dark font-mono">
+          <p class="mt-2 text-xs text-center text-text-accent font-mono">
             {{ loadingMessage }}
           </p>
         </div>
@@ -39,7 +39,7 @@
           
           <!-- Email -->
           <div>
-            <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+            <label class="block font-mono-label text-text-accent mb-2">
               EMAIL
             </label>
             <input 
@@ -47,13 +47,13 @@
               type="email" 
               required
               placeholder="admin@thebravebyte.com"
-              class="w-full px-4 py-3 bg-bg dark:bg-bg-dark border border-border dark:border-border-dark text-text dark:text-text-dark focus:border-accent dark:focus:border-accent-dark outline-none transition-colors rounded-lg"
+              class="w-full px-4 py-3 bg-bg border border-border  focus:border-accent outline-none transition-colors rounded-lg"
             />
           </div>
 
           <!-- Password -->
           <div>
-            <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+            <label class="block font-mono-label text-text-accent mb-2">
               PASSWORD
             </label>
             <input 
@@ -61,7 +61,7 @@
               type="password" 
               required
               placeholder="••••••••"
-              class="w-full px-4 py-3 bg-bg dark:bg-bg-dark border border-border dark:border-border-dark text-text dark:text-text-dark focus:border-accent dark:focus:border-accent-dark outline-none transition-colors rounded-lg"
+              class="w-full px-4 py-3 bg-bg border border-border  focus:border-accent outline-none transition-colors rounded-lg"
             />
           </div>
 
@@ -95,8 +95,8 @@
         </form>
 
         <!-- Info -->
-        <div class="mt-6 pt-6 border-t border-border dark:border-border-dark">
-          <p class="text-xs text-text-secondary dark:text-text-secondary-dark font-mono text-center">
+        <div class="mt-6 pt-6 border-t border-border">
+          <p class="text-xs text-text-accent font-mono text-center">
             SYSTEM_VERSION: 4.0.2 | SECURITY: ENABLED
           </p>
         </div>
@@ -105,7 +105,7 @@
 
       <!-- Back to Site -->
       <div class="mt-6 text-center">
-        <NuxtLink to="/" class="text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark font-mono text-sm">
+        <NuxtLink to="/" class="text-text-accent hover:text-accent hover:text-accent font-mono text-sm">
           ← RETURN_TO_SITE
         </NuxtLink>
       </div>

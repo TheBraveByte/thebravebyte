@@ -1,15 +1,15 @@
 <template>
-  <section id="testimonials" class="py-24 bg-bg dark:bg-bg-dark relative overflow-hidden border-b border-border dark:border-border-dark">
+  <section id="testimonials" class="py-24 bg-bg relative overflow-hidden border-b border-border">
     <!-- Background Grid -->
     <div class="absolute inset-0 bg-grid opacity-[0.03] pointer-events-none"></div>
 
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-16">
-        <h3 class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-3 flex items-center gap-2">
-          <span class="w-2 h-2 bg-accent dark:bg-accent-dark"></span>
+        <h3 class="font-mono-label text-text-accent mb-3 flex items-center gap-2">
+          <span class="w-2 h-2 bg-accent"></span>
           // TRUSTED_NETWORKS
         </h3>
-        <p class="font-mono text-xs text-text-secondary dark:text-text-secondary-dark max-w-xl">
+        <p class="font-mono text-xs text-text-accent max-w-xl">
           ESTABLISHED_UPLINKS_WITH_VISIONARY_ENTITIES.
           <br>
           SCALING_SOLUTIONS_GLOBALLY.
@@ -17,31 +17,31 @@
       </div>
 
       <!-- Marquee Container -->
-      <div class="relative w-full overflow-hidden mask-gradient border-y border-border dark:border-border-dark bg-gray-50/50 dark:bg-white/5">
+      <div class="relative w-full overflow-hidden mask-gradient border-y border-border bg-gray-50/50 bg-bg-secondary">
         <div class="flex gap-12 items-center animate-marquee whitespace-nowrap py-8">
           <!-- Render companies twice for seamless loop -->
           <template v-for="(company, index) in [...companies, ...companies]" :key="`${company.name}-${index}`">
             <div
-              class="flex items-center gap-4 px-6 py-3 border border-border dark:border-border-dark bg-bg dark:bg-bg-dark hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 group cursor-default min-w-[200px]">
+              class="flex items-center gap-4 px-6 py-3 border border-border bg-bg hover:border-accent transition-colors duration-200 group cursor-default min-w-[200px]">
               
               <!-- Tech Marker -->
-              <div class="w-1 h-full bg-border dark:bg-border-dark group-hover:bg-accent dark:group-hover:bg-accent-dark transition-colors duration-200"></div>
+              <div class="w-1 h-full bg-border group-hover:bg-accent group-hover:bg-accent transition-colors duration-200"></div>
 
               <div :class="[
                 'w-10 h-10 overflow-hidden flex items-center justify-center rounded-sm transition-colors',
-                'bg-gray-100 dark:bg-white/10',
+                'bg-gray-100 bg-text/10',
                 company.hoverBg
               ]">
                 <img v-if="company.brandImg" :src="company.brandImg" :alt="`${company.name} logo`"
                   class="w-8 h-8 object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 <Icon v-else :name="company.icon" :class="[
                   'w-5 h-5',
-                  'text-text-secondary dark:text-text-secondary-dark',
+                  'text-text-secondary',
                   company.hoverColor
                 ]" />
               </div>
               <span
-                class="font-mono text-sm font-bold text-text-secondary dark:text-text-secondary-dark group-hover:text-text dark:group-hover:text-text transition-colors">
+                class="font-mono text-sm font-bold text-text-accent group-hover:text-text transition-colors">
                 {{ company.name.toUpperCase() }}
               </span>
             </div>

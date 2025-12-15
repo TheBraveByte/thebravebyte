@@ -1,24 +1,24 @@
 <template>
-  <div class="min-h-screen bg-bg dark:bg-bg-dark py-8">
+  <div class="min-h-screen bg-bg py-8">
     <div class="container mx-auto px-6 max-w-5xl">
       
       <!-- Header -->
       <div class="mb-8 flex items-center justify-between">
         <div>
-          <h1 class="text-3xl font-light text-text dark:text-text-dark mb-2">
+          <h1 class="text-3xl font-light  mb-2">
             {{ isEditing ? 'Edit Article' : 'New Article' }}
           </h1>
-          <p class="text-sm text-text-secondary dark:text-text-secondary-dark font-mono">
+          <p class="text-sm text-text-accent font-mono">
             {{ autoSaveStatus }}
           </p>
         </div>
         <div class="flex gap-3">
           <button @click="saveDraft" :disabled="saving" 
-            class="px-4 py-2 border border-border dark:border-border-dark text-text dark:text-text-dark font-mono text-sm hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 disabled:opacity-50">
+            class="px-4 py-2 border border-border  font-mono text-sm hover:border-accent transition-colors duration-200 disabled:opacity-50">
             {{ saving ? '...' : 'SAVE_DRAFT' }}
           </button>
           <button @click="publish" :disabled="saving || !canPublish"
-            class="px-4 py-2 bg-accent dark:bg-accent-dark text-white font-mono text-sm hover:opacity-90 transition-opacity duration-200 disabled:opacity-50">
+            class="px-4 py-2 bg-accent text-white font-mono text-sm hover:opacity-90 transition-opacity duration-200 disabled:opacity-50">
             {{ article.published ? 'UPDATE' : 'PUBLISH' }}
           </button>
         </div>
@@ -29,49 +29,49 @@
         
         <!-- Title -->
         <div>
-          <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+          <label class="block font-mono-label text-text-accent mb-2">
             TITLE
           </label>
           <input 
             v-model="article.title" 
             type="text" 
             placeholder="Enter article title..."
-            class="w-full px-4 py-3 bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark text-text dark:text-text-dark text-xl font-light focus:border-accent dark:focus:border-accent-dark outline-none transition-colors"
+            class="w-full px-4 py-3  border border-border  text-xl font-light focus:border-accent outline-none transition-colors"
           />
         </div>
 
         <!-- Slug -->
         <div>
-          <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+          <label class="block font-mono-label text-text-accent mb-2">
             SLUG (URL)
           </label>
           <input 
             v-model="article.slug" 
             type="text" 
             placeholder="article-url-slug"
-            class="w-full px-4 py-3 bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark text-text dark:text-text-dark font-mono text-sm focus:border-accent dark:focus:border-accent-dark outline-none transition-colors"
+            class="w-full px-4 py-3  border border-border  font-mono text-sm focus:border-accent outline-none transition-colors"
           />
-          <p class="mt-1 text-xs text-text-secondary dark:text-text-secondary-dark">
+          <p class="mt-1 text-xs text-text-secondary">
             {{ siteUrl }}/article/{{ article.slug || 'your-slug' }}
           </p>
         </div>
 
         <!-- Excerpt -->
         <div>
-          <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+          <label class="block font-mono-label text-text-accent mb-2">
             EXCERPT
           </label>
           <textarea 
             v-model="article.excerpt" 
             rows="3"
             placeholder="Brief description for article cards and SEO..."
-            class="w-full px-4 py-3 bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark text-text dark:text-text-dark focus:border-accent dark:focus:border-accent-dark outline-none transition-colors resize-none"
+            class="w-full px-4 py-3  border border-border  focus:border-accent outline-none transition-colors resize-none"
           ></textarea>
         </div>
 
         <!-- Cover Image -->
         <div>
-          <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+          <label class="block font-mono-label text-text-accent mb-2">
             COVER_IMAGE
           </label>
           <div class="flex gap-3">
@@ -79,22 +79,22 @@
               v-model="article.coverImage" 
               type="text" 
               placeholder="Image URL or upload..."
-              class="flex-1 px-4 py-3 bg-bg-secondary dark:bg-bg-secondary-dark border border-border dark:border-border-dark text-text dark:text-text-dark font-mono text-sm focus:border-accent dark:focus:border-accent-dark outline-none transition-colors"
+              class="flex-1 px-4 py-3  border border-border  font-mono text-sm focus:border-accent outline-none transition-colors"
             />
-            <label class="px-4 py-3 border border-border dark:border-border-dark text-text dark:text-text-dark font-mono text-sm hover:border-accent dark:hover:border-accent-dark transition-colors cursor-pointer flex items-center gap-2">
+            <label class="px-4 py-3 border border-border  font-mono text-sm hover:border-accent transition-colors cursor-pointer flex items-center gap-2">
               <Icon name="lucide:upload" class="w-4 h-4" />
               UPLOAD
               <input type="file" @change="handleImageUpload" accept="image/*" class="hidden" />
             </label>
           </div>
           <div v-if="article.coverImage" class="mt-3">
-            <img :src="article.coverImage" alt="Cover preview" class="max-w-xs border border-border dark:border-border-dark" />
+            <img :src="article.coverImage" alt="Cover preview" class="max-w-xs border border-border" />
           </div>
         </div>
 
         <!-- Content Editor -->
         <div>
-          <label class="block font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2">
+          <label class="block font-mono-label text-text-accent mb-2">
             CONTENT
           </label>
           <ArticleEditor v-model="article.content" />
@@ -103,13 +103,13 @@
       </div>
 
       <!-- Actions Footer -->
-      <div class="mt-8 pt-6 border-t border-border dark:border-border-dark flex justify-between items-center">
-        <NuxtLink to="/admin/dashboard" class="text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark font-mono text-sm">
+      <div class="mt-8 pt-6 border-t border-border flex justify-between items-center">
+        <NuxtLink to="/admin/dashboard" class="text-text-accent hover:text-accent hover:text-accent font-mono text-sm">
           ← BACK_TO_DASHBOARD
         </NuxtLink>
         <div class="flex gap-3">
           <button v-if="isEditing && article.published" @click="unpublish"
-            class="px-4 py-2 border border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
+            class="px-4 py-2 border border-border text-text-accent font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
             UNPUBLISH
           </button>
           <button v-if="isEditing" @click="deleteArticle"

@@ -1,10 +1,10 @@
 <template>
-  <div class="pt-24 pb-16 bg-tertiary dark:bg-tertiary-dark min-h-screen">
+  <div class="pt-24 pb-16 bg-tertiary min-h-screen">
     <div class="container mx-auto px-6">
       <!-- Back to section link -->
       <div class="max-w-6xl mx-auto mb-6">
         <NuxtLink to="/#process" aria-label="Back to process section"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-primary dark:hover:text-white transition-colors text-sm font-light">
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-gray-700 hover:bg-bg-secondary hover:text-primary transition-colors text-sm font-light">
           <Icon name="lucide:arrow-left" class="w-4 h-4" />
           <span>Back to Process Section</span>
         </NuxtLink>
@@ -12,14 +12,14 @@
       <!-- Header -->
       <div class="max-w-4xl mx-auto mb-12 text-center">
         <h3
-          class="text-sm uppercase tracking-widest text-secondary dark:text-secondary-dark mb-3 font-light flex items-center justify-center gap-3">
-          <span class="w-2 h-2 bg-secondary dark:bg-secondary-dark rounded-full shadow-[0_0_10px_currentColor]"></span>
+          class="text-sm uppercase tracking-widest text-accent mb-3 font-light flex items-center justify-center gap-3">
+          <span class="w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_currentColor]"></span>
           Engineering Process
         </h3>
-        <h1 class="text-4xl md:text-5xl font-light text-gray-900 dark:text-white mb-6">
-          System <span class="text-secondary dark:text-secondary-dark">Architecture</span>
+        <h1 class="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+          System <span class="text-secondary">Architecture</span>
         </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+        <p class="text-lg text-gray-600 leading-relaxed">
           Systems that are secure by design, concurrent by default, and scalable by necessity.
         </p>
       </div>
@@ -35,8 +35,8 @@
             :class="[
               'px-5 py-3 rounded-lg text-sm font-light transition-all duration-300 border',
               activeTab === index
-                ? 'bg-secondary dark:bg-secondary-dark text-white border-secondary dark:border-secondary-dark shadow-[0_0_15px_rgba(129,140,248,0.4)]'
-                : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/10'
+                ? 'bg-accent text-white border-secondary shadow-[0_0_15px_rgba(129,140,248,0.4)]'
+                : 'bg-bg-secondary border-border text-gray-700 hover:bg-gray-50 hover:bg-text/10'
             ]"
           >
             {{ section.title }}
@@ -47,7 +47,7 @@
         <div class="md:hidden mb-8">
           <select
             v-model="activeTab"
-            class="w-full px-4 py-3 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-light focus:outline-none focus:ring-2 focus:ring-secondary dark:focus:ring-secondary-dark"
+            class="w-full px-4 py-3 rounded-lg bg-bg-secondary border border-border text-gray-900 font-light focus:outline-none focus:ring-2 focus:ring-secondary"
           >
             <option v-for="(section, index) in sections" :key="index" :value="index">
               {{ section.title }}
@@ -57,7 +57,7 @@
 
         <!-- Tab Content -->
         <transition name="fade" mode="out-in">
-          <div :key="activeTab" class="bg-white dark:bg-white/5 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-white/10 p-8 shadow-lg">
+          <div :key="activeTab" class="bg-bg-secondary backdrop-blur-sm rounded-2xl border border-border p-8 shadow-lg">
             
             <div class="grid lg:grid-cols-2 gap-12">
               
@@ -65,10 +65,10 @@
               <div class="order-1 flex flex-col justify-center">
                 <div class="mb-8">
                   <div class="flex items-start justify-between mb-4">
-                    <h2 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white">
+                    <h2 class="text-3xl md:text-4xl font-light text-gray-900">
                       {{ sections[activeTab]?.title }}
                     </h2>
-                    <span class="text-xs px-3 py-1 bg-secondary/10 dark:bg-secondary-dark/10 text-secondary dark:text-secondary-dark rounded-full font-light whitespace-nowrap">
+                    <span class="text-xs px-3 py-1 bg-secondary/10 bg-bg-secondary/10 text-accent rounded-full font-light whitespace-nowrap">
                       {{ activeTab + 1 }} / {{ sections.length }}
                     </span>
                   </div>
@@ -76,30 +76,30 @@
                   <!-- Achievement Badge (for Eazyfit) -->
                   <div
                     v-if="sections[activeTab]?.title === 'Production Systems'"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 dark:bg-secondary-dark/20 border border-secondary/30 dark:border-secondary-dark/40 rounded-lg mb-6 w-full md:w-auto">
-                    <Icon name="lucide:trophy" class="w-5 h-5 text-secondary dark:text-secondary-dark flex-shrink-0" />
-                    <span class="text-sm font-light text-gray-900 dark:text-white">$5,000 Pre-Seed Funding • Ilorin Innovation Challenge Winner</span>
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/30 rounded-lg mb-6 w-full md:w-auto">
+                    <Icon name="lucide:trophy" class="w-5 h-5 text-accent flex-shrink-0" />
+                    <span class="text-sm font-light text-gray-900">$5,000 Pre-Seed Funding • Ilorin Innovation Challenge Winner</span>
                   </div>
 
-                  <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-8 text-lg">
+                  <p class="text-gray-600 leading-relaxed mb-8 text-lg">
                     {{ sections[activeTab]?.description }}
                   </p>
 
-                  <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Icon name="lucide:sparkles" class="w-5 h-5 text-secondary dark:text-secondary-dark" />
+                  <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
+                    <Icon name="lucide:sparkles" class="w-5 h-5 text-secondary" />
                     Key Capabilities
                   </h3>
 
                   <!-- Features Grid -->
                   <div v-if="sections[activeTab]?.features" class="grid gap-6 mb-6">
-                    <div v-for="(feature, idx) in sections[activeTab]?.features" :key="idx" class="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5">
-                      <h4 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                        <Icon :name="feature.icon || 'lucide:check-circle'" class="w-5 h-5 text-secondary dark:text-secondary-dark" />
+                    <div v-for="(feature, idx) in sections[activeTab]?.features" :key="idx" class="bg-bg-secondary p-4 rounded-xl border border-border">
+                      <h4 class="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                        <Icon :name="feature.icon || 'lucide:check-circle'" class="w-5 h-5 text-secondary" />
                         {{ feature.title }}
                       </h4>
-                      <ul class="space-y-2 text-gray-600 dark:text-gray-300 text-sm">
+                      <ul class="space-y-2 text-gray-600 text-sm">
                         <li v-for="(item, i) in feature.items" :key="i" class="flex items-start gap-2">
-                          <span class="w-1.5 h-1.5 bg-secondary dark:bg-secondary-dark rounded-full mt-2 flex-shrink-0"></span>
+                          <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></span>
                           <span v-html="item"></span>
                         </li>
                       </ul>
@@ -108,15 +108,15 @@
                 </div>
 
                  <!-- Navigation Arrows -->
-                <div class="flex justify-between pt-6 border-t border-gray-200 dark:border-white/10 mt-auto">
+                <div class="flex justify-between pt-6 border-t border-border mt-auto">
                   <button
                     @click="previousTab"
                     :disabled="activeTab === 0"
                     :class="[
                       'inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-light transition-all',
                       activeTab === 0
-                        ? 'opacity-40 cursor-not-allowed text-gray-400 dark:text-gray-600'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10'
+                        ? 'opacity-40 cursor-not-allowed text-gray-400'
+                        : 'text-gray-700 hover:bg-gray-100 hover:bg-text/10'
                     ]"
                   >
                     <Icon name="lucide:chevron-left" class="w-4 h-4" />
@@ -129,8 +129,8 @@
                     :class="[
                       'inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-light transition-all',
                       activeTab === sections.length - 1
-                        ? 'opacity-40 cursor-not-allowed text-gray-400 dark:text-gray-600'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10'
+                        ? 'opacity-40 cursor-not-allowed text-gray-400'
+                        : 'text-gray-700 hover:bg-gray-100 hover:bg-text/10'
                     ]"
                   >
                     Next
@@ -144,15 +144,15 @@
               <div class="order-2 flex flex-col">
                 <!-- Toggle Controls -->
                 <div class="mb-4 flex justify-between items-center" v-if="sections[activeTab]?.code">
-                  <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Implementation Details</h3>
-                  <div class="inline-flex rounded-lg border border-gray-200 dark:border-white/10 p-1 bg-gray-50 dark:bg-white/5">
+                  <h3 class="text-sm font-medium text-gray-500">Implementation Details</h3>
+                  <div class="inline-flex rounded-lg border border-border p-1 bg-bg-secondary">
                     <button
                       @click="showCode = false"
                       :class="[
                         'px-3 py-1.5 rounded-md text-xs font-medium transition-all',
                         !showCode
-                          ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
-                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                          ? 'bg-white text-gray-900 shadow-sm'
+                          : 'text-gray-500 hover:text-gray-700'
                       ]"
                     >
                       Architecture
@@ -162,8 +162,8 @@
                       :class="[
                         'px-3 py-1.5 rounded-md text-xs font-medium transition-all',
                         showCode
-                          ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
-                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                          ? 'bg-white text-gray-900 shadow-sm'
+                          : 'text-gray-500 hover:text-gray-700'
                       ]"
                     >
                       Code
@@ -173,7 +173,7 @@
 
                 <!-- Interactive Diagram View -->
                 <div v-show="!showCode" 
-                     class="mermaid-container relative flex-grow bg-gray-50 dark:bg-[#0B1120] rounded-xl border border-gray-100 dark:border-white/5 overflow-hidden flex items-center justify-center min-h-[600px] cursor-move"
+                     class="mermaid-container relative flex-grow bg-gray-50 rounded-xl border border-border overflow-hidden flex items-center justify-center min-h-[600px] cursor-move"
                      @mousedown="startPan"
                      @mousemove="doPan"
                      @mouseup="endPan"
@@ -187,13 +187,13 @@
 
                   <!-- Zoom Controls -->
                   <div class="absolute bottom-4 right-4 flex gap-2 z-10">
-                    <button @click.stop="zoomIn" class="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors" title="Zoom In">
+                    <button @click.stop="zoomIn" class="p-2 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors" title="Zoom In">
                       <Icon name="lucide:plus" class="w-5 h-5" />
                     </button>
-                    <button @click.stop="zoomOut" class="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors" title="Zoom Out">
+                    <button @click.stop="zoomOut" class="p-2 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors" title="Zoom Out">
                       <Icon name="lucide:minus" class="w-5 h-5" />
                     </button>
-                    <button @click.stop="resetZoom" class="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors" title="Reset View">
+                    <button @click.stop="resetZoom" class="p-2 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-gray-50 text-gray-700 transition-colors" title="Reset View">
                       <Icon name="lucide:rotate-ccw" class="w-5 h-5" />
                     </button>
                   </div>
@@ -221,9 +221,9 @@
 
       <!-- CTA -->
       <div class="mt-20 text-center pb-20">
-        <h3 class="text-2xl font-light text-gray-900 dark:text-white mb-6">Ready to build something robust?</h3>
+        <h3 class="text-2xl font-light text-gray-900 mb-6">Ready to build something robust?</h3>
         <NuxtLink to="/#contact"
-          class="inline-flex items-center gap-2 px-8 py-4 bg-primary dark:bg-white text-white dark:text-black rounded-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 font-light">
+          class="inline-flex items-center gap-2 px-8 py-4 bg-primary bg-text text-white text-bg rounded-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 font-light">
           <span>Let's Discuss Your System</span>
           <Icon name="lucide:arrow-right" class="w-5 h-5" />
         </NuxtLink>
@@ -236,7 +236,7 @@
     to="/#process"
     aria-label="Back to Process section"
     title="Back to Process section"
-    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-secondary dark:text-secondary-dark shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-secondary dark:focus:ring-secondary-dark"
+    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-bg-secondary border border-border text-accent shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-secondary"
   >
     <Icon name="lucide:arrow-left" class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
     <span class="sr-only">Back to Process section</span>

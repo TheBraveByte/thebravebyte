@@ -1,16 +1,16 @@
 ```html
 <template>
-  <section id="blogs" class="py-24 bg-bg dark:bg-bg-dark relative overflow-hidden border-b border-border dark:border-border-dark">
+  <section id="blogs" class="py-24 bg-bg relative overflow-hidden border-b border-border">
     <!-- Background Grid -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-16">
-        <h3 class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-3 flex items-center gap-2">
-          <span class="w-2 h-2 bg-accent dark:bg-accent-dark"></span>
+        <h3 class="font-mono-label text-text-accent mb-3 flex items-center gap-2">
+          <span class="w-2 h-2 bg-accent"></span>
           // KNOWLEDGE_BASE
         </h3>
-        <p class="font-mono text-xs text-text-secondary dark:text-text-secondary-dark max-w-xl">
+        <p class="font-mono text-xs text-text-accent max-w-xl">
           SYSTEM_LOGS_AND_TECHNICAL_DOCUMENTATION.
           <br>
           DEEP_DIVES_INTO_BACKEND_ENGINEERING.
@@ -22,8 +22,8 @@
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
           'px-4 py-2 text-xs font-mono border transition-all duration-200 uppercase tracking-wide',
           selectedCategory === cat
-            ? 'bg-accent dark:bg-accent-dark text-white border-accent dark:border-accent-dark'
-            : 'bg-bg dark:bg-bg-dark text-text-secondary dark:text-text-secondary-dark border-border dark:border-border-dark hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark'
+            ? 'bg-accent text-white border-accent border-accent'
+            : 'bg-bg text-text-accent border-border hover:border-accent hover:text-accent hover:text-accent'
         ]">
           [{{ cat }}]
         </button>
@@ -31,38 +31,38 @@
 
       <!-- Featured Post (First post) -->
       <div v-if="filteredPosts.length > 0"
-        class="mb-12 group relative bg-bg dark:bg-bg-dark border border-border dark:border-border-dark hover:border-accent dark:hover:border-accent-dark transition-colors duration-200">
+        class="mb-12 group relative bg-bg border border-border hover:border-accent transition-colors duration-200">
         
         <!-- Technical Corners -->
-        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-transparent group-hover:border-accent dark:group-hover:border-accent-dark transition-colors duration-200"></div>
-        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-transparent group-hover:border-accent dark:group-hover:border-accent-dark transition-colors duration-200"></div>
+        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-transparent group-hover:border-accent transition-colors duration-200"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
 
         <div class="grid md:grid-cols-2 gap-8 p-8">
           <div class="space-y-6">
             <div class="flex items-center gap-3 font-mono text-xs">
-              <span class="text-accent dark:text-accent-dark">
+              <span class="text-accent text-accent">
                 [FEATURED_LOG]
               </span>
-              <span class="text-text-secondary dark:text-text-secondary-dark">
+              <span class="text-text-secondary">
                 // {{ filteredPosts[0]?.category.toUpperCase() }}
               </span>
             </div>
 
-            <h2 class="text-2xl font-light text-text dark:text-text group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-200">
+            <h2 class="text-2xl font-light text-text group-hover:text-accent transition-colors duration-200">
               {{ filteredPosts[0]?.title }}
             </h2>
 
-            <p class="text-sm text-text-secondary dark:text-text-secondary-dark leading-relaxed font-light">
+            <p class="text-sm text-text-accent leading-relaxed font-light">
               {{ filteredPosts[0]?.excerpt }}
             </p>
 
             <!-- Footer -->
-            <div class="pt-6 border-t border-border dark:border-border-dark flex items-center justify-between mt-auto">
-              <NuxtLink :to="`/blog/${filteredPosts[0]?.slug}`" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-text dark:text-text group-hover:text-accent dark:group-hover:text-accent-dark uppercase tracking-wider transition-colors">
+            <div class="pt-6 border-t border-border flex items-center justify-between mt-auto">
+              <NuxtLink :to="`/blog/${filteredPosts[0]?.slug}`" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-text group-hover:text-accent uppercase tracking-wider transition-colors">
                 READ_PROTOCOL
                 <Icon name="lucide:arrow-right" class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
               </NuxtLink>
-              <span class="font-mono text-[10px] text-text-secondary dark:text-text-secondary-dark opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="font-mono text-[10px] text-text-accent opacity-0 group-hover:opacity-100 transition-opacity">
                 ID: {{ filteredPosts[0]?.slug?.substring(0, 6) }}
               </span>
             </div>
@@ -72,7 +72,7 @@
 
       <!-- View All Link -->
       <div class="mt-16 text-center">
-        <NuxtLink to="/blog" class="inline-flex items-center gap-2 px-8 py-4 border border-text dark:border-white text-text dark:text-white hover:bg-text dark:hover:bg-white hover:text-bg dark:hover:text-black transition-all duration-300 font-mono text-xs font-bold uppercase tracking-wider group">
+        <NuxtLink to="/blog" class="inline-flex items-center gap-2 px-8 py-4 border border-text border-text text-text hover:bg-text hover:bg-text hover:text-bg hover:text-bg transition-all duration-300 font-mono text-xs font-bold uppercase tracking-wider group">
           <span>ACCESS_FULL_ARCHIVE</span>
           <Icon name="lucide:arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
         </NuxtLink>

@@ -1,19 +1,19 @@
 <template>
-  <section id="projects" class="py-24 bg-bg dark:bg-bg relative">
+  <section id="projects" class="py-24 bg-bg relative">
     <div class="container mx-auto px-6 max-w-6xl relative z-10">
       
       <!-- Section Header -->
-      <div class="mb-16 flex items-end justify-between border-b border-border dark:border-border-dark pb-6">
+      <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
         <div>
-          <h3 class="font-mono-label text-text-secondary dark:text-text-secondary-dark mb-2 flex items-center gap-2">
-            <span class="w-2 h-2 bg-accent dark:bg-accent-dark"></span>
+          <h3 class="font-mono-label text-text-accent mb-2 flex items-center gap-2">
+            <span class="w-2 h-2 bg-accent"></span>
             SYSTEM_MODULES
           </h3>
-          <h2 class="text-3xl md:text-4xl font-light text-text dark:text-text">
+          <h2 class="text-3xl md:text-4xl font-light text-text">
             Active Services
           </h2>
         </div>
-        <div class="hidden md:block font-mono text-xs text-text-secondary dark:text-text-secondary-dark text-right">
+        <div class="hidden md:block font-mono text-xs text-text-accent text-right">
           <div>TOTAL_MODULES: {{ projects.length }}</div>
           <div>STATUS: ALL_SYSTEMS_OPERATIONAL</div>
         </div>
@@ -24,8 +24,8 @@
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
           'px-4 py-2 font-mono text-xs transition-colors duration-200 border',
           selectedCategory === cat
-            ? 'bg-text dark:bg-white text-bg dark:text-black border-text dark:border-white'
-            : 'bg-transparent border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark hover:border-accent dark:hover:border-accent-dark'
+            ? 'bg-text bg-text text-bg text-bg border-text border-text'
+            : 'bg-transparent border-border text-text-accent hover:border-accent'
         ]">
           [{{ cat.toUpperCase() }}]
         </button>
@@ -34,16 +34,16 @@
       <!-- Projects Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="(project, index) in displayedProjects" :key="project.id"
-          class="bg-bg dark:bg-bg-dark border border-border dark:border-border-dark hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 flex flex-col group relative">
+          class="bg-bg border border-border hover:border-accent transition-colors duration-200 flex flex-col group relative">
           
           <!-- Technical Corner Markers -->
-          <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-transparent group-hover:border-accent dark:group-hover:border-accent-dark transition-colors duration-200"></div>
-          <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-transparent group-hover:border-accent dark:group-hover:border-accent-dark transition-colors duration-200"></div>
+          <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
+          <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-transparent group-hover:border-accent transition-colors duration-200"></div>
 
           <!-- Project Header -->
           <div class="p-6 flex-grow">
             <div class="flex justify-between items-start mb-4">
-              <span class="font-mono-label text-accent dark:text-accent-dark">
+              <span class="font-mono-label text-accent text-accent">
                 [ SERVICE_{{ String(index + 1).padStart(2, '0') }} ]
               </span>
               <div class="flex items-center gap-2">
@@ -52,20 +52,20 @@
               </div>
             </div>
 
-            <h3 class="text-lg font-normal text-text dark:text-text mb-3 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">
+            <h3 class="text-lg font-normal text-text mb-3 group-hover:text-accent transition-colors">
               {{ project.title }}
             </h3>
 
-            <p class="text-sm text-text-secondary dark:text-text-secondary-dark leading-relaxed mb-6 font-light border-l border-border dark:border-border-dark pl-3">
+            <p class="text-sm text-text-accent leading-relaxed mb-6 font-light border-l border-border pl-3">
               {{ project.description }}
             </p>
 
             <!-- Metrics Grid -->
-            <div class="bg-gray-50 dark:bg-white/5 border border-border dark:border-border-dark p-3 mb-4">
+            <div class="bg-bg-secondary border border-border p-3 mb-4">
               <div class="grid grid-cols-2 gap-y-2 gap-x-4">
                 <div v-for="metric in project.metrics" :key="metric.label">
-                  <div class="font-mono text-[10px] text-text-secondary dark:text-text-secondary-dark uppercase">{{ metric.label }}</div>
-                  <div class="font-mono text-xs text-text dark:text-text">{{ metric.value }}</div>
+                  <div class="font-mono text-[10px] text-text-accent uppercase">{{ metric.label }}</div>
+                  <div class="font-mono text-xs text-text">{{ metric.value }}</div>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@
             <!-- Tech Stack -->
             <div class="flex flex-wrap gap-2">
               <span v-for="tag in project.tags" :key="tag"
-                class="font-mono text-[10px] px-2 py-1 border border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark">
+                class="font-mono text-[10px] px-2 py-1 border border-border text-text-secondary">
                 {{ tag }}
               </span>
             </div>
@@ -85,20 +85,20 @@
       <!-- Load More / Show Less Buttons -->
       <div class="flex justify-center gap-4 mt-12">
         <button v-if="hasMoreProjects" @click="loadMore"
-          class="px-6 py-3 border border-border dark:border-border-dark text-text dark:text-text hover:border-accent dark:hover:border-accent-dark transition-colors duration-200 font-mono text-xs">
+          class="px-6 py-3 border border-border text-text hover:border-accent transition-colors duration-200 font-mono text-xs">
           [ LOAD_MORE_DATA ]
         </button>
         <button v-if="visibleCount > 3" @click="showLess"
-          class="px-6 py-3 text-text-secondary dark:text-text-secondary-dark hover:text-text dark:hover:text-text transition-colors font-mono text-xs">
+          class="px-6 py-3 text-text-accent hover:text-text dark:hover:text-text transition-colors font-mono text-xs">
           [ COLLAPSE_VIEW ]
         </button>
       </div>
 
       <!-- CTA -->
-      <div class="text-center mt-20 border-t border-border dark:border-border-dark pt-12">
-        <p class="font-mono text-xs text-text-secondary dark:text-text-secondary-dark mb-4">:: SYSTEM_READY_FOR_DEPLOYMENT</p>
+      <div class="text-center mt-20 border-t border-border pt-12">
+        <p class="font-mono text-xs text-text-accent mb-4">:: SYSTEM_READY_FOR_DEPLOYMENT</p>
         <NuxtLink to="#contact"
-          class="inline-flex items-center gap-3 px-8 py-4 bg-text dark:bg-white text-bg dark:text-black hover:bg-accent dark:hover:bg-accent-dark hover:text-white transition-colors duration-200 font-mono text-sm group">
+          class="inline-flex items-center gap-3 px-8 py-4 bg-text bg-text text-bg text-bg hover:bg-accent hover:bg-accent hover:text-white transition-colors duration-200 font-mono text-sm group">
           <span>[ INITIATE_COLLABORATION ]</span>
           <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </NuxtLink>

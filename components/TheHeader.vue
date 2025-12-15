@@ -1,13 +1,13 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 bg-bg/90 dark:bg-bg-dark/90 backdrop-blur-xl border-b border-border dark:border-border-dark">
+  <header class="fixed top-0 left-0 right-0 z-50 bg-bg/90 bg-bg/90 backdrop-blur-xl border-b border-border">
     <div class="container mx-auto px-6">
       <div class="flex items-center justify-between h-16">
         
         <!-- Logo -->
         <NuxtLink to="/" class="flex items-center gap-2 group">
           <div class="flex items-center gap-1">
-            <span class="text-xl font-bold text-text dark:text-text-dark tracking-tight">The Brave Byte</span>
-            <span class="text-2xl text-accent dark:text-accent-dark font-bold leading-none">.</span>
+            <span class="text-xl font-bold  tracking-tight">The Brave Byte</span>
+            <span class="text-2xl text-accent text-accent font-bold leading-none">.</span>
           </div>
         </NuxtLink>
         
@@ -32,7 +32,7 @@
           <!-- Theme Toggle -->
           <button 
             @click="toggleTheme" 
-            class="p-2 rounded-lg text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark hover:bg-bg-secondary dark:hover:bg-bg-secondary-dark transition-colors"
+            class="p-2 rounded-lg text-text-accent hover:text-accent hover:text-accent hover:bg-bg-secondary dark:hover: transition-colors"
             aria-label="Toggle theme"
           >
             <Icon v-if="colorMode.value === 'dark'" name="lucide:sun" class="w-5 h-5" />
@@ -43,7 +43,7 @@
           <NuxtLink 
             v-if="!isAuthenticated"
             to="/admin/login" 
-            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-border dark:border-border-dark text-text-secondary dark:text-text-secondary-dark hover:text-accent dark:hover:text-accent-dark hover:border-accent dark:hover:border-accent-dark transition-colors text-sm font-mono"
+            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-accent hover:text-accent hover:text-accent hover:border-accent transition-colors text-sm font-mono"
           >
             <Icon name="lucide:lock" class="w-4 h-4" />
             <span>ADMIN</span>
@@ -52,13 +52,13 @@
           <div v-else class="hidden sm:flex items-center gap-2">
             <NuxtLink 
               to="/admin/dashboard"
-              class="px-4 py-2 rounded-lg bg-accent/10 dark:bg-accent-dark/10 border border-accent/30 dark:border-accent-dark/30 text-accent dark:text-accent-dark hover:bg-accent dark:hover:bg-accent-dark hover:text-white transition-colors text-sm font-mono"
+              class="px-4 py-2 rounded-lg bg-accent/10 bg-accent/10 border border-accent/30 border-accent/30 text-accent text-accent hover:bg-accent hover:bg-accent hover:text-white transition-colors text-sm font-mono"
             >
               DASHBOARD
             </NuxtLink>
             <button 
               @click="logout"
-              class="p-2 rounded-lg text-text-secondary dark:text-text-secondary-dark hover:text-red-500 hover:bg-red-500/10 transition-colors"
+              class="p-2 rounded-lg text-text-accent hover:text-red-500 hover:bg-red-500/10 transition-colors"
               aria-label="Logout"
             >
               <Icon name="lucide:log-out" class="w-5 h-5" />
@@ -68,7 +68,7 @@
           <!-- Mobile Menu Toggle -->
           <button 
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2 rounded-lg text-text dark:text-text-dark hover:bg-bg-secondary dark:hover:bg-bg-secondary-dark transition-colors"
+            class="md:hidden p-2 rounded-lg  hover:bg-bg-secondary dark:hover: transition-colors"
             aria-label="Toggle menu"
           >
             <Icon :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" class="w-6 h-6" />
@@ -78,7 +78,7 @@
 
       <!-- Mobile Menu -->
       <transition name="slide-down">
-        <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-border dark:border-border-dark">
+        <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-border">
           <nav class="flex flex-col gap-2">
             <NuxtLink to="/" @click="mobileMenuOpen = false" class="mobile-nav-link">
               <Icon name="lucide:home" class="w-5 h-5" />
@@ -97,7 +97,7 @@
               <span>Process</span>
             </NuxtLink>
             
-            <div class="border-t border-border dark:border-border-dark my-2"></div>
+            <div class="border-t border-border my-2"></div>
             
             <NuxtLink v-if="!isAuthenticated" to="/admin/login" @click="mobileMenuOpen = false" class="mobile-nav-link">
               <Icon name="lucide:lock" class="w-5 h-5" />
