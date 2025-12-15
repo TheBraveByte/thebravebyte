@@ -173,7 +173,7 @@
 
                 <!-- Interactive Diagram View -->
                 <div v-show="!showCode" 
-                     class="mermaid-container relative flex-grow bg-bg-bg-tertiary rounded-xl border border-border overflow-hidden flex items-center justify-center min-h-[600px] cursor-move"
+                     class="mermaid-container relative flex-grow bg-bg-tertiary rounded-xl border border-border overflow-hidden flex items-center justify-center min-h-[600px] cursor-move"
                      @mousedown="startPan"
                      @mousemove="doPan"
                      @mouseup="endPan"
@@ -244,8 +244,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted, watch, nextTick, computed } from 'vue';
 import mermaid from 'mermaid';
+
+// Color mode detection
+const colorMode = useColorMode();
+const isDarkMode = computed(() => colorMode.value === 'dark');
 
 // --- State Definitions (Must be first) ---
 const activeTab = ref(0);
@@ -812,17 +816,19 @@ async def predict(tx: TransactionFeatures):
   }
 ]);
 
-onMounted(async () => {
+// Initialize mermaid with theme based on color mode
+const initMermaid = () => {
+  const dark = isDarkMode.value;
   mermaid.initialize({
     startOnLoad: false,
     theme: 'base',
     themeVariables: {
-      primaryColor: '#1e293b',
-      primaryTextColor: '#f8fafc',
+      primaryColor: dark ? '#1e293b' : '#e2e8f0',
+      primaryTextColor: dark ? '#f8fafc' : '#0f172a',
       primaryBorderColor: '#818cf8',
-      lineColor: '#94a3b8',
-      secondaryColor: '#0f172a',
-      tertiaryColor: '#020617',
+      lineColor: dark ? '#94a3b8' : '#64748b',
+      secondaryColor: dark ? '#0f172a' : '#f1f5f9',
+      tertiaryColor: dark ? '#020617' : '#ffffff',
       fontSize: '16px',
       fontFamily: '"Space Grotesk", system-ui, sans-serif',
     },
@@ -832,6 +838,16 @@ onMounted(async () => {
       padding: 20,
     }
   });
+};
+
+onMounted(async () => {
+  initMermaid();
+  await renderDiagram();
+});
+
+// Re-render diagram when color mode changes
+watch(() => colorMode.value, async () => {
+  initMermaid();
   await renderDiagram();
 });
 </script>
@@ -862,16 +878,16 @@ onMounted(async () => {
 :deep(.label text) {
   font-size: 16px !important;
   font-weight: 300 !important;
-  fill: #f8fafc !important;
+  fill: var(--color-text) !important;
   font-family: "Space Grotesk", sans-serif !important;
 }
 
 :deep(.edgeLabel) {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
+  background-color: var(--color-bg-secondary) !important;
+  color: var(--color-text) !important;
   padding: 4px 8px;
   border-radius: 4px;
-  border: 1px solid #1e293b;
+  border: 1px solid var(--color-border);
 }
 
 .fade-enter-active,
