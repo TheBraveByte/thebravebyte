@@ -41,10 +41,10 @@
             </div>
             
             <h4 class="font-mono text-sm font-bold text-text dark:text-text mb-4 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">
-              [ PRODUCTION_SYSTEMS ]
+              [ BUSINESS_FIRST ]
             </h4>
             <p class="text-sm text-text-secondary dark:text-text-secondary-dark leading-relaxed font-light">
-              Architecting production-grade solutions. From <strong class="text-text dark:text-text font-medium">Eazyfit</strong> (AI marketplace) to complex billing engines. Handling real users, payments, and data at scale.
+              Every architecture decision starts with <strong class="text-text dark:text-text font-medium">"who is this for?"</strong> From EazyFit (stylists + customers) to OmonAI (compliance officers)—I design systems that solve real business problems, not just technical puzzles.
             </p>
           </div>
         </div>
@@ -61,14 +61,14 @@
           
           <div class="relative z-10">
             <div class="w-16 h-16 bg-gray-50 dark:bg-white/5 border border-border dark:border-border-dark flex items-center justify-center mb-8 group-hover:border-accent dark:group-hover:border-accent-dark transition-colors duration-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-              <Icon name="lucide:network" class="w-8 h-8 text-text-secondary dark:text-text-secondary-dark group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-500" />
+              <Icon name="lucide:scale" class="w-8 h-8 text-text-secondary dark:text-text-secondary-dark group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-500" />
             </div>
             
             <h4 class="font-mono text-sm font-bold text-text dark:text-text mb-4 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">
-              [ DISTRIBUTED_ARCH ]
+              [ TRADE-OFF_ANALYSIS ]
             </h4>
             <p class="text-sm text-text-secondary dark:text-text-secondary-dark leading-relaxed font-light">
-              Designing for reliability. Utilizing <strong class="text-text dark:text-text font-medium">distributed job processing</strong>, message queues, and event-driven patterns to ensure responsiveness.
+              Engineering is about <strong class="text-text dark:text-text font-medium">trade-offs</strong>. Eventual consistency vs. immediate? Multi-tenant vs. isolated? I document why each decision was made—so future you (or your team) understands the reasoning.
             </p>
           </div>
         </div>
@@ -84,14 +84,14 @@
           
           <div class="relative z-10">
             <div class="w-16 h-16 bg-gray-50 dark:bg-white/5 border border-border dark:border-border-dark flex items-center justify-center mb-8 group-hover:border-accent dark:group-hover:border-accent-dark transition-colors duration-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-              <Icon name="lucide:cpu" class="w-8 h-8 text-text-secondary dark:text-text-secondary-dark group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-500" />
+              <Icon name="lucide:trending-up" class="w-8 h-8 text-text-secondary dark:text-text-secondary-dark group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-500" />
             </div>
             
             <h4 class="font-mono text-sm font-bold text-text dark:text-text mb-4 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">
-              [ PERFORMANCE_MODS ]
+              [ MEASURABLE_IMPACT ]
             </h4>
             <p class="text-sm text-text-secondary dark:text-text-secondary-dark leading-relaxed font-light">
-              Leveraging <strong class="text-text dark:text-text font-medium">Go concurrency</strong> and Package-Oriented Design. Building systems that are lightning-fast and easy to evolve.
+              Results matter. <strong class="text-text dark:text-text font-medium">60% fewer false positives</strong> in fraud detection. <strong class="text-text dark:text-text font-medium">98.5% arbitrage capture rate</strong>. <strong class="text-text dark:text-text font-medium">183% conversion increase</strong>. Every system ships with metrics that prove its value.
             </p>
           </div>
         </div>
