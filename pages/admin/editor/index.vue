@@ -92,12 +92,59 @@
           </div>
         </div>
 
-        <!-- Content Editor -->
+        <!-- Content Type Toggle -->
         <div>
           <label class="block font-mono-label text-text-secondary mb-2">
-            CONTENT
+            CONTENT_TYPE
           </label>
-          <ArticleEditor v-model="article.content" />
+          <div class="flex gap-3 mb-4">
+            <button 
+              @click="contentType = 'richtext'" 
+              :class="contentType === 'richtext' ? 'bg-text text-bg' : 'border border-border'"
+              class="px-4 py-2 font-mono text-sm transition-colors duration-200">
+              RICH_TEXT
+            </button>
+            <button 
+              @click="contentType = 'markdown'" 
+              :class="contentType === 'markdown' ? 'bg-text text-bg' : 'border border-border'"
+              class="px-4 py-2 font-mono text-sm transition-colors duration-200">
+              MARKDOWN
+            </button>
+          </div>
+        </div>
+
+        <!-- Content Editor -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="block font-mono-label text-text-secondary">
+              CONTENT
+            </label>
+            <button 
+              v-if="contentType === 'markdown'" 
+              @click="showPreview = !showPreview"
+              class="px-3 py-1 border border-border font-mono text-xs hover:border-text transition-colors">
+              {{ showPreview ? 'EDIT' : 'PREVIEW' }}
+            </button>
+          </div>
+          
+          <!-- Rich Text Editor -->
+          <ArticleEditor v-if="contentType === 'richtext'" v-model="article.content" />
+          
+          <!-- Markdown Editor/Preview -->
+          <div v-else>
+            <textarea 
+              v-if="!showPreview"
+              v-model="markdownContent" 
+              rows="20"
+              placeholder="Write your article in markdown..."
+              class="w-full px-4 py-3 border border-border font-mono text-sm focus:border-text outline-none transition-colors resize-y"
+            ></textarea>
+            <div 
+              v-else
+              class="border border-border p-6 min-h-[500px] prose prose-invert max-w-none"
+              v-html="markdownPreview"
+            ></div>
+          </div>
         </div>
 
       </div>
@@ -124,6 +171,8 @@
 </template>
 
 <script setup>
+import { marked } from 'marked';
+
 definePageMeta({
   middleware: 'auth'
 });
@@ -138,6 +187,10 @@ const saving = ref(false);
 const autoSaveStatus = ref('All changes saved');
 const autoSaveTimer = ref(null);
 
+const contentType = ref('richtext'); // 'richtext' or 'markdown'
+const showPreview = ref(false);
+const markdownContent = ref('');
+
 const article = ref({
   title: '',
   slug: '',
@@ -148,7 +201,16 @@ const article = ref({
 });
 
 const canPublish = computed(() => {
-  return article.value.title && article.value.slug && article.value.excerpt && article.value.content;
+  return article.value.title && article.value.slug && article.value.excerpt && 
+    (contentType.value === 'markdown' ? markdownContent.value : article.value.content);
+});
+
+// Markdown preview using marked
+const markdownPreview = computed(() => {
+  if (!markdownContent.value) return '<p class="text-text-secondary">Nothing to preview yet...</p>';
+  
+  // Simple markdown to HTML conversion (you can use 'marked' library for full support)
+  return marked.parse(markdownContent.value);
 });
 
 // Load article if editing
@@ -158,6 +220,14 @@ onMounted(async () => {
       const { data } = await useFetch(`/api/articles/${route.query.id}`);
       if (data.value) {
         article.value = { ...data.value };
+        
+        // Detect content type
+        if (typeof data.value.content === 'string') {
+          contentType.value = 'markdown';
+          markdownContent.value = data.value.content;
+        } else {
+          contentType.value = 'richtext';
+        }
       }
     } catch (error) {
       console.error('Failed to load article:', error);
@@ -200,9 +270,14 @@ const saveDraft = async (isAutoSave = false) => {
     
     const method = isEditing.value ? 'PUT' : 'POST';
     
+    // Prepare content based on type
+    const contentToSave = contentType.value === 'markdown' 
+      ? markdownContent.value 
+      : article.value.content;
+    
     const { data, error } = await useFetch(endpoint, {
       method,
-      body: { ...article.value, published: false }
+      body: { ...article.value, content: contentToSave, published: false }
     });
     
     if (error.value) {
@@ -239,10 +314,16 @@ const publish = async () => {
     
     const method = isEditing.value ? 'PUT' : 'POST';
     
+    // Prepare content based on type
+    const contentToSave = contentType.value === 'markdown' 
+      ? markdownContent.value 
+      : article.value.content;
+    
     const { data, error } = await useFetch(endpoint, {
       method,
       body: { 
         ...article.value, 
+        content: contentToSave,
         published: true,
         publishedAt: article.value.published ? article.value.publishedAt : new Date()
       }

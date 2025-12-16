@@ -17,7 +17,11 @@
       </header>
 
       <div class="content">
-        <editor-content :editor="editor" />
+        <!-- Markdown Content -->
+        <div v-if="isMarkdown" class="prose-content" v-html="htmlContent"></div>
+        
+        <!-- Rich Text Content (TipTap) -->
+        <editor-content v-else :editor="editor" />
       </div>
 
       <div class="article-footer">
@@ -33,12 +37,23 @@
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
+import { marked } from 'marked'
 
 const route = useRoute();
 const { data: article, pending, error } = await useFetch(`/api/articles/${route.params.slug}`);
 
+// Detect if content is markdown (string) or rich text (object)
+const isMarkdown = computed(() => typeof article.value?.content === 'string');
+
+// For markdown content
+const htmlContent = computed(() => {
+  if (!isMarkdown.value || !article.value?.content) return '';
+  return marked.parse(article.value.content);
+});
+
+// For rich text content (TipTap)
 const editor = useEditor({
-  content: article.value?.content,
+  content: isMarkdown.value ? '' : article.value?.content,
   editable: false,
   extensions: [
     StarterKit,
@@ -48,7 +63,7 @@ const editor = useEditor({
 
 // Update editor content when data loads (if initially null)
 watch(() => article.value, (newArticle) => {
-  if (newArticle && editor.value) {
+  if (newArticle && editor.value && !isMarkdown.value) {
     editor.value.commands.setContent(newArticle.content);
   }
 });
@@ -109,6 +124,118 @@ const formatDate = (date) => {
   font-size: 1.125rem;
   line-height: 1.8;
   color: #d4d4d8;
+}
+
+/* Markdown prose styling */
+.prose-content {
+  color: #d4d4d8;
+}
+
+.prose-content :deep(p) {
+  margin-bottom: 1.5em;
+}
+
+.prose-content :deep(h1) {
+  font-size: 2.5rem;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.prose-content :deep(h2) {
+  font-size: 2rem;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.prose-content :deep(h3) {
+  font-size: 1.5rem;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.prose-content :deep(ul), .prose-content :deep(ol) {
+  margin-bottom: 1.5em;
+  padding-left: 1.5em;
+}
+
+.prose-content :deep(li) {
+  margin-bottom: 0.5em;
+}
+
+.prose-content :deep(blockquote) {
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 1rem;
+  margin-left: 0;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 1.5em;
+}
+
+.prose-content :deep(img) {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.prose-content :deep(pre) {
+  background: #1e1e24;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  margin-bottom: 1.5em;
+}
+
+.prose-content :deep(code) {
+  background: #1e1e24;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.prose-content :deep(pre code) {
+  background: none;
+  padding: 0;
+}
+
+.prose-content :deep(a) {
+  color: var(--accent-primary);
+  text-decoration: underline;
+}
+
+.prose-content :deep(a:hover) {
+  color: var(--accent-secondary);
+}
+
+.prose-content :deep(hr) {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+.prose-content :deep(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5em;
+}
+
+.prose-content :deep(th), .prose-content :deep(td) {
+  border: 1px solid var(--border-color);
+  padding: 0.75em;
+  text-align: left;
+}
+
+.prose-content :deep(th) {
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
 }
 
 /* Deep selector for Tiptap content styling */
