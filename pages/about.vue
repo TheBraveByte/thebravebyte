@@ -4,12 +4,12 @@
       <!-- Header -->
       <div class="max-w-4xl mx-auto mb-16 text-center">
         <h3
-          class="text-sm uppercase tracking-widest text-accent mb-3 font-light flex items-center justify-center gap-3">
-          <span class="w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_currentColor]"></span>
+          class="text-sm uppercase tracking-widest text-text-secondary mb-3 font-light flex items-center justify-center gap-3">
+          <span class="w-2 h-2 bg-text-secondary rounded-full"></span>
           About The Brave Byte
         </h3>
         <h1 class="text-4xl md:text-5xl font-light text-text mb-6">
-          Engineering <span class="text-accent">The Future</span>
+          Engineering <span class="font-medium">The Future</span>
         </h1>
         <p class="text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">
           A technical journal documenting the journey of building scalable, production-grade distributed systems.
@@ -30,8 +30,8 @@
 
           <!-- Topics Grid -->
           <div class="grid sm:grid-cols-2 gap-4 pt-6">
-             <div v-for="(topic, idx) in topics" :key="idx" class="p-6 rounded-xl bg-bg-secondary border border-border hover:border-secondary transition-colors group">
-                <Icon :name="topic.icon" class="w-6 h-6 text-accent mb-3 group-hover:scale-110 transition-transform" />
+             <div v-for="(topic, idx) in topics" :key="idx" class="p-6 rounded-xl bg-bg-secondary border border-border hover:border-text transition-colors group">
+                <Icon :name="topic.icon" class="w-6 h-6 text-text-secondary mb-3 group-hover:scale-110 transition-transform" />
                 <h3 class="text-lg font-medium text-text mb-2">{{ topic.title }}</h3>
                 <p class="text-sm text-text-secondary font-light">{{ topic.description }}</p>
              </div>
@@ -57,7 +57,7 @@
            <!-- Author Card -->
            <div class="p-6 rounded-2xl bg-bg-secondary border border-text/10 shadow-sm">
               <h3 class="text-xl font-medium text-text mb-1">Yusuf Akinleye</h3>
-              <p class="text-sm text-accent mb-4">Software Engineer</p>
+              <p class="text-sm text-text-secondary mb-4">Software Engineer</p>
               <div class="space-y-3 text-sm text-text-secondary font-light">
                  <div class="flex items-center gap-2">
                     <Icon name="lucide:map-pin" class="w-4 h-4" />
@@ -76,7 +76,7 @@
 
            <!-- System Stats -->
            <div class="p-6 rounded-2xl bg-bg-secondary border border-text/10">
-              <h4 class="text-xs font-mono uppercase tracking-wider text-accent mb-4">System Status</h4>
+              <h4 class="text-xs font-mono uppercase tracking-wider text-text-secondary mb-4">System Status</h4>
               <div class="space-y-4">
                  <div v-for="stat in stats" :key="stat.label">
                     <div class="flex justify-between text-xs mb-1">
@@ -84,7 +84,7 @@
                        <span class="text-text font-mono">{{ stat.value }}</span>
                     </div>
                     <div class="h-1 bg-bg-secondary rounded-full overflow-hidden">
-                       <div class="h-full bg-accent rounded-full" :style="{ width: stat.percent + '%' }"></div>
+                       <div class="h-full bg-text-secondary rounded-full" :style="{ width: stat.percent + '%' }"></div>
                     </div>
                  </div>
               </div>

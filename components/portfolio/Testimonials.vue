@@ -6,7 +6,7 @@
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-16">
         <h3 class="font-mono-label text-text-secondary mb-3 flex items-center gap-2">
-          <span class="w-2 h-2 bg-accent"></span>
+          <span class="w-2 h-2 bg-text-secondary"></span>
           // TRUSTED_NETWORKS
         </h3>
         <p class="font-mono text-xs text-text-secondary max-w-xl">
@@ -22,10 +22,10 @@
           <!-- Render companies twice for seamless loop -->
           <template v-for="(company, index) in [...companies, ...companies]" :key="`${company.name}-${index}`">
             <div
-              class="flex items-center gap-4 px-6 py-3 border border-border bg-bg hover:border-accent transition-colors duration-200 group cursor-default min-w-[200px]">
+              class="flex items-center gap-4 px-6 py-3 border border-border bg-bg hover:border-text transition-colors duration-200 group cursor-default min-w-[200px]">
               
               <!-- Tech Marker -->
-              <div class="w-1 h-full bg-border group-hover:bg-accent group-hover:bg-accent transition-colors duration-200"></div>
+              <div class="w-1 h-full bg-border group-hover:bg-text-secondary transition-colors duration-200"></div>
 
               <div :class="[
                 'w-10 h-10 overflow-hidden flex items-center justify-center rounded-sm transition-colors',

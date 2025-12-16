@@ -14,11 +14,11 @@
         </div>
         <div class="flex gap-3">
           <button @click="saveDraft" :disabled="saving" 
-            class="px-4 py-2 border border-border  font-mono text-sm hover:border-accent transition-colors duration-200 disabled:opacity-50">
+            class="px-4 py-2 border border-border  font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200 disabled:opacity-50">
             {{ saving ? '...' : 'SAVE_DRAFT' }}
           </button>
           <button @click="publish" :disabled="saving || !canPublish"
-            class="px-4 py-2 bg-accent text-white font-mono text-sm hover:opacity-90 transition-opacity duration-200 disabled:opacity-50">
+            class="px-4 py-2 bg-text text-bg font-mono text-sm hover:bg-text-secondary transition-colors duration-200 disabled:opacity-50">
             {{ article.published ? 'UPDATE' : 'PUBLISH' }}
           </button>
         </div>
@@ -36,7 +36,7 @@
             v-model="article.title" 
             type="text" 
             placeholder="Enter article title..."
-            class="w-full px-4 py-3  border border-border  text-xl font-light focus:border-accent outline-none transition-colors"
+            class="w-full px-4 py-3  border border-border  text-xl font-light focus:border-text outline-none transition-colors"
           />
         </div>
 
@@ -49,7 +49,7 @@
             v-model="article.slug" 
             type="text" 
             placeholder="article-url-slug"
-            class="w-full px-4 py-3  border border-border  font-mono text-sm focus:border-accent outline-none transition-colors"
+            class="w-full px-4 py-3  border border-border  font-mono text-sm focus:border-text outline-none transition-colors"
           />
           <p class="mt-1 text-xs text-text-secondary">
             {{ siteUrl }}/article/{{ article.slug || 'your-slug' }}
@@ -65,7 +65,7 @@
             v-model="article.excerpt" 
             rows="3"
             placeholder="Brief description for article cards and SEO..."
-            class="w-full px-4 py-3  border border-border  focus:border-accent outline-none transition-colors resize-none"
+            class="w-full px-4 py-3  border border-border  focus:border-text outline-none transition-colors resize-none"
           ></textarea>
         </div>
 
@@ -79,9 +79,9 @@
               v-model="article.coverImage" 
               type="text" 
               placeholder="Image URL or upload..."
-              class="flex-1 px-4 py-3  border border-border  font-mono text-sm focus:border-accent outline-none transition-colors"
+              class="flex-1 px-4 py-3  border border-border  font-mono text-sm focus:border-text outline-none transition-colors"
             />
-            <label class="px-4 py-3 border border-border  font-mono text-sm hover:border-accent transition-colors cursor-pointer flex items-center gap-2">
+            <label class="px-4 py-3 border border-border  font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors cursor-pointer flex items-center gap-2">
               <Icon name="lucide:upload" class="w-4 h-4" />
               UPLOAD
               <input type="file" @change="handleImageUpload" accept="image/*" class="hidden" />
@@ -104,7 +104,7 @@
 
       <!-- Actions Footer -->
       <div class="mt-8 pt-6 border-t border-border flex justify-between items-center">
-        <NuxtLink to="/admin/dashboard" class="text-text-secondary hover:text-accent font-mono text-sm">
+        <NuxtLink to="/admin/dashboard" class="text-text-secondary hover:text-text font-mono text-sm">
           ← BACK_TO_DASHBOARD
         </NuxtLink>
         <div class="flex gap-3">

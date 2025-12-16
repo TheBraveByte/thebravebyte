@@ -6,7 +6,7 @@
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-16">
         <h3 class="font-mono-label text-text-secondary mb-3 flex items-center gap-2">
-          <span class="w-2 h-2 bg-accent"></span>
+          <span class="w-2 h-2 bg-text-secondary"></span>
           // KNOWLEDGE_BASE
         </h3>
         <p class="font-mono text-xs text-text-secondary max-w-xl">
@@ -21,8 +21,8 @@
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
           'px-4 py-2 text-xs font-mono border transition-all duration-200 uppercase tracking-wide',
           selectedCategory === cat
-            ? 'bg-accent text-white border-accent'
-            : 'bg-bg text-text-secondary border-border hover:border-accent hover:text-accent'
+            ? 'bg-text text-bg border-text'
+            : 'bg-bg text-text-secondary border-border hover:border-text'
         ]">
           [{{ cat }}]
         </button>
@@ -30,11 +30,11 @@
 
       <!-- Featured Post (First post) -->
       <div v-if="filteredPosts.length > 0"
-        class="mb-12 group relative bg-bg border border-border hover:border-accent transition-colors duration-200">
+        class="mb-12 group relative bg-bg border border-border hover:border-text transition-colors duration-200">
         
         <!-- Technical Corners -->
-        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-transparent group-hover:border-accent transition-colors duration-200"></div>
-        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
+        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-transparent group-hover:border-text transition-colors duration-200"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-transparent group-hover:border-text transition-colors duration-200"></div>
 
         <div class="grid md:grid-cols-2 gap-8 p-8">
           <!-- Preview Image -->
@@ -44,7 +44,7 @@
           
           <div class="space-y-6">
             <div class="flex items-center gap-3 font-mono text-xs">
-              <span class="text-accent">
+              <span class="text-text-secondary">
                 [FEATURED_LOG]
               </span>
               <span class="text-text-secondary">
@@ -52,7 +52,7 @@
               </span>
             </div>
 
-            <h2 class="text-2xl font-light text-text group-hover:text-accent transition-colors duration-200">
+            <h2 class="text-2xl font-light text-text transition-colors duration-200">
               {{ filteredPosts[0]?.title }}
             </h2>
 
@@ -68,7 +68,7 @@
 
             <!-- Footer -->
             <div class="pt-6 border-t border-border flex items-center justify-between mt-auto">
-              <a :href="filteredPosts[0]?.externalUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-text group-hover:text-accent uppercase tracking-wider transition-colors">
+              <a :href="filteredPosts[0]?.externalUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-text uppercase tracking-wider transition-colors">
                 READ_ON_HASHNODE
                 <Icon name="lucide:external-link" class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
               </a>
@@ -86,13 +86,13 @@
            :href="post.externalUrl" 
            target="_blank" 
            rel="noopener noreferrer"
-           class="group bg-bg border border-border hover:border-accent transition-colors duration-200 p-6 flex flex-col">
+           class="group bg-bg border border-border hover:border-text hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col">
           
           <div class="flex items-center gap-3 font-mono text-xs mb-4">
-            <span class="text-accent">[{{ post.category.toUpperCase().replace(/ /g, '_') }}]</span>
+            <span class="text-text-secondary group-hover:text-text transition-colors">[{{ post.category.toUpperCase().replace(/ /g, '_') }}]</span>
           </div>
 
-          <h3 class="text-lg font-light text-text group-hover:text-accent transition-colors mb-3">
+          <h3 class="text-lg font-light text-text group-hover:text-text transition-colors mb-3">
             {{ post.title }}
           </h3>
 
@@ -106,7 +106,7 @@
               <span>•</span>
               <span>{{ post.readTime }}</span>
             </div>
-            <Icon name="lucide:external-link" class="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors" />
+            <Icon name="lucide:external-link" class="w-4 h-4 text-text-secondary group-hover:text-text group-hover:translate-x-0.5 transition-all duration-300" />
           </div>
         </a>
       </div>
@@ -114,11 +114,11 @@
       <!-- Load More / Show Less -->
       <div v-if="hasMorePosts || visibleCount > 3" class="flex justify-center gap-4 mt-12">
         <button v-if="hasMorePosts" @click="loadMore"
-          class="px-6 py-3 border border-border text-text hover:border-accent hover:text-accent transition-colors duration-200 font-mono text-xs">
+          class="px-6 py-3 border border-border text-text hover:border-text hover:bg-bg-secondary transition-colors duration-200 font-mono text-xs">
           [ LOAD_MORE_LOGS ]
         </button>
         <button v-if="visibleCount > 3" @click="showLess"
-          class="px-6 py-3 text-text-secondary hover:text-accent transition-colors font-mono text-xs">
+          class="px-6 py-3 text-text-secondary hover:text-text transition-colors font-mono text-xs">
           [ COLLAPSE_VIEW ]
         </button>
       </div>

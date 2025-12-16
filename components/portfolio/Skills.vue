@@ -6,7 +6,7 @@
             <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
                 <div>
                     <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-accent"></span>
+                        <span class="w-2 h-2 bg-text-secondary"></span>
                         SYSTEM_TOOLKIT
                     </h3>
                     <h2 class="text-3xl md:text-4xl font-light text-text">
@@ -22,14 +22,14 @@
             <!-- Skills Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 <div v-for="skill in skills" :key="skill.name"
-                    class="group relative bg-bg border border-border p-4 hover:border-accent transition-colors duration-200 flex flex-col items-center justify-center gap-3 h-[140px]">
+                    class="group relative bg-bg border border-border p-4 hover:border-text transition-colors duration-200 flex flex-col items-center justify-center gap-3 h-[140px]">
                     
                     <!-- Technical Corners -->
-                    <div class="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-transparent group-hover:border-accent transition-colors duration-200"></div>
-                    <div class="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
+                    <div class="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-transparent group-hover:border-text transition-colors duration-200"></div>
+                    <div class="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-transparent group-hover:border-text transition-colors duration-200"></div>
 
                     <div class="w-10 h-10 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300">
-                        <Icon :name="skill.icon" class="w-8 h-8 text-text-secondary group-hover:text-accent transition-colors" />
+                        <Icon :name="skill.icon" class="w-8 h-8 text-text-secondary group-hover:text-text transition-colors" />
                     </div>
                     
                     <div class="text-center">
@@ -39,7 +39,7 @@
 
                     <!-- Status Indicator -->
                     <div v-if="skill.learning" class="absolute top-2 right-2 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse"></span>
+                        <span class="w-1.5 h-1.5 bg-text-secondary rounded-full animate-pulse"></span>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
             <div class="mt-16 border border-dashed border-border p-6 bg-bg-secondary">
                 <div class="flex items-start gap-4">
                     <div class="p-2 border border-border bg-bg">
-                        <Icon name="lucide:zap" class="w-5 h-5 text-accent" />
+                        <Icon name="lucide:zap" class="w-5 h-5 text-text-secondary" />
                     </div>
                     <div>
                         <h3 class="font-mono text-sm text-text mb-2 uppercase tracking-wide">Future-Proof Engineering</h3>

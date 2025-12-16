@@ -14,7 +14,7 @@
         </div>
         <div class="flex gap-3">
           <NuxtLink to="/admin/editor" 
-            class="px-4 py-2 bg-accent text-white font-mono text-sm hover:opacity-90 transition-opacity duration-200 flex items-center gap-2">
+            class="px-4 py-2 bg-text text-bg font-mono text-sm hover:bg-text-secondary transition-colors duration-200 flex items-center gap-2">
             <Icon name="lucide:plus" class="w-4 h-4" />
             NEW_ARTICLE
           </NuxtLink>
@@ -39,7 +39,7 @@
           <div class="font-mono-label text-text-secondary mb-2">
             PUBLISHED
           </div>
-          <div class="text-3xl font-light text-accent">
+          <div class="text-3xl font-light text-text">
             {{ stats.published }}
           </div>
         </div>
@@ -57,19 +57,19 @@
       <div class="mb-6 flex gap-4">
         <button 
           @click="filter = 'all'" 
-          :class="filter === 'all' ? 'bg-accent text-white' : 'border border-border '"
+          :class="filter === 'all' ? 'bg-text text-bg' : 'border border-border '"
           class="px-4 py-2 font-mono text-sm transition-colors duration-200">
           ALL ({{ stats.total }})
         </button>
         <button 
           @click="filter = 'published'" 
-          :class="filter === 'published' ? 'bg-accent text-white' : 'border border-border '"
+          :class="filter === 'published' ? 'bg-text text-bg' : 'border border-border '"
           class="px-4 py-2 font-mono text-sm transition-colors duration-200">
           PUBLISHED ({{ stats.published }})
         </button>
         <button 
           @click="filter = 'draft'" 
-          :class="filter === 'draft' ? 'bg-accent text-white' : 'border border-border '"
+          :class="filter === 'draft' ? 'bg-text text-bg' : 'border border-border '"
           class="px-4 py-2 font-mono text-sm transition-colors duration-200">
           DRAFTS ({{ stats.drafts }})
         </button>
@@ -86,7 +86,7 @@
         </div>
 
         <div v-else v-for="article in filteredArticles" :key="article._id"
-          class=" border border-border p-6 hover:border-accent transition-colors duration-200">
+          class=" border border-border p-6 hover:border-text transition-colors duration-200">
           
           <div class="flex items-start justify-between gap-6">
             
@@ -119,12 +119,12 @@
             <!-- Actions -->
             <div class="flex flex-col gap-2">
               <NuxtLink :to="`/admin/editor?id=${article._id}`"
-                class="px-4 py-2 border border-border  font-mono text-sm hover:border-accent transition-colors duration-200 text-center">
+                class="px-4 py-2 border border-border  font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200 text-center">
                 EDIT
               </NuxtLink>
               
               <NuxtLink v-if="article.published" :to="`/article/${article.slug}`" target="_blank"
-                class="px-4 py-2 border border-border text-text-secondary font-mono text-sm hover:border-accent transition-colors duration-200 text-center">
+                class="px-4 py-2 border border-border text-text-secondary font-mono text-sm hover:border-text transition-colors duration-200 text-center">
                 VIEW
               </NuxtLink>
               

@@ -8,7 +8,7 @@
         <!-- System ID -->
         <div class="md:col-span-2">
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-2 h-2 bg-accent"></div>
+            <div class="w-2 h-2 bg-text-secondary"></div>
             <span class="font-mono text-sm font-bold text-text tracking-tight">YA_SYSTEM_V4</span>
           </div>
           <p class="font-mono text-xs text-text-secondary leading-relaxed mb-6 max-w-md">
@@ -19,7 +19,7 @@
           <div class="flex gap-4">
             <a v-for="social in socialLinks" :key="social.name" :href="social.href" :target="social.target"
               :rel="social.rel" :aria-label="social.name"
-              class="w-8 h-8 border border-border flex items-center justify-center hover:border-accent hover:text-accent transition-colors duration-200 bg-bg">
+              class="w-8 h-8 border border-border flex items-center justify-center hover:border-text hover:bg-bg-secondary transition-colors duration-200 bg-bg">
               <Icon :name="social.icon" class="w-4 h-4 text-text-secondary" />
             </a>
           </div>
@@ -33,7 +33,7 @@
           <ul class="space-y-2">
             <li v-for="link in quickLinks" :key="link.name">
               <NuxtLink :to="link.href"
-                class="font-mono text-xs text-text-secondary hover:text-accent transition-colors flex items-center gap-2 group">
+                class="font-mono text-xs text-text-secondary hover:text-text transition-colors flex items-center gap-2 group">
                 <span class="opacity-0 group-hover:opacity-100 transition-opacity">></span>
                 {{ link.name }}
               </NuxtLink>

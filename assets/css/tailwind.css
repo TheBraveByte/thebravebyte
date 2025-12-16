@@ -6,6 +6,21 @@
   /* Typography */
   --font-sans: "Space Grotesk", system-ui, sans-serif;
   --font-mono: "Fira Code", monospace;
+  
+  /* Colors for Tailwind utility generation */
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-secondary-dark: #94A3B8;
+  --color-text-muted: var(--color-text-muted);
+  --color-bg: var(--color-bg);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-tertiary: var(--color-bg-tertiary);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-error: var(--color-error);
 }
 
 /* ===== UNIFIED COLOR SYSTEM ===== */

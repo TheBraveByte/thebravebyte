@@ -6,7 +6,7 @@
     <div class="container mx-auto px-6 relative z-10">
       <div class="mb-24 text-center max-w-2xl mx-auto">
         <h3 class="font-mono-label text-text-secondary mb-4 flex items-center justify-center gap-2">
-          <span class="w-2 h-2 bg-accent animate-pulse"></span>
+          <span class="w-2 h-2 bg-text-secondary animate-pulse"></span>
           // ENGINEERING_PROTOCOLS
         </h3>
         <h2 class="text-4xl md:text-5xl font-bold text-text mb-6 tracking-tight">
@@ -23,24 +23,24 @@
       <div class="grid md:grid-cols-3 gap-8 relative">
         <!-- Connecting Line (Desktop) -->
         <div class="hidden md:block absolute top-16 left-[16%] right-[16%] h-px bg-border z-0">
-          <div class="absolute inset-0 bg-accent opacity-20 w-full h-full"></div>
+          <div class="absolute inset-0 bg-text-secondary opacity-20 w-full h-full"></div>
         </div>
 
         <!-- Step 1 -->
-        <div class="group relative bg-bg border border-border p-8 hover:border-accent transition-all duration-500 hover:-translate-y-2 z-10">
+        <div class="group relative bg-bg border border-border p-8 hover:border-text transition-all duration-500 hover:-translate-y-2 z-10">
           <!-- Connector Dot -->
-          <div class="hidden md:block absolute top-16 -right-4 w-8 h-px bg-border group-hover:bg-accent group-hover:bg-accent transition-colors duration-500"></div>
+          <div class="hidden md:block absolute top-16 -right-4 w-8 h-px bg-border group-hover:bg-text-secondary transition-colors duration-500"></div>
           
-          <div class="absolute -top-8 left-6 font-mono text-7xl font-bold text-border select-none pointer-events-none group-hover:text-accent/10 transition-colors duration-500">
+          <div class="absolute -top-8 left-6 font-mono text-7xl font-bold text-border select-none pointer-events-none group-hover:text-text/10 transition-colors duration-500">
             01
           </div>
           
           <div class="relative z-10">
-            <div class="w-16 h-16 bg-bg-secondary border border-border flex items-center justify-center mb-8 group-hover:border-accent transition-colors duration-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-              <Icon name="lucide:layers" class="w-8 h-8 text-text-secondary group-hover:text-accent transition-colors duration-500" />
+            <div class="w-16 h-16 bg-bg-secondary border border-border flex items-center justify-center mb-8 group-hover:border-text transition-colors duration-500">
+              <Icon name="lucide:layers" class="w-8 h-8 text-text-secondary group-hover:text-text transition-colors duration-500" />
             </div>
             
-            <h4 class="font-mono text-sm font-bold text-text mb-4 group-hover:text-accent transition-colors">
+            <h4 class="font-mono text-sm font-bold text-text mb-4 transition-colors">
               [ BUSINESS_FIRST ]
             </h4>
             <p class="text-sm text-text-secondary leading-relaxed font-light">
@@ -50,21 +50,21 @@
         </div>
 
         <!-- Step 2 -->
-        <div class="group relative bg-bg border border-border p-8 hover:border-accent transition-all duration-500 hover:-translate-y-2 z-10">
+        <div class="group relative bg-bg border border-border p-8 hover:border-text transition-all duration-500 hover:-translate-y-2 z-10">
           <!-- Connector Dots -->
-          <div class="hidden md:block absolute top-16 -left-4 w-8 h-px bg-border group-hover:bg-accent group-hover:bg-accent transition-colors duration-500"></div>
-          <div class="hidden md:block absolute top-16 -right-4 w-8 h-px bg-border group-hover:bg-accent group-hover:bg-accent transition-colors duration-500"></div>
+          <div class="hidden md:block absolute top-16 -left-4 w-8 h-px bg-border group-hover:bg-text-secondary transition-colors duration-500"></div>
+          <div class="hidden md:block absolute top-16 -right-4 w-8 h-px bg-border group-hover:bg-text-secondary transition-colors duration-500"></div>
 
-          <div class="absolute -top-8 left-6 font-mono text-7xl font-bold text-border select-none pointer-events-none group-hover:text-accent/10 transition-colors duration-500">
+          <div class="absolute -top-8 left-6 font-mono text-7xl font-bold text-border select-none pointer-events-none group-hover:text-text/10 transition-colors duration-500">
             02
           </div>
           
           <div class="relative z-10">
-            <div class="w-16 h-16 bg-bg-secondary border border-border flex items-center justify-center mb-8 group-hover:border-accent transition-colors duration-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-              <Icon name="lucide:scale" class="w-8 h-8 text-text-secondary group-hover:text-accent transition-colors duration-500" />
+            <div class="w-16 h-16 bg-bg-secondary border border-border flex items-center justify-center mb-8 group-hover:border-text transition-colors duration-500">
+              <Icon name="lucide:scale" class="w-8 h-8 text-text-secondary group-hover:text-text transition-colors duration-500" />
             </div>
             
-            <h4 class="font-mono text-sm font-bold text-text mb-4 group-hover:text-accent transition-colors">
+            <h4 class="font-mono text-sm font-bold text-text mb-4 transition-colors">
               [ TRADE-OFF_ANALYSIS ]
             </h4>
             <p class="text-sm text-text-secondary leading-relaxed font-light">
@@ -74,20 +74,20 @@
         </div>
 
         <!-- Step 3 -->
-        <div class="group relative bg-bg border border-border p-8 hover:border-accent transition-all duration-500 hover:-translate-y-2 z-10">
+        <div class="group relative bg-bg border border-border p-8 hover:border-text transition-all duration-500 hover:-translate-y-2 z-10">
           <!-- Connector Dot -->
-          <div class="hidden md:block absolute top-16 -left-4 w-8 h-px bg-border group-hover:bg-accent group-hover:bg-accent transition-colors duration-500"></div>
+          <div class="hidden md:block absolute top-16 -left-4 w-8 h-px bg-border group-hover:bg-text-secondary transition-colors duration-500"></div>
 
-          <div class="absolute -top-8 left-6 font-mono text-7xl font-bold text-border select-none pointer-events-none group-hover:text-accent/10 transition-colors duration-500">
+          <div class="absolute -top-8 left-6 font-mono text-7xl font-bold text-border select-none pointer-events-none group-hover:text-text/10 transition-colors duration-500">
             03
           </div>
           
           <div class="relative z-10">
-            <div class="w-16 h-16 bg-bg-secondary border border-border flex items-center justify-center mb-8 group-hover:border-accent transition-colors duration-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-              <Icon name="lucide:trending-up" class="w-8 h-8 text-text-secondary group-hover:text-accent transition-colors duration-500" />
+            <div class="w-16 h-16 bg-bg-secondary border border-border flex items-center justify-center mb-8 group-hover:border-text transition-colors duration-500">
+              <Icon name="lucide:trending-up" class="w-8 h-8 text-text-secondary group-hover:text-text transition-colors duration-500" />
             </div>
             
-            <h4 class="font-mono text-sm font-bold text-text mb-4 group-hover:text-accent transition-colors">
+            <h4 class="font-mono text-sm font-bold text-text mb-4 transition-colors">
               [ MEASURABLE_IMPACT ]
             </h4>
             <p class="text-sm text-text-secondary leading-relaxed font-light">

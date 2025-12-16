@@ -12,12 +12,12 @@
       <!-- Header -->
       <div class="max-w-4xl mx-auto mb-12 text-center">
         <h3
-          class="text-sm uppercase tracking-widest text-accent mb-3 font-light flex items-center justify-center gap-3">
-          <span class="w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_currentColor]"></span>
+          class="text-sm uppercase tracking-widest text-text-secondary mb-3 font-light flex items-center justify-center gap-3">
+          <span class="w-2 h-2 bg-text-secondary rounded-full"></span>
           Engineering Process
         </h3>
         <h1 class="text-4xl md:text-5xl font-light text-text mb-6">
-          System <span class="text-accent">Architecture</span>
+          System <span class="font-medium">Architecture</span>
         </h1>
         <p class="text-lg text-text-secondary leading-relaxed">
           Systems that are secure by design, concurrent by default, and scalable by necessity.
@@ -35,7 +35,7 @@
             :class="[
               'px-5 py-3 rounded-lg text-sm font-light transition-all duration-300 border',
               activeTab === index
-                ? 'bg-accent text-white border-secondary shadow-[0_0_15px_rgba(129,140,248,0.4)]'
+                ? 'bg-text text-bg border-text'
                 : 'bg-bg-secondary border-border text-text-secondary hover:bg-bg-tertiary hover:bg-text/10'
             ]"
           >
@@ -68,7 +68,7 @@
                     <h2 class="text-3xl md:text-4xl font-light text-text">
                       {{ sections[activeTab]?.title }}
                     </h2>
-                    <span class="text-xs px-3 py-1 bg-secondary/10 bg-bg-secondary/10 text-accent rounded-full font-light whitespace-nowrap">
+                    <span class="text-xs px-3 py-1 bg-secondary/10 bg-bg-secondary/10 text-text-secondary rounded-full font-light whitespace-nowrap">
                       {{ activeTab + 1 }} / {{ sections.length }}
                     </span>
                   </div>
@@ -76,8 +76,8 @@
                   <!-- Achievement Badge (for Eazyfit) -->
                   <div
                     v-if="sections[activeTab]?.title === 'Production Systems'"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/30 rounded-lg mb-6 w-full md:w-auto">
-                    <Icon name="lucide:trophy" class="w-5 h-5 text-accent flex-shrink-0" />
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-bg-tertiary border border-border rounded-lg mb-6 w-full md:w-auto">
+                    <Icon name="lucide:trophy" class="w-5 h-5 text-text-secondary flex-shrink-0" />
                     <span class="text-sm font-light text-text">$5,000 Pre-Seed Funding • Ilorin Innovation Challenge Winner</span>
                   </div>
 
@@ -86,7 +86,7 @@
                   </p>
 
                   <h3 class="text-lg font-medium text-text mb-4 flex items-center gap-2">
-                    <Icon name="lucide:sparkles" class="w-5 h-5 text-accent" />
+                    <Icon name="lucide:sparkles" class="w-5 h-5 text-text-secondary" />
                     Key Capabilities
                   </h3>
 
@@ -94,12 +94,12 @@
                   <div v-if="sections[activeTab]?.features" class="grid gap-6 mb-6">
                     <div v-for="(feature, idx) in sections[activeTab]?.features" :key="idx" class="bg-bg-secondary p-4 rounded-xl border border-border">
                       <h4 class="font-medium text-text mb-3 flex items-center gap-2">
-                        <Icon :name="feature.icon || 'lucide:check-circle'" class="w-5 h-5 text-accent" />
+                        <Icon :name="feature.icon || 'lucide:check-circle'" class="w-5 h-5 text-text-secondary" />
                         {{ feature.title }}
                       </h4>
                       <ul class="space-y-2 text-text-secondary text-sm">
                         <li v-for="(item, i) in feature.items" :key="i" class="flex items-start gap-2">
-                          <span class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></span>
+                          <span class="w-1.5 h-1.5 bg-text-secondary rounded-full mt-2 flex-shrink-0"></span>
                           <span v-html="item"></span>
                         </li>
                       </ul>
@@ -236,7 +236,7 @@
     to="/#process"
     aria-label="Back to Process section"
     title="Back to Process section"
-    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-bg-secondary border border-border text-accent shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-secondary"
+    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-bg-secondary border border-border text-text shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-border"
   >
     <Icon name="lucide:arrow-left" class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
     <span class="sr-only">Back to Process section</span>
@@ -250,6 +250,34 @@ import mermaid from 'mermaid';
 // Color mode detection
 const colorMode = useColorMode();
 const isDarkMode = computed(() => colorMode.value === 'dark');
+
+// Theme-aware color generator for diagrams
+const getThemeColors = () => {
+  const dark = isDarkMode.value;
+  return {
+    // Node backgrounds
+    nodePrimary: dark ? '#1e293b' : '#f1f5f9',
+    nodeSecondary: dark ? '#0f172a' : '#e2e8f0',
+    nodeTertiary: dark ? '#020617' : '#ffffff',
+    // Text colors
+    textColor: dark ? '#f8fafc' : '#0f172a',
+    // Border/stroke colors (these stay vibrant in both modes)
+    strokeAccent: '#818cf8',
+    strokeInfo: '#22d3ee',
+    strokeWarning: '#f59e0b',
+    strokeSuccess: '#22c55e',
+    strokeError: '#f43f5e',
+    strokeMuted: dark ? '#94a3b8' : '#64748b',
+    strokePurple: '#6366f1',
+  };
+};
+
+// Helper to generate style string for a node
+const nodeStyle = (type: 'primary' | 'secondary' | 'tertiary', stroke: string) => {
+  const colors = getThemeColors();
+  const fills = { primary: colors.nodePrimary, secondary: colors.nodeSecondary, tertiary: colors.nodeTertiary };
+  return `fill:${fills[type]},stroke:${stroke},stroke-width:2px,color:${colors.textColor}`;
+};
 
 // --- State Definitions (Must be first) ---
 const activeTab = ref(0);
@@ -327,8 +355,36 @@ watch(activeTab, async () => {
   await renderDiagram();
 });
 
-// --- Diagrams Data ---
-const eazyfitDiagram = `graph TB
+// --- Theme-aware Diagram Styles ---
+// Generate style strings based on current theme
+const diagramStyles = computed(() => {
+  const dark = isDarkMode.value;
+  const primary = dark ? '#1e293b' : '#e2e8f0';
+  const secondary = dark ? '#0f172a' : '#f1f5f9';
+  const tertiary = dark ? '#020617' : '#ffffff';
+  const text = dark ? '#f8fafc' : '#0f172a';
+  
+  return {
+    // Node type + stroke color combinations
+    primaryAccent: `fill:${primary},stroke:#818cf8,stroke-width:2px,color:${text}`,
+    primaryInfo: `fill:${primary},stroke:#22d3ee,stroke-width:2px,color:${text}`,
+    primarySuccess: `fill:${primary},stroke:#22c55e,stroke-width:2px,color:${text}`,
+    primaryError: `fill:${primary},stroke:#f43f5e,stroke-width:2px,color:${text}`,
+    secondaryAccent: `fill:${secondary},stroke:#818cf8,stroke-width:2px,color:${text}`,
+    secondaryInfo: `fill:${secondary},stroke:#22d3ee,stroke-width:2px,color:${text}`,
+    secondaryWarning: `fill:${secondary},stroke:#f59e0b,stroke-width:2px,color:${text}`,
+    secondarySuccess: `fill:${secondary},stroke:#22c55e,stroke-width:2px,color:${text}`,
+    secondaryMuted: `fill:${secondary},stroke:${dark ? '#94a3b8' : '#64748b'},stroke-width:2px,color:${text}`,
+    secondaryPurple: `fill:${secondary},stroke:#6366f1,stroke-width:2px,color:${text}`,
+    secondaryOrange: `fill:${secondary},stroke:#f97316,stroke-width:2px,color:${text}`,
+    tertiaryDashed: `fill:${tertiary},stroke:#334155,stroke-width:2px,color:${text},stroke-dasharray: 5 5`,
+  };
+});
+
+// --- Diagrams Data (Computed for theme reactivity) ---
+const eazyfitDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
     Client([Client Apps<br/>Mobile/Web])
     LB[Traefik<br/>Load Balancer]
     API[API Gateway<br/>Go Chi Router]
@@ -371,22 +427,25 @@ const eazyfitDiagram = `graph TB
     Notifs --> Gmail
     Notifs --> Expo
     
-    style Client fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-    style LB fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style API fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-    style Auth fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-    style Core fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-    style Chat fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-    style Media fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-    style Notifs fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-    style Cache fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style DB fill:#0f172a,stroke:#94a3b8,stroke-width:2px,color:#f8fafc
-    style Paystack fill:#0f172a,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-    style Cloudinary fill:#0f172a,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-    style Gmail fill:#0f172a,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-    style Expo fill:#0f172a,stroke:#22c55e,stroke-width:2px,color:#f8fafc`;
+    style Client ${s.primaryAccent}
+    style LB ${s.secondaryWarning}
+    style API ${s.primaryAccent}
+    style Auth ${s.primaryInfo}
+    style Core ${s.primaryInfo}
+    style Chat ${s.primaryInfo}
+    style Media ${s.primaryInfo}
+    style Notifs ${s.primaryInfo}
+    style Cache ${s.secondaryWarning}
+    style DB ${s.secondaryMuted}
+    style Paystack ${s.secondarySuccess}
+    style Cloudinary ${s.secondarySuccess}
+    style Gmail ${s.secondarySuccess}
+    style Expo ${s.secondarySuccess}`;
+});
 
-const billingDiagram = `graph TB
+const billingDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
 API[API] -->|Trigger| Handler[Billing Handler]
 Handler --> Service[Billing Service]
 API -->|Schedule| Jobs[Background Jobs]
@@ -406,15 +465,18 @@ Service --> DB[(Database)]
 WebhookService --> DB
 StripeClient -->|API Call| Stripe
 StripeMeter -->|API Call| Stripe
-style Handler fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Service fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style StripeClient fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style Jobs fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style Stripe fill:#0f172a,stroke:#6366f1,stroke-width:2px,color:#f8fafc
-style Aggregator fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style DB fill:#0f172a,stroke:#94a3b8,stroke-width:2px,color:#f8fafc`;
+style Handler ${s.primaryAccent}
+style Service ${s.primaryInfo}
+style StripeClient ${s.primaryInfo}
+style Jobs ${s.secondaryWarning}
+style Stripe ${s.secondaryPurple}
+style Aggregator ${s.primaryAccent}
+style DB ${s.secondaryMuted}`;
+});
 
-const jobProcessingDiagram = `graph TB
+const jobProcessingDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
 Source["API / Scheduler"] -->|Enqueue| JobService["Job Service"]
 JobService -->|Persist| Queue["Job Queue"]
 Queue -->|Poll| Manager["Worker Manager"]
@@ -427,14 +489,17 @@ W3 -->|Process| P3["Email/Push"]
 P1 -->|Result| JobService
 P2 -->|Result| JobService
 P3 -->|Result| JobService
-style Queue fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style JobService fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Manager fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style W1 fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style W2 fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style W3 fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc`;
+style Queue ${s.secondaryWarning}
+style JobService ${s.primaryAccent}
+style Manager ${s.primaryInfo}
+style W1 ${s.primaryAccent}
+style W2 ${s.primaryAccent}
+style W3 ${s.primaryAccent}`;
+});
 
-const systemDiagram = `graph TB
+const systemDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
 User((User)) -->|Configure| API[API Gateway]
 API --> AutoTrade[AutoTrading Service]
 API --> Analytics[Analytics Service]
@@ -448,14 +513,17 @@ ExchangeAdapter <-->|Orders| Exchanges[Exchanges]
 MarketData <-->|Prices| Exchanges
 Workers --> DB[(Database)]
 Analytics --> DB
-style API fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style AutoTrade fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style ArbEngine fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style Workers fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Exchanges fill:#0f172a,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style DB fill:#0f172a,stroke:#94a3b8,stroke-width:2px,color:#f8fafc`;
+style API ${s.primaryAccent}
+style AutoTrade ${s.primaryInfo}
+style ArbEngine ${s.secondaryWarning}
+style Workers ${s.primaryAccent}
+style Exchanges ${s.secondaryInfo}
+style DB ${s.secondaryMuted}`;
+});
 
-const concurrencyDiagram = `graph TB
+const concurrencyDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
 Job[Job Queue] -->|Distribute| Dispatcher[Dispatcher]
 Dispatcher -->|Spawn| W1[Worker 1]
 Dispatcher -->|Spawn| W2[Worker 2]
@@ -464,15 +532,18 @@ W1 -->|Result| Aggregator[Aggregator]
 W2 -->|Result| Aggregator
 W3 -->|Result| Aggregator
 Aggregator -->|Finalize| Response[Response]
-style Job fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style Dispatcher fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style W1 fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style W2 fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style W3 fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style Aggregator fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Response fill:#0f172a,stroke:#22d3ee,stroke-width:2px,color:#f8fafc`;
+style Job ${s.secondaryWarning}
+style Dispatcher ${s.primaryAccent}
+style W1 ${s.primaryInfo}
+style W2 ${s.primaryInfo}
+style W3 ${s.primaryInfo}
+style Aggregator ${s.primaryAccent}
+style Response ${s.secondaryInfo}`;
+});
 
-const architectureDiagram = `graph TB
+const architectureDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
 Client[Client App] -->|HTTP/JSON| API[API Gateway]
 subgraph Backend["Backend Service"]
 API -->|Validate| Handler[Handler Layer]
@@ -481,16 +552,19 @@ Service -->|Data Access| Repo[Repository Layer]
 end
 Repo -->|Query| DB[(PostgreSQL)]
 Repo -->|Cache| Redis[(Redis)]
-style Client fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style API fill:#0f172a,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style Handler fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Service fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Repo fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style DB fill:#0f172a,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style Redis fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style Backend fill:#020617,stroke:#334155,stroke-width:2px,color:#f8fafc,stroke-dasharray: 5 5`;
+style Client ${s.primaryAccent}
+style API ${s.secondaryInfo}
+style Handler ${s.primaryAccent}
+style Service ${s.primaryAccent}
+style Repo ${s.primaryAccent}
+style DB ${s.secondaryInfo}
+style Redis ${s.secondaryWarning}
+style Backend ${s.tertiaryDashed}`;
+});
 
-const telegramBotDiagram = `graph TB
+const telegramBotDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
 User((User)) -->|/start| Bot[Telegram Bot]
 Bot --> Commands[Command Router]
 Commands -->|/subscribe| SubFlow[Subscription Flow]
@@ -525,22 +599,46 @@ AccessControl -->|Active| Signals[Forex Signals Channel]
 Bot --> UserDB[(Users DB)]
 CryptoHandler --> CoinGecko[CoinGecko API]
 
-style Bot fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style Commands fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-style SubFlow fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style CryptoHandler fill:#1e293b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-style CardHandler fill:#1e293b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-style Admin fill:#1e293b,stroke:#f43f5e,stroke-width:2px,color:#f8fafc
-style WebhookServer fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-style UserDB fill:#0f172a,stroke:#94a3b8,stroke-width:2px,color:#f8fafc
-style SubDB fill:#0f172a,stroke:#94a3b8,stroke-width:2px,color:#f8fafc
-style PaymentDB fill:#0f172a,stroke:#94a3b8,stroke-width:2px,color:#f8fafc
-style NOWPayments fill:#0f172a,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-style Stripe fill:#0f172a,stroke:#6366f1,stroke-width:2px,color:#f8fafc
-style CoinGecko fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-style Signals fill:#0f172a,stroke:#f97316,stroke-width:2px,color:#f8fafc`;
+style Bot ${s.primaryAccent}
+style Commands ${s.primaryInfo}
+style SubFlow ${s.secondaryWarning}
+style CryptoHandler ${s.primarySuccess}
+style CardHandler ${s.primarySuccess}
+style Admin ${s.primaryError}
+style WebhookServer ${s.primaryAccent}
+style UserDB ${s.secondaryMuted}
+style SubDB ${s.secondaryMuted}
+style PaymentDB ${s.secondaryMuted}
+style NOWPayments ${s.secondarySuccess}
+style Stripe ${s.secondaryPurple}
+style CoinGecko ${s.secondaryWarning}
+style Signals ${s.secondaryOrange}`;
+});
 
-const sections = ref([
+// AI Fraud Detection diagram
+const fraudDetectionDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
+    API[API Endpoint] -->|Transaction| Preprocess[Preprocessor]
+    Preprocess -->|Features| Scaler[Standard Scaler]
+    Scaler -->|Vector| Model[TensorFlow Model]
+    Model -->|Score| Decision[Decision Engine]
+    Decision -->|Action| Response[Response]
+    
+    subgraph "ML Inference"
+    Preprocess
+    Scaler
+    Model
+    end
+    
+    style API ${s.primaryAccent}
+    style Preprocess ${s.secondaryWarning}
+    style Scaler ${s.secondaryWarning}
+    style Model ${s.primaryInfo}
+    style Decision ${s.primarySuccess}`;
+});
+
+const sections = computed(() => [
  {
     title: 'Distributed Job Processing',
     description: 'In BiTraq (crypto arbitrage platform), synchronous processing of price alerts, wallet syncing, and notification delivery would block the trading API—causing users to miss time-sensitive arbitrage windows. I decoupled these into persistent background queues, ensuring the main API responds in <50ms even under 10x traffic spikes.',
@@ -556,7 +654,7 @@ const sections = ref([
         items: ['Durable job queues with at-least-once delivery guarantees', 'Worker pool auto-scaling based on queue depth', 'Dead letter queues for failed jobs with exponential backoff', '<strong>Impact:</strong> 99.9% alert delivery rate, API latency reduced from 3s to <50ms']
       }
     ],
-    diagram: jobProcessingDiagram,
+    diagram: jobProcessingDiagram.value,
     code: {
       language: 'go',
       filename: 'worker/pool.go',
@@ -613,7 +711,7 @@ func (wp *WorkerPool) Run() {
         items: ['Fan-out to N workers, fan-in via buffered channels', 'Context-based cancellation for graceful timeout handling', 'Per-exchange circuit breakers to isolate failures', '<strong>Result:</strong> Latency reduced from 5s → max(T) = 300ms, 98.5% opportunity capture rate']
       }
     ],
-    diagram: concurrencyDiagram
+    diagram: concurrencyDiagram.value
   },
   {
     title: 'AI Fraud Detection',
@@ -630,24 +728,7 @@ func (wp *WorkerPool) Run() {
         items: ['<strong>Model:</strong> CiferAI 10-feature vector analysis (amount, balance deltas, account age, velocity)', '<strong>Stack:</strong> Python FastAPI + TensorFlow, Go orchestration layer', '<strong>Architecture:</strong> Separate ML microservice for independent scaling', '<strong>Impact:</strong> 60% reduction in false positives, <50ms latency, $30K/month fraud prevented']
       }
     ],
-    diagram: `graph TB
-    API[API Endpoint] -->|Transaction| Preprocess[Preprocessor]
-    Preprocess -->|Features| Scaler[Standard Scaler]
-    Scaler -->|Vector| Model[TensorFlow Model]
-    Model -->|Score| Decision[Decision Engine]
-    Decision -->|Action| Response[Response]
-    
-    subgraph "ML Inference"
-    Preprocess
-    Scaler
-    Model
-    end
-    
-    style API fill:#1e293b,stroke:#818cf8,stroke-width:2px,color:#f8fafc
-    style Preprocess fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style Scaler fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style Model fill:#1e293b,stroke:#22d3ee,stroke-width:2px,color:#f8fafc
-    style Decision fill:#1e293b,stroke:#22c55e,stroke-width:2px,color:#f8fafc`,
+    diagram: fraudDetectionDiagram.value,
     code: {
       language: 'python',
       filename: 'fraud_detector/app.py',
@@ -706,7 +787,7 @@ async def predict(tx: TransactionFeatures):
         items: ['<strong>Domain Isolation:</strong> Chat (WebSocket), Payments (Paystack), Core (Orders/Users)', '<strong>AI Monitoring:</strong> Real-time content moderation to prevent off-platform transactions', '<strong>Impact:</strong> 99.99% uptime, payment success unaffected by chat load, won Ilorin Innovation Challenge']
       }
     ],
-    diagram: eazyfitDiagram
+    diagram: eazyfitDiagram.value
   },
   {
     title: 'Usage-Based Billing',
@@ -723,7 +804,7 @@ async def predict(tx: TransactionFeatures):
         items: ['<strong>Metrics Tracked:</strong> Uploads, transcoding minutes, storage GB/month, bandwidth GB', '<strong>Aggregation:</strong> Background jobs snapshot usage every hour, report to Stripe Meters', '<strong>Reconciliation:</strong> Nightly jobs compare internal ledger with Stripe to catch discrepancies', '<strong>Result:</strong> 100% billing accuracy, zero disputes, seamless Stripe integration']
       }
     ],
-    diagram: billingDiagram
+    diagram: billingDiagram.value
   },
   {
     title: 'Multi-Tenant Architecture',
@@ -740,7 +821,7 @@ async def predict(tx: TransactionFeatures):
         items: ['<strong>Tenant Model:</strong> Organization ID in every query, PostgreSQL RLS for enforcement', '<strong>Hierarchy:</strong> Parent-child relationships (School → Faculty → Department → Class)', '<strong>Audit Trail:</strong> Immutable event log for every state change (passed enterprise security audits)', '<strong>RBAC:</strong> Super Admin → Org Admin → Department Admin → User cascade']
       }
     ],
-    diagram: systemDiagram
+    diagram: systemDiagram.value
   },
   {
     title: 'Clean Architecture',
@@ -757,7 +838,7 @@ async def predict(tx: TransactionFeatures):
         items: ['<strong>Testability:</strong> Mock repository interface to test service logic without DB', '<strong>Flexibility:</strong> Swap MongoDB for PostgreSQL by implementing same Repository interface', '<strong>Maintainability:</strong> New team members understand boundaries immediately', '<strong>Result:</strong> 80%+ code coverage achievable, confident deployments']
       }
     ],
-    diagram: architectureDiagram
+    diagram: architectureDiagram.value
   },
   {
     title: 'Forex Signals Bot',
@@ -774,7 +855,7 @@ async def predict(tx: TransactionFeatures):
         items: ['<strong>Multi-Gateway:</strong> NOWPayments (250+ cryptos) + Stripe/Paystack (cards)', '<strong>Session State:</strong> Redis-backed conversation state for multi-step payment flows', '<strong>Webhook Security:</strong> Signature verification + idempotent processing', '<strong>Impact:</strong> Checkout completion increased from 30% to 85%']
       }
     ],
-    diagram: telegramBotDiagram,
+    diagram: telegramBotDiagram.value,
     code: {
       language: 'go',
       filename: 'bot/handler.go',

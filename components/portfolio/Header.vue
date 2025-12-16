@@ -4,8 +4,8 @@
       
       <!-- Logo / System ID -->
       <NuxtLink to="/" class="flex items-center gap-3 group">
-        <div class="w-2 h-2 bg-accent animate-pulse"></div>
-        <span class="font-mono text-sm font-bold text-text tracking-tight group-hover:text-accent transition-colors">
+        <div class="w-2 h-2 bg-text-secondary animate-pulse"></div>
+        <span class="font-mono text-sm font-bold text-text tracking-tight transition-colors">
           YA_SYSTEM_V4
         </span>
       </NuxtLink>
@@ -14,7 +14,7 @@
       <ul class="hidden md:flex items-center gap-8">
         <li v-for="item in navItems" :key="item.id">
           <NuxtLink :to="`#${item.id}`"
-            class="font-mono text-xs text-text-secondary hover:text-accent transition-colors uppercase tracking-wider">
+            class="font-mono text-xs text-text-secondary hover:text-text transition-colors uppercase tracking-wider">
             [{{ item.label }}]
           </NuxtLink>
         </li>
@@ -25,7 +25,7 @@
         <ThemeToggle />
         <div class="h-4 w-px bg-border"></div>
         <NuxtLink to="#contact"
-          class="font-mono text-xs bg-text text-bg px-4 py-2 hover:bg-accent hover:text-white transition-colors duration-200">
+          class="font-mono text-xs bg-text text-bg px-4 py-2 hover:bg-text-secondary transition-colors duration-200">
           INITIATE_CONTACT
         </NuxtLink>
       </div>
@@ -45,7 +45,7 @@
         <li v-for="item in navItems" :key="item.id">
           <NuxtLink :to="`#${item.id}`"
             @click="mobileMenuOpen = false"
-            class="block py-3 font-mono text-xs text-text-secondary hover:text-accent transition-colors uppercase tracking-wider border-b border-border/50 last:border-0">
+            class="block py-3 font-mono text-xs text-text-secondary hover:text-text transition-colors uppercase tracking-wider border-b border-border/50 last:border-0">
             > {{ item.label }}
           </NuxtLink>
         </li>

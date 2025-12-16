@@ -7,7 +7,7 @@
         <NuxtLink to="/" class="flex items-center gap-2 group">
           <div class="flex items-center gap-1">
             <span class="text-xl font-bold  tracking-tight">The Brave Byte</span>
-            <span class="text-2xl text-accent font-bold leading-none">.</span>
+            <span class="text-2xl text-text font-bold leading-none">.</span>
           </div>
         </NuxtLink>
         
@@ -32,7 +32,7 @@
           <!-- Theme Toggle -->
           <button 
             @click="toggleTheme" 
-            class="p-2 rounded-lg text-text-secondary hover:text-accent hover:bg-bg-secondary dark:hover: transition-colors"
+            class="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-bg-secondary dark:hover: transition-colors"
             aria-label="Toggle theme"
           >
             <Icon v-if="colorMode.value === 'dark'" name="lucide:sun" class="w-5 h-5" />
@@ -43,7 +43,7 @@
           <NuxtLink 
             v-if="!isAuthenticated"
             to="/admin/login" 
-            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-secondary hover:text-accent hover:border-accent transition-colors text-sm font-mono"
+            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-secondary hover:text-text hover:border-text transition-colors text-sm font-mono"
           >
             <Icon name="lucide:lock" class="w-4 h-4" />
             <span>ADMIN</span>
@@ -52,7 +52,7 @@
           <div v-else class="hidden sm:flex items-center gap-2">
             <NuxtLink 
               to="/admin/dashboard"
-              class="px-4 py-2 rounded-lg bg-accent/10 bg-accent/10 border border-accent/30 border-accent/30 text-accent hover:bg-accent hover:bg-accent hover:text-white transition-colors text-sm font-mono"
+              class="px-4 py-2 rounded-lg bg-bg-secondary border border-border text-text hover:bg-bg-tertiary transition-colors text-sm font-mono"
             >
               DASHBOARD
             </NuxtLink>

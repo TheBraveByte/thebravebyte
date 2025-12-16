@@ -8,16 +8,16 @@
           <!-- Identity Card -->
           <div class="bg-bg border border-border p-6 relative group">
             <!-- Technical Corners -->
-            <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent"></div>
-            <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent"></div>
-            <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent"></div>
-            <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent"></div>
+            <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-text-secondary"></div>
+            <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-text-secondary"></div>
+            <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-text-secondary"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-text-secondary"></div>
 
             <!-- Profile Image -->
             <div class="aspect-square w-full bg-bg-secondary mb-6 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
               <NuxtImg src="/img/yusuf.jpg" alt="Yusuf Akinleye" class="w-full h-full object-cover" />
               <!-- Scanline Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-text/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </div>
 
             <!-- Identity Data -->
@@ -63,13 +63,13 @@
           </div>
 
           <!-- Main Headline -->
-          <h1 class="text-5xl md:text-7xl font-light mb-8 leading-tight tracking-tight">
-            <span class="text-accent">Architecting</span> <br />
-            <span class="text-text">Intelligent Systems</span>
+          <h1 class="text-5xl md:text-7xl font-light text-text dark:text-text mb-8 leading-tight tracking-tight">
+            Architecting <br />
+            <span class="text-text-secondary dark:text-text-secondary-dark">Intelligent Systems</span>
           </h1>
 
           <!-- Terminal Description -->
-          <div class="border-l-2 border-accent pl-6 mb-10">
+          <div class="border-l-2 border-text-secondary pl-6 mb-10">
             <p class="text-lg md:text-xl text-text font-light leading-relaxed max-w-2xl">
               I build high-performance backend infrastructure and AI-powered systems that power millions of transactions. 
               <span class="text-text-secondary">
@@ -81,12 +81,12 @@
           <!-- Action Modules -->
           <div class="flex flex-wrap gap-4 mb-16">
             <NuxtLink to="#projects"
-              class="group px-6 py-3 bg-accent text-white font-mono text-sm hover:bg-accent-hover transition-colors duration-200 flex items-center gap-3">
+              class="group px-6 py-3 bg-text text-bg font-mono text-sm hover:bg-text-secondary transition-colors duration-200 flex items-center gap-3">
               <span>[ VIEW_PROJECTS ]</span>
               <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
             <NuxtLink to="#contact"
-              class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-accent hover:text-accent transition-colors duration-200">
+              class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200">
               [ INITIATE_CONTACT ]
             </NuxtLink>
           </div>
@@ -94,7 +94,7 @@
           <!-- Tech Stack / Loaded Modules -->
         <div class="mb-12">
           <div class="font-mono text-[10px] text-text-muted mb-4 uppercase tracking-widest flex items-center gap-2">
-            <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse"></span>
+            <span class="w-1.5 h-1.5 bg-text-secondary rounded-full animate-pulse"></span>
             @ LOADED_MODULES
           </div>
           <div class="flex flex-wrap gap-6">

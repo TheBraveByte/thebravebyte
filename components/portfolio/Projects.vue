@@ -6,7 +6,7 @@
       <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
         <div>
           <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
-            <span class="w-2 h-2 bg-accent"></span>
+            <span class="w-2 h-2 bg-text-secondary"></span>
             SYSTEM_MODULES
           </h3>
           <h2 class="text-3xl md:text-4xl font-light text-text">
@@ -25,7 +25,7 @@
           'px-4 py-2 font-mono text-xs transition-colors duration-200 border',
           selectedCategory === cat
             ? 'bg-text bg-text text-bg text-bg border-text'
-            : 'bg-transparent border-border text-text-secondary hover:border-accent'
+            : 'bg-transparent border-border text-text-secondary hover:border-text'
         ]">
           [{{ cat.toUpperCase() }}]
         </button>
@@ -34,16 +34,16 @@
       <!-- Projects Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="(project, index) in displayedProjects" :key="project.id"
-          class="bg-bg border border-border hover:border-accent transition-colors duration-200 flex flex-col group relative">
+          class="bg-bg border border-border hover:border-text hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group relative">
           
           <!-- Technical Corner Markers -->
-          <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-transparent group-hover:border-accent transition-colors duration-200"></div>
-          <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-transparent group-hover:border-accent transition-colors duration-200"></div>
+          <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-transparent group-hover:border-text transition-colors duration-300"></div>
+          <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-transparent group-hover:border-text transition-colors duration-300"></div>
 
           <!-- Project Header -->
           <div class="p-6 flex-grow">
             <div class="flex justify-between items-start mb-4">
-              <span class="font-mono-label text-accent">
+              <span class="font-mono-label text-text-secondary group-hover:text-text transition-colors">
                 [ SERVICE_{{ String(index + 1).padStart(2, '0') }} ]
               </span>
               <div class="flex items-center gap-2">
@@ -52,7 +52,7 @@
               </div>
             </div>
 
-            <h3 class="text-lg font-normal text-text mb-3 group-hover:text-accent transition-colors">
+            <h3 class="text-lg font-normal text-text group-hover:translate-x-1 transition-all duration-300 mb-3">
               {{ project.title }}
             </h3>
 
@@ -85,7 +85,7 @@
       <!-- Load More / Show Less Buttons -->
       <div class="flex justify-center gap-4 mt-12">
         <button v-if="hasMoreProjects" @click="loadMore"
-          class="px-6 py-3 border border-border text-text hover:border-accent transition-colors duration-200 font-mono text-xs">
+          class="px-6 py-3 border border-border text-text hover:border-text hover:bg-bg-secondary transition-colors duration-200 font-mono text-xs">
           [ LOAD_MORE_DATA ]
         </button>
         <button v-if="visibleCount > 3" @click="showLess"
@@ -98,7 +98,7 @@
       <div class="text-center mt-20 border-t border-border pt-12">
         <p class="font-mono text-xs text-text-secondary mb-4">:: SYSTEM_READY_FOR_DEPLOYMENT</p>
         <NuxtLink to="#contact"
-          class="inline-flex items-center gap-3 px-8 py-4 bg-text bg-text text-bg text-bg hover:bg-accent hover:bg-accent hover:text-white transition-colors duration-200 font-mono text-sm group">
+          class="inline-flex items-center gap-3 px-8 py-4 bg-text bg-text text-bg text-bg hover:bg-text-secondary transition-colors duration-200 font-mono text-sm group">
           <span>[ INITIATE_COLLABORATION ]</span>
           <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </NuxtLink>
