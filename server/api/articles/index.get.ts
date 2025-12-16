@@ -16,6 +16,11 @@ interface ArticleRow {
 }
 
 export default defineEventHandler(async (event) => {
+  // Prevent caching of this endpoint to ensure drafts don't leak to public
+  setResponseHeader(event, 'Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  setResponseHeader(event, 'Pragma', 'no-cache');
+  setResponseHeader(event, 'Expires', '0');
+
   const db = useD1(event);
   const query = getQuery(event);
   const token = getCookie(event, 'auth_token');
@@ -29,7 +34,7 @@ export default defineEventHandler(async (event) => {
   try {
     // Build query based on admin status
     const whereClause = isAdmin ? '' : 'WHERE published = 1';
-    
+
     // Get articles
     const articlesResult = await db
       .prepare(`SELECT id, title, slug, excerpt, cover_image, published, published_at, author, views, created_at, updated_at FROM articles ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`)
