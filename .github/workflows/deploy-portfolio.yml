@@ -41,9 +41,8 @@ jobs:
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: thebravebyte-portfolio
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          projectName: thebravebyte
           directory: .output/public
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: main
+          wranglerVersion: 2
