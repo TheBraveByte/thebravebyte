@@ -36,6 +36,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@types/bcryptjs": "^2.4.6",
     "tailwindcss": "^4.1.18",
-    "wrangler": "^3.99.0"
+    "wrangler": "^3.99.0",
+    "commander": "^13.1.0"
   }
 }
