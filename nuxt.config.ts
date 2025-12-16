@@ -5,6 +5,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
+  // Cloudflare Pages deployment
+  nitro: {
+    preset: 'cloudflare-pages',
+  },
+
   modules: [
     "@nuxt/icon",
     "@nuxt/image",
@@ -37,8 +42,7 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
-    mongodbUri: process.env.MONGODB_URI,
-    authSecret: process.env.AUTH_SECRET || 'super-secret-key-change-me',
+    jwtSecret: process.env.JWT_SECRET || 'super-secret-key-change-me',
     public: {
       siteUrl: 'https://thebravebyte.com',
     }

@@ -1,39 +1,77 @@
-import { Article } from '~/server/models/Article';
-import mongoose from 'mongoose';
+import { useD1 } from '~/server/utils/d1';
+
+interface ArticleRow {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  cover_image: string;
+  published: number;
+  published_at: string | null;
+  author: string;
+  views: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export default defineEventHandler(async (event) => {
-    // If DB is not connected, return empty list to prevent crash/timeout
-    if (mongoose.connection.readyState !== 1) {
-        return {
-            articles: [],
-            total: 0,
-            page: 1,
-            totalPages: 0
-        };
-    }
+  const db = useD1(event);
+  const query = getQuery(event);
+  const token = getCookie(event, 'auth_token');
+  const isAdmin = !!token;
 
-    const query = getQuery(event);
-    const isAdmin = getCookie(event, 'auth_token') === 'admin-session-token';
+  // Pagination
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 10;
+  const offset = (page - 1) * limit;
 
-    const filter = isAdmin ? {} : { published: true };
+  try {
+    // Build query based on admin status
+    const whereClause = isAdmin ? '' : 'WHERE published = 1';
+    
+    // Get articles
+    const articlesResult = await db
+      .prepare(`SELECT id, title, slug, excerpt, cover_image, published, published_at, author, views, created_at, updated_at FROM articles ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`)
+      .bind(limit, offset)
+      .all<ArticleRow>();
 
-    // Pagination
-    const page = Number(query.page) || 1;
-    const limit = Number(query.limit) || 10;
-    const skip = (page - 1) * limit;
+    // Get total count
+    const countResult = await db
+      .prepare(`SELECT COUNT(*) as count FROM articles ${whereClause}`)
+      .first<{ count: number }>();
 
-    const articles = await Article.find(filter)
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .select('-content'); // Exclude heavy content for list view
+    const total = countResult?.count || 0;
 
-    const total = await Article.countDocuments(filter);
+    // Transform to match expected format
+    const articles = (articlesResult.results || []).map(row => ({
+      id: row.id,
+      _id: row.id.toString(),
+      title: row.title,
+      slug: row.slug,
+      excerpt: row.excerpt,
+      coverImage: row.cover_image,
+      published: row.published === 1,
+      publishedAt: row.published_at,
+      author: row.author,
+      views: row.views,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at
+    }));
 
     return {
-        articles,
-        total,
-        page,
-        totalPages: Math.ceil(total / limit)
+      articles,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
     };
+  } catch (error: any) {
+    console.error('Error fetching articles:', error);
+    return {
+      articles: [],
+      total: 0,
+      page: 1,
+      totalPages: 0
+    };
+  }
 });

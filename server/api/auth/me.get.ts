@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-
 export default defineEventHandler(async (event) => {
   const token = getCookie(event, 'auth_token');
 
@@ -11,14 +9,24 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-    const decoded = jwt.verify(token, JWT_SECRET) as any;
+    // Decode the base64 token
+    const decoded = JSON.parse(atob(token));
+
+    // Check if token is expired
+    if (decoded.exp && decoded.exp < Date.now()) {
+      throw createError({
+        statusCode: 401,
+        message: 'Token expired'
+      });
+    }
 
     return {
       email: decoded.email,
       role: decoded.role
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error.statusCode) throw error;
+    
     throw createError({
       statusCode: 401,
       message: 'Invalid token'

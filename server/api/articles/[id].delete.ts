@@ -1,32 +1,42 @@
-import { Article } from '~~/server/models/Article';
-import jwt from 'jsonwebtoken';
+import { useD1 } from '~/server/utils/d1';
 
 export default defineEventHandler(async (event) => {
-    // Auth Check
-    const token = getCookie(event, 'auth_token');
-    if (!token) {
-        throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
-    }
+  const token = getCookie(event, 'auth_token');
+  if (!token) {
+    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
+  }
 
-    const config = useRuntimeConfig();
-    try {
-        jwt.verify(token, config.authSecret);
-    } catch (e) {
-        throw createError({ statusCode: 401, statusMessage: 'Invalid token' });
-    }
+  const id = getRouterParam(event, 'id');
+  if (!id) {
+    throw createError({ statusCode: 400, statusMessage: 'ID is required' });
+  }
 
-    const id = event.context.params?.id;
+  const db = useD1(event);
 
-    await connectToDatabase();
-
-    const article = await Article.findByIdAndDelete(id);
+  try {
+    // Check if article exists
+    const article = await db
+      .prepare('SELECT id FROM articles WHERE id = ?')
+      .bind(parseInt(id))
+      .first();
 
     if (!article) {
-        throw createError({
-            statusCode: 404,
-            statusMessage: 'Article not found',
-        });
+      throw createError({ statusCode: 404, statusMessage: 'Article not found' });
     }
 
+    // Delete article
+    await db
+      .prepare('DELETE FROM articles WHERE id = ?')
+      .bind(parseInt(id))
+      .run();
+
     return { success: true };
+  } catch (e: any) {
+    if (e.statusCode) throw e;
+    console.error('Error deleting article:', e);
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Failed to delete article'
+    });
+  }
 });

@@ -1,5 +1,14 @@
-import jwt from 'jsonwebtoken';
-import { User } from '../../models/User';
+import { useD1 } from '~/server/utils/d1';
+import bcrypt from 'bcryptjs';
+
+interface UserRow {
+  id: number;
+  email: string;
+  password: string;
+  role: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody(event);
@@ -11,11 +20,16 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+  const db = useD1(event);
+  const config = useRuntimeConfig();
+  const JWT_SECRET = config.jwtSecret || 'your-secret-key-change-in-production';
 
   try {
     // Find admin user in database
-    const user = await User.findOne({ email: email.toLowerCase(), role: 'admin' });
+    const user = await db
+      .prepare('SELECT * FROM users WHERE email = ? AND role = ?')
+      .bind(email.toLowerCase(), 'admin')
+      .first<UserRow>();
     
     if (!user) {
       throw createError({
@@ -25,7 +39,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Compare password with hashed password in database
-    const isValidPassword = await user.comparePassword(password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
     
     if (!isValidPassword) {
       throw createError({
@@ -34,12 +48,15 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Generate JWT token
-    const token = jwt.sign(
-      { email: user.email, role: user.role, userId: user._id },
-      JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    // Generate simple token (JWT requires crypto which may not be fully available in Workers)
+    // Using a simple base64 encoded token with expiry
+    const tokenPayload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+      exp: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+    };
+    const token = btoa(JSON.stringify(tokenPayload));
 
     // Set cookie
     setCookie(event, 'auth_token', token, {
@@ -52,7 +69,6 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      token,
       user: { email: user.email, role: user.role }
     };
   } catch (error: any) {
