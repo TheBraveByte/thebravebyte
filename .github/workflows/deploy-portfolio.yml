@@ -43,6 +43,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           projectName: thebravebyte
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
           directory: .output/public
           branch: main
           wranglerVersion: 2
