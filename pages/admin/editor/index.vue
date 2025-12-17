@@ -12,7 +12,16 @@
             {{ autoSaveStatus }}
           </p>
         </div>
-        <div class="flex gap-3">
+        <div class="flex gap-3 items-center">
+          <!-- View Article button (visible when we have a slug) -->
+          <NuxtLink
+            v-if="article.slug"
+            :to="`/article/${article.slug}`"
+            target="_blank"
+            class="px-4 py-2 border border-border font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200"
+          >
+            VIEW_ARTICLE
+          </NuxtLink>
           <button @click="saveDraft" :disabled="saving" 
             class="px-4 py-2 border border-border  font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200 disabled:opacity-50">
             {{ saving ? '...' : 'SAVE_DRAFT' }}
@@ -141,7 +150,7 @@
             ></textarea>
             <div 
               v-else
-              class="border border-border p-6 min-h-[500px] prose prose-invert max-w-none"
+              class="border border-border p-6 min-h-[500px] markdown-preview"
               v-html="markdownPreview"
             ></div>
           </div>
@@ -337,7 +346,8 @@ const publish = async () => {
     autoSaveStatus.value = 'Published successfully!';
     
     setTimeout(() => {
-      router.push('/admin/dashboard');
+      // After publishing, take the user to the public article page
+      router.push(`/article/${article.value.slug}`);
     }, 1000);
     
   } catch (error) {
@@ -421,3 +431,93 @@ onUnmounted(() => {
   }
 });
 </script>
+
+<style scoped>
+/* Basic, readable styling for Markdown preview without relying on Tailwind Typography */
+.markdown-preview {
+  color: var(--color-text);
+}
+
+.markdown-preview :where(p, ul, ol, blockquote, pre, table) {
+  margin-bottom: 1em;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: var(--color-text);
+}
+
+.markdown-preview h1 { font-size: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.3em; }
+.markdown-preview h2 { font-size: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.25em; }
+.markdown-preview h3 { font-size: 1.25rem; }
+.markdown-preview h4 { font-size: 1.125rem; }
+.markdown-preview h5 { font-size: 1rem; }
+.markdown-preview h6 { font-size: 0.875rem; color: var(--color-text-secondary); }
+
+.markdown-preview ul,
+.markdown-preview ol {
+  padding-left: 1.5rem;
+}
+.markdown-preview ul { list-style: disc; }
+.markdown-preview ol { list-style: decimal; }
+.markdown-preview li { margin: 0.25em 0; }
+
+.markdown-preview blockquote {
+  border-left: 4px solid var(--color-accent);
+  padding-left: 1rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.markdown-preview code {
+  background: var(--color-bg-secondary);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.markdown-preview pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.markdown-preview pre {
+  background: var(--color-bg-secondary);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.markdown-preview a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.markdown-preview img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.markdown-preview table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.markdown-preview th,
+.markdown-preview td {
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+}
+.markdown-preview thead th {
+  background: var(--color-bg-secondary);
+}
+</style>
