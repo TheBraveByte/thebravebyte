@@ -59,13 +59,13 @@
 
                     <!-- Documentation / Resume -->
                     <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="https://drive.google.com/file/d/1bhKFxFhO2uey5Tojg3fYfJs17NmEScgy/view?usp=sharing"
+                        <a href="https://drive.google.com/file/d/1iuvFjmPYCF7s5PSC43vzxzXlQNkJcA8l/view?usp=sharing"
                             target="_blank"
                             class="px-6 py-3 bg-text text-bg font-mono text-sm hover:bg-text-secondary transition-colors duration-200 flex items-center gap-2">
                             <Icon name="lucide:file-text" class="w-4 h-4" />
                             [ VIEW_LOGS ]
                         </a>
-                        <a href="https://drive.google.com/uc?export=download&id=1bhKFxFhO2uey5Tojg3fYfJs17NmEScgy"
+                        <a href="https://drive.google.com/uc?export=download&id=1iuvFjmPYCF7s5PSC43vzxzXlQNkJcA8l"
                             download
                             class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200 flex items-center gap-2">
                             <Icon name="lucide:download" class="w-4 h-4" />
