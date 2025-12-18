@@ -38,40 +38,92 @@
 
       <!-- Articles List -->
       <div v-else class="space-y-0">
-        <component 
-          :is="article.isExternal ? 'a' : 'NuxtLink'"
+        <!-- Render each article once; branch internally to avoid v-for + v-if on the same node -->
+        <template 
           v-for="(article, index) in filteredArticles" 
-          :key="article.slug || article._id"
-          :href="article.isExternal ? article.externalUrl : undefined"
-          :to="article.isExternal ? undefined : `/article/${article.slug}`"
-          :target="article.isExternal ? '_blank' : undefined"
-          :rel="article.isExternal ? 'noopener noreferrer' : undefined"
-          class="group block py-6 border-b border-border hover:bg-bg-secondary/50 -mx-4 px-4 transition-colors"
+          :key="article?._id || article?.slug || `idx-${index}`"
         >
-          <article class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-            <!-- Content -->
-            <div class="flex-1 min-w-0">
-              <h2 class="text-lg md:text-xl font-light text-text transition-colors mb-2 flex items-center gap-2">
-                {{ article.title }}
-                <Icon 
-                  v-if="article.isExternal" 
-                  name="lucide:external-link" 
-                  class="w-4 h-4 text-text-muted flex-shrink-0" 
-                />
-              </h2>
-              <p class="text-text-secondary font-light text-sm leading-relaxed line-clamp-2">
-                {{ article.excerpt }}
-              </p>
-            </div>
-            
-            <!-- Meta -->
-            <div class="flex items-center gap-3 text-sm text-text-muted font-light md:text-right md:flex-shrink-0">
-              <span>{{ article.date || formatDate(article.createdAt) }}</span>
-              <span class="hidden md:inline">·</span>
-              <span class="hidden md:inline">{{ article.readTime || '5 min' }}</span>
-            </div>
-          </article>
-        </component>
+          <!-- Internal articles (NuxtLink) -->
+          <NuxtLink
+            v-if="!article?.isExternal && article?.slug"
+            :to="`/article/${article.slug}`"
+            class="group block py-6 border-b border-border hover:bg-bg-secondary/50 -mx-4 px-4 transition-colors"
+          >
+            <article class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <h2 class="text-lg md:text-xl font-light text-text transition-colors mb-2 flex items-center gap-2">
+                  {{ article.title }}
+                </h2>
+                <p class="text-text-secondary font-light text-sm leading-relaxed line-clamp-2">
+                  {{ article.excerpt }}
+                </p>
+              </div>
+
+              <!-- Meta -->
+              <div class="flex items-center gap-3 text-sm text-text-muted font-light md:text-right md:flex-shrink-0">
+                <span>{{ article.date || formatDate(article.createdAt) }}</span>
+                <span class="hidden md:inline">·</span>
+                <span class="hidden md:inline">{{ article.readTime || '5 min' }}</span>
+              </div>
+            </article>
+          </NuxtLink>
+
+          <!-- External articles (anchor) -->
+          <a
+            v-else-if="article?.isExternal"
+            :href="article.externalUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block py-6 border-b border-border hover:bg-bg-secondary/50 -mx-4 px-4 transition-colors"
+          >
+            <article class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <h2 class="text-lg md:text-xl font-light text-text transition-colors mb-2 flex items-center gap-2">
+                  {{ article.title }}
+                  <Icon 
+                    name="lucide:external-link" 
+                    class="w-4 h-4 text-text-muted flex-shrink-0" 
+                  />
+                </h2>
+                <p class="text-text-secondary font-light text-sm leading-relaxed line-clamp-2">
+                  {{ article.excerpt }}
+                </p>
+              </div>
+
+              <!-- Meta -->
+              <div class="flex items-center gap-3 text-sm text-text-muted font-light md:text-right md:flex-shrink-0">
+                <span>{{ article.date || formatDate(article.createdAt) }}</span>
+                <span class="hidden md:inline">·</span>
+                <span class="hidden md:inline">{{ article.readTime || '5 min' }}</span>
+              </div>
+            </article>
+          </a>
+
+          <!-- Fallback for internal articles missing slug -->
+          <div
+            v-else
+            class="block py-6 border-b border-border -mx-4 px-4 opacity-60 cursor-not-allowed"
+            title="Missing slug — cannot open this article"
+          >
+            <article class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <h2 class="text-lg md:text-xl font-light text-text transition-colors mb-2">
+                  {{ article.title }}
+                </h2>
+                <p class="text-text-secondary font-light text-sm leading-relaxed line-clamp-2">
+                  {{ article.excerpt }}
+                </p>
+              </div>
+              <div class="flex items-center gap-3 text-sm text-text-muted font-light md:text-right md:flex-shrink-0">
+                <span>{{ article.date || formatDate(article.createdAt) }}</span>
+                <span class="hidden md:inline">·</span>
+                <span class="hidden md:inline">{{ article.readTime || '5 min' }}</span>
+              </div>
+            </article>
+          </div>
+        </template>
 
         <!-- Empty State -->
         <div v-if="filteredArticles.length === 0" class="py-16 text-center">
@@ -169,14 +221,19 @@ const externalArticles = [
 
 const selectedCategory = ref('All');
 
-// Combine internal and external articles
+// Combine internal and external articles (harden against undefined/null entries)
 const allArticles = computed(() => {
-  const internal = (apiData.value?.articles || []).map((a: any) => ({
-    ...a,
-    isExternal: false,
-    category: 'Engineering'
-  }));
-  return [...externalArticles, ...internal];
+  const rawInternal = Array.isArray(apiData.value?.articles)
+    ? apiData.value!.articles
+    : [];
+  const internal = rawInternal
+    .filter(Boolean)
+    .map((a: any) => ({
+      ...a,
+      isExternal: false,
+      category: 'Engineering'
+    }));
+  return [...externalArticles, ...internal].filter(Boolean);
 });
 
 // Get unique categories
