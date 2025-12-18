@@ -245,8 +245,10 @@ onMounted(async () => {
 });
 
 // Auto-generate slug from title
+// Auto-generate slug from title
 watch(() => article.value.title, (newTitle) => {
-  if (!isEditing.value && newTitle) {
+  // Generate slug if it's a new article OR if the slug is empty
+  if (newTitle && (!isEditing.value || !article.value.slug)) {
     article.value.slug = newTitle
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')

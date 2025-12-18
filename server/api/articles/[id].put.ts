@@ -24,6 +24,9 @@ export default defineEventHandler(async (event) => {
     values.push(body.title);
   }
   if (body.slug !== undefined) {
+    if (!body.slug.trim()) {
+      throw createError({ statusCode: 400, statusMessage: 'Slug cannot be empty' });
+    }
     updates.push('slug = ?');
     values.push(body.slug);
   }
@@ -43,7 +46,7 @@ export default defineEventHandler(async (event) => {
   if (body.published !== undefined) {
     updates.push('published = ?');
     values.push(body.published ? 1 : 0);
-    
+
     // Set published_at when publishing
     if (body.published) {
       updates.push('published_at = ?');
