@@ -317,7 +317,15 @@ const publish = async () => {
   saving.value = true;
   
   try {
-    const endpoint = isEditing.value 
+    // Ensure slug is generated if missing
+    if (!article.value.slug && article.value.title) {
+      article.value.slug = article.value.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)+/g, '');
+    }
+
+    const endpoint = isEditing.value
       ? `/api/articles/${route.query.id}`
       : '/api/articles';
     
