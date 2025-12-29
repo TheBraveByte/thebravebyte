@@ -7,14 +7,14 @@
         <div>
           <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
             <span class="w-2 h-2 bg-text-secondary"></span>
-            SYSTEM_MODULES
+            SELECTED_CASE_STUDIES
           </h3>
           <h2 class="text-3xl md:text-4xl font-light text-text">
-            Active Services
+            Engineering Impact
           </h2>
         </div>
         <div class="hidden md:block font-mono text-xs text-text-secondary text-right">
-          <div>TOTAL_MODULES: {{ projects.length }}</div>
+          <div>DELIVERED_SOLUTIONS: {{ projects.length }}</div>
           <div>STATUS: ALL_SYSTEMS_OPERATIONAL</div>
         </div>
       </div>

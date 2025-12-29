@@ -24,18 +24,19 @@
                 <!-- Left Column: Architecture Overview (7 cols) -->
                 <div class="lg:col-span-7 space-y-12">
                     
-                    <!-- Bio / Architecture Overview -->
+                    <!-- Bio / Core Philosophy -->
                     <div>
                         <div class="font-mono-label text-text-secondary mb-4 border-b border-border pb-2">
-                            // ARCHITECTURE_OVERVIEW
+                            // CORE_IDENTITY
                         </div>
                         <p class="text-lg text-text font-light leading-relaxed mb-6">
-                            I engineer backend systems designed for <span class="font-medium">reliability</span>, <span class="font-medium">maintainability</span>, and <span class="font-medium">business impact</span>. 
-                            My approach treats software as a long-term asset, focusing on clean architecture and pragmatic design decisions.
+                            <span class="font-medium text-text">Intelligence is the ability to adapt.</span>
+                            Great engineering cultures don't just value the languages you know; they value the ability to acquire knowledge and apply it. 
+                            I believe "genius" is often just dedication and consistency in disguise.
                         </p>
                         <p class="text-text-secondary font-light leading-relaxed">
-                            Specializing in backend technologies, I build the invisible engines that power seamless user experiences. 
-                            Whether it's optimizing database queries, designing RESTful APIs, or integrating complex third-party services, I focus on delivering code that works exceptionally well.
+                            Like the industry's shift to Go in 2016, technology is always moving. I don't just write code; I adapt. 
+                            Whether it's Go, Python, or the next paradigm, I bring the dedication to learn quickly and the consistency to deliver robust, scalable systems in any environment.
                         </p>
                     </div>
 

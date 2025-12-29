@@ -57,7 +57,7 @@
         <div class="lg:col-span-8 flex flex-col justify-center h-full pt-8 lg:pt-0">
           <!-- Header Status Line -->
           <div class="flex items-center gap-4 mb-8 font-mono text-xs text-text-secondary">
-            <span>:: SYSTEM_INIT</span>
+            <span>:: ENGINEER_PROFILE</span>
             <span class="flex-grow h-px bg-border"></span>
             <span>V 3.0</span>
           </div>
@@ -95,7 +95,7 @@
         <div class="mb-12">
           <div class="font-mono text-[10px] text-text-muted mb-4 uppercase tracking-widest flex items-center gap-2">
             <span class="w-1.5 h-1.5 bg-text-secondary rounded-full animate-pulse"></span>
-            @ LOADED_MODULES
+            @ TECHNOLOGY_STACK
           </div>
           <div class="flex flex-wrap gap-6">
             <Icon name="logos:go" class="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity" />

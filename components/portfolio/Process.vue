@@ -7,15 +7,15 @@
       <div class="mb-24 text-center max-w-2xl mx-auto">
         <h3 class="font-mono-label text-text-secondary mb-4 flex items-center justify-center gap-2">
           <span class="w-2 h-2 bg-text-secondary animate-pulse"></span>
-          // ENGINEERING_PROTOCOLS
+          // ENGINEERING_METHODOLOGY
         </h3>
         <h2 class="text-4xl md:text-5xl font-bold text-text mb-6 tracking-tight">
           System Architecture <span class="text-text-secondary font-light">&</span> Workflow
         </h2>
         <p class="font-mono text-xs text-text-secondary uppercase tracking-widest">
-          FROM_CHAOS_TO_CLARITY_V2.0
+          CHAOS_TO_CLARITY_V2.0
           <br>
-          EXECUTING_PRECISION_ENGINEERING_AT_SCALE
+          PRECISION_ENGINEERING_AT_SCALE
         </p>
       </div>
 

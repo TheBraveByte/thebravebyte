@@ -7,14 +7,14 @@
                 <div>
                     <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
                         <span class="w-2 h-2 bg-text-secondary"></span>
-                        SYSTEM_TOOLKIT
+                        TECHNICAL_PROFICIENCY
                     </h3>
                     <h2 class="text-3xl md:text-4xl font-light text-text">
                         Core Stack
                     </h2>
                 </div>
                 <div class="hidden md:block font-mono text-xs text-text-secondary text-right">
-                    <div>MODULES_LOADED: {{ skills.length }}</div>
+                    <div>CORE_TECHNOLOGIES: {{ skills.length }}</div>
                     <div>OPTIMIZED_FOR: PERFORMANCE</div>
                 </div>
             </div>
@@ -51,10 +51,9 @@
                         <Icon name="lucide:zap" class="w-5 h-5 text-text-secondary" />
                     </div>
                     <div>
-                        <h3 class="font-mono text-sm text-text mb-2 uppercase tracking-wide">Future-Proof Engineering</h3>
+                        <h3 class="font-mono text-sm text-text mb-2 uppercase tracking-wide">Continuous Evolution</h3>
                         <p class="text-sm text-text-secondary leading-relaxed font-light max-w-3xl">
-                            My commitment to the Edge ensures that all delivered solutions benefit from the latest
-                            advancements in distributed systems and cloud architecture. I continuously integrate cutting-edge technologies to keep your infrastructure ahead of the curve.
+                            Tools change. Principles endure. I pick the right tool for the job—whether it's Go for concurrency, Python for ML, or the next breakthrough technology.
                         </p>
                     </div>
                 </div>
