@@ -32,9 +32,8 @@
                                 <span class="text-text font-medium">Great engineering cultures</span> don't just value the languages you know; they value the ability to acquire knowledge and apply it. 
                                 I believe "genius" is often just dedication and consistency in disguise.
                             </p>
-                            <p class="about-reveal translate-y-8 opacity-0">
-                                Like the industry's shift to Go in 2016, technology is always moving. I don't just write code; I adapt. 
-                                Whether it's Go, Python, or the next paradigm, I bring the dedication to learn quickly and the consistency to deliver robust, scalable systems in any environment.
+                            <p class="text-text-secondary leading-relaxed">
+                                Technology is always moving. I don't just write code; I adapt. Whether it's Go, Python, or the next paradigm, I bring the dedication to learn quickly and the consistency to deliver robust, scalable systems in any environment.
                             </p>
                         </div>
                     </div>
