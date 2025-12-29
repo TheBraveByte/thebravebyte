@@ -9,7 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 # ============================================
 # Pages Build Configuration
 # ============================================
-pages_build_output_dir = ".output/public"
+pages_build_output_dir = "dist"
 
 # ============================================
 # D1 Database Bindings

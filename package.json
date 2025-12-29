@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "npm run build && wrangler pages deploy .output/public",
+    "deploy": "npm run build && wrangler pages deploy dist",
     "db:create": "wrangler d1 create thebravebyte-db",
     "db:migrate": "wrangler d1 execute thebravebyte-db --file=./server/database/schema.sql",
     "db:migrate:local": "wrangler d1 execute thebravebyte-db --local --file=./server/database/schema.sql"
