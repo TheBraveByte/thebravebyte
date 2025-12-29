@@ -45,7 +45,7 @@
         >
           <!-- Internal articles (NuxtLink) -->
           <NuxtLink
-            v-if="!article?.isExternal && article?.slug"
+            v-if="!article?.isExternal"
             :to="`/article/${article.slug}`"
             class="group block py-6 border-b border-border hover:bg-bg-secondary/50 -mx-4 px-4 transition-colors"
           >
@@ -100,29 +100,6 @@
               </div>
             </article>
           </a>
-
-          <!-- Fallback for internal articles missing slug -->
-          <div
-            v-else
-            class="block py-6 border-b border-border -mx-4 px-4 opacity-60 cursor-not-allowed"
-            title="Missing slug — cannot open this article"
-          >
-            <article class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-              <div class="flex-1 min-w-0">
-                <h2 class="text-lg md:text-xl font-light text-text transition-colors mb-2">
-                  {{ article.title }}
-                </h2>
-                <p class="text-text-secondary font-light text-sm leading-relaxed line-clamp-2">
-                  {{ article.excerpt }}
-                </p>
-              </div>
-              <div class="flex items-center gap-3 text-sm text-text-muted font-light md:text-right md:flex-shrink-0">
-                <span>{{ article.date || formatDate(article.createdAt) }}</span>
-                <span class="hidden md:inline">·</span>
-                <span class="hidden md:inline">{{ article.readTime || '5 min' }}</span>
-              </div>
-            </article>
-          </div>
         </template>
 
         <!-- Empty State -->

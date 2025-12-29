@@ -64,16 +64,16 @@
 
           <!-- Main Headline -->
           <h1 class="text-5xl md:text-7xl font-light text-text dark:text-text mb-8 leading-tight tracking-tight">
-            Architecting <br />
-            <span class="text-text-secondary dark:text-text-secondary-dark">Intelligent Systems</span>
+            Building the <br />
+            <span class="text-text-secondary dark:text-text-secondary-dark">Backbone of Software</span>
           </h1>
 
-          <!-- Terminal Description -->
+          <!-- Description -->
           <div class="border-l-2 border-text-secondary pl-6 mb-10">
             <p class="text-lg md:text-xl text-text font-light leading-relaxed max-w-2xl">
-              I build high-performance backend infrastructure and AI-powered systems that power millions of transactions. 
-              <span class="text-text-secondary">
-                Specializing in distributed architectures, scalable APIs, ML pipelines, and production-grade AI integration.
+              I am <span class="font-medium text-text">Yusuf Akinleye</span>. I engineer high-performance backend systems, scalable APIs, and production-grade architectures that drive business growth. 
+              <span class="text-text-secondary block mt-2">
+                Focused on Go, Python, and Distributed Systems.
               </span>
             </p>
           </div>
@@ -82,12 +82,12 @@
           <div class="flex flex-wrap gap-4 mb-16">
             <NuxtLink to="#projects"
               class="group px-6 py-3 bg-text text-bg font-mono text-sm hover:bg-text-secondary transition-colors duration-200 flex items-center gap-3">
-              <span>[ VIEW_PROJECTS ]</span>
+              <span>View My Work</span>
               <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
             <NuxtLink to="#contact"
               class="px-6 py-3 border border-border text-text font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200">
-              [ INITIATE_CONTACT ]
+              Let's Talk
             </NuxtLink>
           </div>
 

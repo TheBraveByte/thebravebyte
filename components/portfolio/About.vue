@@ -30,12 +30,12 @@
                             // ARCHITECTURE_OVERVIEW
                         </div>
                         <p class="text-lg text-text font-light leading-relaxed mb-6">
-                            I engineer backend systems designed for <span class="font-medium">resilience</span> and <span class="font-medium">scale</span>. 
-                            My approach treats infrastructure as code and failure as an expected state to be managed, not feared.
+                            I engineer backend systems designed for <span class="font-medium">reliability</span>, <span class="font-medium">maintainability</span>, and <span class="font-medium">business impact</span>. 
+                            My approach treats software as a long-term asset, focusing on clean architecture and pragmatic design decisions.
                         </p>
                         <p class="text-text-secondary font-light leading-relaxed">
-                            Specializing in distributed architectures, I build the invisible engines that power seamless user experiences. 
-                            From high-concurrency payment gateways to real-time AI inference pipelines, I focus on systems that remain performant under pressure.
+                            Specializing in backend technologies, I build the invisible engines that power seamless user experiences. 
+                            Whether it's optimizing database queries, designing RESTful APIs, or integrating complex third-party services, I focus on delivering code that works exceptionally well.
                         </p>
                     </div>
 
@@ -85,21 +85,21 @@
                         <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-text-secondary"></div>
 
                         <div class="font-mono-label text-text-secondary mb-6 flex items-center gap-2">
-                            <Icon name="lucide:bar-chart-2" class="w-4 h-4" />
-                            PERFORMANCE_BENCHMARKS
+                            <Icon name="lucide:terminal" class="w-4 h-4" />
+                            ENGINEERING_PHILOSOPHY
                         </div>
 
                         <div class="space-y-6">
-                            <div v-for="metric in metrics" :key="metric.label" class="group">
+                            <div v-for="item in philosophy" :key="item.label" class="group">
                                 <div class="flex justify-between items-end mb-2">
-                                    <span class="font-mono text-xs text-text-secondary">{{ metric.label }}</span>
-                                    <span class="font-mono text-xl text-text transition-colors">{{ metric.value }}</span>
+                                    <span class="font-mono text-xs text-text-secondary">{{ item.label }}</span>
+                                    <span class="font-mono text-base text-text transition-colors">{{ item.value }}</span>
                                 </div>
-                                <div class="w-full h-1 bg-border overflow-hidden">
-                                    <div class="h-full bg-text-secondary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                                <div class="w-full h-px bg-border overflow-hidden">
+                                     <div class="h-full bg-text-secondary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                                 </div>
                                 <p class="text-xs text-text-secondary mt-2 font-light leading-relaxed">
-                                    {{ metric.description }}
+                                    {{ item.description }}
                                 </p>
                             </div>
                         </div>
@@ -128,38 +128,38 @@
 <script setup lang="ts">
 const capabilities = [
     {
-        title: 'Scalability Engineering',
-        description: 'Design distributed systems handling millions of requests daily using event-driven architecture and concurrency patterns.'
+        title: 'Backend Development',
+        description: 'Building robust, scalable server-side applications using Go and Python.'
     },
     {
-        title: 'Deployment & Infrastructure',
-        description: 'Implement CI/CD pipelines and containerization strategies for reliable, zero-downtime deployments.'
+        title: 'API Design',
+        description: 'Crafting intuitively designed, well-documented RESTful and gRPC APIs.'
     },
     {
-        title: 'AI & ML Integration',
-        description: 'Deploy machine learning models into production pipelines with optimized inference, real-time scoring, and intelligent automation.'
+        title: 'Database Management',
+        description: 'Optimizing data schemas and queries for performance and integrity with PostgreSQL and MongoDB.'
     },
     {
-        title: 'Production Reliability',
-        description: 'Build systems that fail gracefully. Error handling, monitoring, and recovery are first-class concerns.'
+        title: 'DevOps & Deployment',
+        description: 'Streamlining development workflows with Docker, CI/CD, and cloud infrastructure.'
     }
 ];
 
-const metrics = [
+const philosophy = [
     {
-        label: 'QUERY_PERFORMANCE',
-        value: '2x FASTER',
-        description: 'Database optimization and query tuning delivering consistent performance improvements.'
+        label: 'CLEAN CODE',
+        value: 'Maintainable',
+        description: 'Writing code that is easy to read, test, and extend for future growth.'
     },
     {
-        label: 'SYSTEM_RELIABILITY',
-        value: '99.9% UPTIME',
-        description: 'Production uptime through monitoring, alerting, and automated recovery protocols.'
+        label: 'PERFORMANCE',
+        value: 'Efficient',
+        description: 'Optimizing for speed and resource usage without premature complication.'
     },
     {
-        label: 'TRAFFIC_CAPACITY',
-        value: '10M+ REQ/DAY',
-        description: 'Systems processing millions of daily requests with sub-50ms latency.'
+        label: 'RELIABILITY',
+        value: 'Robust',
+        description: 'Building systems that handle errors gracefully and ensure data integrity.'
     }
 ];
 </script>

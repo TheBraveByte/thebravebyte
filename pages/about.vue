@@ -111,8 +111,8 @@ const topics = [
 ];
 
 const stats = [
-  { label: 'Uptime', value: '99.99%', percent: 99 },
-  { label: 'Code Quality', value: 'A+', percent: 95 },
-  { label: 'Coffee', value: '∞', percent: 100 },
+  { label: 'Problem Solving', value: 'Passionate', percent: 100 },
+  { label: 'Code Quality', value: 'High', percent: 95 },
+  { label: 'Learning', value: 'Continuous', percent: 100 },
 ];
 </script>
