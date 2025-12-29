@@ -52,7 +52,7 @@ if [ $? -eq 0 ]; then
     echo "   - Go to https://dash.cloudflare.com"
     echo "   - Workers & Pages → Create project"
     echo "   - Connect GitHub repository"
-    echo "   - Set build command: npm run build && rm -f dist/_worker.js/wrangler.json"
+    echo "   - Set build command: npm run build && rm -f dist/_worker.js/wrangler.json && npx wrangler pages deploy dist --project-name=thebravebyte --config wrangler.toml"
     echo "   - Set output directory: dist"
     echo ""
     echo "2. Add GitHub Secrets:"

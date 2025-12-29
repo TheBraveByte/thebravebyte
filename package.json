@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "npm run build && rm -f dist/_worker.js/wrangler.json && npx wrangler pages deploy dist --project-name=thebravebyte",
+    "deploy": "npm run build && rm -f dist/_worker.js/wrangler.json && npx wrangler pages deploy dist --project-name=thebravebyte --config wrangler.toml",
     "db:create": "npx wrangler d1 create thebravebyte-db",
     "db:migrate": "npx wrangler d1 execute thebravebyte-db --file=./server/database/schema.sql",
     "db:migrate:local": "npx wrangler d1 execute thebravebyte-db --local --file=./server/database/schema.sql"
