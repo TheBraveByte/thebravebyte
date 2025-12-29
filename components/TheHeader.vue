@@ -19,7 +19,7 @@
           <NuxtLink to="/blog" class="nav-link">
             <span>Blog</span>
           </NuxtLink>
-          <NuxtLink to="/about" class="nav-link">
+          <NuxtLink to="/#about" class="nav-link">
             <span>About</span>
           </NuxtLink>
           <NuxtLink to="/process" class="nav-link">
@@ -88,7 +88,7 @@
               <Icon name="lucide:book-open" class="w-5 h-5" />
               <span>Blog</span>
             </NuxtLink>
-            <NuxtLink to="/about" @click="mobileMenuOpen = false" class="mobile-nav-link">
+            <NuxtLink to="/#about" @click="mobileMenuOpen = false" class="mobile-nav-link">
               <Icon name="lucide:user" class="w-5 h-5" />
               <span>About</span>
             </NuxtLink>

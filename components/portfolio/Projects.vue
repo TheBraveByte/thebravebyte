@@ -1,232 +1,170 @@
 <template>
-  <section id="projects" class="py-24 bg-bg relative">
+  <section id="projects" class="py-32 bg-bg relative">
     <div class="container mx-auto px-6 max-w-6xl relative z-10">
       
       <!-- Section Header -->
-      <div class="mb-16 flex items-end justify-between border-b border-border pb-6">
-        <div>
-          <h3 class="font-mono-label text-text-secondary mb-2 flex items-center gap-2">
-            <span class="w-2 h-2 bg-text-secondary"></span>
-            SELECTED_CASE_STUDIES
-          </h3>
-          <h2 class="text-3xl md:text-4xl font-light text-text">
+      <div class="mb-20">
+        <h3 class="font-mono text-xs text-accent tracking-widest mb-4 flex items-center gap-2">
+            <span class="w-8 h-px bg-accent"></span>
+            CASE STUDIES
+        </h3>
+        <h2 class="text-4xl md:text-5xl font-bold text-text mb-6">
             Engineering Impact
-          </h2>
-        </div>
-        <div class="hidden md:block font-mono text-xs text-text-secondary text-right">
-          <div>DELIVERED_SOLUTIONS: {{ projects.length }}</div>
-          <div>STATUS: ALL_SYSTEMS_OPERATIONAL</div>
-        </div>
+        </h2>
       </div>
 
       <!-- Category Filter -->
       <div class="flex flex-wrap gap-2 mb-12">
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
-          'px-4 py-2 font-mono text-xs transition-colors duration-200 border',
+          'px-4 py-2 text-sm rounded-full transition-all duration-300 border',
           selectedCategory === cat
-            ? 'bg-text bg-text text-bg text-bg border-text'
-            : 'bg-transparent border-border text-text-secondary hover:border-text'
+            ? 'bg-text text-bg border-text font-medium'
+            : 'bg-transparent border-transparent text-text-secondary hover:border-border hover:text-text'
         ]">
-          [{{ cat.toUpperCase() }}]
+          {{ cat }}
         </button>
       </div>
 
       <!-- Projects Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="(project, index) in displayedProjects" :key="project.id"
-          class="bg-bg border border-border hover:border-text hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group relative">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-for="project in displayedProjects" :key="project.id"
+          class="project-card opacity-0 translate-y-8 group relative bg-bg-secondary/50 border border-border/50 rounded-2xl overflow-hidden hover:border-accent/30 hover:bg-bg-secondary transition-all duration-500 hover:shadow-2xl hover:shadow-accent/5">
           
-          <!-- Technical Corner Markers -->
-          <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-transparent group-hover:border-text transition-colors duration-300"></div>
-          <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-transparent group-hover:border-text transition-colors duration-300"></div>
-
-          <!-- Project Header -->
-          <div class="p-6 flex-grow">
-            <div class="flex justify-between items-start mb-4">
-              <span class="font-mono-label text-text-secondary group-hover:text-text transition-colors">
-                [ SERVICE_{{ String(index + 1).padStart(2, '0') }} ]
-              </span>
-              <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="font-mono text-[10px] text-green-500">RUNNING</span>
-              </div>
+          <div class="p-8 h-full flex flex-col">
+            <!-- Header -->
+            <div class="flex justify-between items-start mb-6">
+               <div class="p-2 rounded-lg bg-bg border border-border/50 group-hover:border-accent/20 transition-colors">
+                  <Icon name="lucide:folder-git-2" class="w-6 h-6 text-text-secondary group-hover:text-accent transition-colors" />
+               </div>
+               <div class="px-3 py-1 rounded-full bg-success/10 border border-success/20">
+                 <span class="text-[10px] font-bold text-success uppercase tracking-wider">Operational</span>
+               </div>
             </div>
 
-            <h3 class="text-lg font-normal text-text group-hover:translate-x-1 transition-all duration-300 mb-3">
+            <h3 class="text-xl font-bold text-text mb-3 group-hover:text-accent transition-colors duration-300">
               {{ project.title }}
             </h3>
 
-            <p class="text-sm text-text-secondary leading-relaxed mb-6 font-light border-l border-border pl-3">
+            <p class="text-sm text-text-secondary leading-relaxed mb-6 font-light flex-grow">
               {{ project.description }}
             </p>
 
-            <!-- Metrics Grid -->
-            <div class="bg-bg-secondary border border-border p-3 mb-4">
-              <div class="grid grid-cols-2 gap-y-2 gap-x-4">
-                <div v-for="metric in project.metrics" :key="metric.label">
-                  <div class="font-mono text-[10px] text-text-secondary uppercase">{{ metric.label }}</div>
-                  <div class="font-mono text-xs text-text">{{ metric.value }}</div>
-                </div>
+            <!-- Metrics -->
+            <div class="grid grid-cols-2 gap-4 py-4 border-t border-border/30 mb-6">
+              <div v-for="metric in project.metrics" :key="metric.label">
+                <div class="text-[10px] text-text-muted uppercase tracking-wider mb-1">{{ metric.label }}</div>
+                <div class="text-sm font-medium text-text">{{ metric.value }}</div>
               </div>
             </div>
 
-            <!-- Tech Stack -->
-            <div class="flex flex-wrap gap-2">
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mt-auto">
               <span v-for="tag in project.tags" :key="tag"
-                class="font-mono text-[10px] px-2 py-1 border border-border text-text-secondary">
+                class="text-[10px] px-2 py-1 rounded bg-bg border border-border text-text-secondary">
                 {{ tag }}
               </span>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- Load More / Show Less Buttons -->
-      <div class="flex justify-center gap-4 mt-12">
-        <button v-if="hasMoreProjects" @click="loadMore"
-          class="px-6 py-3 border border-border text-text hover:border-text hover:bg-bg-secondary transition-colors duration-200 font-mono text-xs">
-          [ LOAD_MORE_DATA ]
-        </button>
-        <button v-if="visibleCount > 3" @click="showLess"
-          class="px-6 py-3 text-text-secondary hover:text-text dark:hover:text-text transition-colors font-mono text-xs">
-          [ COLLAPSE_VIEW ]
+      <!-- Load More -->
+      <div class="flex justify-center mt-16" v-if="hasMoreProjects">
+        <button @click="loadMore"
+          class="px-8 py-3 rounded-full border border-border text-text hover:bg-bg-secondary transition-colors text-sm font-medium">
+          Load More Cases
         </button>
       </div>
 
-      <!-- CTA -->
-      <div class="text-center mt-20 border-t border-border pt-12">
-        <p class="font-mono text-xs text-text-secondary mb-4">:: SYSTEM_READY_FOR_DEPLOYMENT</p>
-        <NuxtLink to="#contact"
-          class="inline-flex items-center gap-3 px-8 py-4 bg-text bg-text text-bg text-bg hover:bg-text-secondary transition-colors duration-200 font-mono text-sm group">
-          <span>[ INITIATE_COLLABORATION ]</span>
-          <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </NuxtLink>
-      </div>
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const projects = [
   {
     id: 1,
-    title: "RiXL — Usage-Based Cloud Media Platform",
-    description: "Built for content creators who need scalable media hosting. Traditional seat-based pricing fails here—users pay for storage, bandwidth, and transcoding they actually use. Designed idempotent billing with Stripe Meters and nightly reconciliation to ensure zero revenue leakage.",
-    impact: "100% billing accuracy with Cloudflare analytics integration for real-time bandwidth tracking",
-    tags: ["Usage-Based Billing", "Stripe Meters", "Event-Driven", "Cloudflare CDN"],
+    title: "RiXL — Cloud Media",
+    description: "Usage-based media hosting platform. Traditional seat-based pricing fails here—users pay for storage, bandwidth, and transcoding they actually use. Idempotent billing with Stripe Meters ensuring zero revenue leakage.",
+    impact: "100% billing accuracy with Cloudflare analytics integration",
+    tags: ["Go", "Stripe", "Cloudflare"],
     category: "Media & Streaming",
     metrics: [
-      { label: "THROUGHPUT", value: "10GB/s" },
-      { label: "BILLING", value: "100% ACCURATE" },
+      { label: "Throughput", value: "10GB/s" },
+      { label: "Billing", value: "100% Accurate" },
     ],
   },
   {
     id: 2,
-    title: "EazyFit — Fashion Marketplace Platform",
-    description: "Connects customers with professional fashion stylists. The challenge: chat surge during order negotiations was crashing checkout. Isolated domains (Chat, Payments, Core) ensure a 10x chat spike doesn't affect payment success. AI monitoring prevents off-platform transactions.",
-    impact: "Won Ilorin Innovation Challenge, secured $5K pre-seed. 99.99% uptime during peak traffic.",
-    tags: ["Domain Isolation", "WebSocket", "AI Content Moderation", "Paystack"],
+    title: "EazyFit — Marketplace",
+    description: "Connecting customers with stylists. Isolated domains (Chat, Payments, Core) ensure a 10x chat spike doesn't affect payment success. AI monitoring prevents off-platform transactions.",
+    impact: "99.99% uptime during peak traffic",
+    tags: ["microservices", "WebSocket", "AI"],
     category: "E-Commerce",
     metrics: [
-      { label: "MSG_LATENCY", value: "<100ms" },
-      { label: "UPTIME", value: "99.99%" },
+      { label: "Latency", value: "<100ms" },
+      { label: "Uptime", value: "99.99%" },
     ],
   },
-  {
+    {
     id: 3,
-    title: "OmonAI — Fraud Detection & AML Platform",
-    description: "Financial institutions were losing $50K+/month to fraud while rule-based detection blocked 40% of legitimate transactions. Deployed 10-dimensional ML model (CiferAI) for behavioral pattern analysis—catches sophisticated fraud rules miss while reducing false positives by 60%.",
-    impact: "60% reduction in false positives, <50ms inference latency, estimated $30K/month fraud prevented",
-    tags: ["TensorFlow ML", "Real-Time Scoring", "AML Compliance", "FastAPI"],
+    title: "OmonAI — Fraud Detection",
+    description: "Deployed 10-dimensional ML model (CiferAI) for behavioral pattern analysis. Catches sophisticated fraud that rules miss while reducing false positives by 60%.",
+    impact: "Estimated $30K/month fraud prevented",
+    tags: ["Python", "TensorFlow", "FastAPI"],
     category: "Fintech",
     metrics: [
-      { label: "INFERENCE", value: "<50ms" },
-      { label: "FALSE_POS", value: "-60%" },
+      { label: "Inference", value: "<50ms" },
+      { label: "False Pos", value: "-60%" },
     ],
   },
   {
     id: 4,
-    title: "BiTraq — Real-time Crypto Arbitrage Engine",
-    description: "Arbitrage windows last 200-500ms—sequential price fetching from 10 exchanges takes 5s, missing every opportunity. Fan-Out/Fan-In pattern reduces latency to max(T)=300ms. Background job queues ensure trading API stays responsive during alert processing spikes.",
-    impact: "Captures 98.5% of arbitrage opportunities that slower systems miss entirely",
-    tags: ["Fan-Out/Fan-In", "Low-Latency", "Job Queues", "Multi-Exchange"],
+    title: "BiTraq — Arbitrage Engine",
+    description: "Real-time crypto arbitrage. Fan-Out/Fan-In pattern reduces latency to max(T)=300ms. Background job queues ensure trading API stays responsive during alert processing spikes.",
+    impact: "Captures 98.5% of arbitrage opportunities",
+    tags: ["Go", "Redis", "gRPC"],
     category: "Fintech & Blockchain",
     metrics: [
-      { label: "EXEC_TIME", value: "<200ms" },
-      { label: "CAPTURE", value: "98.5%" },
+      { label: "Exec Time", value: "<200ms" },
+      { label: "Capture", value: "98.5%" },
     ],
   },
   {
     id: 5,
-    title: "Unified Campus — Multi-Tenant Attendance Platform",
-    description: "Schools, universities, and companies need attendance tracking with strict data isolation. Built multi-tenant architecture with organization hierarchies (School → Faculty → Department). Immutable audit logs for every state change passed enterprise security audits.",
-    impact: "Serves companies, schools, and universities with complete data isolation and full audit trails",
-    tags: ["Multi-Tenancy", "Hierarchical RBAC", "Audit Logging", "PostgreSQL RLS"],
+    title: "Unified Campus",
+    description: "Multi-tenant attendance architecture with strict data isolation (School → Faculty → Department). Immutable audit logs for every state change passed enterprise security audits.",
+    impact: "Complete data isolation for 50+ tenants",
+    tags: ["PostgreSQL", "RLS", "Audit Logs"],
     category: "Enterprise & SaaS",
     metrics: [
-      { label: "TENANTS", value: "ISOLATED" },
-      { label: "AUDIT", value: "IMMUTABLE" },
+      { label: "Tenants", value: "Isolated" },
+      { label: "Audit", value: "Immutable" },
     ],
   },
   {
     id: 6,
-    title: "Forex Signals Telegram Bot",
-    description: "Forex traders abandoned 70% of checkouts on external payment pages. Embedded entire subscription flow inside Telegram—users never leave the app. Supporting 250+ cryptocurrencies plus cards maximized addressable market. Admin approval workflow ensures payment verification.",
-    impact: "Checkout completion increased from 30% to 85% with in-app payment flow",
-    tags: ["Telegram Bot API", "NOWPayments", "Session State", "Webhook Security"],
+    title: "Forex Bot Automation",
+    description: "Embedded subscription flow inside Telegram. Supporting 250+ cryptocurrencies plus cards maximized addressable market. Admin approval workflow ensures payment verification.",
+    impact: "Checkout completion increased from 30% to 85%",
+    tags: ["Telegram API", "Webhooks", "Security"],
     category: "Fintech & Automation",
     metrics: [
-      { label: "CONVERSION", value: "+183%" },
-      { label: "CRYPTOS", value: "250+" },
+      { label: "Conversion", value: "+183%" },
+      { label: "Cryptos", value: "250+" },
     ],
-  },
-  {
-    id: 7,
-    title: "Enterprise Ride-Hailing Platform",
-    description: "Employed a Microservices-based approach to isolate failure domains. If the ride tracking service experiences issues, the core booking and payment modules remain unaffected and operational.",
-    impact: "System resilience ensures 99.9% booking availability even during partial outages",
-    tags: ["Microservices", "Fault Tolerance", "Orchestration", "System Resilience"],
-    category: "Mobility & Logistics",
-    metrics: [
-      { label: "DAU", value: "2300+" },
-      { label: "AVAILABILITY", value: "99.9%" },
-    ],
-  },
-  {
-    id: 8,
-    title: "Healthcare Complaint Management",
-    description: "Designed for regulatory compliance (HIPAA) with end-to-end encryption for patient data. Separation of PII (Personally Identifiable Information) from analytics data ensures privacy by design.",
-    impact: "Full HIPAA compliance achieved through architectural decisions, not just policy",
-    tags: ["Compliance Engineering", "Data Privacy", "Encryption", "Healthcare"],
-    category: "Healthcare & Compliance",
-    metrics: [
-      { label: "DATA_VOL", value: "500/DAY" },
-      { label: "COMPLIANCE", value: "HIPAA" },
-    ],
-  },
-  {
-    id: 9,
-    title: "AI-Powered IoT Fire Detection",
-    description: "Moved inference to the Edge (IoT device) to remove network latency dependencies. This architectural choice ensures fire detection happens in milliseconds, even if the internet connection is down.",
-    impact: "Life-saving detection works 100% of the time, even without internet connectivity",
-    tags: ["Edge Computing", "IoT", "Computer Vision", "Embedded Systems"],
-    category: "AI & IoT",
-    metrics: [
-      { label: "ACCURACY", value: "86%" },
-      { label: "LATENCY", value: "REAL-TIME" },
-    ],
-  },
+  }
 ];
 
 const selectedCategory = ref('All Projects');
-const visibleCount = ref(3);
+const visibleCount = ref(6); // Show more by default
 
 const categories = computed(() => {
-  const cats = ['All Projects', ...new Set(projects.map(p => p.category))];
-  return cats;
+  return ['All Projects', ...new Set(projects.map(p => p.category))];
 });
 
 const filteredProjects = computed(() => {
@@ -248,12 +186,32 @@ const loadMore = () => {
   visibleCount.value += 3;
 };
 
-const showLess = () => {
-  visibleCount.value = 3;
-  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// Animation Logic
+const animateProjects = () => {
+    nextTick(() => {
+        ScrollTrigger.refresh(); // Ensure positions are recalculated
+        gsap.to('.project-card', {
+            scrollTrigger: {
+                trigger: '#projects',
+                start: 'top 80%'
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power2.out',
+            overwrite: 'auto' // Prevent conflict with category filtering
+        });
+    });
 };
 
-watch(selectedCategory, () => {
-  visibleCount.value = 3;
+onMounted(() => {
+    animateProjects();
+});
+
+watch([selectedCategory, visibleCount], () => {
+    // Re-animate when filter changes
+    gsap.set('.project-card', { y: 20, opacity: 0 });
+    animateProjects();
 });
 </script>
