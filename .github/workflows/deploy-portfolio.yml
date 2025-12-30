@@ -5,9 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'app/**'
-      - 'nuxt.config.ts'
-      - 'package.json'
+      - "app/**"
+      - "nuxt.config.ts"
+      - "package.json"
   workflow_dispatch:
 
 jobs:
@@ -16,9 +16,9 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    
+
     name: Deploy to Cloudflare Pages
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,8 +26,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
-          cache: 'npm'
+          node-version: "latest"
+          cache: "npm"
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
@@ -41,7 +41,7 @@ jobs:
       - name: Install Wrangler v4 and deploy to Pages
         run: |
           npm install --no-audit --no-fund --no-save wrangler@4
-          npx wrangler pages deploy .output/public --project-name thebravebyte --branch main --commit ${{ github.sha }}
+          npx wrangler pages deploy .output/public --project-name thebravebyte --branch main --commit-hash ${{ github.sha }}
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
