@@ -90,7 +90,7 @@ const contacts = [
   {
     name: 'X (Twitter)',
     icon: 'simple-icons:x',
-    href: 'https://x.com/_iamyak',
+    href: 'https://x.com/thebravebyte',
     target: '_blank',
     rel: 'noopener noreferrer'
   },

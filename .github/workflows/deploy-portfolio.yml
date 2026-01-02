@@ -5,7 +5,9 @@ on:
     branches:
       - main
     paths:
-      - "app/**"
+      - "server/**"
+      - "pages/**"
+      - "components/**"
       - "nuxt.config.ts"
       - "package.json"
   workflow_dispatch:

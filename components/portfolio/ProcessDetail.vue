@@ -467,7 +467,7 @@ style W2 ${s.primaryAccent}
 style W3 ${s.primaryAccent}`;
 });
 
-const systemDiagram = computed(() => {
+const bitraqDiagram = computed(() => {
   const s = diagramStyles.value;
   return `graph TB
 User((User)) -->|Configure| API[API Gateway]
@@ -489,6 +489,29 @@ style ArbEngine ${s.secondaryWarning}
 style Workers ${s.primaryAccent}
 style Exchanges ${s.secondaryInfo}
 style DB ${s.secondaryMuted}`;
+});
+
+const multiTenantDiagram = computed(() => {
+  const s = diagramStyles.value;
+  return `graph TB
+    Org[Organization Admin] -->|Manages| Faculty[Faculty/Unit]
+    Faculty -->|Contains| Dept[Department]
+    Dept -->|Hosts| Class[Class/Room]
+    
+    User((Student/Staff)) -->|Request| API[API Gateway]
+    API -->|Inject TenantID| Auth[Auth Layer]
+    Auth -->|RLS Policy| DB[(Multi-Tenant DB)]
+    
+    subgraph "Data Isolation"
+    DB
+    end
+    
+    style Org ${s.primaryAccent}
+    style Faculty ${s.primaryInfo}
+    style Dept ${s.primaryInfo}
+    style API ${s.secondaryWarning}
+    style Auth ${s.primaryAccent}
+    style DB ${s.secondaryMuted}`;
 });
 
 const concurrencyDiagram = computed(() => {
@@ -790,7 +813,7 @@ async def predict(tx: TransactionFeatures):
         items: ['<strong>Tenant Model:</strong> Organization ID in every query, PostgreSQL RLS for enforcement', '<strong>Hierarchy:</strong> Parent-child relationships (School → Faculty → Department → Class)', '<strong>Audit Trail:</strong> Immutable event log for every state change (passed enterprise security audits)', '<strong>RBAC:</strong> Super Admin → Org Admin → Department Admin → User cascade']
       }
     ],
-    diagram: systemDiagram.value
+    diagram: multiTenantDiagram.value
   },
   {
     title: 'Clean Architecture',

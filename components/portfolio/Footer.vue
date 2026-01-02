@@ -93,7 +93,7 @@ const socialLinks = [
   {
     name: 'X',
     icon: 'simple-icons:x',
-    href: 'https://x.com/_iamyak',
+    href: 'https://x.com/thebravebyte',
     target: '_blank',
     rel: 'noopener noreferrer'
   },
