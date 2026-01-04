@@ -102,16 +102,14 @@ const formatDate = (date) => {
   font-size: 3rem;
   line-height: 1.1;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-text);
 }
 
 .cover-image {
   margin: 2rem -2rem;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 .cover-image img {
@@ -123,12 +121,12 @@ const formatDate = (date) => {
 .content {
   font-size: 1.125rem;
   line-height: 1.8;
-  color: #d4d4d8;
+  color: var(--color-text-secondary);
 }
 
 /* Markdown prose styling */
 .prose-content {
-  color: #d4d4d8;
+  color: var(--color-text-secondary);
 }
 
 .prose-content :deep(p) {
@@ -139,7 +137,7 @@ const formatDate = (date) => {
   font-size: 2.5rem;
   margin-top: 2em;
   margin-bottom: 0.75em;
-  color: var(--text-primary);
+  color: var(--color-text);
   font-weight: 600;
 }
 
@@ -147,7 +145,7 @@ const formatDate = (date) => {
   font-size: 2rem;
   margin-top: 2em;
   margin-bottom: 0.75em;
-  color: var(--text-primary);
+  color: var(--color-text);
   font-weight: 600;
 }
 
@@ -155,7 +153,7 @@ const formatDate = (date) => {
   font-size: 1.5rem;
   margin-top: 1.5em;
   margin-bottom: 0.75em;
-  color: var(--text-primary);
+  color: var(--color-text);
   font-weight: 600;
 }
 
@@ -169,11 +167,11 @@ const formatDate = (date) => {
 }
 
 .prose-content :deep(blockquote) {
-  border-left: 4px solid var(--accent-primary);
+  border-left: 4px solid var(--color-accent);
   padding-left: 1rem;
   margin-left: 0;
   font-style: italic;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin-bottom: 1.5em;
 }
 
@@ -184,17 +182,18 @@ const formatDate = (date) => {
 }
 
 .prose-content :deep(pre) {
-  background: #1e1e24;
+  background: var(--color-bg-secondary);
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: 0.9em;
   margin-bottom: 1.5em;
+  border: 1px solid var(--color-border);
 }
 
 .prose-content :deep(code) {
-  background: #1e1e24;
+  background: var(--color-bg-secondary);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-family: var(--font-mono);
