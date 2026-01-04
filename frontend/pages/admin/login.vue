@@ -157,8 +157,8 @@ const handleLogin = async () => {
       body: credentials.value
     });
 
-    if (error.value || !data.value?.success) {
-      errorMessage.value = error.value?.data?.message || 'Invalid credentials';
+    if (error.value) {
+      errorMessage.value = error.value?.data?.error || error.value?.data?.status || 'Invalid credentials';
       progress.value = 0;
       loadingMessage.value = '';
       loading.value = false;
