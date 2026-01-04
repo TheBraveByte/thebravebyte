@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+
 	"github.com/thebravebyte/backend/internal/handlers"
 	customMiddleware "github.com/thebravebyte/backend/internal/middleware"
 )
@@ -18,7 +19,7 @@ func SetupRouter() *chi.Mux {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:8080"}, // Adjust for frontend URL
+		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:8080", "https://thebravebyte.com", "https://thebravebyte.netlify.app", "https://*.netlify.app"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
