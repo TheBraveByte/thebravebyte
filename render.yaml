@@ -1,0 +1,17 @@
+services:
+  # Backend Service
+  - type: web
+    name: thebravebyte-backend
+    env: go
+    rootDir: backend
+    buildCommand: go build -o server ./cmd/api
+    startCommand: ./server
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: MONGO_URI
+        sync: false # Set this in Render Dashboard
+      - key: JWT_SECRET
+        sync: false # Set this in Render Dashboard
+      - key: DB_NAME
+        value: thebravebyte
