@@ -8,7 +8,10 @@ export default defineNuxtConfig({
   // Netlify deployment
   nitro: {
     preset: 'netlify',
-    plugins: ['~/server/utils/db.ts']
+    plugins: ['~/server/utils/db.ts'],
+    routeRules: {
+      '/api/**': { proxy: process.env.NUXT_PUBLIC_API_BASE ? `${process.env.NUXT_PUBLIC_API_BASE}/**` : 'https://thebravebyte.onrender.com/api/**' }
+    }
   },
 
   modules: [
@@ -48,6 +51,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET || 'super-secret-key-change-me',
     public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://thebravebyte.onrender.com/api',
       siteUrl: 'https://thebravebyte.com',
     }
   },
