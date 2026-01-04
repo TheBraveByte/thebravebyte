@@ -7,7 +7,7 @@ import (
 )
 
 type Article struct {
-	ID          bson.ObjectID `bson:"_id,omitempty" json:"id"`
+	ID          bson.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Title       string        `bson:"title" json:"title"`
 	Slug        string        `bson:"slug" json:"slug"`
 	Excerpt     string        `bson:"excerpt" json:"excerpt"`

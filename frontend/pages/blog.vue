@@ -203,14 +203,24 @@ const allArticles = computed(() => {
   const rawInternal = Array.isArray(apiData.value?.articles)
     ? apiData.value!.articles
     : [];
+  
+  // Filter for published articles and map them
   const internal = rawInternal
-    .filter(Boolean)
+    .filter((a: any) => a && a.published)
     .map((a: any) => ({
       ...a,
       isExternal: false,
       category: 'Engineering'
     }));
-  return [...externalArticles, ...internal].filter(Boolean);
+
+  const combined = [...externalArticles, ...internal].filter(Boolean);
+
+  // Sort by date descending (newest first)
+  return combined.sort((a: any, b: any) => {
+    const dateA = new Date(a.date || a.createdAt).getTime();
+    const dateB = new Date(b.date || b.createdAt).getTime();
+    return dateB - dateA;
+  });
 });
 
 // Get unique categories
