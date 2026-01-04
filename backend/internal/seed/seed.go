@@ -4,23 +4,16 @@ import (
 	"context"
 	"time"
 
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.uber.org/zap"
+
 	"github.com/thebravebyte/backend/internal/auth"
 	"github.com/thebravebyte/backend/internal/database"
 	"github.com/thebravebyte/backend/internal/logger"
 	"github.com/thebravebyte/backend/internal/models"
-	"go.mongodb.org/mongo-driver/v2/bson"
-	"go.uber.org/zap"
 )
 
 func AdminUser(email, password string) {
-	// Fallback to hardcoded credentials if not provided
-	if email == "" {
-		email = "ayaaakinleye@gmail.com"
-	}
-	if password == "" {
-		password = "@Akinleye@123"
-	}
-
 	if email == "" || password == "" {
 		logger.Log.Warn("Admin email or password not set, skipping admin seeding")
 		return
