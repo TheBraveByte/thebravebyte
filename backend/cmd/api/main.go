@@ -10,6 +10,7 @@ import (
 	"github.com/thebravebyte/backend/internal/database"
 	"github.com/thebravebyte/backend/internal/logger"
 	"github.com/thebravebyte/backend/internal/routes"
+	"github.com/thebravebyte/backend/internal/seed"
 )
 
 func main() {
@@ -26,6 +27,9 @@ func main() {
 
 	// Connect Database
 	database.Connect(cfg.MongoURI, cfg.DBName)
+
+	// Seed Admin User
+	seed.AdminUser(cfg.AdminEmail, cfg.AdminPassword)
 
 	// Setup Router
 	r := routes.SetupRouter()

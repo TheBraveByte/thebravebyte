@@ -8,10 +8,12 @@ import (
 )
 
 type Config struct {
-	Port      string
-	MongoURI  string
-	DBName    string
-	JWTSecret string
+	Port          string
+	MongoURI      string
+	DBName        string
+	JWTSecret     string
+	AdminEmail    string
+	AdminPassword string
 }
 
 func LoadConfig() *Config {
@@ -39,10 +41,15 @@ func LoadConfig() *Config {
 		log.Fatal("JWT_SECRET is required")
 	}
 
+	adminEmail := os.Getenv("ADMIN_EMAIL")
+	adminPassword := os.Getenv("ADMIN_PASSWORD")
+
 	return &Config{
-		Port:      port,
-		MongoURI:  mongoURI,
-		DBName:    dbName,
-		JWTSecret: jwtSecret,
+		Port:          port,
+		MongoURI:      mongoURI,
+		DBName:        dbName,
+		JWTSecret:     jwtSecret,
+		AdminEmail:    adminEmail,
+		AdminPassword: adminPassword,
 	}
 }
