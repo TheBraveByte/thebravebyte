@@ -183,8 +183,14 @@ const formatDate = (date) => {
 const deleteArticle = async (id) => {
   if (!confirm('Delete this article permanently?')) return;
   
+  const token = useCookie('auth_token');
   try {
-    await useFetch(`/api/articles/${id}`, { method: 'DELETE' });
+    await useFetch(`/api/articles/${id}`, { 
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      }
+    });
     refresh();
   } catch (error) {
     console.error('Delete failed:', error);

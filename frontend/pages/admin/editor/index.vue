@@ -273,6 +273,7 @@ watch(article, () => {
 
 const saveDraft = async (isAutoSave = false) => {
   saving.value = true;
+  const token = useCookie('auth_token');
   
   try {
     const endpoint = isEditing.value 
@@ -288,6 +289,9 @@ const saveDraft = async (isAutoSave = false) => {
     
     const { data, error } = await useFetch(endpoint, {
       method,
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      },
       body: { ...article.value, content: contentToSave, published: false }
     });
     
@@ -317,6 +321,7 @@ const saveDraft = async (isAutoSave = false) => {
 
 const publish = async () => {
   saving.value = true;
+  const token = useCookie('auth_token');
   
   try {
     // Ensure slug is generated if missing
@@ -340,6 +345,9 @@ const publish = async () => {
     
     const { data, error } = await useFetch(endpoint, {
       method,
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      },
       body: { 
         ...article.value, 
         content: contentToSave,
@@ -372,10 +380,14 @@ const unpublish = async () => {
   if (!confirm('Unpublish this article?')) return;
   
   saving.value = true;
+  const token = useCookie('auth_token');
   
   try {
     const { error } = await useFetch(`/api/articles/${route.query.id}`, {
       method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      },
       body: { ...article.value, published: false }
     });
     
@@ -397,10 +409,14 @@ const deleteArticle = async () => {
   if (!confirm('Delete this article permanently? This cannot be undone.')) return;
   
   saving.value = true;
+  const token = useCookie('auth_token');
   
   try {
     const { error } = await useFetch(`/api/articles/${route.query.id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      }
     });
     
     if (error.value) {
