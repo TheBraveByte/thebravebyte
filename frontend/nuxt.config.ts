@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   // Netlify deployment
   nitro: {
     preset: 'netlify',
-    plugins: ['~/server/utils/db.ts'],
     routeRules: {
       '/api/**': { proxy: process.env.NUXT_PUBLIC_API_BASE ? `${process.env.NUXT_PUBLIC_API_BASE}/**` : 'https://thebravebyte.onrender.com/api/**' }
     }
