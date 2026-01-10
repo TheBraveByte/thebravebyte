@@ -39,17 +39,8 @@
             <Icon v-else name="lucide:moon" class="w-5 h-5" />
           </button>
 
-          <!-- Admin Access -->
-          <NuxtLink 
-            v-if="!isAuthenticated"
-            to="/admin/login" 
-            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-secondary hover:text-text hover:border-text transition-colors text-sm font-mono"
-          >
-            <Icon name="lucide:lock" class="w-4 h-4" />
-            <span>ADMIN</span>
-          </NuxtLink>
-
-          <div v-else class="hidden sm:flex items-center gap-2">
+          <!-- Admin Access (only shown when authenticated) -->
+          <div v-if="isAuthenticated" class="hidden sm:flex items-center gap-2">
             <NuxtLink 
               to="/admin/dashboard"
               class="px-4 py-2 rounded-lg bg-bg-secondary border border-border text-text hover:bg-bg-tertiary transition-colors text-sm font-mono"
@@ -97,20 +88,18 @@
               <span>Process</span>
             </NuxtLink>
             
-            <div class="border-t border-border my-2"></div>
-            
-            <NuxtLink v-if="!isAuthenticated" to="/admin/login" @click="mobileMenuOpen = false" class="mobile-nav-link">
-              <Icon name="lucide:lock" class="w-5 h-5" />
-              <span>Admin Login</span>
-            </NuxtLink>
-            <NuxtLink v-else to="/admin/dashboard" @click="mobileMenuOpen = false" class="mobile-nav-link">
-              <Icon name="lucide:layout-dashboard" class="w-5 h-5" />
-              <span>Dashboard</span>
-            </NuxtLink>
-            <button v-if="isAuthenticated" @click="logout" class="mobile-nav-link text-left">
-              <Icon name="lucide:log-out" class="w-5 h-5" />
-              <span>Logout</span>
-            </button>
+            <template v-if="isAuthenticated">
+              <div class="border-t border-border my-2"></div>
+              
+              <NuxtLink to="/admin/dashboard" @click="mobileMenuOpen = false" class="mobile-nav-link">
+                <Icon name="lucide:layout-dashboard" class="w-5 h-5" />
+                <span>Dashboard</span>
+              </NuxtLink>
+              <button @click="logout" class="mobile-nav-link text-left">
+                <Icon name="lucide:log-out" class="w-5 h-5" />
+                <span>Logout</span>
+              </button>
+            </template>
           </nav>
         </div>
       </transition>
