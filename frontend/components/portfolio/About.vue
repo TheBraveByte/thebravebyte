@@ -49,7 +49,7 @@
 
                     <!-- Resume Download -->
                     <div class="about-reveal translate-y-8 opacity-0 pt-4">
-                        <a href="https://drive.google.com/file/d/10n3WSqvp81oE9miaPANJV1h6U6Wi3zw7/view?usp=sharing"
+                        <a href="https://drive.google.com/file/d/13GTqHs-pQZamtD9SI3-Qth8Y1hg9C2nH/view?usp=sharing"
                             class="inline-flex items-center gap-3 text-sm font-medium text-text hover:text-accent transition-colors pb-1 border-b border-border hover:border-accent">
                             <Icon name="lucide:download" class="w-4 h-4" />
                             <span>Download Engineering Resume</span>

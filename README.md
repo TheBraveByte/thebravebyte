@@ -31,14 +31,23 @@ func GetTechStack() map[string][]string {
 
 ## 📊 GitHub Stats
 
-[![GitHub Streak](https://streak-stats.demolab.com?user=TheBraveByte&theme=dark)](https://git.io/streak-stats)
-[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=donut-vertical&theme=vision-friendly-dark)](https://github.com/anuraghazra/github-readme-stats)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=dark&hide_border=true&include_all_commits=true" />
+  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=default&hide_border=true&include_all_commits=true" />
+  <img alt="TheBraveByte's GitHub stats" src="https://github-readme-stats.vercel.app/api?username=TheBraveByte&show_icons=true&theme=default&hide_border=true&include_all_commits=true" />
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=dark&hide_border=true" />
+  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=default&hide_border=true" />
+  <img alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheBraveByte&layout=compact&theme=default&hide_border=true" />
+</picture>
+
+[![GitHub Streak](https://streak-stats.demolab.com?user=TheBraveByte&theme=dark&hide_border=true)](https://git.io/streak-stats)
 
 ## Coding Stats
 
-![Yusuf's WakaTime Stats](https://github-readme-stats.vercel.app/api/wakatime?username=bravebyte_&theme=radical)
-
-[![Total time coded since Nov 21 2023](https://wakatime.com/badge/user/018bf172-272c-4d25-9859-84617c8d2e14.svg)](https://wakatime.com/@018bf172-272c-4d25-9859-84617c8d2e14)
+[![wakatime](https://wakatime.com/badge/user/018bf172-272c-4d25-9859-84617c8d2e14.svg)](https://wakatime.com/@018bf172-272c-4d25-9859-84617c8d2e14)
 
 ## 🤝 Connect
 
