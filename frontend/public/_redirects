@@ -1,2 +1,5 @@
-/api/*  https://thebravebyte.onrender.com/api/:splat  200
+# Proxying to an external domain with a 200 rewrite is not supported
+# by Cloudflare Pages. Use a 302 redirect to forward requests instead.
+/api/*  https://thebravebyte.onrender.com/api/:splat  302
+
 /* /index.html 200
