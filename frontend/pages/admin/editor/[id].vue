@@ -72,6 +72,7 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
+const { apiFetch, useApiFetch } = await import('~/composables/useApi');
 const isNew = route.params.id === 'create';
 const saving = ref(false);
 
@@ -85,7 +86,7 @@ const form = ref({
 });
 
 if (!isNew) {
-  const { data } = await useFetch(`${config.public.apiBase}/articles/${route.params.id}`); // We need a get-by-id endpoint or use slug if ID is slug?
+  const { data } = await useApiFetch(`/articles/${route.params.id}`); // We need a get-by-id endpoint or use slug if ID is slug?
   // Actually my API uses ID for PUT but I don't have a GET by ID endpoint exposed yet, only by slug.
   // Wait, I implemented `[slug].get.ts`. I should probably implement `[id].get.ts` for admin or just use the list data?
   // Better to have `[id].get.ts`. I'll add it.
@@ -101,13 +102,13 @@ const save = async (publish) => {
     const payload = { ...form.value, published: publish || form.value.published };
     
     if (isNew) {
-      await $fetch(`${config.public.apiBase}/articles`, {
+      await apiFetch(`/articles`, {
         method: 'POST',
         body: payload
       });
       router.push('/admin/editor');
     } else {
-      await $fetch(`${config.public.apiBase}/articles/${route.params.id}`, {
+      await apiFetch(`/articles/${route.params.id}`, {
         method: 'PUT',
         body: payload
       });

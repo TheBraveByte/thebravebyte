@@ -189,6 +189,7 @@ definePageMeta({
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
+const { apiFetch, useApiFetch, apiUrl } = await import('~/composables/useApi');
 
 const siteUrl = config.public.siteUrl || 'http://localhost:3000';
 const isEditing = computed(() => !!route.query.id);
@@ -333,8 +334,8 @@ const publish = async () => {
     }
 
     const endpoint = isEditing.value
-      ? `/api/articles/${route.query.id}`
-      : '/api/articles';
+      ? `/articles/${route.query.id}`
+      : '/articles';
     
     const method = isEditing.value ? 'PUT' : 'POST';
     
@@ -343,7 +344,7 @@ const publish = async () => {
       ? markdownContent.value 
       : article.value.content;
     
-    const { data, error } = await useFetch(endpoint, {
+    const { data, error } = await useApiFetch(endpoint, {
       method,
       headers: {
         Authorization: `Bearer ${token.value}`
@@ -383,7 +384,7 @@ const unpublish = async () => {
   const token = useCookie('auth_token');
   
   try {
-    const { error } = await useFetch(`/api/articles/${route.query.id}`, {
+    const { error } = await useApiFetch(`/articles/${route.query.id}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token.value}`
@@ -412,7 +413,7 @@ const deleteArticle = async () => {
   const token = useCookie('auth_token');
   
   try {
-    const { error } = await useFetch(`/api/articles/${route.query.id}`, {
+    const { error } = await useApiFetch(`/articles/${route.query.id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token.value}`

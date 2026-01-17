@@ -116,10 +116,12 @@ const toggleTheme = () => {
   colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
 };
 
+const { useApiFetch } = await import('~/composables/useApi');
+
 const logout = async () => {
   const token = useCookie('auth_token');
   token.value = null;
-  await useFetch('/api/auth/logout', { method: 'POST' });
+  await useApiFetch('/auth/logout', { method: 'POST' });
   isAuthenticated.value = false;
   await navigateTo('/');
   mobileMenuOpen.value = false;
@@ -130,7 +132,7 @@ onMounted(async () => {
   const token = useCookie('auth_token');
   if (token.value) {
     try {
-      const { data } = await useFetch('/api/auth/me');
+      const { data } = await useApiFetch('/auth/me');
       if (data.value) {
         isAuthenticated.value = true;
       }
