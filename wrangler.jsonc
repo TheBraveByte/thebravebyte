@@ -3,7 +3,8 @@
   // root can find and upload frontend static assets.
   "name": "thebravebyte",
   "compatibility_date": "2026-01-17",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": "./frontend/dist"
+    "directory": "./frontend/.output/public"
   }
 }
