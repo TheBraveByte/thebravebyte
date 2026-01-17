@@ -5,8 +5,11 @@
   // Use the same compatibility date as shown in the Wrangler logs
   "compatibility_date": "2026-01-17",
 
+  // Enable Node.js compatibility for SSR
+  "compatibility_flags": ["nodejs_compat"],
+
   // Tell Wrangler where the built static assets live
   "assets": {
-    "directory": "./dist"
+    "directory": "./.output/public"
   }
 }

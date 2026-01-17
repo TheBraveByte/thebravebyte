@@ -5,9 +5,13 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  // Netlify deployment
+  // Cloudflare Pages deployment
   nitro: {
-    preset: 'netlify',
+    preset: 'cloudflare-pages',
+    output: {
+      dir: '.output',
+      publicDir: '.output/public'
+    },
     routeRules: {
       '/api/**': { proxy: process.env.NUXT_PUBLIC_API_BASE ? `${process.env.NUXT_PUBLIC_API_BASE}/**` : 'https://thebravebyte.onrender.com/api/**' }
     }
