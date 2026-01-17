@@ -12,22 +12,19 @@ compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
 
 # ============================================
-# D1 Database Bindings
-# ============================================
-# Database for storing blog articles and user authentication
-[[d1_databases]]
-binding = "DB"
-database_name = "thebravebyte-db"
-database_id = "ab3b6831-956a-4423-a4e8-93d5ed3a2c8c"
-
-# ============================================
 # Environment Variables
 # ============================================
-# Note: Secrets like JWT_SECRET should be set via:
-#   npx wrangler pages secret put JWT_SECRET --project-name=thebravebyte
-# 
-# For local development, create a .dev.vars file with:
-#   JWT_SECRET=your-local-secret-key
+# NOTE: This frontend is deployed as a static site and the backend runs on a
+# separate service. Do NOT enable D1 or other Cloudflare-managed databases
+# here since the application uses an external API.
+#
+# Set runtime/public environment variables for the frontend via the Pages
+# dashboard or the `wrangler` CLI. Important env to set in Pages:
+#   NUXT_PUBLIC_API_BASE  -> e.g. https://your-backend.example.com/api
+#
+# To store a secret via the CLI:
+#   npx wrangler pages secret put NUXT_PUBLIC_API_BASE --project-name=thebravebyte
+
 [vars]
 NODE_ENV = "production"
 
