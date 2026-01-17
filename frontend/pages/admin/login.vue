@@ -152,7 +152,8 @@ const handleLogin = async () => {
       loadingMessage.value = step.message;
     }
 
-    const { data, error } = await useFetch('/api/auth/login', {
+    const config = useRuntimeConfig();
+    const { data, error } = await useFetch(`${config.public.apiBase}/auth/login`, {
       method: 'POST',
       body: credentials.value
     });
@@ -190,7 +191,8 @@ onMounted(async () => {
   const token = useCookie('auth_token');
   if (token.value) {
     try {
-      const { data } = await useFetch('/api/auth/me');
+      const config = useRuntimeConfig();
+      const { data } = await useFetch(`${config.public.apiBase}/auth/me`);
       if (data.value) {
         await navigateTo('/admin/dashboard');
       }

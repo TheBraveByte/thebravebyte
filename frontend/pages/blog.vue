@@ -130,7 +130,8 @@
 import { ref, computed } from 'vue';
 
 // Fetch internal articles from API
-const { data: apiData, pending: loading } = await useFetch('/api/articles');
+const config = useRuntimeConfig();
+const { data: apiData, pending: loading } = await useFetch(`${config.public.apiBase}/articles`);
 
 // External articles (from Hashnode)
 const externalArticles = [

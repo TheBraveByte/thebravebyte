@@ -40,7 +40,8 @@ import Image from '@tiptap/extension-image'
 import { marked } from 'marked'
 
 const route = useRoute();
-const { data: article, pending, error } = await useFetch(`/api/articles/${route.params.slug}`);
+const config = useRuntimeConfig();
+const { data: article, pending, error } = await useFetch(`${config.public.apiBase}/articles/${route.params.slug}`);
 
 // Detect if content is markdown (string) or rich text (object)
 const isMarkdown = computed(() => typeof article.value?.content === 'string');

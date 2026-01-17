@@ -149,8 +149,9 @@ definePageMeta({
 
 const router = useRouter();
 const filter = ref('all');
+const config = useRuntimeConfig();
 
-const { data: articlesData, pending, refresh } = await useFetch('/api/articles', {
+const { data: articlesData, pending, refresh } = await useFetch(`${config.public.apiBase}/articles`, {
   query: { limit: 100 }
 });
 
@@ -185,7 +186,7 @@ const deleteArticle = async (id) => {
   
   const token = useCookie('auth_token');
   try {
-    await useFetch(`/api/articles/${id}`, { 
+    await useFetch(`${config.public.apiBase}/articles/${id}`, { 
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token.value}`
@@ -200,7 +201,7 @@ const deleteArticle = async (id) => {
 const logout = async () => {
   const token = useCookie('auth_token');
   token.value = null;
-  await useFetch('/api/auth/logout', { method: 'POST' });
+  await useFetch(`${config.public.apiBase}/auth/logout`, { method: 'POST' });
   router.push('/admin/login');
 };
 </script>

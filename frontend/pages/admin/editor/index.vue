@@ -226,7 +226,7 @@ const markdownPreview = computed(() => {
 onMounted(async () => {
   if (isEditing.value) {
     try {
-      const { data } = await useFetch(`/api/articles/${route.query.id}`);
+      const { data } = await useFetch(`${config.public.apiBase}/articles/${route.query.id}`);
       if (data.value) {
         article.value = { ...data.value };
         
@@ -277,8 +277,8 @@ const saveDraft = async (isAutoSave = false) => {
   
   try {
     const endpoint = isEditing.value 
-      ? `/api/articles/${route.query.id}`
-      : '/api/articles';
+      ? `${config.public.apiBase}/articles/${route.query.id}`
+      : `${config.public.apiBase}/articles`;
     
     const method = isEditing.value ? 'PUT' : 'POST';
     
