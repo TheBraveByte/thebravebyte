@@ -1,0 +1,12 @@
+{
+  // Worker/Pages project name
+  "name": "thebravebyte",
+
+  // Use the same compatibility date as shown in the Wrangler logs
+  "compatibility_date": "2026-01-17",
+
+  // Tell Wrangler where the built static assets live
+  "assets": {
+    "directory": "./dist"
+  }
+}
