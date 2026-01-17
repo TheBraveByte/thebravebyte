@@ -15,12 +15,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install and build frontend
         working-directory: frontend
         run: |
-          npm ci
+          rm -f package-lock.json
+          npm install
           npm run build
         env:
           NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}

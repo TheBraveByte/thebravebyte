@@ -36,7 +36,9 @@ Set any other secrets used by client code here. Do NOT store server-only secrets
 
 ## CLI / Wrangler option
 
-If you prefer CLI deploys (not GitHub integration), you can build locally and publish static assets with Wrangler:
+If you prefer CLI deploys (not GitHub integration), you can build locally and publish with Wrangler:
+
+### Option A: Static Generation (simpler)
 
 ```bash
 # from repo root
@@ -44,7 +46,18 @@ cd frontend
 npm ci
 npm run generate
 # publish the generated `dist` folder
-npx wrangler pages publish dist --project-name=thebravebyte
+npx wrangler pages deploy dist --project-name=thebravebyte
+```
+
+### Option B: SSR with Cloudflare Pages (current config)
+
+```bash
+# from repo root
+cd frontend
+npm ci
+npm run build
+# publish the SSR build output
+npx wrangler pages deploy .output/public --project-name=thebravebyte
 ```
 
 If you want to automate via GitHub Actions, enable Cloudflare Pages GitHub integration in the Pages dashboard — this is the straightforward flow.
