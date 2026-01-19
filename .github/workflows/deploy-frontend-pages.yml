@@ -22,7 +22,7 @@ jobs:
         run: |
           rm -f package-lock.json
           npm install
-          npm run generate
+          npm run build
         env:
           NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}
 
@@ -32,4 +32,4 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           # Deploy the SSR build output
-          npx wrangler pages deploy frontend/.output/public --project-name "${{ secrets.CLOUDFLARE_PAGES_PROJECT }}" --branch main --commit-hash ${{ github.sha }}
+          npx wrangler pages deploy frontend/.output --project-name "${{ secrets.CLOUDFLARE_PAGES_PROJECT }}" --branch main --commit-hash ${{ github.sha }}
