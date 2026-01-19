@@ -23,6 +23,17 @@ jobs:
           rm -f package-lock.json
           npm install
           npm run build
+          # Consolidate build artifacts into public directory for deployment
+          # Move _worker.js directory (containing the worker script)
+          if [ -d ".output/_worker.js" ]; then
+            cp -r .output/_worker.js .output/public/
+            # Remove the generated wrangler.json which causes "assets not supported" error
+            rm -f .output/public/_worker.js/wrangler.json
+          fi
+          # Move other config files if they exist
+          [ -f ".output/_headers" ] && cp .output/_headers .output/public/
+          [ -f ".output/_redirects" ] && cp .output/_redirects .output/public/
+          [ -f ".output/_routes.json" ] && cp .output/_routes.json .output/public/
         env:
           NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}
 
@@ -32,4 +43,4 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           # Deploy the SSR build output
-          npx wrangler pages deploy frontend/.output --project-name "${{ secrets.CLOUDFLARE_PAGES_PROJECT }}" --branch main --commit-hash ${{ github.sha }}
+          npx wrangler pages deploy frontend/.output/public --project-name "${{ secrets.CLOUDFLARE_PAGES_PROJECT }}" --branch main --commit-hash ${{ github.sha }}
