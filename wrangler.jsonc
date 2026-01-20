@@ -1,7 +1,0 @@
-{
-  // Root-level Wrangler config so CI/Deploys running from repository
-  // root can find and upload frontend static assets.
-  "name": "thebravebyte",
-  "compatibility_date": "2026-01-17",
-  "pages_build_output_dir": "./frontend/.output/public"
-}
