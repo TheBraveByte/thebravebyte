@@ -10,7 +10,7 @@ compatibility_flags = ["nodejs_compat"]
 # Pages Build Configuration
 # ============================================
 pages_build_output_dir = ".output/public"
-functions = "functions"
+# functions = "functions"
 
 # ============================================
 # Environment Variables

@@ -7,11 +7,7 @@ export default defineNuxtConfig({
 
   // Cloudflare Pages deployment
   nitro: {
-    preset: 'cloudflare-pages',
-    output: {
-      dir: '.output',
-      publicDir: '.output/public'
-    },
+    preset: process.env.VERCEL ? 'vercel' : 'cloudflare-pages',
     routeRules: {
       '/api/**': { proxy: process.env.NUXT_PUBLIC_API_BASE ? `${process.env.NUXT_PUBLIC_API_BASE}/**` : 'https://thebravebyte.onrender.com/api/**' }
     }
