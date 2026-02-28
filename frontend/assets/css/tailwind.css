@@ -8,72 +8,86 @@
 :root {
   /* Editorial Light Mode */
   --color-bg: #ffffff;
-  --color-bg-secondary: #f5f5f5;
-  --color-bg-tertiary: #ebebeb;
-  --color-border: #d4d4d4;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f1f3f5;
+  --color-border: #dee2e6;
   --color-text: #1a1a1a;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #737373;
-  /* Accent — the "third color" from the logo */
-  --color-accent: #0055d4;
-  --color-accent-hover: #003da8;
-  --color-accent-glow: rgba(0, 85, 212, 0.15);
-  --color-success: #16a34a;
-  --color-warning: #ca8a04;
-  --color-error: #dc2626;
+  --color-text-secondary: #495057;
+  --color-text-muted: #868e96;
+
+  /* Third Variant - Primary Accent (The Blue from the Logo) */
+  --color-accent: #004b87;
+  --color-accent-hover: #003366;
+  --color-accent-glow: rgba(0, 75, 135, 0.15);
+
+  --color-success: #2f9e44;
+  --color-warning: #f08c00;
+  --color-error: #e03131;
 }
 
 .dark {
-  /* Warm Grey Dark Mode (NOT deep black) */
-  --color-bg: #1e1e24;
-  --color-bg-secondary: #27272f;
-  --color-bg-tertiary: #30303a;
-  --color-border: #3f3f4a;
-  --color-text: #f0f0f0;
-  --color-text-secondary: #b0b0ba;
-  --color-text-muted: #808090;
-  /* Cyan Accent for Dark Mode — the "third color" glowing */
+  /* Warm Grey Dark Mode (User: "grey not deep black") */
+  --color-bg: #1a1a22;
+  --color-bg-secondary: #25252e;
+  --color-bg-tertiary: #2e2e38;
+  --color-border: #383845;
+  --color-text: #e9ecef;
+  --color-text-secondary: #adb5bd;
+  --color-text-muted: #6e7681;
+
+  /* Third Variant - Vibrant Cyan Accent for Dark Mode */
   --color-accent: #38bdf8;
   --color-accent-hover: #7dd3fc;
-  --color-accent-glow: rgba(56, 189, 248, 0.15);
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  --color-accent-glow: rgba(56, 189, 248, 0.2);
+
+  --color-success: #40c057;
+  --color-warning: #fab005;
+  --color-error: #fa5252;
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     font-family: var(--font-serif);
     background-color: var(--color-bg);
     color: var(--color-text);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-serif);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
   p {
     line-height: 1.8;
   }
   ::selection {
-    background-color: var(--color-accent);
-    color: #ffffff;
+    background: var(--color-accent);
+    color: #fff;
   }
 }
 
 @layer utilities {
   .font-sans-label {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-weight: 600;
   }
 
   .glass {
-    background: rgba(var(--color-bg-secondary), 0.7);
+    background: rgba(var(--color-bg-secondary), 0.8);
     backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
   }
@@ -83,21 +97,49 @@
   }
 
   .accent-line {
-    width: 40px;
-    height: 3px;
+    width: 32px;
+    height: 2px;
     background-color: var(--color-accent);
-    border-radius: 2px;
+    border-radius: 1px;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
 @layer components {
   .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 1.5rem;
+  }
+
+  .btn-primary {
+    @apply px-8 py-3.5 text-white rounded-full font-sans font-medium transition-all duration-300 shadow-lg flex items-center justify-center gap-2;
+    background-color: var(--color-accent);
+    box-shadow: 0 10px 15px -3px var(--color-accent-glow);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    @apply px-8 py-3.5 rounded-full font-sans font-medium transition-all duration-300 flex items-center justify-center gap-2;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
 }
 
 :root {
-  --header-height: 4rem;
+  --header-height: 5rem;
 }
