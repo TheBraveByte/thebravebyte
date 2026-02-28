@@ -1,11 +1,9 @@
 import tailwindcss from "@tailwindcss/vite";
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
-  // Cloudflare Pages deployment
   nitro: {
     preset: process.env.VERCEL ? 'vercel' : 'cloudflare-pages',
     routeRules: {
@@ -22,14 +20,14 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: '',
-    preference: 'light', // default value of $colorMode.preference
-    fallback: 'light', // fallback value if not system preference found
+    preference: 'system',
+    fallback: 'dark',
   },
 
   googleFonts: {
     families: {
-      "Space Grotesk": [300, 400, 500, 600, 700],
-      "Fira Code": [400, 500],
+      "Lora": [400, 500, 600, 700],
+      "Inter": [400, 500, 600],
     },
     display: "swap",
     prefetch: true,
@@ -58,9 +56,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
-      htmlAttrs: {
-        lang: "en",
-      },
+      htmlAttrs: { lang: "en" },
       title: "The Brave Byte | Yusuf Akinleye",
       meta: [
         { name: "description", content: "Engineering the future with code. A premium blog by Yusuf Akinleye." },

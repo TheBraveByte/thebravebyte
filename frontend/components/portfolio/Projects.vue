@@ -1,25 +1,24 @@
 <template>
-  <section id="projects" class="py-32 bg-bg relative">
-    <div class="container mx-auto px-6 max-w-6xl relative z-10">
+  <section id="projects" class="py-24 bg-bg border-b border-border">
+    <div class="container mx-auto px-6 relative z-10">
       
       <!-- Section Header -->
-      <div class="mb-20">
-        <h3 class="font-mono text-xs text-accent tracking-widest mb-4 flex items-center gap-2">
-            <span class="w-8 h-px bg-accent"></span>
+      <div class="section-header mb-16 border-b border-border pb-6 origin-left">
+        <h3 class="font-sans-label text-text-muted mb-2">
             CASE STUDIES
         </h3>
-        <h2 class="text-4xl md:text-5xl font-bold text-text mb-6">
+        <h2 class="text-4xl md:text-5xl font-semibold text-text tracking-tight">
             Engineering Impact
         </h2>
       </div>
 
       <!-- Category Filter -->
-      <div class="flex flex-wrap gap-2 mb-12">
+      <div class="flex flex-wrap gap-6 mb-12 border-b border-border pb-4">
         <button v-for="cat in categories" :key="cat" @click="selectedCategory = cat" :class="[
-          'px-4 py-2 text-sm rounded-full transition-all duration-300 border',
+          'pb-4 text-sm font-sans transition-all duration-300 relative -mb-[17px]',
           selectedCategory === cat
-            ? 'bg-text text-bg border-text font-medium'
-            : 'bg-transparent border-transparent text-text-secondary hover:border-border hover:text-text'
+            ? 'text-text font-semibold border-b-2 border-accent'
+            : 'text-text-secondary hover:text-text border-b-2 border-transparent'
         ]">
           {{ cat }}
         </button>
@@ -28,50 +27,50 @@
       <!-- Projects Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="project in displayedProjects" :key="project.id"
-          class="project-card opacity-0 translate-y-8 group relative bg-bg-secondary/50 border border-border/50 rounded-2xl overflow-hidden hover:border-accent/30 hover:bg-bg-secondary transition-all duration-500 hover:shadow-2xl hover:shadow-accent/5">
+          class="project-card bg-bg border border-border p-8 rounded-2xl flex flex-col group hover:border-accent hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgba(56,189,248,0.05)] transition-all duration-500">
           
-          <div class="p-8 h-full flex flex-col">
-            <!-- Header -->
-            <div class="flex justify-between items-start mb-6">
-               <div class="p-2 rounded-lg bg-bg border border-border/50 group-hover:border-accent/20 transition-colors">
-                  <Icon name="lucide:folder-git-2" class="w-6 h-6 text-text-secondary group-hover:text-accent transition-colors" />
-               </div>
-               <div class="px-3 py-1 rounded-full bg-success/10 border border-success/20">
-                 <span class="text-[10px] font-bold text-success uppercase tracking-wider">Operational</span>
-               </div>
-            </div>
+          <!-- Header -->
+          <div class="flex justify-between items-start mb-6 border-b border-border pb-4">
+             <div class="flex items-center gap-2 p-2 bg-bg-secondary rounded-lg text-text-secondary group-hover:text-accent group-hover:bg-accent/10 transition-colors">
+                <Icon name="lucide:folder-git-2" class="w-5 h-5" />
+             </div>
+             <div class="px-3 py-1 bg-bg-secondary border border-border rounded-full flex items-center gap-2">
+               <span class="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
+               <span class="font-sans text-[10px] font-semibold text-text uppercase tracking-wider">Operational</span>
+             </div>
+          </div>
 
-            <h3 class="text-xl font-bold text-text mb-3 group-hover:text-accent transition-colors duration-300">
-              {{ project.title }}
-            </h3>
+          <h3 class="text-xl font-semibold text-text mb-4 group-hover:text-accent transition-colors">
+            {{ project.title }}
+          </h3>
 
-            <p class="text-sm text-text-secondary leading-relaxed mb-6 font-light flex-grow">
-              {{ project.description }}
-            </p>
+          <p class="text-base text-text-secondary leading-relaxed mb-6 flex-grow">
+            {{ project.description }}
+          </p>
 
-            <!-- Metrics -->
-            <div class="grid grid-cols-2 gap-4 py-4 border-t border-border/30 mb-6">
-              <div v-for="metric in project.metrics" :key="metric.label">
-                <div class="text-[10px] text-text-muted uppercase tracking-wider mb-1">{{ metric.label }}</div>
-                <div class="text-sm font-medium text-text">{{ metric.value }}</div>
-              </div>
-            </div>
-
-            <!-- Tags -->
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span v-for="tag in project.tags" :key="tag"
-                class="text-[10px] px-2 py-1 rounded bg-bg border border-border text-text-secondary">
-                {{ tag }}
-              </span>
+          <!-- Metrics -->
+          <div class="grid grid-cols-2 gap-4 py-4 border-t border-border mb-6 group-hover:border-accent/30 transition-colors">
+            <div v-for="metric in project.metrics" :key="metric.label">
+              <div class="font-sans text-[10px] text-text-muted uppercase tracking-wider mb-1">{{ metric.label }}</div>
+              <div class="font-sans text-sm font-medium text-text">{{ metric.value }}</div>
             </div>
           </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2 mt-auto">
+            <span v-for="tag in project.tags" :key="tag"
+              class="font-sans text-[10px] px-3 py-1 border border-border text-text-secondary uppercase rounded-full group-hover:border-accent/30 transition-colors">
+              {{ tag }}
+            </span>
+          </div>
+          
         </div>
       </div>
 
       <!-- Load More -->
       <div class="flex justify-center mt-16" v-if="hasMoreProjects">
         <button @click="loadMore"
-          class="px-8 py-3 rounded-full border border-border text-text hover:bg-bg-secondary transition-colors text-sm font-medium">
+          class="px-8 py-3 border border-border rounded-full text-text font-sans text-sm font-medium hover:bg-bg-secondary hover:border-text transition-all duration-300">
           Load More Cases
         </button>
       </div>
@@ -103,14 +102,14 @@ const projects = [
     title: "EazyFit — Marketplace",
     description: "Connecting customers with stylists. Isolated domains (Chat, Payments, Core) ensure a 10x chat spike doesn't affect payment success. AI monitoring prevents off-platform transactions.",
     impact: "99.99% uptime during peak traffic",
-    tags: ["microservices", "WebSocket", "AI"],
+    tags: ["Microservices", "WebSocket", "AI"],
     category: "E-Commerce",
     metrics: [
       { label: "Latency", value: "<100ms" },
       { label: "Uptime", value: "99.99%" },
     ],
   },
-    {
+  {
     id: 3,
     title: "OmonAI — Fraud Detection",
     description: "Deployed 10-dimensional ML model (CiferAI) for behavioral pattern analysis. Catches sophisticated fraud that rules miss while reducing false positives by 60%.",
@@ -137,7 +136,7 @@ const projects = [
   {
     id: 5,
     title: "Unified Campus",
-    description: "Multi-tenant attendance architecture with strict data isolation (School → Faculty → Department). Immutable audit logs for every state change passed enterprise security audits.",
+    description: "Multi-tenant attendance architecture with strict data isolation. Immutable audit logs for every state change passed enterprise security audits.",
     impact: "Complete data isolation for 50+ tenants",
     tags: ["PostgreSQL", "RLS", "Audit Logs"],
     category: "Enterprise & SaaS",
@@ -161,7 +160,7 @@ const projects = [
 ];
 
 const selectedCategory = ref('All Projects');
-const visibleCount = ref(6); // Show more by default
+const visibleCount = ref(6);
 
 const categories = computed(() => {
   return ['All Projects', ...new Set(projects.map(p => p.category))];
@@ -186,32 +185,52 @@ const loadMore = () => {
   visibleCount.value += 3;
 };
 
-// Animation Logic
 const animateProjects = () => {
     nextTick(() => {
-        ScrollTrigger.refresh(); // Ensure positions are recalculated
-        gsap.to('.project-card', {
-            scrollTrigger: {
-                trigger: '#projects',
-                start: 'top 80%'
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power2.out',
-            overwrite: 'auto' // Prevent conflict with category filtering
-        });
+        ScrollTrigger.refresh();
+        gsap.fromTo('.project-card', 
+            { y: 40, opacity: 0, scale: 0.95 },
+            {
+                scrollTrigger: {
+                    trigger: '#projects',
+                    start: 'top 80%',
+                },
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'back.out(1.2)',
+                overwrite: 'auto'
+            }
+        );
     });
 };
 
 onMounted(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo('#projects .section-header', 
+        { y: 50, opacity: 0, scale: 0.95 },
+        {
+            scrollTrigger: {
+                trigger: '#projects',
+                start: 'top 85%',
+                end: 'top 30%',
+                scrub: 1,
+            },
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            ease: 'none'
+        }
+    );
+
     animateProjects();
 });
 
 watch([selectedCategory, visibleCount], () => {
-    // Re-animate when filter changes
-    gsap.set('.project-card', { y: 20, opacity: 0 });
+    gsap.set('.project-card', { y: 30, opacity: 0, scale: 0.95 });
     animateProjects();
 });
 </script>

@@ -1,70 +1,52 @@
 <template>
-  <section id="contact" class="py-24 bg-bg relative">
+  <section id="contact" class="py-24 bg-bg">
     <div class="container mx-auto px-6 max-w-4xl relative z-10">
       
       <!-- Section Header -->
-      <div class="mb-16 text-center">
-        <h3 class="font-mono-label text-text-secondary mb-3 flex items-center justify-center gap-2">
-          <span class="w-2 h-2 bg-text-secondary animate-pulse"></span>
-          INITIATE_UPLINK
+      <div class="section-header mb-16 text-center border-b border-border pb-8 origin-center">
+        <h3 class="font-sans-label text-text-muted mb-3 flex items-center justify-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+          CONNECT
         </h3>
-        <h2 class="text-3xl md:text-4xl font-light text-text mb-6">
-          Establish Connection
+        <h2 class="text-4xl md:text-5xl font-semibold text-text mb-6">
+          Get in Touch
         </h2>
-        <p class="text-lg text-text-secondary font-light max-w-2xl mx-auto">
-          Ready to architect systems that define reliability. 
-          <span class="font-mono text-xs text-text-secondary">[ STATUS: OPEN_FOR_COLLABORATION ]</span>
+        <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+          Available for new projects, technical consulting, and collaborative engineering.
         </p>
       </div>
 
       <!-- Main Actions -->
-      <div class="grid md:grid-cols-2 gap-6 mb-16">
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
         <!-- Email Action -->
         <a href="mailto:ayaaakinleye@gmail.com"
-          class="group relative bg-bg border border-border p-8 hover:border-text transition-colors duration-200 text-center">
-          <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-transparent group-hover:border-text transition-colors duration-200"></div>
-          <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-transparent group-hover:border-text transition-colors duration-200"></div>
-          
-          <Icon name="lucide:mail" class="w-8 h-8 text-text mb-4 mx-auto transition-colors" />
-          <h3 class="font-mono text-sm text-text mb-2">DIRECT_MESSAGE</h3>
-          <p class="text-sm text-text-secondary font-light">Send encrypted transmission</p>
+          class="contact-reveal group flex flex-col items-center justify-center p-12 bg-bg border border-border rounded-2xl hover:border-accent hover:shadow-xl hover:shadow-accent/5 transition-all duration-300">
+          <div class="p-4 bg-bg-secondary rounded-full mb-6 group-hover:bg-accent group-hover:text-white text-text-secondary transition-colors duration-300">
+            <Icon name="lucide:mail" class="w-6 h-6" />
+          </div>
+          <h3 class="font-semibold text-text mb-2 text-xl group-hover:text-accent transition-colors">Direct Email</h3>
+          <p class="text-sm font-sans text-text-secondary">ayaaakinleye@gmail.com</p>
         </a>
 
         <!-- Contra Action -->
         <a href="https://contra.com/yusuf_akinleye_bb35981b4" target="_blank"
-          class="group relative bg-bg border border-border p-8 hover:border-text transition-colors duration-200 text-center">
-          <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-transparent group-hover:border-text transition-colors duration-200"></div>
-          <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-transparent group-hover:border-text transition-colors duration-200"></div>
-
-          <Icon name="lucide:briefcase" class="w-8 h-8 text-text mb-4 mx-auto transition-colors" />
-          <h3 class="font-mono text-sm text-text mb-2">CONTRACT_HIRE</h3>
-          <p class="text-sm text-text-secondary font-light">Initiate project workflow</p>
+          class="contact-reveal group flex flex-col items-center justify-center p-12 bg-bg border border-border rounded-2xl hover:border-accent hover:shadow-xl hover:shadow-accent/5 transition-all duration-300">
+          <div class="p-4 bg-bg-secondary rounded-full mb-6 group-hover:bg-accent group-hover:text-white text-text-secondary transition-colors duration-300">
+            <Icon name="lucide:briefcase" class="w-6 h-6" />
+          </div>
+          <h3 class="font-semibold text-text mb-2 text-xl group-hover:text-accent transition-colors">Contract & Hire</h3>
+          <p class="text-sm font-sans text-text-secondary">View Profile on Contra</p>
         </a>
       </div>
 
       <!-- Network Links -->
-      <div class="border-t border-border pt-12">
-        <div class="font-mono-label text-center text-text-secondary mb-8">
-          // NETWORK_PROTOCOLS
-        </div>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a v-for="contact in contacts" :key="contact.name" :href="contact.href" :target="contact.target"
-            :rel="contact.rel"
-            class="group flex items-center gap-3 px-6 py-3 border border-border hover:border-text transition-colors duration-200 bg-bg">
-            <Icon :name="contact.icon"
-              class="w-4 h-4 text-text-secondary group-hover:text-text transition-colors" />
-            <span
-              class="font-mono text-xs text-text transition-colors">
-              {{ contact.name.toUpperCase() }}
-            </span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Terminal Footer -->
-      <div class="mt-16 text-center font-mono text-[10px] text-text-secondary opacity-60">
-        <p>SECURE_CONNECTION_ESTABLISHED_V4.0</p>
-        <p>END_OF_TRANSMISSION</p>
+      <div class="flex flex-wrap justify-center gap-6 pt-8">
+        <a v-for="contact in contacts" :key="contact.name" :href="contact.href" :target="contact.target"
+          :rel="contact.rel"
+          class="contact-reveal group flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-bg-secondary text-sm font-sans text-text-secondary hover:text-text hover:border-accent hover:bg-accent/5 transition-all duration-300">
+          <Icon :name="contact.icon" class="w-4 h-4 group-hover:text-accent transition-colors" />
+          <span class="font-medium tracking-wide">{{ contact.name }}</span>
+        </a>
       </div>
 
     </div>
@@ -72,6 +54,10 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 const contacts = [
   {
     name: 'GitHub',
@@ -102,4 +88,40 @@ const contacts = [
     rel: 'noopener noreferrer'
   }
 ];
+
+onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo('#contact .section-header', 
+      { y: 50, opacity: 0, scale: 0.95 },
+      {
+          scrollTrigger: {
+              trigger: '#contact',
+              start: 'top 85%',
+              end: 'top 30%',
+              scrub: 1,
+          },
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          ease: 'none'
+      }
+  );
+
+  gsap.fromTo('.contact-reveal', 
+    { y: 40, opacity: 0, scale: 0.95 },
+    {
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top 85%',
+      },
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: 'back.out(1.2)'
+    }
+  );
+});
 </script>

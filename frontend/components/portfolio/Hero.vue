@@ -1,64 +1,60 @@
 <template>
-  <section id="home" class="min-h-screen flex items-center justify-center py-20 relative overflow-hidden bg-bg">
-    <!-- Premium Ambient Background -->
-    <div class="absolute inset-0 pointer-events-none">
-       <div class="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-accent/5 blur-[120px] animate-pulse-slow"></div>
-       <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[100px] animate-pulse-slow delay-700"></div>
+  <section id="home" class="min-h-screen flex text-center items-center py-20 bg-bg border-b border-border relative overflow-hidden">
+    <!-- Abstract background glow -->
+    <div class="hero-bg absolute inset-0 z-0 opacity-20 dark:opacity-10 pointer-events-none transform-origin-center">
+      <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-hover rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse" style="animation-delay: 2s;"></div>
     </div>
 
-    <!-- Grid Pattern Overlay -->
-    <div class="absolute inset-0 bg-[url('/img/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03] pointer-events-none"></div>
-
-    <div class="container mx-auto px-6 relative z-10">
-      <div class="max-w-4xl mx-auto text-center">
+    <div class="container mx-auto px-6 relative z-10 hero-content transform-origin-center">
+      <div class="max-w-4xl mx-auto flex flex-col items-center">
         
-        <!-- Status Badge -->
-        <div class="hero-reveal opacity-0 translate-y-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg-secondary border border-border mb-8">
-           <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
-            </span>
-           <span class="font-mono text-xs font-medium text-text-secondary tracking-wide">AVAILABLE FOR NEW PROJECTS</span>
+        <!-- Status Label -->
+        <div class="hero-reveal mb-8 px-4 py-2 bg-bg-secondary border border-border rounded-full flex items-center gap-3">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
+          </span>
+          <span class="font-sans text-[11px] font-semibold text-text uppercase tracking-widest">Available for New Projects</span>
         </div>
 
         <!-- Main Headline -->
-        <h1 class="hero-reveal opacity-0 translate-y-8 text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-text mb-8 leading-[1.1]">
+        <h1 class="hero-title text-6xl md:text-7xl lg:text-8xl font-semibold text-text mb-8 leading-[1.1] tracking-tight">
           Building the <br />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-text via-text-secondary to-text-muted">
-            Backbone of Software
-          </span>
+          Backbone of Software.
         </h1>
 
         <!-- Subtext -->
-        <p class="hero-reveal opacity-0 translate-y-4 text-lg md:text-xl text-text-secondary font-light leading-relaxed max-w-2xl mx-auto mb-12">
-          I am <span class="text-text font-medium">Yusuf Akinleye</span>. I engineer high-performance backend systems and scalable APIs.
-          <br class="hidden md:block" />
+        <p class="hero-reveal text-lg md:text-xl text-text-secondary mb-12 max-w-2xl font-serif">
+          I am Yusuf Akinleye. I engineer high-performance backend systems and scalable APIs.
           Focused on distributed architectures that drive business growth.
         </p>
 
         <!-- CTA Buttons -->
-        <div class="hero-reveal opacity-0 translate-y-4 flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+        <div class="hero-reveal flex flex-col sm:flex-row items-center gap-6 mb-20">
           <NuxtLink to="#projects" 
-            class="group relative px-8 py-4 bg-text text-bg rounded-full text-sm font-medium hover:bg-white/90 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_-5px_rgba(255,255,255,0.5)]">
-            <span>View Case Studies</span>
-            <Icon name="lucide:arrow-right" class="w-4 h-4 inline-block ml-2 group-hover:translate-x-1 transition-transform" />
+            class="group px-8 py-4 bg-text text-bg text-sm font-sans font-medium rounded-full hover:bg-accent hover:text-white transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-accent/25 hover:-translate-y-1">
+            View Case Studies
+            <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </NuxtLink>
           
           <NuxtLink to="#contact"
-            class="px-8 py-4 rounded-full border border-border text-text text-sm font-medium hover:bg-bg-secondary transition-colors duration-300">
+            class="px-8 py-4 bg-transparent border border-border rounded-full text-text text-sm font-sans font-medium hover:border-text hover:bg-bg-secondary transition-all duration-300">
             Let's Talk
           </NuxtLink>
         </div>
 
-        <!-- Tech Stack Scroller -->
-        <div class="hero-reveal opacity-0 pt-8 border-t border-border/50">
-          <p class="font-mono text-[10px] text-text-muted uppercase tracking-widest mb-6">Create with the best tools</p>
-          <div class="flex flex-wrap justify-center gap-8 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-             <Icon name="logos:go" class="w-8 h-8" />
-             <Icon name="logos:python" class="w-8 h-8" />
-             <Icon name="logos:postgresql" class="w-8 h-8" />
-             <Icon name="logos:docker-icon" class="w-8 h-8" />
-             <Icon name="logos:aws" class="w-8 h-8" />
+        <!-- Tech Stack -->
+        <div class="hero-reveal pt-10 border-t border-border mt-12 w-full">
+          <p class="font-sans-label text-text-muted mb-6">Core Competencies</p>
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Go (Golang)</span>
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Python</span>
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">PostgreSQL</span>
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">AWS</span>
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Docker</span>
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Microservices</span>
+            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">REST & gRPC</span>
           </div>
         </div>
 
@@ -70,32 +66,47 @@
 <script setup>
 import { onMounted } from 'vue';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger);
   const tl = gsap.timeline();
 
-  tl.to('.hero-reveal', {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    stagger: 0.15,
-    ease: 'power3.out',
-    delay: 0.2
+  // Entrance animations
+  tl.fromTo('.hero-title',
+    { y: 50, opacity: 0, scale: 0.95 },
+    { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out', delay: 0.1 }
+  )
+  .fromTo('.hero-reveal', 
+    { y: 30, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out' },
+    "-=0.6"
+  );
+
+  // Parallax / Zoom scroll animations
+  gsap.to('.hero-bg', {
+    scrollTrigger: {
+      trigger: '#home',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    },
+    scale: 0.7,
+    opacity: 0,
+    ease: 'none'
+  });
+
+  gsap.to('.hero-content', {
+    scrollTrigger: {
+      trigger: '#home',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    },
+    scale: 1.15,
+    y: 50,
+    opacity: 0,
+    ease: 'none'
   });
 });
 </script>
-
-<style scoped>
-.animate-pulse-slow {
-  animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-</style>

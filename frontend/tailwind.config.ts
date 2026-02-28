@@ -12,7 +12,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // All colors use CSS variables - automatically switch in dark mode
         'bg': 'var(--color-bg)',
         'bg-secondary': 'var(--color-bg-secondary)',
         'bg-tertiary': 'var(--color-bg-tertiary)',
@@ -29,7 +28,7 @@ export default {
       },
       fontFamily: {
         sans: ['var(--font-sans)'],
-        mono: ['var(--font-mono)'],
+        serif: ['var(--font-serif)'],
       },
     },
   },
