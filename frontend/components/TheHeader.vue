@@ -26,11 +26,11 @@
           <!-- Theme Toggle -->
           <button 
             @click="toggleTheme" 
-            class="p-2 rounded-full border border-border text-text hover:bg-bg-secondary transition-colors duration-300 flex items-center justify-center group"
+            class="p-2 rounded-full border border-border text-text hover:bg-accent/10 hover:border-accent transition-all duration-300 flex items-center justify-center group"
             aria-label="Toggle theme"
           >
             <Icon 
-              :name="$colorMode.value === 'dark' ? 'lucide:sun' : 'lucide:moon'" 
+              :name="themeIcon" 
               class="w-5 h-5 group-hover:text-accent transition-colors duration-300"
             />
           </button>
@@ -91,12 +91,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 const colorMode = useColorMode();
+const hasMounted = ref(false);
+
 const toggleTheme = () => {
   colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
 };
+
+const themeIcon = computed(() => {
+  if (!hasMounted.value) return 'lucide:moon';
+  return colorMode.value === 'dark' ? 'lucide:sun' : 'lucide:moon';
+});
 
 const scrolled = ref(false);
 const handleScroll = () => {
@@ -104,6 +111,7 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
+  hasMounted.value = true;
   window.addEventListener('scroll', handleScroll);
 });
 onUnmounted(() => {
