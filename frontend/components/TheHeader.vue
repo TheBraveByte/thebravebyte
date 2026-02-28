@@ -53,12 +53,12 @@
           <!-- Theme Toggle -->
           <button
             @click="toggleTheme"
-            class="w-10 h-10 md:w-11 md:h-11 rounded-full border border-border text-text hover:border-accent hover:bg-accent/5 transition-all duration-300 flex items-center justify-center group"
+            class="w-10 h-10 md:w-11 md:h-11 rounded-full border border-border text-text hover:border-accent hover:bg-accent/5 active:scale-95 transition-all duration-300 flex items-center justify-center group relative overflow-hidden"
             aria-label="Toggle theme"
           >
             <Icon
               :name="themeIcon"
-              class="w-5 h-5 group-hover:text-accent transition-colors duration-300"
+              class="w-5 h-5 group-hover:text-accent transition-all duration-500 group-hover:rotate-[360deg] transform-origin-center"
             />
           </button>
 

@@ -3,7 +3,7 @@
     <div class="container mx-auto px-6 relative z-10">
       <!-- Section Header -->
       <div
-        class="section-header mb-16 border-b-2 border-accent/30 pb-6 origin-left"
+        class="section-header mb-16 border-b-2 border-accent/50 pb-6 origin-left"
       >
         <h3 class="font-sans-label text-accent mb-2">CASE STUDIES</h3>
         <h2 class="text-4xl md:text-5xl font-semibold text-text tracking-tight">

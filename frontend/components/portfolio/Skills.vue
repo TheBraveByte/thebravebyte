@@ -3,7 +3,7 @@
         <div class="container mx-auto px-6 relative z-10">
             
             <!-- Section Header -->
-            <div class="section-header mb-16 border-b-2 border-accent/30 pb-6 origin-left">
+            <div class="section-header mb-16 border-b-2 border-accent/50 pb-6 origin-left">
                 <h3 class="font-sans-label text-accent mb-2">
                     TECHNICAL PROFICIENCY
                 </h3>
@@ -59,17 +59,17 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const skills = [
-    { name: 'Go (Golang)', icon: 'logos:go', category: 'Backend' },
-    { name: 'Python', icon: 'logos:python', category: 'Data & ML' },
-    { name: 'PostgreSQL', icon: 'logos:postgresql', category: 'RDBMS' },
-    { name: 'MongoDB', icon: 'logos:mongodb-icon', category: 'NoSQL' },
-    { name: 'Docker', icon: 'logos:docker-icon', category: 'Containers' },
-    { name: 'AWS', icon: 'logos:aws', category: 'Cloud Infra' },
-    { name: 'gRPC', icon: 'logos:grpc', category: 'API' },
-    { name: 'Redis', icon: 'logos:redis', category: 'Caching' },
-    { name: 'ClickHouse', icon: 'logos:clickhouse', category: 'OLAP DB' },
-    { name: 'Kafka', icon: 'logos:kafka-icon', category: 'Events' },
-    { name: 'Git', icon: 'logos:git-icon', category: 'VCS' },
+    { name: 'Go (Golang)', icon: 'devicon:go', category: 'Backend' },
+    { name: 'Python', icon: 'devicon:python', category: 'Data & ML' },
+    { name: 'PostgreSQL', icon: 'devicon:postgresql', category: 'RDBMS' },
+    { name: 'MongoDB', icon: 'devicon:mongodb', category: 'NoSQL' },
+    { name: 'Docker', icon: 'devicon:docker', category: 'Containers' },
+    { name: 'AWS', icon: 'devicon:amazonwebservices-wordmark', category: 'Cloud Infra' },
+    { name: 'gRPC', icon: 'lucide:network', category: 'API' },
+    { name: 'Redis', icon: 'devicon:redis', category: 'Caching' },
+    { name: 'ClickHouse', icon: 'devicon:clickhouse', category: 'OLAP DB' },
+    { name: 'Kafka', icon: 'devicon:apachekafka', category: 'Events' },
+    { name: 'Git', icon: 'devicon:git', category: 'VCS' },
     { name: 'Linux', icon: 'lucide:server', category: 'Infrastructure' }
 ];
 

@@ -3,6 +3,19 @@
 @theme {
   --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "Lora", "Merriweather", Georgia, serif;
+
+  --color-bg: var(--color-bg);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-tertiary: var(--color-bg-tertiary);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-error: var(--color-error);
 }
 
 :root {

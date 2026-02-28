@@ -10,7 +10,7 @@
       </defs>
 
       <!-- Minimal Outer Circle -->
-      <circle cx="32" cy="32" r="30" stroke="var(--color-border)" stroke-width="1.5" class="transition-colors duration-500 group-hover:stroke-[var(--color-accent)]" fill="transparent"/>
+      <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1.5" class="text-border transition-colors duration-500 group-hover:text-accent" fill="transparent"/>
 
       <g stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
         <!-- Letter Y Background -->

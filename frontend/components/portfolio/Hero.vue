@@ -19,6 +19,11 @@
     <div
       class="container mx-auto px-6 relative z-10 hero-content transform-origin-center"
     >
+      <!-- Ambient Glow -->
+      <div 
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/15 blur-[120px] rounded-full -z-10 pointer-events-none"
+      ></div>
+
       <div class="max-w-4xl mx-auto flex flex-col items-center">
         <!-- Status Label -->
         <div
@@ -43,7 +48,7 @@
           class="hero-title text-6xl md:text-7xl lg:text-8xl font-semibold text-text mb-8 leading-[1.1] tracking-tight"
         >
           Building the <br />
-          <span class="text-accent">Backbone</span> of Software.
+          <span class="text-accent">Backbone</span> of <span class="text-accent">Software</span>.
         </h1>
 
         <!-- Subtext -->
@@ -67,7 +72,7 @@
             />
           </NuxtLink>
 
-          <NuxtLink to="#contact" class="btn-secondary w-full sm:w-auto">
+          <NuxtLink to="#contact" class="btn-secondary w-full sm:w-auto hover:bg-accent/5 transition-all">
             Let's Talk
           </NuxtLink>
         </div>
