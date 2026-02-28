@@ -4,9 +4,21 @@
     <main class="main-content">
       <NuxtPage />
     </main>
-    <footer class="footer">
-      <div class="container">
-        <p>&copy; {{ new Date().getFullYear() }} The Brave Byte. Built with Nuxt & MongoDB.</p>
+    <footer class="py-10 border-t border-border bg-bg">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-3">
+            <LogoYA />
+            <span class="font-serif text-sm text-text-secondary">
+              &copy; {{ new Date().getFullYear() }} <span class="text-text font-semibold">The Brave Byte</span>
+            </span>
+          </div>
+          <div class="flex items-center gap-1 text-xs font-sans text-text-muted">
+            <span>Engineered with</span>
+            <span class="text-accent">&#9829;</span>
+            <span>by Yusuf Akinleye</span>
+          </div>
+        </div>
       </div>
     </footer>
   </div>
@@ -29,14 +41,5 @@ if (import.meta.client) {
 
 .main-content {
   flex: 1;
-  padding: 2rem 0;
-}
-
-.footer {
-  padding: 2rem 0;
-  border-top: 1px solid var(--border-color);
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.9rem;
 }
 </style>

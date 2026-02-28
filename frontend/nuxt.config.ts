@@ -58,9 +58,19 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: "en" },
       title: "The Brave Byte | Yusuf Akinleye",
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo-ya.svg' },
+        { rel: 'icon', type: 'image/png', href: '/logo-ya-light.png' },
+      ],
       meta: [
         { name: "description", content: "Engineering the future with code. A premium blog by Yusuf Akinleye." },
-        { name: "viewport", content: "width=device-width, initial-scale=1" }
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { property: "og:title", content: "The Brave Byte | Yusuf Akinleye" },
+        { property: "og:description", content: "Backend engineer building high-performance systems, APIs, and distributed architectures." },
+        { property: "og:image", content: "https://thebravebyte.com/logo-ya-light.png" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:image", content: "https://thebravebyte.com/logo-ya-light.png" },
       ],
     },
   },

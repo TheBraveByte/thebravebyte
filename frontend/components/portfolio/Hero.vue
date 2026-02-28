@@ -21,7 +21,7 @@
         <!-- Main Headline -->
         <h1 class="hero-title text-6xl md:text-7xl lg:text-8xl font-semibold text-text mb-8 leading-[1.1] tracking-tight">
           Building the <br />
-          Backbone of Software.
+          <span class="text-accent">Backbone</span> of Software.
         </h1>
 
         <!-- Subtext -->
@@ -33,28 +33,26 @@
         <!-- CTA Buttons -->
         <div class="hero-reveal flex flex-col sm:flex-row items-center gap-6 mb-20">
           <NuxtLink to="#projects" 
-            class="group px-8 py-4 bg-text text-bg text-sm font-sans font-medium rounded-full hover:bg-accent hover:text-white transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-accent/25 hover:-translate-y-1">
+            class="group px-8 py-4 bg-accent text-white text-sm font-sans font-medium rounded-full hover:bg-accent-hover transition-all duration-300 flex items-center gap-3 shadow-lg shadow-accent/25 hover:-translate-y-1">
             View Case Studies
             <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </NuxtLink>
           
           <NuxtLink to="#contact"
-            class="px-8 py-4 bg-transparent border border-border rounded-full text-text text-sm font-sans font-medium hover:border-text hover:bg-bg-secondary transition-all duration-300">
+            class="px-8 py-4 bg-transparent border border-border rounded-full text-text text-sm font-sans font-medium hover:border-accent hover:text-accent transition-all duration-300">
             Let's Talk
           </NuxtLink>
         </div>
 
-        <!-- Tech Stack -->
+        <!-- Tech Stack with Icons -->
         <div class="hero-reveal pt-10 border-t border-border mt-12 w-full">
           <p class="font-sans-label text-text-muted mb-6">Core Competencies</p>
-          <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Go (Golang)</span>
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Python</span>
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">PostgreSQL</span>
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">AWS</span>
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Docker</span>
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">Microservices</span>
-            <span class="text-sm font-sans font-medium text-text-secondary hover:text-accent transition-colors duration-300">REST & gRPC</span>
+          <div class="flex flex-wrap justify-center gap-4">
+            <div v-for="tech in techStack" :key="tech.name" 
+              class="tech-badge flex items-center gap-2.5 px-4 py-2.5 bg-bg-secondary border border-border rounded-full hover:border-accent hover:shadow-md hover:shadow-accent/10 hover:-translate-y-0.5 transition-all duration-300 group cursor-default">
+              <Icon :name="tech.icon" class="w-5 h-5 shrink-0" />
+              <span class="text-sm font-sans font-medium text-text-secondary group-hover:text-text transition-colors duration-300">{{ tech.name }}</span>
+            </div>
           </div>
         </div>
 
@@ -67,6 +65,16 @@
 import { onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+const techStack = [
+  { name: 'Go', icon: 'logos:go' },
+  { name: 'Python', icon: 'logos:python' },
+  { name: 'PostgreSQL', icon: 'logos:postgresql' },
+  { name: 'AWS', icon: 'logos:aws' },
+  { name: 'Docker', icon: 'logos:docker-icon' },
+  { name: 'Redis', icon: 'logos:redis' },
+  { name: 'gRPC', icon: 'logos:grpc' },
+];
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger);
@@ -81,6 +89,12 @@ onMounted(() => {
     { y: 30, opacity: 0 },
     { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out' },
     "-=0.6"
+  );
+
+  // Stagger tech badges
+  gsap.fromTo('.tech-badge',
+    { y: 20, opacity: 0, scale: 0.9 },
+    { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.08, ease: 'back.out(1.4)', delay: 1.2 }
   );
 
   // Parallax / Zoom scroll animations

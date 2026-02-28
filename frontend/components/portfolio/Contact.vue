@@ -4,12 +4,12 @@
       
       <!-- Section Header -->
       <div class="section-header mb-16 text-center border-b border-border pb-8 origin-center">
-        <h3 class="font-sans-label text-text-muted mb-3 flex items-center justify-center gap-2">
+        <h3 class="font-sans-label text-accent mb-3 flex items-center justify-center gap-2">
           <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
           CONNECT
         </h3>
         <h2 class="text-4xl md:text-5xl font-semibold text-text mb-6">
-          Get in Touch
+          Get in <span class="text-accent">Touch</span>
         </h2>
         <p class="text-lg text-text-secondary max-w-2xl mx-auto">
           Available for new projects, technical consulting, and collaborative engineering.

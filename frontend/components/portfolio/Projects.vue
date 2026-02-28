@@ -4,11 +4,11 @@
       
       <!-- Section Header -->
       <div class="section-header mb-16 border-b border-border pb-6 origin-left">
-        <h3 class="font-sans-label text-text-muted mb-2">
+        <h3 class="font-sans-label text-accent mb-2">
             CASE STUDIES
         </h3>
         <h2 class="text-4xl md:text-5xl font-semibold text-text tracking-tight">
-            Engineering Impact
+            Engineering <span class="text-accent">Impact</span>
         </h2>
       </div>
 

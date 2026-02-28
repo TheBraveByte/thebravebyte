@@ -4,11 +4,11 @@
             
             <!-- Section Header -->
             <div class="section-header mb-16 border-b border-border pb-6 origin-left">
-                <h3 class="font-sans-label text-text-muted mb-2">
+                <h3 class="font-sans-label text-accent mb-2">
                     CORE PHILOSOPHY
                 </h3>
                 <h2 class="text-4xl md:text-5xl font-semibold text-text tracking-tight">
-                    Intelligence is the Ability to Adapt.
+                    Intelligence is the Ability to <span class="text-accent">Adapt.</span>
                 </h2>
             </div>
 
