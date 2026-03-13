@@ -1,31 +1,59 @@
+<script setup lang="ts">
+interface Props {
+  className?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  className: "h-10 w-10",
+});
+</script>
+
 <template>
-  <div class="relative flex items-center justify-center p-1 group cursor-pointer">
-    
-    <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative z-10 transition-transform duration-500 group-hover:scale-110">
-      <defs>
-        <filter id="ya-glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-      </defs>
+  <div
+    class="relative flex items-center justify-center p-1 group cursor-pointer"
+    :class="props.className"
+  >
+    <svg
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-full w-full transition-all duration-500 group-hover:scale-105"
+    >
+      <!-- Outer Frame - Minimalist geometric border -->
+      <path
+        d="M20 10 H80 Q90 10 90 20 V80 Q90 90 80 90 H20 Q10 90 10 80 V20 Q10 10 20 10"
+        stroke="currentColor"
+        stroke-width="3"
+        class="text-border opacity-70 group-hover:opacity-100 transition-opacity"
+      />
 
-      <!-- Minimal Outer Circle -->
-      <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1.5" class="text-border transition-colors duration-500 group-hover:text-accent" fill="transparent"/>
-
-      <g stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Letter Y Background -->
-        <path d="M 20 20 L 32 36 L 32 50" stroke="currentColor" class="text-text transition-all duration-500 group-hover:text-accent opacity-80" />
-        <path d="M 44 20 L 32 36" stroke="currentColor" class="text-text transition-all duration-500 group-hover:text-accent opacity-80" />
-        
-        <!-- Letter A Foreground (Overlap) -->
-        <path d="M 44 50 L 32 18 L 20 50" stroke="var(--color-accent)" style="filter: url(#ya-glow);" class="transition-all duration-500 opacity-90 group-hover:opacity-100" />
-        <path d="M 25 40 L 39 40" stroke="var(--color-accent)" class="transition-all duration-500" />
-        
-        <!-- Nodes -->
-        <circle cx="20" cy="20" r="2.5" fill="var(--color-accent)" class="transition-all duration-500 transform origin-center group-hover:scale-150" />
-        <circle cx="44" cy="20" r="2.5" fill="var(--color-accent)" class="transition-all duration-500 transform origin-center group-hover:scale-150" />
-        <circle cx="32" cy="18" r="2.5" fill="var(--color-text)" class="transition-all duration-500 group-hover:fill-[var(--color-accent)]" />
+      <!-- Stylized 'Y' and 'A' Integration -->
+      <g
+        stroke="var(--color-accent)"
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <!-- Combined path for Y/A structure -->
+        <path d="M30 35 L50 55 L70 35" />
+        <!-- Y top -->
+        <path d="M50 55 V80" />
+        <!-- Y stem -->
+        <path d="M30 80 L50 30 L70 80" />
+        <!-- A outer -->
+        <path d="M38 65 H62" stroke-width="5" />
+        <!-- A bar -->
       </g>
+
+      <!-- "The Byte" Accent - A small digital square -->
+      <rect
+        x="72"
+        y="18"
+        width="12"
+        height="12"
+        fill="var(--color-accent)"
+        class="animate-pulse"
+      />
     </svg>
   </div>
 </template>
