@@ -36,6 +36,17 @@
   --color-success: #2f9e44;
   --color-warning: #f08c00;
   --color-error: #e03131;
+
+  /* Code Blocks & Syntax Highlighting */
+  --color-code-bg: #f8f9fa;
+  --color-code-text: #24292e;
+  --hljs-comment: #6b7280;
+  --hljs-keyword: #d946ef;
+  --hljs-string: #16a34a;
+  --hljs-title: #0284c7;
+  --hljs-variable: #d97706;
+  --hljs-built_in: #4f46e5;
+  --hljs-deletion: #dc2626;
 }
 
 .dark {
@@ -56,6 +67,17 @@
   --color-success: #40c057;
   --color-warning: #fab005;
   --color-error: #fa5252;
+
+  /* Code Blocks & Syntax Highlighting */
+  --color-code-bg: #0f172a;
+  --color-code-text: #e2e8f0;
+  --hljs-comment: #64748b;
+  --hljs-keyword: #f472b6;
+  --hljs-string: #4ade80;
+  --hljs-title: #38bdf8;
+  --hljs-variable: #fbbf24;
+  --hljs-built_in: #818cf8;
+  --hljs-deletion: #f87171;
 }
 
 @layer base {

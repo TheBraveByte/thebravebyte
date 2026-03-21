@@ -7,8 +7,8 @@ import { marked } from 'marked';
 import { mangle } from 'marked-mangle';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/github-dark.css';
 import mermaid from 'mermaid';
+import { useColorMode } from '#imports';
 
 const props = defineProps({
   content: {
@@ -42,35 +42,175 @@ const renderedHtml = computed(() => {
   return marked.parse(props.content, { renderer });
 });
 
-// Initialize mermaid
-onMounted(() => {
+const colorMode = useColorMode();
+
+const initializeMermaid = () => {
+  const isDark = colorMode.value === 'dark';
   mermaid.initialize({
     startOnLoad: false,
-    theme: 'dark',
+    theme: isDark ? 'dark' : 'default',
     securityLevel: 'loose',
     fontFamily: 'Monaco, monospace',
-    fontSize: 11.5,
+    fontSize: 14,
+    themeVariables: {
+      lineColor: isDark ? '#e2e8f0' : '#1a1a1a',
+      background: 'transparent',
+      primaryTextColor: isDark ? '#f1f5f9' : '#1a1a1a',
+      nodeTextColor: isDark ? '#f1f5f9' : '#1a1a1a',
+      edgeLabelBackground: isDark ? '#0f172a' : '#f8f9fa',
+      tertiaryColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+      fontFamily: 'Monaco, monospace',
+    }
   });
+};
+
+// Initialize mermaid
+onMounted(() => {
+  initializeMermaid();
   renderMermaid();
 });
 
-// Re-render mermaid when content changes
-watch(() => props.content, () => {
+// Re-render mermaid when content or theme changes
+watch([() => props.content, () => colorMode.value], () => {
+  initializeMermaid();
   nextTick(() => {
+    // We need to clear the old SVGs before re-rendering so mermaid parses again
+    if (container.value) {
+      container.value.querySelectorAll('.mermaid').forEach(el => {
+        el.removeAttribute('data-processed');
+        // If it already contains an svg, restore original text to parse again
+        const code = el.getAttribute('data-original-code');
+        if (code) {
+          el.innerHTML = code;
+        } else {
+          el.setAttribute('data-original-code', el.innerHTML);
+        }
+      });
+    }
     renderMermaid();
   });
-});
+}, { deep: true });
 
 async function renderMermaid() {
   if (container.value) {
     try {
+      const nodes = Array.from(container.value.querySelectorAll('.mermaid'));
+      
+      // Store original code for re-renders on theme change
+      nodes.forEach(el => {
+        if (!el.getAttribute('data-original-code')) {
+          el.setAttribute('data-original-code', el.innerHTML);
+        }
+      });
+
       await mermaid.run({
         nodes: container.value.querySelectorAll('.mermaid'),
+      });
+
+      // Inject Zoom/Pan capability
+      nextTick(() => {
+        addZoomPanToMermaid();
       });
     } catch (e) {
       console.error('Mermaid render failed:', e);
     }
   }
+}
+
+function addZoomPanToMermaid() {
+  if (!container.value) return;
+  const svgs = container.value.querySelectorAll('.mermaid svg');
+  
+  svgs.forEach((svg) => {
+    // Avoid double-wrapping
+    if (svg.parentElement?.classList.contains('mermaid-wrapper')) return;
+
+    // Make lines bolder using inline styles
+    const paths = svg.querySelectorAll('.edgePath .path, .flowchart-link');
+    paths.forEach(p => {
+      p.setAttribute('stroke-width', '2.5');
+    });
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mermaid-wrapper';
+    
+    const controls = document.createElement('div');
+    controls.className = 'mermaid-controls';
+    
+    let scale = 1;
+    let isPanning = false;
+    let startX = 0;
+    let startY = 0;
+    let translateX = 0;
+    let translateY = 0;
+
+  const svgEl = svg as SVGElement;
+
+    const updateTransform = () => {
+      svgEl.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    };
+
+    const zoomInBtn = document.createElement('button');
+    zoomInBtn.innerHTML = '+';
+    zoomInBtn.onclick = () => { scale += 0.2; updateTransform(); };
+    
+    const zoomOutBtn = document.createElement('button');
+    zoomOutBtn.innerHTML = '-';
+    zoomOutBtn.onclick = () => { scale = Math.max(0.2, scale - 0.2); updateTransform(); };
+    
+    const resetBtn = document.createElement('button');
+    resetBtn.innerHTML = '⟲';
+    resetBtn.onclick = () => { scale = 1; translateX = 0; translateY = 0; updateTransform(); };
+
+    controls.appendChild(zoomInBtn);
+    controls.appendChild(zoomOutBtn);
+    controls.appendChild(resetBtn);
+
+    svg.parentNode?.insertBefore(wrapper, svg);
+    wrapper.appendChild(controls);
+    
+    // Create an inner container for the SVG to safely pan/zoom
+    const inner = document.createElement('div');
+    inner.className = 'mermaid-inner';
+    wrapper.appendChild(inner);
+    inner.appendChild(svg);
+    
+    // Initial styles
+    svgEl.style.transformOrigin = 'center center';
+    svgEl.style.transition = 'transform 0.15s ease-out';
+    svgEl.style.cursor = 'grab';
+    svgEl.style.maxWidth = 'none';
+
+    // Mouse wheel zoom
+    wrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      scale = Math.max(0.2, Math.min(scale + delta, 5));
+      updateTransform();
+    }, { passive: false });
+
+    // Panning
+    inner.addEventListener('mousedown', (e) => {
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      svgEl.style.cursor = 'grabbing';
+      svgEl.style.transition = 'none'; // Disable transition during drag for smoothness
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+      svgEl.style.cursor = 'grab';
+      svgEl.style.transition = 'transform 0.15s ease-out';
+    });
+  });
 }
 </script>
 
@@ -97,6 +237,7 @@ async function renderMermaid() {
   line-height: 1.25;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
+  text-align: center;
 }
 
 .markdown-body :deep(h1) { font-size: 2rem; margin-top: 0; }
@@ -199,13 +340,13 @@ async function renderMermaid() {
 
 /* ─── Code blocks (fenced) ──────────────────────────────────── */
 .markdown-body :deep(pre) {
-  background: #0f172a;
+  background: var(--color-code-bg, #0f172a);
   padding: 1.1rem 1.25rem;
   border-radius: 12px;
   overflow-x: auto;
   overflow-y: hidden;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
   /* Force single-axis scroll, no word-wrap */
   white-space: pre;
@@ -220,7 +361,7 @@ async function renderMermaid() {
   font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
   font-size: 11.5px;
   line-height: 1.65;
-  color: #e2e8f0;
+  color: var(--color-code-text, #e2e8f0);
   white-space: pre;
   word-break: normal;
   overflow-wrap: normal;
@@ -276,17 +417,17 @@ async function renderMermaid() {
   display: block;
 }
 
-/* ─── Antigravity Syntax Highlight Theme ────────────────────── */
+/* ─── Syntax Highlight Theme ────────────────────────────────── */
 .markdown-body :deep(.hljs-comment),
 .markdown-body :deep(.hljs-quote) {
-  color: #64748b;
+  color: var(--hljs-comment, #64748b);
   font-style: italic;
 }
 
 .markdown-body :deep(.hljs-keyword),
 .markdown-body :deep(.hljs-selector-tag),
 .markdown-body :deep(.hljs-addition) {
-  color: #f472b6;
+  color: var(--hljs-keyword, #f472b6);
 }
 
 .markdown-body :deep(.hljs-number),
@@ -294,7 +435,7 @@ async function renderMermaid() {
 .markdown-body :deep(.hljs-meta),
 .markdown-body :deep(.hljs-symbol),
 .markdown-body :deep(.hljs-bullet) {
-  color: #4ade80;
+  color: var(--hljs-string, #4ade80);
 }
 
 .markdown-body :deep(.hljs-title),
@@ -302,7 +443,7 @@ async function renderMermaid() {
 .markdown-body :deep(.hljs-name),
 .markdown-body :deep(.hljs-selector-id),
 .markdown-body :deep(.hljs-selector-class) {
-  color: #38bdf8;
+  color: var(--hljs-title, #38bdf8);
 }
 
 .markdown-body :deep(.hljs-attribute),
@@ -311,18 +452,18 @@ async function renderMermaid() {
 .markdown-body :deep(.hljs-template-variable),
 .markdown-body :deep(.hljs-class .hljs-title),
 .markdown-body :deep(.hljs-type) {
-  color: #fbbf24;
+  color: var(--hljs-variable, #fbbf24);
 }
 
 .markdown-body :deep(.hljs-built_in),
 .markdown-body :deep(.hljs-params),
 .markdown-body :deep(.hljs-formula),
 .markdown-body :deep(.hljs-link) {
-  color: #818cf8;
+  color: var(--hljs-built_in, #818cf8);
 }
 
 .markdown-body :deep(.hljs-deletion) {
-  color: #f87171;
+  color: var(--hljs-deletion, #f87171);
 }
 
 .markdown-body :deep(.hljs-emphasis) {
