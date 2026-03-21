@@ -19,7 +19,7 @@ func SetupRouter() *chi.Mux {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:8080", "https://thebravebyte.com", "https://thebravebyte.netlify.app", "https://*.netlify.app"},
+		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:8080", "https://thebravebyte.com", "https://thebravebyte.netlify.app", "https://*.netlify.app", "https://thebravebyte.pages.dev", "https://*.pages.dev"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
