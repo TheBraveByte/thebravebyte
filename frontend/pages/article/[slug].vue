@@ -38,23 +38,24 @@ import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import { marked } from 'marked'
+import { createEmptyRichTextDoc, parseArticleContent } from '~/utils/articleContent'
 
 const route = useRoute();
 const config = useRuntimeConfig();
 const { data: article, pending, error } = await useFetch(`${config.public.apiBase}/articles/${route.params.slug}`);
 
-// Detect if content is markdown (string) or rich text (object)
-const isMarkdown = computed(() => typeof article.value?.content === 'string');
+const parsedContent = computed(() => parseArticleContent(article.value?.content));
+const isMarkdown = computed(() => parsedContent.value.mode === 'markdown');
 
 // For markdown content
 const htmlContent = computed(() => {
-  if (!isMarkdown.value || !article.value?.content) return '';
-  return marked.parse(article.value.content);
+  if (!isMarkdown.value || !parsedContent.value.markdown) return '';
+  return marked.parse(parsedContent.value.markdown);
 });
 
 // For rich text content (TipTap)
 const editor = useEditor({
-  content: isMarkdown.value ? '' : article.value?.content,
+  content: isMarkdown.value ? createEmptyRichTextDoc() : parsedContent.value.richText,
   editable: false,
   extensions: [
     StarterKit,
@@ -65,7 +66,7 @@ const editor = useEditor({
 // Update editor content when data loads (if initially null)
 watch(() => article.value, (newArticle) => {
   if (newArticle && editor.value && !isMarkdown.value) {
-    editor.value.commands.setContent(newArticle.content);
+    editor.value.commands.setContent(parsedContent.value.richText);
   }
 });
 

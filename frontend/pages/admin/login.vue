@@ -114,7 +114,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   layout: false
 });
@@ -142,43 +142,32 @@ const handleLogin = async () => {
   loading.value = true;
   errorMessage.value = '';
   progress.value = 0;
+  loadingMessage.value = loadingSteps[0].message;
+
+  const progressInterval = setInterval(() => {
+    progress.value = Math.min(progress.value + 12, 88);
+    const step = loadingSteps.findLast((item) => progress.value >= item.progress) || loadingSteps[0];
+    loadingMessage.value = step.message;
+  }, 180);
 
   try {
-    // Simulate progressive loading
-    for (let i = 0; i < loadingSteps.length; i++) {
-      const step = loadingSteps[i];
-      await new Promise(resolve => setTimeout(resolve, 300));
-      progress.value = step.progress;
-      loadingMessage.value = step.message;
-    }
-
-    const config = useRuntimeConfig();
-    const { data, error } = await useFetch(`${config.public.apiBase}/auth/login`, {
+    const data = await apiFetch('/auth/login', {
       method: 'POST',
       body: credentials.value
     });
 
-    if (error.value) {
-      errorMessage.value = error.value?.data?.error || error.value?.data?.status || 'Invalid credentials';
-      progress.value = 0;
-      loadingMessage.value = '';
-      loading.value = false;
-      return;
-    }
-
-    // Set auth cookie
     const token = useCookie('auth_token');
-    token.value = data.value.token;
+    token.value = data.token;
 
-    // Small delay to show success
+    clearInterval(progressInterval);
+    progress.value = 100;
+    loadingMessage.value = 'Access granted!';
     await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Redirect to dashboard using navigateTo for better Nuxt compatibility
     await navigateTo('/admin/dashboard');
 
-  } catch (err) {
-    errorMessage.value = 'Login failed. Please try again.';
-    console.error('Login error:', err);
+  } catch (err: any) {
+    clearInterval(progressInterval);
+    errorMessage.value = err?.data?.error || err?.message || 'Login failed. Please try again.';
     progress.value = 0;
     loadingMessage.value = '';
   } finally {
@@ -186,18 +175,20 @@ const handleLogin = async () => {
   }
 };
 
-// Check if already logged in
 onMounted(async () => {
   const token = useCookie('auth_token');
   if (token.value) {
     try {
-      const config = useRuntimeConfig();
-      const { data } = await useFetch(`${config.public.apiBase}/auth/me`);
-      if (data.value) {
+      await apiFetch('/auth/me', {
+        headers: {
+          Authorization: `Bearer ${token.value}`
+        }
+      });
+      if (token.value) {
         await navigateTo('/admin/dashboard');
       }
     } catch (err) {
-      // Continue to login page
+      token.value = null;
     }
   }
 });

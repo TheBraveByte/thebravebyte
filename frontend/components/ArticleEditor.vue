@@ -45,18 +45,19 @@ import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
+import { createEmptyRichTextDoc, isRichTextDoc } from '~/utils/articleContent'
 
 const props = defineProps({
   modelValue: {
-    type: Object,
-    default: () => ({})
+    type: [Object, String],
+    default: () => createEmptyRichTextDoc()
   }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
 const editor = useEditor({
-  content: props.modelValue,
+  content: normalizeContent(props.modelValue),
   extensions: [
     StarterKit,
     Image,
@@ -79,9 +80,14 @@ const editor = useEditor({
 
 // Watch for external changes
 watch(() => props.modelValue, (newValue) => {
-  if (editor.value && JSON.stringify(newValue) !== JSON.stringify(editor.value.getJSON())) {
-    editor.value.commands.setContent(newValue);
+  const normalizedValue = normalizeContent(newValue);
+  if (editor.value && JSON.stringify(normalizedValue) !== JSON.stringify(editor.value.getJSON())) {
+    editor.value.commands.setContent(normalizedValue);
   }
+});
+
+onUnmounted(() => {
+  editor.value?.destroy();
 });
 
 const addImage = () => {
@@ -108,6 +114,25 @@ const setLink = () => {
 
   // update
   editor.value.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+}
+
+function normalizeContent(value) {
+  if (isRichTextDoc(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string' && value.trim()) {
+    try {
+      const parsed = JSON.parse(value);
+      if (isRichTextDoc(parsed)) {
+        return parsed;
+      }
+    } catch {
+      return createEmptyRichTextDoc();
+    }
+  }
+
+  return createEmptyRichTextDoc();
 }
 </script>
 

@@ -30,15 +30,17 @@ func SetupRouter() *chi.Mux {
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/articles", func(r chi.Router) {
 			r.Get("/", h.GetArticles)
-			r.Get("/{id}", h.GetArticle)
 
 			// Protected routes
 			r.Group(func(r chi.Router) {
 				r.Use(customMiddleware.AuthMiddleware)
+				r.Get("/admin", h.GetAdminArticles)
 				r.Post("/", h.CreateArticle)
 				r.Put("/{id}", h.UpdateArticle)
 				r.Delete("/{id}", h.DeleteArticle)
 			})
+
+			r.Get("/{id}", h.GetArticle)
 		})
 
 		r.Route("/auth", func(r chi.Router) {

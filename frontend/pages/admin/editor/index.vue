@@ -1,466 +1,709 @@
 <template>
-  <div class="min-h-screen bg-bg py-8">
-    <div class="container mx-auto px-6 max-w-5xl">
-      
-      <!-- Header -->
-      <div class="mb-8 flex items-center justify-between">
+  <div class="min-h-screen bg-bg pt-28 pb-12">
+    <div class="container mx-auto max-w-6xl px-6">
+      <div class="mb-8 flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div>
-          <h1 class="text-3xl font-light  mb-2">
-            {{ isEditing ? 'Edit Article' : 'New Article' }}
+          <p class="mb-2 font-mono text-xs uppercase tracking-[0.3em] text-text-secondary">
+            Editorial Workspace
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight text-text md:text-4xl">
+            {{ pageTitle }}
           </h1>
-          <p class="text-sm text-text-secondary font-mono">
-            {{ autoSaveStatus }}
+          <p class="mt-2 text-sm text-text-secondary">
+            {{ statusLine }}
           </p>
         </div>
-        <div class="flex gap-3 items-center">
-          <!-- View Article button (visible when we have a slug) -->
+
+        <div class="flex flex-wrap gap-3">
           <NuxtLink
-            v-if="article.slug"
-            :to="`/article/${article.slug}`"
-            target="_blank"
-            class="px-4 py-2 border border-border font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200"
+            to="/admin/dashboard"
+            class="rounded-full border border-border px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary transition-colors hover:border-text hover:text-text"
           >
-            VIEW_ARTICLE
+            Back to Dashboard
           </NuxtLink>
-          <button @click="saveDraft" :disabled="saving" 
-            class="px-4 py-2 border border-border  font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors duration-200 disabled:opacity-50">
-            {{ saving ? '...' : 'SAVE_DRAFT' }}
+          <NuxtLink
+            v-if="canViewArticle"
+            :to="`/article/${form.slug}`"
+            target="_blank"
+            class="rounded-full border border-border px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary transition-colors hover:border-text hover:text-text"
+          >
+            View Article
+          </NuxtLink>
+          <button
+            class="rounded-full border border-border px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-text transition-colors hover:border-text hover:bg-bg disabled:cursor-not-allowed disabled:opacity-60"
+            :disabled="saving || !canSaveDraft"
+            @click="saveDraft(false)"
+          >
+            {{ secondaryActionLabel }}
           </button>
-          <button @click="publish" :disabled="saving || !canPublish"
-            class="px-4 py-2 bg-text text-bg font-mono text-sm hover:bg-text-secondary transition-colors duration-200 disabled:opacity-50">
-            {{ article.published ? 'UPDATE' : 'PUBLISH' }}
+          <button
+            class="rounded-full bg-text px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-bg transition-colors hover:bg-text-secondary disabled:cursor-not-allowed disabled:opacity-60"
+            :disabled="saving || !canPublish"
+            @click="publish"
+          >
+            {{ primaryActionLabel }}
           </button>
         </div>
       </div>
 
-      <!-- Form -->
-      <div class="space-y-6">
-        
-        <!-- Title -->
-        <div>
-          <label class="block font-mono-label text-text-secondary mb-2">
-            TITLE
-          </label>
-          <input 
-            v-model="article.title" 
-            type="text" 
-            placeholder="Enter article title..."
-            class="w-full px-4 py-3  border border-border  text-xl font-light focus:border-text outline-none transition-colors"
-          />
-        </div>
+      <div
+        v-if="notice.message"
+        class="mb-6 rounded-2xl border px-4 py-3 text-sm"
+        :class="notice.type === 'error'
+          ? 'border-error/30 bg-error/10 text-error'
+          : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'"
+      >
+        {{ notice.message }}
+      </div>
 
-        <!-- Slug -->
-        <div>
-          <label class="block font-mono-label text-text-secondary mb-2">
-            SLUG (URL)
-          </label>
-          <input 
-            v-model="article.slug" 
-            type="text" 
-            placeholder="article-url-slug"
-            class="w-full px-4 py-3  border border-border  font-mono text-sm focus:border-text outline-none transition-colors"
-          />
-          <p class="mt-1 text-xs text-text-secondary">
-            {{ siteUrl }}/article/{{ article.slug || 'your-slug' }}
-          </p>
-        </div>
+      <div v-if="loadingArticle" class="rounded-3xl border border-border bg-bg-secondary/60 p-10 text-center">
+        <p class="font-mono text-sm uppercase tracking-[0.24em] text-text-secondary">
+          Loading Article
+        </p>
+      </div>
 
-        <!-- Excerpt -->
-        <div>
-          <label class="block font-mono-label text-text-secondary mb-2">
-            EXCERPT
-          </label>
-          <textarea 
-            v-model="article.excerpt" 
-            rows="3"
-            placeholder="Brief description for article cards and SEO..."
-            class="w-full px-4 py-3  border border-border  focus:border-text outline-none transition-colors resize-none"
-          ></textarea>
-        </div>
-
-        <!-- Cover Image -->
-        <div>
-          <label class="block font-mono-label text-text-secondary mb-2">
-            COVER_IMAGE
-          </label>
-          <div class="flex gap-3">
-            <input 
-              v-model="article.coverImage" 
-              type="text" 
-              placeholder="Image URL or upload..."
-              class="flex-1 px-4 py-3  border border-border  font-mono text-sm focus:border-text outline-none transition-colors"
+      <div v-else class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+        <section class="space-y-6">
+          <div class="rounded-3xl border border-border bg-bg-secondary/70 p-6 backdrop-blur-sm">
+            <label class="mb-2 block font-mono text-xs uppercase tracking-[0.22em] text-text-secondary">
+              Title
+            </label>
+            <input
+              v-model="form.title"
+              type="text"
+              placeholder="Designing reliable systems under real constraints"
+              class="w-full border-0 bg-transparent px-0 text-3xl font-semibold tracking-tight text-text outline-none placeholder:text-text-muted md:text-4xl"
             />
-            <label class="px-4 py-3 border border-border  font-mono text-sm hover:border-text hover:bg-bg-secondary transition-colors cursor-pointer flex items-center gap-2">
-              <Icon name="lucide:upload" class="w-4 h-4" />
-              UPLOAD
-              <input type="file" @change="handleImageUpload" accept="image/*" class="hidden" />
-            </label>
           </div>
-          <div v-if="article.coverImage" class="mt-3">
-            <img :src="article.coverImage" alt="Cover preview" class="max-w-xs border border-border" />
-          </div>
-        </div>
 
-        <!-- Content Type Toggle -->
-        <div>
-          <label class="block font-mono-label text-text-secondary mb-2">
-            CONTENT_TYPE
-          </label>
-          <div class="flex gap-3 mb-4">
-            <button 
-              @click="contentType = 'richtext'" 
-              :class="contentType === 'richtext' ? 'bg-text text-bg' : 'border border-border'"
-              class="px-4 py-2 font-mono text-sm transition-colors duration-200">
-              RICH_TEXT
-            </button>
-            <button 
-              @click="contentType = 'markdown'" 
-              :class="contentType === 'markdown' ? 'bg-text text-bg' : 'border border-border'"
-              class="px-4 py-2 font-mono text-sm transition-colors duration-200">
-              MARKDOWN
-            </button>
-          </div>
-        </div>
+          <div class="rounded-3xl border border-border bg-bg-secondary/70 p-6 backdrop-blur-sm">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <label class="font-mono text-xs uppercase tracking-[0.22em] text-text-secondary">
+                Content
+              </label>
 
-        <!-- Content Editor -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <label class="block font-mono-label text-text-secondary">
-              CONTENT
-            </label>
-            <button 
-              v-if="contentType === 'markdown'" 
-              @click="showPreview = !showPreview"
-              class="px-3 py-1 border border-border font-mono text-xs hover:border-text transition-colors">
-              {{ showPreview ? 'EDIT' : 'PREVIEW' }}
-            </button>
-          </div>
-          
-          <!-- Rich Text Editor -->
-          <ArticleEditor v-if="contentType === 'richtext'" v-model="article.content" />
-          
-          <!-- Markdown Editor/Preview -->
-          <div v-else>
-            <textarea 
-              v-if="!showPreview"
-              v-model="markdownContent" 
-              rows="20"
-              placeholder="Write your article in markdown..."
-              class="w-full px-4 py-3 border border-border font-mono text-sm focus:border-text outline-none transition-colors resize-y"
-            ></textarea>
-            <div 
-              v-else
-              class="border border-border p-6 min-h-[500px] markdown-preview"
-              v-html="markdownPreview"
-            ></div>
-          </div>
-        </div>
+              <div class="flex flex-wrap gap-2">
+                <button
+                  class="rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition-colors"
+                  :class="contentType === 'richtext'
+                    ? 'bg-text text-bg'
+                    : 'border border-border text-text-secondary hover:border-text hover:text-text'"
+                  @click="setContentType('richtext')"
+                >
+                  Rich Text
+                </button>
+                <button
+                  class="rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition-colors"
+                  :class="contentType === 'markdown'
+                    ? 'bg-text text-bg'
+                    : 'border border-border text-text-secondary hover:border-text hover:text-text'"
+                  @click="setContentType('markdown')"
+                >
+                  Markdown
+                </button>
+                <button
+                  v-if="contentType === 'markdown'"
+                  class="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary transition-colors hover:border-text hover:text-text"
+                  @click="showPreview = !showPreview"
+                >
+                  {{ showPreview ? "Edit Markdown" : "Preview Markdown" }}
+                </button>
+              </div>
+            </div>
 
+            <ArticleEditor v-if="contentType === 'richtext'" v-model="richTextContent" />
+
+            <div v-else>
+              <textarea
+                v-if="!showPreview"
+                v-model="markdownContent"
+                rows="20"
+                placeholder="Write in markdown..."
+                class="min-h-[460px] w-full rounded-2xl border border-border bg-bg px-4 py-4 font-mono text-sm leading-7 text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
+              />
+              <div
+                v-else
+                class="markdown-preview min-h-[460px] rounded-2xl border border-border bg-bg px-6 py-5"
+                v-html="markdownPreview"
+              />
+            </div>
+          </div>
+        </section>
+
+        <aside class="space-y-6">
+          <section class="rounded-3xl border border-border bg-bg-secondary/70 p-6 backdrop-blur-sm">
+            <h2 class="text-lg font-semibold text-text">Publishing</h2>
+            <div class="mt-4 space-y-4">
+              <div>
+                <label class="mb-2 block font-mono text-xs uppercase tracking-[0.22em] text-text-secondary">
+                  Slug
+                </label>
+                <input
+                  :value="form.slug"
+                  type="text"
+                  placeholder="article-slug"
+                  class="w-full rounded-2xl border border-border bg-bg px-4 py-3 font-mono text-sm text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
+                  @input="updateSlug"
+                />
+                <p class="mt-2 break-all text-xs text-text-secondary">
+                  {{ siteUrl }}/article/{{ form.slug || "your-slug" }}
+                </p>
+              </div>
+
+              <div>
+                <label class="mb-2 block font-mono text-xs uppercase tracking-[0.22em] text-text-secondary">
+                  Excerpt
+                </label>
+                <textarea
+                  v-model="form.excerpt"
+                  rows="4"
+                  placeholder="Short summary for cards, SEO, and sharing."
+                  class="w-full rounded-2xl border border-border bg-bg px-4 py-3 text-sm leading-7 text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
+                />
+              </div>
+
+              <div>
+                <label class="mb-2 block font-mono text-xs uppercase tracking-[0.22em] text-text-secondary">
+                  Cover Image
+                </label>
+                <div class="space-y-3">
+                  <input
+                    v-model.trim="form.coverImage"
+                    type="text"
+                    placeholder="https://..."
+                    class="w-full rounded-2xl border border-border bg-bg px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
+                  />
+                  <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary transition-colors hover:border-text hover:text-text">
+                    <Icon name="lucide:upload" class="h-4 w-4" />
+                    Upload Image
+                    <input
+                      class="hidden"
+                      type="file"
+                      accept="image/*"
+                      @change="handleImageUpload"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label class="mb-2 block font-mono text-xs uppercase tracking-[0.22em] text-text-secondary">
+                  Author
+                </label>
+                <input
+                  v-model.trim="form.author"
+                  type="text"
+                  placeholder="Yusuf Akinleye"
+                  class="w-full rounded-2xl border border-border bg-bg px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-3xl border border-border bg-bg-secondary/70 p-6 backdrop-blur-sm">
+            <h2 class="text-lg font-semibold text-text">Status</h2>
+            <div class="mt-4 space-y-3 text-sm text-text-secondary">
+              <p>
+                <span class="font-semibold text-text">State:</span>
+                {{ form.published ? "Published" : "Draft" }}
+              </p>
+              <p>
+                <span class="font-semibold text-text">Autosave:</span>
+                {{ autosaveLabel }}
+              </p>
+              <p>
+                <span class="font-semibold text-text">Content mode:</span>
+                {{ contentType === "richtext" ? "Rich text" : "Markdown" }}
+              </p>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-2">
+              <button
+                v-if="isEditing && form.published"
+                class="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary transition-colors hover:border-amber-500 hover:text-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
+                :disabled="saving"
+                @click="unpublish"
+              >
+                Unpublish
+              </button>
+              <button
+                v-if="isEditing"
+                class="rounded-full border border-error/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-error transition-colors hover:bg-error hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+                :disabled="saving"
+                @click="deleteArticle"
+              >
+                Delete
+              </button>
+            </div>
+          </section>
+
+          <div v-if="form.coverImage" class="overflow-hidden rounded-3xl border border-border bg-bg-secondary/70 backdrop-blur-sm">
+            <img
+              :src="form.coverImage"
+              :alt="form.title || 'Cover image preview'"
+              class="h-52 w-full object-cover"
+            />
+          </div>
+        </aside>
       </div>
-
-      <!-- Actions Footer -->
-      <div class="mt-8 pt-6 border-t border-border flex justify-between items-center">
-        <NuxtLink to="/admin/dashboard" class="text-text-secondary hover:text-text font-mono text-sm">
-          ← BACK_TO_DASHBOARD
-        </NuxtLink>
-        <div class="flex gap-3">
-          <button v-if="isEditing && article.published" @click="unpublish"
-            class="px-4 py-2 border border-border text-text-secondary font-mono text-sm hover:border-red-500 hover:text-red-500 transition-colors duration-200">
-            UNPUBLISH
-          </button>
-          <button v-if="isEditing" @click="deleteArticle"
-            class="px-4 py-2 border border-red-500 text-red-500 font-mono text-sm hover:bg-red-500 hover:text-white transition-colors duration-200">
-            DELETE
-          </button>
-        </div>
-      </div>
-
     </div>
   </div>
 </template>
 
-<script setup>
-import { marked } from 'marked';
+<script setup lang="ts">
+import { marked } from "marked";
+import {
+  createEmptyRichTextDoc,
+  hasRichTextContent,
+  parseArticleContent,
+  serializeArticleContent,
+  type RichTextDoc,
+} from "~/utils/articleContent";
 
 definePageMeta({
-  middleware: 'auth'
+  middleware: "auth",
 });
+
+type EditableArticle = {
+  _id?: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  coverImage: string;
+  published: boolean;
+  publishedAt: string | null;
+  author: string;
+};
 
 const route = useRoute();
 const router = useRouter();
-const config = useRuntimeConfig();
-const { apiFetch, useApiFetch, apiUrl } = await import('~/composables/useApi');
+const token = useCookie<string | null>("auth_token");
 
-const siteUrl = config.public.siteUrl || 'http://localhost:3000';
-const isEditing = computed(() => !!route.query.id);
+const siteUrl = useRuntimeConfig().public.siteUrl || "http://localhost:3000";
+const loadingArticle = ref(false);
 const saving = ref(false);
-const autoSaveStatus = ref('All changes saved');
-const autoSaveTimer = ref(null);
-
-const contentType = ref('richtext'); // 'richtext' or 'markdown'
 const showPreview = ref(false);
-const markdownContent = ref('');
+const contentType = ref<"markdown" | "richtext">("richtext");
+const markdownContent = ref("");
+const richTextContent = ref<RichTextDoc>(createEmptyRichTextDoc());
+const autosaveState = ref<"idle" | "dirty" | "saving" | "saved" | "error">("idle");
+const notice = ref<{ type: "success" | "error"; message: string }>({
+  type: "success",
+  message: "",
+});
+const autosaveTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const slugManuallyEdited = ref(false);
+const isHydrating = ref(true);
+const loadedArticleId = ref("");
+const lastSavedSnapshot = ref("");
 
-const article = ref({
-  title: '',
-  slug: '',
-  excerpt: '',
-  content: {},
-  coverImage: '',
+const form = ref<EditableArticle>({
+  title: "",
+  slug: "",
+  excerpt: "",
+  coverImage: "",
   published: false,
+  publishedAt: null,
+  author: "Yusuf Akinleye",
 });
 
-const canPublish = computed(() => {
-  return article.value.title && article.value.slug && article.value.excerpt && 
-    (contentType.value === 'markdown' ? markdownContent.value : article.value.content);
+const articleId = computed(() => {
+  const id = route.query.id;
+  return typeof id === "string" ? id : "";
 });
 
-// Markdown preview using marked
+const isEditing = computed(() => Boolean(articleId.value));
+
+const authHeaders = computed(() =>
+  token.value
+    ? {
+        Authorization: `Bearer ${token.value}`,
+      }
+    : undefined,
+);
+
+const pageTitle = computed(() => (isEditing.value ? "Edit Article" : "New Article"));
+
+const statusLine = computed(() => {
+  if (saving.value) {
+    return "Saving your changes...";
+  }
+
+  return autosaveLabel.value;
+});
+
+const autosaveLabel = computed(() => {
+  switch (autosaveState.value) {
+    case "dirty":
+      return "Unsaved changes";
+    case "saving":
+      return "Autosaving changes";
+    case "saved":
+      return "All changes saved";
+    case "error":
+      return "Autosave failed";
+    default:
+      return isEditing.value ? "Editing existing article" : "Ready for a new draft";
+  }
+});
+
 const markdownPreview = computed(() => {
-  if (!markdownContent.value) return '<p class="text-text-secondary">Nothing to preview yet...</p>';
-  
-  // Simple markdown to HTML conversion (you can use 'marked' library for full support)
+  if (!markdownContent.value.trim()) {
+    return '<p class="text-text-secondary">Nothing to preview yet.</p>';
+  }
+
   return marked.parse(markdownContent.value);
 });
 
-// Load article if editing
-onMounted(async () => {
-  if (isEditing.value) {
-    try {
-      const { data } = await useFetch(`${config.public.apiBase}/articles/${route.query.id}`);
-      if (data.value) {
-        article.value = { ...data.value };
-        
-        // Detect content type
-        if (typeof data.value.content === 'string') {
-          contentType.value = 'markdown';
-          markdownContent.value = data.value.content;
-        } else {
-          contentType.value = 'richtext';
-        }
-      }
-    } catch (error) {
-      console.error('Failed to load article:', error);
-    }
+const contentPresent = computed(() => {
+  if (contentType.value === "markdown") {
+    return markdownContent.value.trim().length > 0;
+  }
+
+  return hasRichTextContent(richTextContent.value);
+});
+
+const canPublish = computed(() => {
+  return (
+    form.value.title.trim().length > 0 &&
+    form.value.slug.trim().length > 0 &&
+    form.value.excerpt.trim().length > 0 &&
+    contentPresent.value
+  );
+});
+
+const canSaveDraft = computed(() => {
+  return Boolean(
+    form.value.title.trim() ||
+      form.value.slug.trim() ||
+      form.value.excerpt.trim() ||
+      form.value.coverImage.trim() ||
+      contentPresent.value,
+  );
+});
+
+const canViewArticle = computed(() => form.value.published && form.value.slug.trim().length > 0);
+
+const secondaryActionLabel = computed(() => {
+  if (saving.value) return "Saving";
+  return form.value.published ? "Save Changes" : "Save Draft";
+});
+
+const primaryActionLabel = computed(() => {
+  if (saving.value) return "Saving";
+  return form.value.published ? "Update Article" : "Publish";
+});
+
+const autosaveSnapshot = computed(() =>
+  JSON.stringify({
+    form: form.value,
+    contentType: contentType.value,
+    markdown: markdownContent.value,
+    richText: richTextContent.value,
+  }),
+);
+
+watch(articleId, async () => {
+  await loadArticle();
+}, { immediate: true });
+
+watch(
+  () => form.value.title,
+  (title) => {
+    if (!title || slugManuallyEdited.value) return;
+    form.value.slug = slugify(title);
+  },
+);
+
+watch(
+  autosaveSnapshot,
+  (snapshot) => {
+    if (isHydrating.value) return;
+    if (snapshot === lastSavedSnapshot.value) return;
+    if (!canSaveDraft.value) return;
+
+    autosaveState.value = "dirty";
+    scheduleAutosave();
+  },
+);
+
+onUnmounted(() => {
+  if (autosaveTimer.value) {
+    clearTimeout(autosaveTimer.value);
   }
 });
 
-// Auto-generate slug from title
-// Auto-generate slug from title
-watch(() => article.value.title, (newTitle) => {
-  // Generate slug if it's a new article OR if the slug is empty
-  if (newTitle && (!isEditing.value || !article.value.slug)) {
-    article.value.slug = newTitle
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
-  }
-});
+async function loadArticle() {
+  clearNotice();
+  cancelAutosave();
+  isHydrating.value = true;
 
-// Auto-save functionality
-watch(article, () => {
-  autoSaveStatus.value = 'Unsaved changes...';
-  
-  // Clear existing timer
-  if (autoSaveTimer.value) {
-    clearTimeout(autoSaveTimer.value);
+  if (!isEditing.value) {
+    loadedArticleId.value = "";
+    slugManuallyEdited.value = false;
+    form.value = {
+      title: "",
+      slug: "",
+      excerpt: "",
+      coverImage: "",
+      published: false,
+      publishedAt: null,
+      author: "Yusuf Akinleye",
+    };
+    contentType.value = "richtext";
+    richTextContent.value = createEmptyRichTextDoc();
+    markdownContent.value = "";
+    showPreview.value = false;
+    autosaveState.value = "idle";
+    lastSavedSnapshot.value = autosaveSnapshot.value;
+    isHydrating.value = false;
+    return;
   }
-  
-  // Set new timer for auto-save after 2 seconds of inactivity
-  autoSaveTimer.value = setTimeout(async () => {
+
+  if (articleId.value === loadedArticleId.value) {
+    isHydrating.value = false;
+    return;
+  }
+
+  loadingArticle.value = true;
+
+  try {
+    const article = await apiFetch<any>(`/articles/${articleId.value}`, {
+      headers: authHeaders.value,
+    });
+
+    applyArticle(article);
+    loadedArticleId.value = article._id;
+    lastSavedSnapshot.value = autosaveSnapshot.value;
+    autosaveState.value = "idle";
+  } catch (loadError: any) {
+    notice.value = {
+      type: "error",
+      message:
+        loadError?.data?.error ||
+        loadError?.message ||
+        "Failed to load the article.",
+    };
+  } finally {
+    loadingArticle.value = false;
+    isHydrating.value = false;
+  }
+}
+
+function applyArticle(article: any) {
+  const parsedContent = parseArticleContent(article?.content);
+
+  form.value = {
+    _id: article?._id,
+    title: article?.title || "",
+    slug: article?.slug || "",
+    excerpt: article?.excerpt || "",
+    coverImage: article?.coverImage || "",
+    published: Boolean(article?.published),
+    publishedAt: article?.publishedAt || null,
+    author: article?.author || "Yusuf Akinleye",
+  };
+
+  contentType.value = parsedContent.mode;
+  markdownContent.value = parsedContent.markdown;
+  richTextContent.value = parsedContent.richText;
+  slugManuallyEdited.value = Boolean(article?.slug);
+  showPreview.value = false;
+}
+
+function scheduleAutosave() {
+  cancelAutosave();
+  autosaveTimer.value = setTimeout(async () => {
+    autosaveState.value = "saving";
     await saveDraft(true);
-  }, 2000);
-}, { deep: true });
+  }, 1500);
+}
 
-const saveDraft = async (isAutoSave = false) => {
+function cancelAutosave() {
+  if (autosaveTimer.value) {
+    clearTimeout(autosaveTimer.value);
+    autosaveTimer.value = null;
+  }
+}
+
+function clearNotice() {
+  notice.value.message = "";
+}
+
+function updateSlug(event: Event) {
+  const nextValue = (event.target as HTMLInputElement).value;
+  slugManuallyEdited.value = true;
+  form.value.slug = slugify(nextValue);
+}
+
+function setContentType(nextType: "markdown" | "richtext") {
+  if (contentType.value === nextType) return;
+
+  contentType.value = nextType;
+  showPreview.value = false;
+}
+
+async function saveDraft(isAutoSave: boolean) {
+  await saveArticle({
+    publish: form.value.published,
+    successMessage: form.value.published ? "Published article updated." : "Draft saved.",
+    autoSave: isAutoSave,
+  });
+}
+
+async function publish() {
+  await saveArticle({
+    publish: true,
+    successMessage: "Article published successfully.",
+    autoSave: false,
+  });
+}
+
+async function unpublish() {
+  if (!confirm("Unpublish this article? It will no longer be visible publicly.")) {
+    return;
+  }
+
+  await saveArticle({
+    publish: false,
+    successMessage: "Article moved back to draft.",
+    autoSave: false,
+  });
+}
+
+async function saveArticle(options: {
+  publish: boolean;
+  successMessage: string;
+  autoSave: boolean;
+}) {
+  if (!token.value) {
+    notice.value = {
+      type: "error",
+      message: "Admin session missing. Please log in again.",
+    };
+    return;
+  }
+
+  if (!options.autoSave) {
+    clearNotice();
+  }
+
   saving.value = true;
-  const token = useCookie('auth_token');
-  
+  if (options.autoSave) {
+    autosaveState.value = "saving";
+  }
+
   try {
-    const endpoint = isEditing.value 
-      ? `${config.public.apiBase}/articles/${route.query.id}`
-      : `${config.public.apiBase}/articles`;
-    
-    const method = isEditing.value ? 'PUT' : 'POST';
-    
-    // Prepare content based on type
-    const contentToSave = contentType.value === 'markdown' 
-      ? markdownContent.value 
-      : article.value.content;
-    
-    const { data, error } = await useFetch(endpoint, {
+    const payload = {
+      ...form.value,
+      title: form.value.title.trim(),
+      slug: form.value.slug.trim(),
+      excerpt: form.value.excerpt.trim(),
+      coverImage: form.value.coverImage.trim(),
+      author: form.value.author.trim() || "Yusuf Akinleye",
+      published: options.publish,
+      publishedAt: options.publish
+        ? form.value.publishedAt || new Date().toISOString()
+        : null,
+      content: serializeArticleContent(
+        contentType.value,
+        markdownContent.value,
+        richTextContent.value,
+      ),
+    };
+
+    const endpoint = isEditing.value ? `/articles/${articleId.value}` : "/articles";
+    const method = isEditing.value ? "PUT" : "POST";
+
+    const savedArticle = await apiFetch<any>(endpoint, {
       method,
-      headers: {
-        Authorization: `Bearer ${token.value}`
-      },
-      body: { ...article.value, content: contentToSave, published: false }
+      headers: authHeaders.value,
+      body: payload,
     });
-    
-    if (error.value) {
-      throw new Error(error.value.message);
+
+    isHydrating.value = true;
+    applyArticle(savedArticle);
+    loadedArticleId.value = savedArticle._id;
+
+    if (!isEditing.value) {
+      await router.replace({ path: "/admin/editor", query: { id: savedArticle._id } });
     }
-    
-    if (data.value && !isEditing.value) {
-      // Update URL to editing mode
-      router.replace({ query: { id: data.value._id } });
-      article.value = data.value;
+
+    lastSavedSnapshot.value = autosaveSnapshot.value;
+    autosaveState.value = "saved";
+
+    if (!options.autoSave) {
+      notice.value = {
+        type: "success",
+        message: options.successMessage,
+      };
     }
-    
-    autoSaveStatus.value = isAutoSave ? 'Auto-saved' : 'Draft saved';
-    
-    setTimeout(() => {
-      autoSaveStatus.value = 'All changes saved';
-    }, 2000);
-    
-  } catch (error) {
-    console.error('Save failed:', error);
-    autoSaveStatus.value = 'Save failed';
+  } catch (saveError: any) {
+    autosaveState.value = "error";
+    notice.value = {
+      type: "error",
+      message:
+        saveError?.data?.error ||
+        saveError?.message ||
+        "Failed to save the article.",
+    };
   } finally {
     saving.value = false;
+    isHydrating.value = false;
   }
-};
+}
 
-const publish = async () => {
+async function deleteArticle() {
+  if (!isEditing.value) return;
+  if (!confirm("Delete this article permanently? This cannot be undone.")) {
+    return;
+  }
+
   saving.value = true;
-  const token = useCookie('auth_token');
-  
-  try {
-    // Ensure slug is generated if missing
-    if (!article.value.slug && article.value.title) {
-      article.value.slug = article.value.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)+/g, '');
-    }
+  clearNotice();
 
-    const endpoint = isEditing.value
-      ? `/articles/${route.query.id}`
-      : '/articles';
-    
-    const method = isEditing.value ? 'PUT' : 'POST';
-    
-    // Prepare content based on type
-    const contentToSave = contentType.value === 'markdown' 
-      ? markdownContent.value 
-      : article.value.content;
-    
-    const { data, error } = await useApiFetch(endpoint, {
-      method,
-      headers: {
-        Authorization: `Bearer ${token.value}`
-      },
-      body: { 
-        ...article.value, 
-        content: contentToSave,
-        published: true,
-        publishedAt: article.value.published ? article.value.publishedAt : new Date()
-      }
+  try {
+    await apiFetch(`/articles/${articleId.value}`, {
+      method: "DELETE",
+      headers: authHeaders.value,
     });
-    
-    if (error.value) {
-      throw new Error(error.value.message);
-    }
-    
-    article.value = data.value;
-    autoSaveStatus.value = 'Published successfully!';
-    
-    setTimeout(() => {
-      // After publishing, take the user to the public article page
-      router.push(`/article/${article.value.slug}`);
-    }, 1000);
-    
-  } catch (error) {
-    console.error('Publish failed:', error);
-    autoSaveStatus.value = 'Publish failed';
+
+    await router.push("/admin/dashboard");
+  } catch (deleteError: any) {
+    notice.value = {
+      type: "error",
+      message:
+        deleteError?.data?.error ||
+        deleteError?.message ||
+        "Failed to delete the article.",
+    };
   } finally {
     saving.value = false;
   }
-};
+}
 
-const unpublish = async () => {
-  if (!confirm('Unpublish this article?')) return;
-  
-  saving.value = true;
-  const token = useCookie('auth_token');
-  
-  try {
-    const { error } = await useApiFetch(`/articles/${route.query.id}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token.value}`
-      },
-      body: { ...article.value, published: false }
-    });
-    
-    if (error.value) {
-      throw new Error(error.value.message);
-    }
-    
-    article.value.published = false;
-    autoSaveStatus.value = 'Article unpublished';
-    
-  } catch (error) {
-    console.error('Unpublish failed:', error);
-  } finally {
-    saving.value = false;
-  }
-};
-
-const deleteArticle = async () => {
-  if (!confirm('Delete this article permanently? This cannot be undone.')) return;
-  
-  saving.value = true;
-  const token = useCookie('auth_token');
-  
-  try {
-    const { error } = await useApiFetch(`/articles/${route.query.id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token.value}`
-      }
-    });
-    
-    if (error.value) {
-      throw new Error(error.value.message);
-    }
-    
-    router.push('/admin/dashboard');
-    
-  } catch (error) {
-    console.error('Delete failed:', error);
-  } finally {
-    saving.value = false;
-  }
-};
-
-const handleImageUpload = async (event) => {
-  const file = event.target.files[0];
+function handleImageUpload(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
   if (!file) return;
-  
-  // For now, just use a data URL. In production, upload to cloud storage
+
   const reader = new FileReader();
-  reader.onload = (e) => {
-    article.value.coverImage = e.target.result;
+  reader.onload = (loadEvent) => {
+    form.value.coverImage = String(loadEvent.target?.result || "");
   };
   reader.readAsDataURL(file);
-  
-  // TODO: Upload to cloud storage (Cloudinary, S3, etc.)
-  // const formData = new FormData();
-  // formData.append('image', file);
-  // const { data } = await useFetch('/api/upload', { method: 'POST', body: formData });
-  // article.value.coverImage = data.value.url;
-};
+}
 
-// Cleanup on unmount
-onUnmounted(() => {
-  if (autoSaveTimer.value) {
-    clearTimeout(autoSaveTimer.value);
-  }
-});
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 </script>
 
 <style scoped>
-/* Basic, readable styling for Markdown preview without relying on Tailwind Typography */
 .markdown-preview {
   color: var(--color-text);
 }
@@ -475,27 +718,36 @@ onUnmounted(() => {
 .markdown-preview h4,
 .markdown-preview h5,
 .markdown-preview h6 {
-  font-weight: 600;
-  line-height: 1.25;
-  margin-top: 1.5em;
   margin-bottom: 0.5em;
   color: var(--color-text);
+  font-weight: 600;
+  line-height: 1.25;
 }
 
-.markdown-preview h1 { font-size: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.3em; }
-.markdown-preview h2 { font-size: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.25em; }
-.markdown-preview h3 { font-size: 1.25rem; }
-.markdown-preview h4 { font-size: 1.125rem; }
-.markdown-preview h5 { font-size: 1rem; }
-.markdown-preview h6 { font-size: 0.875rem; color: var(--color-text-secondary); }
+.markdown-preview h1 {
+  font-size: 2rem;
+}
+
+.markdown-preview h2 {
+  font-size: 1.5rem;
+}
+
+.markdown-preview h3 {
+  font-size: 1.25rem;
+}
 
 .markdown-preview ul,
 .markdown-preview ol {
   padding-left: 1.5rem;
 }
-.markdown-preview ul { list-style: disc; }
-.markdown-preview ol { list-style: decimal; }
-.markdown-preview li { margin: 0.25em 0; }
+
+.markdown-preview ul {
+  list-style: disc;
+}
+
+.markdown-preview ol {
+  list-style: decimal;
+}
 
 .markdown-preview blockquote {
   border-left: 4px solid var(--color-accent);
@@ -505,46 +757,33 @@ onUnmounted(() => {
 }
 
 .markdown-preview code {
+  border-radius: 4px;
   background: var(--color-bg-secondary);
   padding: 0.15em 0.35em;
-  border-radius: 4px;
   font-family: var(--font-mono);
   font-size: 0.9em;
 }
 
-.markdown-preview pre code {
-  background: none;
-  padding: 0;
-  border-radius: 0;
-}
-
 .markdown-preview pre {
+  overflow-x: auto;
+  border-radius: 12px;
   background: var(--color-bg-secondary);
   padding: 1rem;
-  border-radius: 6px;
-  overflow-x: auto;
+}
+
+.markdown-preview pre code {
+  background: transparent;
+  padding: 0;
 }
 
 .markdown-preview a {
-  color: var(--color-accent);
+  color: var(--color-text);
   text-decoration: underline;
 }
 
 .markdown-preview img {
+  margin: 1.5rem 0;
   max-width: 100%;
-  border-radius: 6px;
-}
-
-.markdown-preview table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.markdown-preview th,
-.markdown-preview td {
-  border: 1px solid var(--color-border);
-  padding: 0.5rem 0.75rem;
-}
-.markdown-preview thead th {
-  background: var(--color-bg-secondary);
+  border-radius: 12px;
 }
 </style>

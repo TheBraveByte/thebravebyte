@@ -21,17 +21,22 @@ func NewArticleRepository() *ArticleRepository {
 	}
 }
 
-func (r *ArticleRepository) GetAll(ctx context.Context, page, limit int) ([]models.Article, int64, error) {
+func (r *ArticleRepository) GetAll(ctx context.Context, page, limit int, includeDrafts bool) ([]models.Article, int64, error) {
 	skip := (int64(page) - 1) * int64(limit)
 	opts := options.Find().SetLimit(int64(limit)).SetSkip(skip).SetSort(bson.D{{Key: "created_at", Value: -1}})
 
+	filter := bson.D{}
+	if !includeDrafts {
+		filter = bson.D{{Key: "published", Value: true}}
+	}
+
 	// Count total documents
-	total, err := r.collection.CountDocuments(ctx, bson.D{})
+	total, err := r.collection.CountDocuments(ctx, filter)
 	if err != nil {
 		return nil, 0, err
 	}
 
-	cursor, err := r.collection.Find(ctx, bson.D{}, opts)
+	cursor, err := r.collection.Find(ctx, filter, opts)
 	if err != nil {
 		return nil, 0, err
 	}
