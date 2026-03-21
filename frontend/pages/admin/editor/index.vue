@@ -101,28 +101,28 @@
                 >
                   Markdown
                 </button>
-                <button
-                  v-if="contentType === 'markdown'"
-                  class="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary transition-colors hover:border-text hover:text-text"
-                  @click="showPreview = !showPreview"
-                >
-                  {{ showPreview ? "Edit Markdown" : "Preview Markdown" }}
-                </button>
               </div>
             </div>
 
             <ArticleEditor v-if="contentType === 'richtext'" v-model="richTextContent" />
 
-            <div v-else>
-              <textarea
-                v-if="!showPreview"
-                v-model="markdownContent"
-                rows="20"
-                placeholder="Write in markdown..."
-                class="min-h-[460px] w-full rounded-2xl border border-border bg-bg px-4 py-4 font-mono text-sm leading-7 text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
-              />
-              <div v-else class="min-h-[460px] rounded-2xl border border-border bg-bg px-6 py-5">
-                <MarkdownRenderer :content="markdownContent" />
+            <!-- Markdown: split-pane side-by-side editor + live preview -->
+            <div v-else class="markdown-split">
+              <!-- Editor pane -->
+              <div class="markdown-split__pane">
+                <p class="markdown-split__label">Editor</p>
+                <textarea
+                  v-model="markdownContent"
+                  placeholder="Write in markdown..."
+                  class="markdown-split__textarea"
+                />
+              </div>
+              <!-- Preview pane -->
+              <div class="markdown-split__pane">
+                <p class="markdown-split__label">Preview</p>
+                <div class="markdown-split__preview">
+                  <MarkdownRenderer :content="markdownContent" />
+                </div>
               </div>
             </div>
           </div>
@@ -280,7 +280,6 @@ const token = useCookie<string | null>("auth_token");
 const siteUrl = useRuntimeConfig().public.siteUrl || "http://localhost:3000";
 const loadingArticle = ref(false);
 const saving = ref(false);
-const showPreview = ref(false);
 const contentType = ref<"markdown" | "richtext">("richtext");
 const markdownContent = ref("");
 const richTextContent = ref<RichTextDoc>(createEmptyRichTextDoc());
@@ -444,7 +443,6 @@ async function loadArticle() {
     contentType.value = "richtext";
     richTextContent.value = createEmptyRichTextDoc();
     markdownContent.value = "";
-    showPreview.value = false;
     autosaveState.value = "idle";
     lastSavedSnapshot.value = autosaveSnapshot.value;
     isHydrating.value = false;
@@ -499,7 +497,6 @@ function applyArticle(article: any) {
   markdownContent.value = parsedContent.markdown;
   richTextContent.value = parsedContent.richText;
   slugManuallyEdited.value = Boolean(article?.slug);
-  showPreview.value = false;
 }
 
 function scheduleAutosave() {
@@ -531,7 +528,6 @@ function setContentType(nextType: "markdown" | "richtext") {
   if (contentType.value === nextType) return;
 
   contentType.value = nextType;
-  showPreview.value = false;
 }
 
 async function saveDraft(isAutoSave: boolean) {
@@ -695,86 +691,76 @@ function slugify(value: string) {
 </script>
 
 <style scoped>
-.markdown-preview {
-  color: var(--color-text);
+/* ─── Markdown split-pane layout ─ */
+.markdown-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  min-height: 520px;
 }
 
-.markdown-preview :where(p, ul, ol, blockquote, pre, table) {
-  margin-bottom: 1em;
+@media (max-width: 768px) {
+  .markdown-split {
+    grid-template-columns: 1fr;
+  }
 }
 
-.markdown-preview h1,
-.markdown-preview h2,
-.markdown-preview h3,
-.markdown-preview h4,
-.markdown-preview h5,
-.markdown-preview h6 {
-  margin-bottom: 0.5em;
-  color: var(--color-text);
-  font-weight: 600;
-  line-height: 1.25;
+.markdown-split__pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0; /* prevent grid blowout */
 }
 
-.markdown-preview h1 {
-  font-size: 2rem;
+.markdown-split__label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-text-secondary, #94a3b8);
+  user-select: none;
 }
 
-.markdown-preview h2 {
-  font-size: 1.5rem;
-}
-
-.markdown-preview h3 {
-  font-size: 1.25rem;
-}
-
-.markdown-preview ul,
-.markdown-preview ol {
-  padding-left: 1.5rem;
-}
-
-.markdown-preview ul {
-  list-style: disc;
-}
-
-.markdown-preview ol {
-  list-style: decimal;
-}
-
-.markdown-preview blockquote {
-  border-left: 4px solid var(--color-accent);
-  padding-left: 1rem;
-  color: var(--color-text-secondary);
-  font-style: italic;
-}
-
-.markdown-preview code {
-  border-radius: 4px;
-  background: var(--color-bg-secondary);
-  padding: 0.15em 0.35em;
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-.markdown-preview pre {
-  overflow-x: auto;
-  border-radius: 12px;
-  background: var(--color-bg-secondary);
+.markdown-split__textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 500px;
   padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--color-border, rgba(255,255,255,0.1));
+  background: var(--color-bg, #0a0a0a);
+  color: var(--color-text, #e2e8f0);
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  outline: none;
+  resize: vertical;
+  /* ── Critical: code-editor behaviour ── */
+  white-space: pre;       /* preserve exact whitespace, no soft-wrap */
+  overflow-x: auto;       /* horizontal scroll instead of wrapping */
+  overflow-y: auto;
+  word-break: normal;
+  overflow-wrap: normal;
+  tab-size: 2;
+  transition: border-color 0.2s;
 }
 
-.markdown-preview pre code {
-  background: transparent;
-  padding: 0;
+.markdown-split__textarea::placeholder {
+  color: var(--color-text-muted, #475569);
 }
 
-.markdown-preview a {
-  color: var(--color-text);
-  text-decoration: underline;
+.markdown-split__textarea:focus {
+  border-color: var(--color-text, #e2e8f0);
 }
 
-.markdown-preview img {
-  margin: 1.5rem 0;
-  max-width: 100%;
-  border-radius: 12px;
+.markdown-split__preview {
+  flex: 1;
+  min-height: 500px;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  border: 1px solid var(--color-border, rgba(255,255,255,0.1));
+  background: var(--color-bg, #0a0a0a);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
