@@ -18,7 +18,9 @@
 
       <div class="content">
         <!-- Markdown Content -->
-        <div v-if="isMarkdown" class="prose-content" v-html="htmlContent"></div>
+        <div v-if="isMarkdown" class="prose-content">
+          <MarkdownRenderer :content="parsedContent.markdown" />
+        </div>
         
         <!-- Rich Text Content (TipTap) -->
         <editor-content v-else :editor="editor" />
@@ -37,7 +39,6 @@
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
-import { marked } from 'marked'
 import { createEmptyRichTextDoc, parseArticleContent } from '~/utils/articleContent'
 
 const route = useRoute();
@@ -46,12 +47,6 @@ const { data: article, pending, error } = await useFetch(`${config.public.apiBas
 
 const parsedContent = computed(() => parseArticleContent(article.value?.content));
 const isMarkdown = computed(() => parsedContent.value.mode === 'markdown');
-
-// For markdown content
-const htmlContent = computed(() => {
-  if (!isMarkdown.value || !parsedContent.value.markdown) return '';
-  return marked.parse(parsedContent.value.markdown);
-});
 
 // For rich text content (TipTap)
 const editor = useEditor({

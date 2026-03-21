@@ -121,11 +121,9 @@
                 placeholder="Write in markdown..."
                 class="min-h-[460px] w-full rounded-2xl border border-border bg-bg px-4 py-4 font-mono text-sm leading-7 text-text outline-none transition-colors placeholder:text-text-muted focus:border-text"
               />
-              <div
-                v-else
-                class="markdown-preview min-h-[460px] rounded-2xl border border-border bg-bg px-6 py-5"
-                v-html="markdownPreview"
-              />
+              <div v-else class="min-h-[460px] rounded-2xl border border-border bg-bg px-6 py-5">
+                <MarkdownRenderer :content="markdownContent" />
+              </div>
             </div>
           </div>
         </section>
@@ -347,13 +345,6 @@ const autosaveLabel = computed(() => {
   }
 });
 
-const markdownPreview = computed(() => {
-  if (!markdownContent.value.trim()) {
-    return '<p class="text-text-secondary">Nothing to preview yet.</p>';
-  }
-
-  return marked.parse(markdownContent.value);
-});
 
 const contentPresent = computed(() => {
   if (contentType.value === "markdown") {
@@ -468,7 +459,7 @@ async function loadArticle() {
   loadingArticle.value = true;
 
   try {
-    const article = await apiFetch<any>(`/articles/${articleId.value}`, {
+    const article = await (apiFetch as any)(`/articles/${articleId.value}`, {
       headers: authHeaders.value,
     });
 
@@ -615,7 +606,7 @@ async function saveArticle(options: {
     const endpoint = isEditing.value ? `/articles/${articleId.value}` : "/articles";
     const method = isEditing.value ? "PUT" : "POST";
 
-    const savedArticle = await apiFetch<any>(endpoint, {
+    const savedArticle = await (apiFetch as any)(endpoint, {
       method,
       headers: authHeaders.value,
       body: payload,
