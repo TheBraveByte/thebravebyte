@@ -16,13 +16,17 @@
 // Nuxt 3 auto-imports nested components as DirectoryComponent.
 // So components/portfolio/Hero.vue -> <PortfolioHero />
 
-useHead({
+const config = useRuntimeConfig();
+
+useSeoMeta({
   title: 'Yusuf Akinleye | Software Engineer & Backend Architect',
-  meta: [
-    { name: 'description', content: 'Portfolio of Yusuf Akinleye (The Brave Byte). Specializing in high-performance backend systems, distributed architectures, Go, and Python.' },
-    { name: 'keywords', content: 'Software Engineer, Backend Developer, Go, Python, Distributed Systems, Yusuf Akinleye, The Brave Byte' }
-  ]
-})
+  ogTitle: 'Yusuf Akinleye | Software Engineer & Backend Architect',
+  description: 'Portfolio of Yusuf Akinleye (The Brave Byte). Specializing in high-performance backend systems, distributed architectures, Go, and Python.',
+  ogDescription: 'Portfolio of Yusuf Akinleye (The Brave Byte). Specializing in high-performance backend systems, distributed architectures, Go, and Python.',
+  ogImage: `${config.public.siteUrl}/og-image.jpg`,
+  twitterCard: 'summary_large_image',
+  twitterImage: `${config.public.siteUrl}/og-image.jpg`,
+});
 </script>
 
 <style scoped>

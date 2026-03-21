@@ -88,15 +88,15 @@ export default defineNuxtConfig({
           content:
             "Backend engineer building high-performance systems, APIs, and distributed architectures.",
         },
+        { property: "og:type", content: "website" },
         {
           property: "og:image",
-          content: "https://thebravebyte.com/logo-ya-light.png",
+          content: "https://thebravebyte.com/og-image.jpg",
         },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary" },
+        { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:image",
-          content: "https://thebravebyte.com/logo-ya-light.png",
+          content: "https://thebravebyte.com/og-image.jpg",
         },
       ],
     },

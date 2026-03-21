@@ -48,6 +48,17 @@ const { data: article, pending, error } = await useFetch(`${config.public.apiBas
 const parsedContent = computed(() => parseArticleContent(article.value?.content));
 const isMarkdown = computed(() => parsedContent.value.mode === 'markdown');
 
+// Dynamically populate Open Graph SEO tags for the current article
+useSeoMeta({
+  title: () => article.value?.title ? `${article.value.title} | The Brave Byte` : 'Article | The Brave Byte',
+  ogTitle: () => article.value?.title || 'The Brave Byte',
+  description: () => article.value?.excerpt || 'Read the full article on The Brave Byte.',
+  ogDescription: () => article.value?.excerpt || 'Read the full article on The Brave Byte.',
+  ogImage: () => article.value?.coverImage || `${config.public.siteUrl}/og-image.jpg`,
+  twitterCard: 'summary_large_image',
+  twitterImage: () => article.value?.coverImage || `${config.public.siteUrl}/og-image.jpg`,
+});
+
 // For rich text content (TipTap)
 const editor = useEditor({
   content: isMarkdown.value ? createEmptyRichTextDoc() : parsedContent.value.richText,
