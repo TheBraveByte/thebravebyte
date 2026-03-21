@@ -8,7 +8,7 @@
     "generate": "nuxt generate && rm -f dist/_redirects",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "wrangler pages deploy dist --project-name=thebravebyte"
+    "deploy": "wrangler pages deploy dist --project-name=thebravebyte --branch=main"
   },
   "dependencies": {
     "@nuxt/icon": "^2.1.0",
