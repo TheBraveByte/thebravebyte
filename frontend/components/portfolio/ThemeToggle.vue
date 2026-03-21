@@ -14,17 +14,6 @@
 const colorMode = useColorMode();
 
 const toggleTheme = () => {
-  switch (colorMode.preference) {
-    case "dark":
-      colorMode.preference = "light";
-      break;
-    case "light":
-      colorMode.preference = "system";
-      break;
-    case "system":
-    default:
-      colorMode.preference = "dark";
-      break;
-  }
+  colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
 };
 </script>
