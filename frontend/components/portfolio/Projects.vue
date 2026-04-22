@@ -55,16 +55,16 @@ const projects: Project[] = [
     description:
       "Usage-based billing pipeline on Stripe Meters for a media optimization platform. Idempotent writes, nightly reconciliation, zero revenue leakage.",
     tags: ["Go", "Stripe", "Cloudflare"],
-    href: "https://rixl.xyz",
+    href: "https://docs.rixl.com",
   },
   {
     id: 2,
     title: "Eazyfit",
     year: "2024",
     description:
-      "Co-founded a styling marketplace connecting customers with verified fashion designers in Nigeria. Domain-isolated services so a 10x chat spike never touches checkout.",
-    tags: ["Microservices", "WebSocket", "AI"],
-    href: "https://eazyfit.framer.website",
+      "Co-founded a styling marketplace connecting customers with verified fashion designers in Nigeria. Escrow payments hold funds until delivery approval; domain-isolated services keep chat spikes away from checkout.",
+    tags: ["Microservices", "WebSocket", "Escrow"],
+    href: "https://www.eazyfitfashion.com",
   },
   {
     id: 3,

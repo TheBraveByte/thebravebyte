@@ -27,7 +27,7 @@
       <p class="text-[15px] text-text-secondary leading-[1.7]">
         Backend engineer shipping APIs and distributed systems in Go and Python.
         Currently building usage-based billing and media infra at
-        <a href="https://rixl.xyz" target="_blank" rel="noopener noreferrer" class="text-text prose-link">RIXL</a>.
+        <a href="https://docs.rixl.com" target="_blank" rel="noopener noreferrer" class="text-text prose-link">RIXL</a>.
       </p>
 
       <div class="flex flex-wrap gap-2 mt-6">
