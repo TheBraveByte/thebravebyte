@@ -14,7 +14,7 @@
       <header class="mb-10 max-w-2xl">
         <h1 class="text-xl font-semibold text-text mb-2">Architecture notes</h1>
         <p class="text-[15px] text-text-secondary leading-[1.65]">
-          Short write-ups of real systems I've shipped — the business problem,
+          Short write-ups of real systems I've shipped: the business problem,
           the trade-off, the outcome.
         </p>
       </header>
@@ -42,7 +42,7 @@
             class="w-full px-3 py-2 border border-border bg-bg text-text text-sm rounded-md focus:outline-none focus:border-ink"
           >
             <option v-for="(section, index) in sections" :key="index" :value="index">
-              {{ (index + 1).toString().padStart(2, '0') }} — {{ section.title }}
+              {{ (index + 1).toString().padStart(2, '0') }} · {{ section.title }}
             </option>
           </select>
         </div>
@@ -600,7 +600,7 @@ const fraudDetectionDiagram = computed(() => {
 const sections = computed(() => [
   {
     title: 'Distributed Job Processing',
-    description: 'In BiTraq (crypto arbitrage platform), synchronous processing of price alerts, wallet syncing, and notification delivery would block the trading API—causing users to miss time-sensitive arbitrage windows. I decoupled these into persistent background queues, ensuring the main API responds in <50ms even under 10x traffic spikes.',
+    description: 'In BiTraq (crypto arbitrage platform), synchronous processing of price alerts, wallet syncing, and notification delivery would block the trading API, causing users to miss time-sensitive arbitrage windows. I decoupled these into persistent background queues, ensuring the main API responds in <50ms even under 10x traffic spikes.',
     features: [
       {
         title: 'Problem Solved',
@@ -657,7 +657,7 @@ func (wp *WorkerPool) Run() {
   },
   {
     title: 'Concurrency Patterns',
-    description: 'In BiTraq\'s arbitrage engine, we fetch prices from 10+ exchanges simultaneously. Sequential fetching would take 5-10 seconds—by then, arbitrage windows close. Using Fan-Out/Fan-In, total latency equals only the slowest exchange (~300ms), capturing opportunities that competitors miss.',
+    description: 'In BiTraq\'s arbitrage engine, we fetch prices from 10+ exchanges simultaneously. Sequential fetching would take 5-10 seconds. By then, arbitrage windows close. Using Fan-Out/Fan-In, total latency equals only the slowest exchange (~300ms), capturing opportunities that competitors miss.',
     features: [
       {
         title: 'Why This Pattern?',
@@ -674,7 +674,7 @@ func (wp *WorkerPool) Run() {
   },
   {
     title: 'AI Fraud Detection',
-    description: 'For OmonAI (AML compliance platform), financial institutions needed real-time fraud detection without blocking legitimate transactions. Rule-based systems had 40% false positives—frustrating genuine customers. Our 10-dimensional ML model (CiferAI) analyzes behavioral patterns in <50ms, blocking sophisticated fraud while reducing false positives by 60%.',
+    description: 'For OmonAI (AML compliance platform), financial institutions needed real-time fraud detection without blocking legitimate transactions. Rule-based systems had 40% false positives, frustrating genuine customers. Our 10-dimensional ML model (CiferAI) analyzes behavioral patterns in <50ms, blocking sophisticated fraud while reducing false positives by 60%.',
     features: [
       {
         title: 'Business Problem',
@@ -733,7 +733,7 @@ async def predict(tx: TransactionFeatures):
   },
   {
     title: 'Production Systems',
-    description: 'EazyFit connects fashion customers with professional stylists. A monolithic architecture meant chat traffic surges during peak hours degraded checkout reliability. I isolated Chat, Payments, and Core into separate domains—now a 10x chat spike doesn\'t affect payment success rates. This modular design helped secure $5K pre-seed funding.',
+    description: 'Eazyfit connects fashion customers with verified designers in Nigeria. A monolithic architecture meant chat traffic surges during peak hours degraded checkout reliability. I isolated Chat, Payments, and Core into separate domains, so a 10x chat spike no longer affects payment success rates. This modular design helped secure $5K pre-seed funding.',
     features: [
       {
         title: 'Business Context',
@@ -750,7 +750,7 @@ async def predict(tx: TransactionFeatures):
   },
   {
     title: 'Usage-Based Billing',
-    description: 'For RiXL (cloud media platform), traditional seat-based pricing didn\'t fit—customers pay for what they use: storage, bandwidth, transcoding. I designed an idempotent webhook system with nightly reconciliation against Stripe Meters. This ensures zero revenue leakage even during payment network failures.',
+    description: 'For RIXL (a media optimization platform with global edge delivery), traditional seat-based pricing did not fit. Customers pay for what they use: storage, bandwidth, transcoding. I designed an idempotent webhook system with nightly reconciliation against Stripe Meters. This ensures zero revenue leakage even during payment network failures.',
     features: [
       {
         title: 'Business Model',
@@ -767,7 +767,7 @@ async def predict(tx: TransactionFeatures):
   },
   {
     title: 'Multi-Tenant Architecture',
-    description: 'Unified Campus (attendance platform) serves schools, universities, and companies—each with strict data isolation requirements. A single-tenant approach would be cost-prohibitive. I implemented multi-tenant architecture with organization hierarchies (school → faculty → department) and immutable audit logs for compliance.',
+    description: 'Unified Campus (attendance platform) serves schools, universities, and companies, each with strict data isolation requirements. A single-tenant approach would be cost-prohibitive. I implemented multi-tenant architecture with organization hierarchies (school → faculty → department) and immutable audit logs for compliance.',
     features: [
       {
         title: 'Business Requirements',
@@ -784,7 +784,7 @@ async def predict(tx: TransactionFeatures):
   },
   {
     title: 'Clean Architecture',
-    description: 'Across all my projects, I apply package-oriented design: Handlers (HTTP), Services (business logic), Repositories (data access). This isn\'t just academic—it enables testing business logic without databases, swapping Stripe for PayStack without touching services, and onboarding new developers in days, not weeks.',
+    description: 'Across all my projects, I apply package-oriented design: Handlers (HTTP), Services (business logic), Repositories (data access). This is not academic. It enables testing business logic without databases, swapping Stripe for PayStack without touching services, and onboarding new developers in days, not weeks.',
     features: [
       {
         title: 'Why This Structure?',
@@ -801,7 +801,7 @@ async def predict(tx: TransactionFeatures):
   },
   {
     title: 'Forex Signals Bot',
-    description: 'For a forex signals service, I embedded the entire subscription and payment flow inside Telegram—users never leave the app. Supporting 250+ cryptocurrencies via NOWPayments plus traditional cards maximized conversion. Admin approval workflow ensures payment verification before granting channel access.',
+    description: 'For a forex signals service, I embedded the entire subscription and payment flow inside Telegram, so users never leave the app. Supporting 250+ cryptocurrencies via NOWPayments plus traditional cards maximized conversion. Admin approval workflow ensures payment verification before granting channel access.',
     features: [
       {
         title: 'Business Problem',

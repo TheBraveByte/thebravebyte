@@ -31,7 +31,7 @@ const companies: Company[] = [
   { name: 'RIXL', logo: '/img/brands/rixl.png' },
   { name: 'Wayg', logo: '/img/brands/wayg.svg' },
   { name: '1Go', logo: '/img/brands/1go.jpg' },
-  { name: 'EazyFit', logo: '/img/brands/eazyfit.png' },
+  { name: 'Eazyfit', logo: '/img/brands/eazyfit.png' },
   { name: 'Toptech', logo: '/img/brands/toptech.png' },
   { name: 'BiTraq', logo: '/img/brands/bitraq.svg' },
   { name: 'Contra', logo: '/img/brands/contra.svg' },
