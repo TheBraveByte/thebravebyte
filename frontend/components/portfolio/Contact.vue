@@ -1,13 +1,13 @@
 <template>
   <section id="contact" class="py-10">
-    <div class="container">
+    <div class="container text-center">
       <h2 class="text-sm font-medium text-text-muted mb-4">Contact</h2>
 
-      <p class="text-[15px] text-text-secondary leading-[1.7] mb-5">
+      <p class="text-[15px] text-text-secondary leading-[1.7] mb-5 max-w-[52ch] mx-auto">
         Best reached by email. I read everything and reply within a day.
       </p>
 
-      <ul class="space-y-2 text-[15px]">
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px]">
         <li>
           <a
             href="mailto:ayaaakinleye@gmail.com"

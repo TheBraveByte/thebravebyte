@@ -1,9 +1,9 @@
 <template>
   <div class="pt-16 md:pt-20 pb-16">
     <div class="container">
-      <header class="mb-10">
+      <header class="mb-10 text-center">
         <h1 class="text-xl font-semibold text-text mb-2">Writing</h1>
-        <p class="text-[15px] text-text-secondary leading-[1.65]">
+        <p class="text-[15px] text-text-secondary leading-[1.65] max-w-[52ch] mx-auto">
           Notes on backend engineering, Go concurrency, and systems design.
         </p>
       </header>

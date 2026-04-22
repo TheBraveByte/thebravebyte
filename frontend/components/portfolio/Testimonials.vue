@@ -7,14 +7,14 @@
         <li
           v-for="c in companies"
           :key="c.name"
-          class="bg-bg aspect-[5/2] flex items-center justify-center p-3 group relative"
+          class="bg-bg aspect-[5/2] flex items-center justify-center px-4 py-3 group relative"
           :title="c.name"
         >
           <img
             v-if="c.logo"
             :src="c.logo"
             :alt="c.name"
-            class="max-h-6 max-w-full object-contain grayscale opacity-60 group-hover:opacity-90 group-hover:grayscale-0 transition-all"
+            class="max-h-9 max-w-[85%] object-contain grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all"
           />
           <span v-else class="text-sm font-medium text-text-muted">{{ c.name }}</span>
         </li>
