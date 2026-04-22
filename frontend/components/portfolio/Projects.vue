@@ -5,15 +5,25 @@
         <li
           v-for="p in projects"
           :key="p.id"
-          class="py-5 first:pt-0 last:pb-0 group"
+          class="py-5 first:pt-0 last:pb-0 group transition-colors"
         >
           <div class="flex items-baseline justify-between gap-4 mb-1.5">
             <h3 class="text-[15px] font-medium text-text">
-              {{ p.title }}
+              <a
+                v-if="p.href"
+                :href="p.href"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 hover:underline underline-offset-4 decoration-border hover:decoration-text"
+              >
+                {{ p.title }}
+                <Icon name="lucide:arrow-up-right" class="w-3.5 h-3.5 text-text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+              <template v-else>{{ p.title }}</template>
             </h3>
             <span class="text-xs text-text-muted tabular-nums shrink-0">{{ p.year }}</span>
           </div>
-          <p class="text-[14px] text-text-secondary leading-[1.6] mb-2.5">
+          <p class="text-[14px] text-text-secondary leading-[1.6] mb-2.5 transition-colors group-hover:text-text">
             {{ p.description }}
           </p>
           <div class="flex items-center gap-2 text-xs text-text-muted">
@@ -28,53 +38,64 @@
 </template>
 
 <script lang="ts" setup>
-const projects = [
+interface Project {
+  id: number;
+  title: string;
+  year: string;
+  description: string;
+  tags: string[];
+  href?: string;
+}
+
+const projects: Project[] = [
   {
     id: 1,
-    title: "RiXL — Cloud media",
+    title: "RIXL",
     year: "2024",
     description:
-      "Usage-based billing for a video platform. Idempotent Stripe Meter pipeline with nightly reconciliation. Zero revenue leakage.",
+      "Usage-based billing pipeline on Stripe Meters for a media optimization platform. Idempotent writes, nightly reconciliation, zero revenue leakage.",
     tags: ["Go", "Stripe", "Cloudflare"],
+    href: "https://rixl.xyz",
   },
   {
     id: 2,
-    title: "EazyFit — Styling marketplace",
+    title: "Eazyfit",
     year: "2024",
     description:
-      "Domain-isolated services for chat, payments, and core. A 10× chat spike doesn't touch checkout.",
+      "Co-founded a styling marketplace connecting customers with verified fashion designers in Nigeria. Domain-isolated services so a 10x chat spike never touches checkout.",
     tags: ["Microservices", "WebSocket", "AI"],
+    href: "https://eazyfit.framer.website",
   },
   {
     id: 3,
-    title: "OmonAI — Fraud detection",
+    title: "OmonAI",
     year: "2024",
     description:
-      "Ten-feature ML model for behavioral fraud scoring. <50 ms inference, 60% drop in false positives.",
+      "Ten-feature ML model for behavioral fraud scoring. Sub-50ms inference, 60% drop in false positives.",
     tags: ["Python", "TensorFlow", "FastAPI"],
   },
   {
     id: 4,
-    title: "BiTraq — Arbitrage engine",
+    title: "BiTraq",
     year: "2023",
     description:
-      "Real-time crypto arbitrage across 10+ exchanges. Fan-out/fan-in workers keep latency at max(T) = 300 ms.",
+      "Real-time crypto arbitrage across 10+ exchanges. Fan-out and fan-in workers cap latency at 300ms worst case.",
     tags: ["Go", "Redis", "gRPC"],
   },
   {
     id: 5,
-    title: "Unified Campus — Multi-tenant",
+    title: "Unified Campus",
     year: "2023",
     description:
-      "Attendance platform with hierarchical tenants and immutable audit logs. Cleared enterprise security review.",
+      "Multi-tenant attendance platform with hierarchical tenants and immutable audit logs. Cleared enterprise security review.",
     tags: ["PostgreSQL", "RLS", "Audit"],
   },
   {
     id: 6,
-    title: "Forex Bot — In-Telegram payments",
+    title: "Forex Bot",
     year: "2023",
     description:
-      "Subscription + payments embedded in Telegram. 250+ cryptos via NOWPayments, card rails via Stripe.",
+      "Subscription and payments embedded in Telegram. 250+ cryptos via NOWPayments, card rails via Stripe.",
     tags: ["Telegram", "Webhooks", "Security"],
   },
 ];

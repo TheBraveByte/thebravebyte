@@ -1,12 +1,13 @@
 <template>
   <div class="portfolio-page">
     <PortfolioHero />
-    <PortfolioAbout />
-    <PortfolioSkills />
-    <PortfolioProjects />
-    <PortfolioProcess />
-    <PortfolioTestimonials />
-    <PortfolioContact />
+    <div data-reveal><PortfolioAbout /></div>
+    <div data-reveal><PortfolioSkills /></div>
+    <div data-reveal><PortfolioProjects /></div>
+    <div data-reveal><PortfolioProcess /></div>
+    <div data-reveal><PortfolioWriting /></div>
+    <div data-reveal><PortfolioTestimonials /></div>
+    <div data-reveal><PortfolioContact /></div>
   </div>
 </template>
 
