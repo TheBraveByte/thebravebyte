@@ -1,11 +1,6 @@
 <template>
   <section id="work" class="py-10">
     <div class="container">
-      <div class="flex items-baseline justify-between mb-4">
-        <h2 class="text-sm font-medium text-text-muted">Selected work</h2>
-        <span class="text-xs text-text-muted">{{ projects.length }} projects</span>
-      </div>
-
       <ul class="divide-y divide-border">
         <li
           v-for="p in projects"

@@ -1,8 +1,6 @@
 <template>
   <section id="skills" class="py-10">
     <div class="container">
-      <h2 class="text-sm font-medium text-text-muted mb-4">Stack</h2>
-
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-[14px]">
         <div
           v-for="s in skills"

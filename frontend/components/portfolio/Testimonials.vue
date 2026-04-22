@@ -1,8 +1,6 @@
 <template>
   <section id="clients" class="py-10">
     <div class="container">
-      <h2 class="text-sm font-medium text-text-muted mb-4">Worked with</h2>
-
       <ul class="grid grid-cols-3 sm:grid-cols-4 gap-px bg-border border border-border rounded-md overflow-hidden">
         <li
           v-for="c in companies"

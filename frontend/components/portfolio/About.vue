@@ -1,8 +1,6 @@
 <template>
   <section id="about" class="py-10">
     <div class="container">
-      <h2 class="text-sm font-medium text-text-muted mb-4">About</h2>
-
       <p class="text-[15px] text-text-secondary leading-[1.7] mb-6">
         Five years writing production code. Most of my work sits close to data —
         queues, payments, search — the parts that break first under load.

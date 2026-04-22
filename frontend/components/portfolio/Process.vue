@@ -1,8 +1,6 @@
 <template>
   <section id="process" class="py-10">
     <div class="container">
-      <h2 class="text-sm font-medium text-text-muted mb-4">How I work</h2>
-
       <ol class="space-y-4 text-[15px] text-text-secondary leading-[1.7]">
         <li class="flex items-start gap-3">
           <span class="text-text-muted text-sm tabular-nums mt-0.5">01</span>
