@@ -3,8 +3,8 @@
     <PortfolioHero />
     <PortfolioTestimonials />
     <PortfolioAbout />
-    <PortfolioProcess />
     <PortfolioSkills />
+    <PortfolioProcess />
     <PortfolioProjects />
     <PortfolioContact />
   </div>
@@ -31,8 +31,7 @@ useSeoMeta({
 
 <style scoped>
 .portfolio-page {
-  /* Ensure it inherits the dark theme */
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 </style>

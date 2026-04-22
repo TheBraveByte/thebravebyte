@@ -39,8 +39,9 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Lora: [400, 500, 600, 700],
-      Inter: [400, 500, 600],
+      "Instrument Serif": [400],
+      "JetBrains Mono": [400, 500, 600, 700],
+      Inter: [400, 500, 600, 700],
     },
     display: "swap",
     prefetch: true,
@@ -88,15 +89,15 @@ export default defineNuxtConfig({
           content:
             "Backend engineer building high-performance systems, APIs, and distributed architectures.",
         },
-        { property: "og:type", content: "website" },
         {
           property: "og:image",
-          content: "https://thebravebyte.com/og-image.jpg",
+          content: "https://thebravebyte.com/logo-ya-light.png",
         },
-        { name: "twitter:card", content: "summary_large_image" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
         {
           name: "twitter:image",
-          content: "https://thebravebyte.com/og-image.jpg",
+          content: "https://thebravebyte.com/logo-ya-light.png",
         },
       ],
     },

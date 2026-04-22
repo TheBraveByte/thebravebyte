@@ -1,216 +1,246 @@
 <template>
-  <div class="pt-24 pb-16 bg-bg-tertiary min-h-screen">
+  <div class="pt-28 md:pt-32 pb-20 bg-bg min-h-screen">
     <div class="container mx-auto px-6">
       <slot name="header">
-        <div class="max-w-6xl mx-auto mb-6">
-          <NuxtLink to="/#process" aria-label="Back to process section"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-secondary hover:bg-bg-secondary hover:text-primary transition-colors text-sm font-light">
-            <Icon name="lucide:arrow-left" class="w-4 h-4" />
-            <span>Back to Process Section</span>
+        <div class="mb-10">
+          <NuxtLink
+            to="/#process"
+            aria-label="Back to process section"
+            class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-text-muted hover:text-text transition-colors"
+          >
+            <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
+            <span>Back to process</span>
           </NuxtLink>
         </div>
       </slot>
-      
-      <div class="max-w-4xl mx-auto mb-12 text-center">
-        <h3
-          class="text-sm uppercase tracking-widest text-text-secondary mb-3 font-light flex items-center justify-center gap-3">
-          <span class="w-2 h-2 bg-text-secondary rounded-full"></span>
-          Engineering Process
-        </h3>
-        <h1 class="text-4xl md:text-5xl font-light text-text mb-6">
-          System <span class="font-medium">Architecture</span>
+
+      <!-- Page header -->
+      <div class="mb-14 pb-6 border-b-[1.5px] border-ink">
+        <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-3">
+          § Blueprints / Engineering process
+        </p>
+        <h1 class="font-serif text-5xl md:text-7xl text-text leading-[0.95] mb-6">
+          System architecture,<br /><em class="italic text-text-secondary">in detail.</em>
         </h1>
-        <p class="text-lg text-text-secondary leading-relaxed">
-          Systems that are secure by design, concurrent by default, and scalable by necessity.
+        <p class="font-sans text-[15px] text-text-secondary leading-relaxed max-w-2xl">
+          Systems that are secure by design, concurrent by default, and scalable
+          by necessity. Each case below explains the business problem, the
+          trade-off, and the measured outcome.
         </p>
       </div>
 
-      <div class="max-w-7xl mx-auto mb-12">
-        <div class="hidden md:flex flex-wrap justify-center gap-3 mb-8">
+      <!-- Tabs -->
+      <div class="mb-10 border-y-[1.5px] border-ink">
+        <div class="hidden md:flex flex-nowrap overflow-x-auto hide-scrollbar">
           <button
             v-for="(section, index) in sections"
             :key="index"
             @click="activeTab = index"
             :class="[
-              'px-5 py-3 rounded-lg text-sm font-light transition-all duration-300 border',
+              'whitespace-nowrap px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] border-r-[1.5px] border-ink transition-colors',
               activeTab === index
-                ? 'bg-text text-bg border-text'
-                : 'bg-bg-secondary border-border text-text-secondary hover:bg-bg-tertiary hover:bg-text/10'
+                ? 'bg-ink text-bg'
+                : 'bg-bg text-text-muted hover:text-text hover:bg-bg-secondary',
             ]"
           >
-            {{ section.title }}
+            {{ (index + 1).toString().padStart(2, '0') }} · {{ section.title }}
           </button>
         </div>
-
-        <div class="md:hidden mb-8">
+        <div class="md:hidden p-3">
           <select
             v-model="activeTab"
-            class="w-full px-4 py-3 rounded-lg bg-bg-secondary border border-border text-text font-light focus:outline-none focus:ring-2 focus:ring-secondary"
+            class="w-full px-4 py-3 border-[1.5px] border-ink bg-bg text-text font-mono text-xs focus:outline-none"
           >
             <option v-for="(section, index) in sections" :key="index" :value="index">
-              {{ section.title }}
+              {{ (index + 1).toString().padStart(2, '0') }} — {{ section.title }}
             </option>
           </select>
         </div>
-
-        <transition name="fade" mode="out-in">
-          <div :key="activeTab" class="bg-bg-secondary backdrop-blur-sm rounded-2xl border border-border p-8 shadow-lg">
-            
-            <div class="grid lg:grid-cols-2 gap-12">
-              
-              <div class="order-1 flex flex-col justify-center">
-                <div class="mb-8">
-                  <div class="flex items-start justify-between mb-4">
-                    <h2 class="text-3xl md:text-4xl font-light text-text">
-                      {{ sections[activeTab]?.title }}
-                    </h2>
-                    <span class="text-xs px-3 py-1 bg-secondary/10 bg-bg-secondary/10 text-text-secondary rounded-full font-light whitespace-nowrap">
-                      {{ activeTab + 1 }} / {{ sections.length }}
-                    </span>
-                  </div>
-
-                  <div
-                    v-if="sections[activeTab]?.title === 'Production Systems'"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-bg-tertiary border border-border rounded-lg mb-6 w-full md:w-auto">
-                    <Icon name="lucide:trophy" class="w-5 h-5 text-text-secondary flex-shrink-0" />
-                    <span class="text-sm font-light text-text">$5,000 Pre-Seed Funding • Ilorin Innovation Challenge Winner</span>
-                  </div>
-
-                  <p class="text-text-secondary leading-relaxed mb-8 text-lg">
-                    {{ sections[activeTab]?.description }}
-                  </p>
-
-                  <h3 class="text-lg font-medium text-text mb-4 flex items-center gap-2">
-                    <Icon name="lucide:sparkles" class="w-5 h-5 text-text-secondary" />
-                    Key Capabilities
-                  </h3>
-
-                  <div v-if="sections[activeTab]?.features" class="grid gap-6 mb-6">
-                    <div v-for="(feature, idx) in sections[activeTab]?.features" :key="idx" class="bg-bg-secondary p-4 rounded-xl border border-border">
-                      <h4 class="font-medium text-text mb-3 flex items-center gap-2">
-                        <Icon :name="feature.icon || 'lucide:check-circle'" class="w-5 h-5 text-text-secondary" />
-                        {{ feature.title }}
-                      </h4>
-                      <ul class="space-y-2 text-text-secondary text-sm">
-                        <li v-for="(item, i) in feature.items" :key="i" class="flex items-start gap-2">
-                          <span class="w-1.5 h-1.5 bg-text-secondary rounded-full mt-2 flex-shrink-0"></span>
-                          <span v-html="item"></span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="flex justify-between pt-6 border-t border-border mt-auto">
-                  <button
-                    @click="previousTab"
-                    :disabled="activeTab === 0"
-                    :class="[
-                      'inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-light transition-all',
-                      activeTab === 0
-                        ? 'opacity-40 cursor-not-allowed text-text-secondary'
-                        : 'text-text-secondary hover:bg-bg-secondary hover:bg-text/10'
-                    ]"
-                  >
-                    <Icon name="lucide:chevron-left" class="w-4 h-4" />
-                    Previous
-                  </button>
-
-                  <button
-                    @click="nextTab"
-                    :disabled="activeTab === sections.length - 1"
-                    :class="[
-                      'inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-light transition-all',
-                      activeTab === sections.length - 1
-                        ? 'opacity-40 cursor-not-allowed text-text-secondary'
-                        : 'text-text-secondary hover:bg-bg-secondary hover:bg-text/10'
-                    ]"
-                  >
-                    Next
-                    <Icon name="lucide:chevron-right" class="w-4 h-4" />
-                  </button>
-                </div>
-
-              </div>
-              
-              <div class="order-2 flex flex-col">
-                <div class="mb-4 flex justify-between items-center" v-if="sections[activeTab]?.code">
-                  <h3 class="text-sm font-medium text-text-secondary">Implementation Details</h3>
-                  <div class="inline-flex rounded-lg border border-border p-1 bg-bg-secondary">
-                    <button
-                      @click="showCode = false"
-                      :class="[
-                        'px-3 py-1.5 rounded-md text-xs font-medium transition-all',
-                        !showCode
-                          ? 'bg-bg text-text shadow-sm'
-                          : 'text-text-secondary hover:text-text-secondary'
-                      ]"
-                    >
-                      Architecture
-                    </button>
-                    <button
-                      @click="showCode = true"
-                      :class="[
-                        'px-3 py-1.5 rounded-md text-xs font-medium transition-all',
-                        showCode
-                          ? 'bg-bg text-text shadow-sm'
-                          : 'text-text-secondary hover:text-text-secondary'
-                      ]"
-                    >
-                      Code
-                    </button>
-                  </div>
-                </div>
-
-                <div v-show="!showCode" 
-                     class="mermaid-container relative flex-grow bg-bg-tertiary rounded-xl border border-border overflow-hidden flex items-center justify-center min-h-[600px] cursor-move"
-                     @mousedown="startPan"
-                     @mousemove="doPan"
-                     @mouseup="endPan"
-                     @mouseleave="endPan"
-                >
-                  <div class="mermaid-content w-full h-full flex items-center justify-center transition-transform duration-75 ease-linear"
-                       :style="{ transform: `translate(${panX}px, ${panY}px) scale(${scale})` }">
-                      <div class="mermaid w-full h-full flex items-center justify-center select-none pointer-events-none" v-html="currentSvg"></div>
-                  </div>
-
-                  <div class="absolute bottom-4 right-4 flex gap-2 z-10">
-                    <button @click.stop="zoomIn" class="p-2 bg-bg rounded-lg shadow-md border border-border hover:bg-bg-tertiary text-text-secondary transition-colors" title="Zoom In">
-                      <Icon name="lucide:plus" class="w-5 h-5" />
-                    </button>
-                    <button @click.stop="zoomOut" class="p-2 bg-bg rounded-lg shadow-md border border-border hover:bg-bg-tertiary text-text-secondary transition-colors" title="Zoom Out">
-                      <Icon name="lucide:minus" class="w-5 h-5" />
-                    </button>
-                    <button @click.stop="resetZoom" class="p-2 bg-bg rounded-lg shadow-md border border-border hover:bg-bg-tertiary text-text-secondary transition-colors" title="Reset View">
-                      <Icon name="lucide:rotate-ccw" class="w-5 h-5" />
-                    </button>
-                  </div>
-                  
-                  <div class="absolute top-4 left-4 pointer-events-none opacity-50">
-                    <span class="px-2 py-1 bg-black/20 text-white text-xs rounded-md backdrop-blur-sm">Drag to pan • Scroll to zoom</span>
-                  </div>
-                </div>
-
-                <div v-if="showCode && sections[activeTab]?.code" class="relative group flex-grow h-full min-h-[600px]">
-                  <div class="absolute -top-3 right-4 px-2 py-1 bg-text text-text-secondary text-xs rounded-md font-mono border border-border z-10">
-                    {{ sections[activeTab]?.code?.filename }}
-                  </div>
-                  <pre class="h-full bg-[#0B1120] text-text-secondary p-6 rounded-xl border border-border overflow-x-auto text-sm font-mono leading-relaxed"><code>{{ sections[activeTab]?.code?.content }}</code></pre>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </transition>
       </div>
 
-      <div class="mt-20 text-center pb-20">
-        <h3 class="text-2xl font-light text-text mb-6">Ready to build something robust?</h3>
-        <NuxtLink to="/#contact"
-          class="inline-flex items-center gap-2 px-8 py-4 bg-primary bg-text text-white text-bg rounded-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 font-light">
-          <span>Let's Discuss Your System</span>
-          <Icon name="lucide:arrow-right" class="w-5 h-5" />
+      <transition name="fade" mode="out-in">
+        <div :key="activeTab" class="border-[1.5px] border-ink">
+          <div class="grid lg:grid-cols-2 divide-y-[1.5px] lg:divide-y-0 lg:divide-x-[1.5px] divide-ink">
+            <!-- Narrative column -->
+            <div class="p-8 md:p-10 flex flex-col">
+              <div class="flex items-start justify-between mb-6">
+                <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
+                  Entry {{ (activeTab + 1).toString().padStart(2, '0') }} / {{ sections.length.toString().padStart(2, '0') }}
+                </span>
+                <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
+                  {{ sections[activeTab]?.code ? 'Has code' : 'Diagram only' }}
+                </span>
+              </div>
+
+              <h2 class="font-serif text-3xl md:text-5xl text-text leading-[1.05] mb-6">
+                {{ sections[activeTab]?.title }}
+              </h2>
+
+              <div
+                v-if="sections[activeTab]?.title === 'Production Systems'"
+                class="flex items-center gap-3 px-4 py-3 border-[1.5px] border-ink bg-bg-secondary mb-6"
+              >
+                <span class="inline-block w-1.5 h-1.5 bg-success"></span>
+                <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-text">
+                  $5,000 Pre-Seed · Ilorin Innovation Challenge winner
+                </span>
+              </div>
+
+              <p class="font-sans text-[15px] text-text-secondary leading-relaxed mb-8">
+                {{ sections[activeTab]?.description }}
+              </p>
+
+              <h3 class="font-mono text-[10px] text-text uppercase tracking-[0.22em] mb-4 pb-2 border-b-[1.5px] border-ink">
+                / Key decisions
+              </h3>
+
+              <div v-if="sections[activeTab]?.features" class="space-y-6 mb-8">
+                <div
+                  v-for="(feature, idx) in sections[activeTab]?.features"
+                  :key="idx"
+                  class="border-[1.5px] border-ink"
+                >
+                  <div class="px-4 py-2 border-b-[1.5px] border-ink bg-bg-secondary">
+                    <h4 class="font-serif text-lg text-text">{{ feature.title }}</h4>
+                  </div>
+                  <ul class="p-4 space-y-2 text-sm text-text-secondary">
+                    <li
+                      v-for="(item, i) in feature.items"
+                      :key="i"
+                      class="flex items-start gap-3"
+                    >
+                      <span class="font-mono text-[10px] text-text-muted mt-1">·</span>
+                      <span class="flex-1" v-html="item"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center pt-6 border-t-[1.5px] border-ink mt-auto gap-4">
+                <button
+                  @click="previousTab"
+                  :disabled="activeTab === 0"
+                  :class="[
+                    'inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] transition-colors',
+                    activeTab === 0 ? 'opacity-30 cursor-not-allowed' : 'text-text-muted hover:text-text',
+                  ]"
+                >
+                  <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
+                  Previous
+                </button>
+                <button
+                  @click="nextTab"
+                  :disabled="activeTab === sections.length - 1"
+                  :class="[
+                    'inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] transition-colors',
+                    activeTab === sections.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-text-muted hover:text-text',
+                  ]"
+                >
+                  Next
+                  <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            <!-- Diagram / code column -->
+            <div class="p-8 md:p-10 flex flex-col bg-bg-secondary">
+              <div class="mb-4 flex justify-between items-center" v-if="sections[activeTab]?.code">
+                <p class="font-mono text-[10px] text-text uppercase tracking-[0.22em]">
+                  / Implementation
+                </p>
+                <div class="inline-flex border-[1.5px] border-ink">
+                  <button
+                    @click="showCode = false"
+                    :class="[
+                      'px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors border-r-[1.5px] border-ink',
+                      !showCode ? 'bg-ink text-bg' : 'bg-bg text-text-muted hover:text-text',
+                    ]"
+                  >
+                    Diagram
+                  </button>
+                  <button
+                    @click="showCode = true"
+                    :class="[
+                      'px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors',
+                      showCode ? 'bg-ink text-bg' : 'bg-bg text-text-muted hover:text-text',
+                    ]"
+                  >
+                    Source
+                  </button>
+                </div>
+              </div>
+              <p v-else class="font-mono text-[10px] text-text uppercase tracking-[0.22em] mb-4">
+                / Architecture diagram
+              </p>
+
+              <div
+                v-show="!showCode"
+                class="mermaid-container relative grow border-[1.5px] border-ink overflow-hidden flex items-center justify-center min-h-[520px] bg-bg cursor-move"
+                @mousedown="startPan"
+                @mousemove="doPan"
+                @mouseup="endPan"
+                @mouseleave="endPan"
+              >
+                <div
+                  class="mermaid-content w-full h-full flex items-center justify-center transition-transform duration-75 ease-linear"
+                  :style="{ transform: `translate(${panX}px, ${panY}px) scale(${scale})` }"
+                >
+                  <div
+                    class="mermaid w-full h-full flex items-center justify-center select-none pointer-events-none"
+                    v-html="currentSvg"
+                  ></div>
+                </div>
+
+                <div class="absolute bottom-3 right-3 flex border-[1.5px] border-ink z-10 bg-bg">
+                  <button
+                    @click.stop="zoomIn"
+                    class="p-2 border-r-[1.5px] border-ink hover:bg-bg-secondary text-text transition-colors"
+                    title="Zoom in"
+                  >
+                    <Icon name="lucide:plus" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click.stop="zoomOut"
+                    class="p-2 border-r-[1.5px] border-ink hover:bg-bg-secondary text-text transition-colors"
+                    title="Zoom out"
+                  >
+                    <Icon name="lucide:minus" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click.stop="resetZoom"
+                    class="p-2 hover:bg-bg-secondary text-text transition-colors"
+                    title="Reset"
+                  >
+                    <Icon name="lucide:rotate-ccw" class="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div class="absolute top-3 left-3 pointer-events-none">
+                  <span class="px-2 py-1 bg-ink text-bg font-mono text-[9px] uppercase tracking-[0.2em]">
+                    Drag · scroll to zoom
+                  </span>
+                </div>
+              </div>
+
+              <div v-if="showCode && sections[activeTab]?.code" class="relative grow min-h-[520px] border-[1.5px] border-ink">
+                <div class="absolute top-0 right-0 px-2 py-1 bg-ink text-bg font-mono text-[9.5px] uppercase tracking-[0.2em] z-10">
+                  {{ sections[activeTab]?.code?.filename }}
+                </div>
+                <pre class="h-full bg-bg text-text p-6 overflow-x-auto text-[13px] font-mono leading-relaxed"><code>{{ sections[activeTab]?.code?.content }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+      <!-- CTA -->
+      <div class="mt-20 pt-10 border-t-[1.5px] border-ink flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
+        <h3 class="font-serif text-3xl md:text-4xl text-text leading-tight max-w-xl">
+          Ready to build<br /><em class="italic text-text-secondary">something robust?</em>
+        </h3>
+        <NuxtLink to="/#contact" class="btn-primary">
+          Discuss your system
+          <Icon name="lucide:arrow-right" class="w-4 h-4" />
         </NuxtLink>
       </div>
     </div>
@@ -218,12 +248,12 @@
 
   <NuxtLink
     to="/#process"
-    aria-label="Back to Process section"
-    title="Back to Process section"
-    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-bg-secondary border border-border text-text shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-border"
+    aria-label="Back to process section"
+    title="Back to process"
+    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-11 h-11 border-[1.5px] border-ink bg-bg text-text hover:bg-ink hover:text-bg transition-colors"
   >
-    <Icon name="lucide:arrow-left" class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
-    <span class="sr-only">Back to Process section</span>
+    <Icon name="lucide:arrow-up" class="w-4 h-4" aria-hidden="true" />
+    <span class="sr-only">Back to process</span>
   </NuxtLink>
 </template>
 
@@ -901,8 +931,8 @@ const initMermaid = () => {
       lineColor: dark ? '#94a3b8' : '#64748b',
       secondaryColor: dark ? '#0f172a' : '#f1f5f9',
       tertiaryColor: dark ? '#020617' : '#ffffff',
-      fontSize: '16px',
-      fontFamily: '"Space Grotesk", system-ui, sans-serif',
+      fontSize: '14px',
+      fontFamily: '"JetBrains Mono", "SF Mono", monospace',
     },
     flowchart: {
       htmlLabels: true,
@@ -947,10 +977,10 @@ watch(() => colorMode.value, async () => {
 :deep(.nodes text),
 :deep(.edgeLabel text),
 :deep(.label text) {
-  font-size: 16px !important;
-  font-weight: 300 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
   fill: var(--color-text) !important;
-  font-family: "Space Grotesk", sans-serif !important;
+  font-family: "JetBrains Mono", "SF Mono", monospace !important;
 }
 
 :deep(.edgeLabel) {

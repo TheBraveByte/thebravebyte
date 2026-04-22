@@ -1,98 +1,96 @@
 <template>
   <section
     id="home"
-    class="min-h-screen flex text-center items-center py-20 bg-bg border-b border-border relative overflow-hidden"
+    class="relative pt-32 md:pt-36 pb-20 bg-bg border-b-[1.5px] border-ink overflow-hidden"
   >
-    <!-- Abstract background glow -->
-    <div
-      class="hero-bg absolute inset-0 z-0 opacity-20 dark:opacity-10 pointer-events-none transform-origin-center"
-    >
-      <div
-        class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse"
-      ></div>
-      <div
-        class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-hover rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse"
-        style="animation-delay: 2s"
-      ></div>
-    </div>
+    <div class="absolute inset-0 nb-grid-bg opacity-60 pointer-events-none"></div>
 
-    <div
-      class="container mx-auto px-6 relative z-10 hero-content transform-origin-center"
-    >
-      <!-- Ambient Glow -->
-      <div 
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/15 blur-[120px] rounded-full -z-10 pointer-events-none"
-      ></div>
-
-      <div class="max-w-4xl mx-auto flex flex-col items-center">
-        <!-- Status Label -->
-        <div
-          class="hero-reveal mb-8 px-4 py-2 bg-bg-secondary border border-border rounded-full flex items-center gap-3"
-        >
-          <span class="relative flex h-2 w-2">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"
-            ></span>
-            <span
-              class="relative inline-flex rounded-full h-2 w-2 bg-success"
-            ></span>
-          </span>
-          <span
-            class="font-sans text-[11px] font-semibold text-text uppercase tracking-widest"
-            >Available for New Projects</span
-          >
+    <div class="container mx-auto px-6 relative z-10">
+      <!-- Eyebrow row -->
+      <div class="hero-reveal flex items-center justify-between mb-10 md:mb-14 flex-wrap gap-4">
+        <div class="flex items-center gap-2 font-mono text-[10px] text-text-muted uppercase tracking-[0.2em]">
+          <span class="inline-block w-1.5 h-1.5 bg-success"></span>
+          <span>Available for engagements</span>
         </div>
+        <div class="font-mono text-[10px] text-text-muted uppercase tracking-[0.2em] hidden sm:block">
+          Portfolio · Edition 05 · {{ year }}
+        </div>
+      </div>
 
-        <!-- Main Headline -->
+      <!-- Main Headline -->
+      <div class="max-w-5xl">
         <h1
-          class="hero-title text-6xl md:text-7xl lg:text-8xl font-semibold text-text mb-8 leading-[1.1] tracking-tight"
+          class="hero-title font-serif text-text tracking-tight leading-[0.95] text-[clamp(3rem,10vw,8.5rem)]"
         >
-          Building the <br />
-          <span class="text-accent">Backbone</span> of <span class="text-accent">Software</span>.
+          Backend<br />
+          &amp; the <em class="italic font-serif text-text-secondary">quiet</em><br />
+          systems<br />
+          <span class="inline-block">
+            <span class="inline-block align-middle w-[0.85em] h-[0.08em] bg-ink mr-3"></span>
+            <span class="align-middle">behind them.</span>
+          </span>
         </h1>
+      </div>
 
-        <!-- Subtext -->
-        <p
-          class="hero-reveal text-lg md:text-xl text-text-secondary mb-12 max-w-2xl font-serif"
-        >
-          I am Yusuf Akinleye. I engineer high-performance backend systems and
-          scalable APIs. Focused on distributed architectures that drive
-          business growth.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div
-          class="hero-reveal flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-16 sm:mb-20"
-        >
-          <NuxtLink to="#projects" class="btn-primary w-full sm:w-auto">
-            View Case Studies
-            <Icon
-              name="lucide:arrow-right"
-              class="w-4 h-4 group-hover:translate-x-1 transition-transform"
-            />
-          </NuxtLink>
-
-          <NuxtLink to="#contact" class="btn-secondary w-full sm:w-auto hover:bg-accent/5 transition-all">
-            Let's Talk
-          </NuxtLink>
+      <!-- Meta grid -->
+      <div class="hero-reveal mt-14 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 pt-10 border-t-[1.5px] border-ink">
+        <div class="md:col-span-4">
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.2em] mb-3">
+            01 — Engineer
+          </p>
+          <p class="font-sans text-[15px] text-text leading-relaxed">
+            Yusuf Akinleye. Building backend services, APIs, and distributed
+            architectures for companies scaling from pre-seed to enterprise.
+          </p>
         </div>
 
-        <!-- Tech Stack with Icons -->
-        <div class="hero-reveal pt-10 border-t border-border mt-12 w-full">
-          <p class="font-sans-label text-text-muted mb-6">Core Competencies</p>
-          <div class="flex flex-wrap justify-center gap-3 md:gap-4">
-            <div
-              v-for="tech in techStack"
-              :key="tech.name"
-              class="tech-badge flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-bg-secondary border border-border rounded-full hover:border-accent hover:shadow-md hover:shadow-accent/10 hover:-translate-y-0.5 transition-all duration-300 group cursor-default"
-            >
-              <Icon :name="tech.icon" class="w-4 h-4 md:w-5 md:h-5 shrink-0" />
-              <span
-                class="text-xs md:text-sm font-sans font-medium text-text-secondary group-hover:text-text transition-colors duration-300"
-                >{{ tech.name }}</span
-              >
-            </div>
+        <div class="md:col-span-4">
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.2em] mb-3">
+            02 — Focus
+          </p>
+          <p class="font-sans text-[15px] text-text leading-relaxed">
+            High-throughput services in Go and Python. Event-driven systems,
+            payment infrastructure, observability, and measured performance.
+          </p>
+        </div>
+
+        <div class="md:col-span-4 flex flex-col gap-4">
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.2em]">
+            03 — Engage
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <NuxtLink to="#work" class="btn-primary">
+              View work
+              <Icon name="lucide:arrow-down-right" class="w-4 h-4" />
+            </NuxtLink>
+            <NuxtLink to="#contact" class="btn-secondary">
+              Get in touch
+            </NuxtLink>
           </div>
+        </div>
+      </div>
+
+      <!-- Stack strip -->
+      <div class="hero-reveal mt-14 pt-8 border-t-[1.5px] border-ink">
+        <div class="flex items-baseline justify-between mb-5 flex-wrap gap-4">
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
+            / Primary stack
+          </p>
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
+            07 languages, 12+ services in production
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-0 border-[1.5px] border-ink divide-x-[1.5px] divide-ink">
+          <span
+            v-for="(item, i) in techStack"
+            :key="item"
+            :class="[
+              'flex-1 text-center px-4 py-4 font-mono text-xs tracking-wide',
+              i % 2 === 0 ? 'bg-bg' : 'bg-bg-secondary'
+            ]"
+          >
+            {{ item }}
+          </span>
         </div>
       </div>
     </div>
@@ -102,80 +100,31 @@
 <script setup>
 import { onMounted } from "vue";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const year = new Date().getFullYear();
 
 const techStack = [
-  { name: "Go", icon: "devicon:go" },
-  { name: "Python", icon: "devicon:python" },
-  { name: "PostgreSQL", icon: "devicon:postgresql" },
-  { name: "AWS", icon: "devicon:amazonwebservices-wordmark" },
-  { name: "Docker", icon: "devicon:docker" },
-  { name: "Redis", icon: "devicon:redis" },
-  { name: "gRPC", icon: "devicon:googlecloud" },
+  "Go",
+  "Python",
+  "PostgreSQL",
+  "Redis",
+  "Kafka",
+  "Docker",
+  "AWS",
 ];
 
 onMounted(() => {
-  gsap.registerPlugin(ScrollTrigger);
   const tl = gsap.timeline();
 
-  // Entrance animations
   tl.fromTo(
     ".hero-title",
-    { y: 50, opacity: 0, scale: 0.95 },
-    {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 1.2,
-      ease: "power3.out",
-      delay: 0.1,
-    },
+    { y: 28, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }
   ).fromTo(
     ".hero-reveal",
-    { y: 30, opacity: 0 },
-    { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" },
-    "-=0.6",
+    { y: 16, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" },
+    "-=0.5"
   );
-
-  // Stagger tech badges
-  gsap.fromTo(
-    ".tech-badge",
-    { y: 20, opacity: 0, scale: 0.9 },
-    {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 0.5,
-      stagger: 0.08,
-      ease: "back.out(1.4)",
-      delay: 1.2,
-    },
-  );
-
-  // Parallax / Zoom scroll animations
-  gsap.to(".hero-bg", {
-    scrollTrigger: {
-      trigger: "#home",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-    },
-    scale: 0.7,
-    opacity: 0,
-    ease: "none",
-  });
-
-  gsap.to(".hero-content", {
-    scrollTrigger: {
-      trigger: "#home",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-    },
-    scale: 1.15,
-    y: 50,
-    opacity: 0,
-    ease: "none",
-  });
 });
 </script>

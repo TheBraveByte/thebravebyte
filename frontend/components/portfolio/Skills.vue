@@ -1,56 +1,80 @@
 <template>
-    <section id="skills" class="py-24 bg-bg border-b border-border">
-        <div class="container mx-auto px-6 relative z-10">
-            
-            <!-- Section Header -->
-            <div class="section-header mb-16 border-b-2 border-accent/50 pb-6 origin-left">
-                <h3 class="font-sans-label text-accent mb-2">
-                    TECHNICAL PROFICIENCY
-                </h3>
-                <h2 class="text-4xl md:text-5xl font-semibold text-text tracking-tight">
-                    Core <span class="text-accent">Technologies</span>
-                </h2>
-            </div>
-            
-            <div class="grid lg:grid-cols-12 gap-12 items-start">
-                
-                <!-- Left Column: Skills Grid (8 cols) -->
-                <div class="lg:col-span-8">
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                        <div v-for="(skill, i) in skills" :key="i"
-                            class="skill-item flex items-center justify-between p-4 rounded-xl border border-border bg-bg hover:border-accent hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 group">
-                             
-                             <div class="flex items-center gap-3">
-                                <Icon :name="skill.icon" class="w-6 h-6 text-text-secondary group-hover:text-accent transition-colors duration-300" />
-                                <span class="font-sans text-sm font-medium text-text">{{ skill.name }}</span>
-                             </div>
-                             
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Context/Philosophy (4 cols) -->
-                <div class="lg:col-span-4 sticky top-24 border-l border-border pl-8">
-                    <div class="mb-8">
-                        <h3 class="text-lg font-semibold text-text mb-2 border-b border-border pb-2">Full-Stack Context</h3>
-                        <p class="text-sm font-sans text-text-secondary mt-2 uppercase tracking-wide">Depth Over Breadth</p>
-                    </div>
-
-                    <p class="text-base text-text-secondary leading-relaxed mb-6">
-                        My stack is chosen for performance and scalability. While I specialize in Go and Python for the backend, I maintain full proficiency in modern frontend frameworks to ensure end-to-end type safety and architectural consistency.
-                    </p>
-
-                    <div class="pt-6 border-t border-border mt-8">
-                        <h4 class="font-sans text-xs text-text uppercase tracking-wider mb-3">Continuous Evolution</h4>
-                        <p class="text-sm text-text-secondary leading-relaxed">
-                            Tools change. Principles endure. I pick the right tool for the job—whether it's Go for concurrency, Python for ML, or the next breakthrough technology.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
+  <section id="skills" class="py-24 bg-bg border-b-[1.5px] border-ink">
+    <div class="container mx-auto px-6">
+      <!-- Section marker -->
+      <div class="flex items-baseline justify-between mb-14 pb-4 border-b-[1.5px] border-ink flex-wrap gap-4">
+        <div>
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-2">
+            § 02 / Toolkit
+          </p>
+          <h2 class="font-serif text-4xl md:text-6xl text-text leading-none">
+            A quiet stack,<br /><em class="italic text-text-secondary">picked on purpose.</em>
+          </h2>
         </div>
-    </section>
+        <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] max-w-xs md:text-right">
+          Depth &gt; breadth. The tools change;<br />the principles don't.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+        <!-- Skills list -->
+        <div class="lg:col-span-8">
+          <div class="border-[1.5px] border-ink">
+            <div class="grid grid-cols-[auto_1fr_auto] px-5 py-3 border-b-[1.5px] border-ink bg-bg-secondary font-mono text-[10px] text-text uppercase tracking-[0.22em] gap-6">
+              <span>#</span>
+              <span>Tool</span>
+              <span>Use</span>
+            </div>
+            <ul class="divide-y-[1.5px] divide-ink">
+              <li
+                v-for="(skill, i) in skills"
+                :key="skill.name"
+                class="skill-item grid grid-cols-[auto_1fr_auto] gap-6 px-5 py-4 items-center hover:bg-bg-secondary transition-colors"
+              >
+                <span class="font-mono text-[11px] text-text-muted w-8">
+                  {{ (i + 1).toString().padStart(2, '0') }}
+                </span>
+                <span class="font-serif text-lg text-text">{{ skill.name }}</span>
+                <span class="font-mono text-[11px] text-text-muted uppercase tracking-[0.18em]">
+                  {{ skill.category }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Side context -->
+        <aside class="lg:col-span-4 space-y-6">
+          <div class="border-[1.5px] border-ink p-6">
+            <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-3">
+              Full-stack context
+            </p>
+            <p class="font-serif text-xl text-text leading-snug mb-3">
+              Backend-first, full-stack fluent.
+            </p>
+            <p class="font-sans text-sm text-text-secondary leading-relaxed">
+              Go and Python carry the weight. Typescript/Vue/React where the
+              work crosses the wire — enough to keep type safety and
+              architecture coherent end-to-end.
+            </p>
+          </div>
+          <div class="border-[1.5px] border-ink p-6 bg-ink text-bg">
+            <p class="font-mono text-[10px] uppercase tracking-[0.22em] mb-3 opacity-70">
+              Continuous evolution
+            </p>
+            <p class="font-serif text-xl leading-snug mb-3">
+              Tools change. Principles endure.
+            </p>
+            <p class="font-sans text-sm leading-relaxed opacity-80">
+              Go for concurrency, Python for ML, Rust when it earns its weight.
+              I pick the right primitive for the problem, not the other way
+              around.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -59,53 +83,34 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const skills = [
-    { name: 'Go (Golang)', icon: 'devicon:go', category: 'Backend' },
-    { name: 'Python', icon: 'devicon:python', category: 'Data & ML' },
-    { name: 'PostgreSQL', icon: 'devicon:postgresql', category: 'RDBMS' },
-    { name: 'MongoDB', icon: 'devicon:mongodb', category: 'NoSQL' },
-    { name: 'Docker', icon: 'devicon:docker', category: 'Containers' },
-    { name: 'AWS', icon: 'devicon:amazonwebservices-wordmark', category: 'Cloud Infra' },
-    { name: 'gRPC', icon: 'lucide:network', category: 'API' },
-    { name: 'Redis', icon: 'devicon:redis', category: 'Caching' },
-    { name: 'ClickHouse', icon: 'devicon:clickhouse', category: 'OLAP DB' },
-    { name: 'Kafka', icon: 'devicon:apachekafka', category: 'Events' },
-    { name: 'Git', icon: 'devicon:git', category: 'VCS' },
-    { name: 'Linux', icon: 'lucide:server', category: 'Infrastructure' }
+  { name: 'Go (Golang)', category: 'Backend core' },
+  { name: 'Python', category: 'Data · ML' },
+  { name: 'PostgreSQL', category: 'Relational' },
+  { name: 'MongoDB', category: 'Document' },
+  { name: 'Redis', category: 'Cache · Queues' },
+  { name: 'Kafka', category: 'Event streams' },
+  { name: 'gRPC', category: 'RPC / APIs' },
+  { name: 'Docker', category: 'Containers' },
+  { name: 'AWS', category: 'Cloud infra' },
+  { name: 'ClickHouse', category: 'OLAP' },
+  { name: 'Linux', category: 'Runtime' },
+  { name: 'Git', category: 'Versioning' },
 ];
 
 onMounted(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-    gsap.fromTo('#skills .section-header', 
-        { y: 50, opacity: 0, scale: 0.95 },
-        {
-            scrollTrigger: {
-                trigger: '#skills',
-                start: 'top 85%',
-                end: 'top 30%',
-                scrub: 1,
-            },
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            ease: 'none'
-        }
-    );
-
-    gsap.fromTo('.skill-item', 
-        { y: 30, opacity: 0, scale: 0.95 },
-        {
-            scrollTrigger: {
-                trigger: '#skills',
-                start: 'top 85%',
-            },
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: 'back.out(1.2)'
-        }
-    );
+  gsap.fromTo(
+    '.skill-item',
+    { y: 14, opacity: 0 },
+    {
+      scrollTrigger: { trigger: '#skills', start: 'top 85%' },
+      y: 0,
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.04,
+      ease: 'power3.out',
+    }
+  );
 });
 </script>

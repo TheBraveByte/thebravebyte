@@ -1,94 +1,74 @@
 <template>
   <header
-    class="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+    class="fixed top-0 left-0 right-0 z-50 transition-colors duration-200"
     :class="[
       scrolled
-        ? 'bg-bg/90 backdrop-blur-md border-b border-border shadow-sm'
-        : 'bg-transparent border-transparent',
+        ? 'bg-bg/95 backdrop-blur-sm border-b-[1.5px] border-ink'
+        : 'bg-transparent',
     ]"
   >
     <div class="container mx-auto px-6">
-      <div class="flex items-center justify-between h-20 md:h-24">
-        <!-- Logo -->
+      <div class="flex items-center justify-between h-18 md:h-20">
+        <!-- Wordmark -->
         <NuxtLink to="/" class="flex items-center gap-3 group">
-          <LogoYA />
-          <div class="hidden sm:flex flex-col">
+          <span
+            class="inline-flex items-center justify-center w-8 h-8 border-[1.5px] border-ink bg-bg font-serif text-lg leading-none pt-0.5"
+          >
+            Y
+          </span>
+          <div class="hidden sm:flex flex-col leading-tight">
+            <span class="font-serif text-[1.05rem] text-text">
+              Yusuf Akinleye
+            </span>
             <span
-              class="text-lg md:text-xl font-bold tracking-tight text-text leading-tight transition-colors group-hover:text-accent"
-              >Yusuf Akinleye</span
+              class="font-mono text-[9.5px] font-medium text-text-muted uppercase tracking-[0.22em] mt-0.5"
             >
-            <span
-              class="text-[10px] font-sans font-semibold text-text-muted uppercase tracking-[0.2em]"
-              >Backend Architect</span
-            >
+              Backend / Systems
+            </span>
           </div>
         </NuxtLink>
 
-        <!-- Desktop Navigation -->
+        <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center gap-10">
           <NuxtLink
-            to="/"
-            class="nav-link font-sans text-[11px] font-bold tracking-[0.15em] uppercase px-1"
-            >Home</NuxtLink
+            v-for="item in navItems"
+            :key="item.to"
+            :to="item.to"
+            class="nav-link font-mono text-[11px] font-medium tracking-[0.18em] uppercase"
           >
-          <NuxtLink
-            to="/blog"
-            class="nav-link font-sans text-[11px] font-bold tracking-[0.15em] uppercase px-1"
-            >Blog</NuxtLink
-          >
-          <NuxtLink
-            to="/#about"
-            class="nav-link font-sans text-[11px] font-bold tracking-[0.15em] uppercase px-1"
-            >About</NuxtLink
-          >
-          <NuxtLink
-            to="/process"
-            class="nav-link font-sans text-[11px] font-bold tracking-[0.15em] uppercase px-1"
-            >Process</NuxtLink
-          >
+            {{ item.label }}
+          </NuxtLink>
         </nav>
 
         <!-- Actions -->
-        <div class="flex items-center gap-4">
-          <!-- Theme Toggle -->
+        <div class="flex items-center gap-3">
           <button
             @click="toggleTheme"
-            class="w-10 h-10 md:w-11 md:h-11 rounded-full border border-border text-text hover:border-accent hover:bg-accent/5 active:scale-95 transition-all duration-300 flex items-center justify-center group relative overflow-hidden"
+            class="w-10 h-10 border-[1.5px] border-ink bg-bg text-text hover:bg-ink hover:text-bg transition-colors flex items-center justify-center"
             aria-label="Toggle theme"
           >
-            <Icon
-              :name="themeIcon"
-              class="w-5 h-5 group-hover:text-accent transition-all duration-500 group-hover:rotate-[360deg] transform-origin-center"
-            />
+            <Icon :name="themeIcon" class="w-4 h-4" />
           </button>
 
-          <!-- Admin Access -->
           <div v-if="isAuthenticated" class="hidden sm:flex items-center gap-2">
-            <NuxtLink
-              to="/admin/dashboard"
-              class="px-5 py-2.5 rounded-full bg-accent text-white hover:bg-accent-hover transition-all text-xs font-sans tracking-widest uppercase font-semibold shadow-lg shadow-accent/20"
-            >
+            <NuxtLink to="/admin/dashboard" class="btn-primary py-2! px-4! text-xs!">
               Dashboard
             </NuxtLink>
             <button
               @click="logout"
-              class="p-2.5 rounded-full text-text-secondary hover:text-error hover:bg-error/10 transition-colors"
+              class="w-10 h-10 border-[1.5px] border-ink bg-bg text-text hover:bg-ink hover:text-bg transition-colors flex items-center justify-center"
               aria-label="Logout"
             >
-              <Icon name="lucide:log-out" class="w-5 h-5" />
+              <Icon name="lucide:log-out" class="w-4 h-4" />
             </button>
           </div>
 
-          <!-- Mobile Menu Toggle -->
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2 rounded-full border border-border text-text hover:bg-bg-secondary transition-colors"
+            class="lg:hidden w-10 h-10 border-[1.5px] border-ink bg-bg text-text flex items-center justify-center"
             aria-label="Toggle menu"
           >
-            <Icon
-              :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'"
-              class="w-5 h-5"
-            />
+            <Icon :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" class="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -97,49 +77,31 @@
       <transition name="slide-down">
         <div
           v-if="mobileMenuOpen"
-          class="md:hidden py-6 border-t border-border bg-bg/95 backdrop-blur-xl absolute left-0 right-0 top-full px-6 shadow-xl"
+          class="lg:hidden py-6 border-t-[1.5px] border-ink bg-bg absolute left-0 right-0 top-full px-6"
         >
-          <nav class="flex flex-col gap-4">
+          <nav class="flex flex-col gap-1">
             <NuxtLink
-              to="/"
+              v-for="item in navItems"
+              :key="item.to"
+              :to="item.to"
               @click="mobileMenuOpen = false"
-              class="mobile-nav-link text-lg font-serif"
-              >Home</NuxtLink
+              class="mobile-nav-link font-mono text-xs tracking-[0.18em] uppercase py-3 border-b border-ink/20"
             >
-            <NuxtLink
-              to="/blog"
-              @click="mobileMenuOpen = false"
-              class="mobile-nav-link text-lg font-serif"
-              >Blog</NuxtLink
-            >
-            <NuxtLink
-              to="/#about"
-              @click="mobileMenuOpen = false"
-              class="mobile-nav-link text-lg font-serif"
-              >About</NuxtLink
-            >
-            <NuxtLink
-              to="/process"
-              @click="mobileMenuOpen = false"
-              class="mobile-nav-link text-lg font-serif"
-              >Process</NuxtLink
-            >
+              {{ item.label }}
+            </NuxtLink>
 
             <template v-if="isAuthenticated">
-              <div class="h-px w-full bg-border my-3"></div>
               <NuxtLink
                 to="/admin/dashboard"
                 @click="mobileMenuOpen = false"
-                class="mobile-nav-link text-lg font-serif text-accent flex items-center gap-3"
+                class="mobile-nav-link font-mono text-xs tracking-[0.18em] uppercase py-3 border-b border-ink/20"
               >
-                <Icon name="lucide:layout-dashboard" class="w-5 h-5" />
                 Dashboard
               </NuxtLink>
               <button
                 @click="logout"
-                class="mobile-nav-link text-lg font-serif text-error text-left flex items-center gap-3"
+                class="mobile-nav-link font-mono text-xs tracking-[0.18em] uppercase py-3 text-left"
               >
-                <Icon name="lucide:log-out" class="w-5 h-5" />
                 Logout
               </button>
             </template>
@@ -164,6 +126,15 @@ const themeIcon = computed(() => {
   if (!hasMounted.value) return "lucide:moon";
   return colorMode.value === "dark" ? "lucide:sun" : "lucide:moon";
 });
+
+const navItems = [
+  { to: "/", label: "Index" },
+  { to: "/#about", label: "About" },
+  { to: "/#work", label: "Work" },
+  { to: "/process", label: "Process" },
+  { to: "/blog", label: "Writing" },
+  { to: "/#contact", label: "Contact" },
+];
 
 const scrolled = ref(false);
 const handleScroll = () => {
@@ -192,15 +163,12 @@ const logout = async () => {
   mobileMenuOpen.value = false;
 };
 
-// Check authentication status
 onMounted(async () => {
   const token = useCookie("auth_token");
   if (token.value) {
     try {
       const { data } = await useApiFetch("/auth/me");
-      if (data.value) {
-        isAuthenticated.value = true;
-      }
+      if (data.value) isAuthenticated.value = true;
     } catch (err) {
       isAuthenticated.value = false;
     }
@@ -211,40 +179,39 @@ onMounted(async () => {
 <style scoped>
 .nav-link {
   color: var(--color-text-secondary);
-  transition: color 0.3s ease;
+  transition: color 0.15s ease;
   position: relative;
+  padding: 4px 0;
 }
 .nav-link:hover {
   color: var(--color-text);
 }
 .nav-link.router-link-active {
-  color: var(--color-accent);
+  color: var(--color-text);
 }
 .nav-link.router-link-active::after {
   content: "";
   position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-accent);
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-ink);
 }
 .mobile-nav-link {
   color: var(--color-text);
-  transition: color 0.3s ease;
+  transition: color 0.15s ease;
 }
 .mobile-nav-link:hover {
-  color: var(--color-accent);
+  color: var(--color-text-muted);
 }
 .slide-down-enter-active,
 .slide-down-leave-active {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s ease;
 }
 .slide-down-enter-from,
 .slide-down-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-6px);
 }
 </style>

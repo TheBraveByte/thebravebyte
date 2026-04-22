@@ -1,114 +1,98 @@
 <template>
-  <section id="projects" class="py-24 bg-bg border-b border-border">
-    <div class="container mx-auto px-6 relative z-10">
-      <!-- Section Header -->
-      <div
-        class="section-header mb-16 border-b-2 border-accent/50 pb-6 origin-left"
-      >
-        <h3 class="font-sans-label text-accent mb-2">CASE STUDIES</h3>
-        <h2 class="text-4xl md:text-5xl font-semibold text-text tracking-tight">
-          Engineering <span class="text-accent">Impact</span>
-        </h2>
+  <section id="work" class="py-24 bg-bg border-b-[1.5px] border-ink">
+    <div class="container mx-auto px-6">
+      <!-- Section marker -->
+      <div class="flex items-baseline justify-between mb-14 pb-4 border-b-[1.5px] border-ink flex-wrap gap-4">
+        <div>
+          <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-2">
+            § 04 / Case studies
+          </p>
+          <h2 class="font-serif text-4xl md:text-6xl text-text leading-none">
+            Selected<br /><em class="italic text-text-secondary">engineering impact.</em>
+          </h2>
+        </div>
+        <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] max-w-xs md:text-right">
+          {{ filteredProjects.length }} / {{ projects.length }} projects<br />shipping in production
+        </p>
       </div>
 
-      <!-- Category Filter -->
-      <div
-        class="flex flex-nowrap overflow-x-auto hide-scrollbar gap-4 md:gap-8 mb-12 border-b border-border pb-4 -mx-6 px-6 sm:mx-0 sm:px-0"
-      >
+      <!-- Filter row -->
+      <div class="flex flex-nowrap overflow-x-auto hide-scrollbar gap-0 mb-12 border-y-[1.5px] border-ink -mx-6 px-6 sm:mx-0 sm:px-0">
         <button
           v-for="cat in categories"
           :key="cat"
           @click="selectedCategory = cat"
           :class="[
-            'whitespace-nowrap pb-4 text-xs md:text-sm font-sans transition-all duration-300 relative -mb-[17px]',
+            'whitespace-nowrap px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] border-r-[1.5px] border-ink transition-colors',
             selectedCategory === cat
-              ? 'text-text font-semibold border-b-2 border-accent'
-              : 'text-text-secondary hover:text-text border-b-2 border-transparent',
+              ? 'bg-ink text-bg'
+              : 'bg-bg text-text-muted hover:text-text hover:bg-bg-secondary',
           ]"
         >
           {{ cat }}
         </button>
       </div>
 
-      <!-- Projects Grid -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-      >
-        <div
-          v-for="project in displayedProjects"
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 border-[1.5px] border-ink">
+        <article
+          v-for="(project, i) in displayedProjects"
           :key="project.id"
-          class="project-card bg-bg border border-border p-8 rounded-2xl flex flex-col group hover:border-accent hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgba(56,189,248,0.05)] transition-all duration-500"
+          :class="[
+            'project-card relative flex flex-col p-8 md:p-10 group transition-colors hover:bg-bg-secondary',
+            i % 2 === 0 ? 'md:border-r-[1.5px] border-ink' : '',
+            i < displayedProjects.length - (displayedProjects.length % 2 === 0 ? 2 : 1) ? 'border-b-[1.5px] border-ink' : '',
+            displayedProjects.length % 2 !== 0 && i === displayedProjects.length - 1 ? '' : '',
+          ]"
         >
           <!-- Header -->
-          <div
-            class="flex justify-between items-start mb-6 border-b border-border pb-4"
-          >
-            <div
-              class="flex items-center gap-2 p-2 bg-bg-secondary rounded-lg text-text-secondary group-hover:text-accent group-hover:bg-accent/10 transition-colors"
-            >
-              <Icon name="lucide:folder-git-2" class="w-5 h-5" />
-            </div>
-            <div
-              class="px-3 py-1 bg-bg-secondary border border-border rounded-full flex items-center gap-2"
-            >
-              <span
-                class="w-1.5 h-1.5 rounded-full bg-success animate-pulse"
-              ></span>
-              <span
-                class="font-sans text-[10px] font-semibold text-text uppercase tracking-wider"
-                >Operational</span
-              >
-            </div>
+          <div class="flex items-start justify-between mb-6">
+            <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
+              {{ project.category }}
+            </span>
+            <span class="flex items-center gap-2 font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
+              <span class="inline-block w-1.5 h-1.5 bg-success"></span>
+              Live
+            </span>
           </div>
 
-          <h3
-            class="text-xl font-semibold text-text mb-4 group-hover:text-accent transition-colors"
-          >
+          <h3 class="font-serif text-3xl text-text leading-tight mb-4">
             {{ project.title }}
           </h3>
 
-          <p
-            class="text-base text-text-secondary leading-relaxed mb-6 flex-grow"
-          >
+          <p class="font-sans text-[15px] text-text-secondary leading-relaxed mb-8 flex-grow">
             {{ project.description }}
           </p>
 
           <!-- Metrics -->
-          <div
-            class="grid grid-cols-2 gap-4 py-4 border-t border-border mb-6 group-hover:border-accent/30 transition-colors"
-          >
+          <div class="grid grid-cols-2 gap-6 pt-6 border-t-[1.5px] border-ink mb-6">
             <div v-for="metric in project.metrics" :key="metric.label">
-              <div
-                class="font-sans text-[10px] text-text-muted uppercase tracking-wider mb-1"
-              >
+              <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-1">
                 {{ metric.label }}
-              </div>
-              <div class="font-sans text-sm font-medium text-text">
+              </p>
+              <p class="font-serif text-xl text-text">
                 {{ metric.value }}
-              </div>
+              </p>
             </div>
           </div>
 
           <!-- Tags -->
-          <div class="flex flex-wrap gap-2 mt-auto">
+          <div class="flex flex-wrap gap-2">
             <span
               v-for="tag in project.tags"
               :key="tag"
-              class="font-sans text-[10px] px-3 py-1 border border-border text-text-secondary uppercase rounded-full group-hover:border-accent/30 transition-colors"
+              class="font-mono text-[10px] text-text uppercase tracking-[0.18em] px-2 py-1 border-[1.5px] border-ink"
             >
               {{ tag }}
             </span>
           </div>
-        </div>
+        </article>
       </div>
 
-      <!-- Load More -->
-      <div class="flex justify-center mt-16" v-if="hasMoreProjects">
-        <button
-          @click="loadMore"
-          class="px-8 py-3 border border-border rounded-full text-text font-sans text-sm font-medium hover:bg-bg-secondary hover:border-text transition-all duration-300"
-        >
-          Load More Cases
+      <div v-if="hasMoreProjects" class="flex justify-center mt-10">
+        <button @click="loadMore" class="btn-secondary">
+          Load more
+          <Icon name="lucide:plus" class="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -123,64 +107,59 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const projects = [
   {
     id: 1,
-    title: "RiXL — Cloud Media",
+    title: "RiXL — Cloud media platform",
     description:
-      "Usage-based media hosting platform. Traditional seat-based pricing fails here—users pay for storage, bandwidth, and transcoding they actually use. Idempotent billing with Stripe Meters ensuring zero revenue leakage.",
-    impact: "100% billing accuracy with Cloudflare analytics integration",
+      "Usage-based media hosting. Idempotent billing with Stripe Meters and nightly reconciliation ensures zero revenue leakage across uploads, storage, and bandwidth.",
     tags: ["Go", "Stripe", "Cloudflare"],
-    category: "Media & Streaming",
+    category: "Media",
     metrics: [
-      { label: "Throughput", value: "10GB/s" },
-      { label: "Billing", value: "100% Accurate" },
+      { label: "Throughput", value: "10 GB/s" },
+      { label: "Billing", value: "100% accurate" },
     ],
   },
   {
     id: 2,
-    title: "EazyFit — Marketplace",
+    title: "EazyFit — Styling marketplace",
     description:
-      "Connecting customers with stylists. Isolated domains (Chat, Payments, Core) ensure a 10x chat spike doesn't affect payment success. AI monitoring prevents off-platform transactions.",
-    impact: "99.99% uptime during peak traffic",
+      "Customers ↔ stylists. Domain-isolated services (Chat, Payments, Core) so a 10× chat spike can't take down checkout. AI moderation keeps transactions on-platform.",
     tags: ["Microservices", "WebSocket", "AI"],
     category: "E-Commerce",
     metrics: [
-      { label: "Latency", value: "<100ms" },
+      { label: "Latency", value: "<100 ms" },
       { label: "Uptime", value: "99.99%" },
     ],
   },
   {
     id: 3,
-    title: "OmonAI — Fraud Detection",
+    title: "OmonAI — Fraud detection",
     description:
-      "Deployed 10-dimensional ML model (CiferAI) for behavioral pattern analysis. Catches sophisticated fraud that rules miss while reducing false positives by 60%.",
-    impact: "Estimated $30K/month fraud prevented",
+      "Ten-dimensional ML model (CiferAI) for behavioral pattern analysis. Catches sophisticated fraud rules miss, drops false positives by 60%, all in <50 ms.",
     tags: ["Python", "TensorFlow", "FastAPI"],
     category: "Fintech",
     metrics: [
-      { label: "Inference", value: "<50ms" },
-      { label: "False Pos", value: "-60%" },
+      { label: "Inference", value: "<50 ms" },
+      { label: "False pos", value: "−60%" },
     ],
   },
   {
     id: 4,
-    title: "BiTraq — Arbitrage Engine",
+    title: "BiTraq — Arbitrage engine",
     description:
-      "Real-time crypto arbitrage. Fan-Out/Fan-In pattern reduces latency to max(T)=300ms. Background job queues ensure trading API stays responsive during alert processing spikes.",
-    impact: "Captures 98.5% of arbitrage opportunities",
+      "Real-time crypto arbitrage across 10+ exchanges. Fan-out/fan-in cuts latency to max(T)=300ms. Persistent queues keep the trading API responsive under spike.",
     tags: ["Go", "Redis", "gRPC"],
-    category: "Fintech & Blockchain",
+    category: "Fintech",
     metrics: [
-      { label: "Exec Time", value: "<200ms" },
+      { label: "Exec time", value: "<200 ms" },
       { label: "Capture", value: "98.5%" },
     ],
   },
   {
     id: 5,
-    title: "Unified Campus",
+    title: "Unified Campus — Multi-tenant",
     description:
-      "Multi-tenant attendance architecture with strict data isolation. Immutable audit logs for every state change passed enterprise security audits.",
-    impact: "Complete data isolation for 50+ tenants",
-    tags: ["PostgreSQL", "RLS", "Audit Logs"],
-    category: "Enterprise & SaaS",
+      "Attendance platform for schools and enterprises. Hierarchical tenants (school → faculty → department), Postgres RLS, and immutable audit logs that cleared enterprise security review.",
+    tags: ["PostgreSQL", "RLS", "Audit"],
+    category: "SaaS",
     metrics: [
       { label: "Tenants", value: "Isolated" },
       { label: "Audit", value: "Immutable" },
@@ -188,12 +167,11 @@ const projects = [
   },
   {
     id: 6,
-    title: "Forex Bot Automation",
+    title: "Forex Bot — In-Telegram payments",
     description:
-      "Embedded subscription flow inside Telegram. Supporting 250+ cryptocurrencies plus cards maximized addressable market. Admin approval workflow ensures payment verification.",
-    impact: "Checkout completion increased from 30% to 85%",
-    tags: ["Telegram API", "Webhooks", "Security"],
-    category: "Fintech & Automation",
+      "Subscription and payments embedded in Telegram. 250+ cryptos via NOWPayments plus card rails; admin approval workflow for manual verification where needed.",
+    tags: ["Telegram", "Webhooks", "Security"],
+    category: "Automation",
     metrics: [
       { label: "Conversion", value: "+183%" },
       { label: "Cryptos", value: "250+" },
@@ -201,30 +179,22 @@ const projects = [
   },
 ];
 
-const selectedCategory = ref("All Projects");
+const selectedCategory = ref("All");
 const visibleCount = ref(6);
 
-const categories = computed(() => {
-  return ["All Projects", ...new Set(projects.map((p) => p.category))];
-});
+const categories = computed(() => ["All", ...new Set(projects.map((p) => p.category))]);
 
-const filteredProjects = computed(() => {
-  if (selectedCategory.value === "All Projects") {
-    return projects;
-  }
-  return projects.filter((p) => p.category === selectedCategory.value);
-});
+const filteredProjects = computed(() =>
+  selectedCategory.value === "All"
+    ? projects
+    : projects.filter((p) => p.category === selectedCategory.value)
+);
 
-const displayedProjects = computed(() => {
-  return filteredProjects.value.slice(0, visibleCount.value);
-});
-
-const hasMoreProjects = computed(() => {
-  return visibleCount.value < filteredProjects.value.length;
-});
+const displayedProjects = computed(() => filteredProjects.value.slice(0, visibleCount.value));
+const hasMoreProjects = computed(() => visibleCount.value < filteredProjects.value.length);
 
 const loadMore = () => {
-  visibleCount.value += 3;
+  visibleCount.value += 2;
 };
 
 const animateProjects = () => {
@@ -232,49 +202,27 @@ const animateProjects = () => {
     ScrollTrigger.refresh();
     gsap.fromTo(
       ".project-card",
-      { y: 40, opacity: 0, scale: 0.95 },
+      { y: 20, opacity: 0 },
       {
-        scrollTrigger: {
-          trigger: "#projects",
-          start: "top 80%",
-        },
+        scrollTrigger: { trigger: "#work", start: "top 85%" },
         y: 0,
         opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "back.out(1.2)",
+        duration: 0.6,
+        stagger: 0.08,
+        ease: "power3.out",
         overwrite: "auto",
-      },
+      }
     );
   });
 };
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger);
-
-  gsap.fromTo(
-    "#projects .section-header",
-    { y: 50, opacity: 0, scale: 0.95 },
-    {
-      scrollTrigger: {
-        trigger: "#projects",
-        start: "top 85%",
-        end: "top 30%",
-        scrub: 1,
-      },
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      ease: "none",
-    },
-  );
-
   animateProjects();
 });
 
 watch([selectedCategory, visibleCount], () => {
-  gsap.set(".project-card", { y: 30, opacity: 0, scale: 0.95 });
+  gsap.set(".project-card", { y: 20, opacity: 0 });
   animateProjects();
 });
 </script>
