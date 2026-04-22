@@ -1,55 +1,45 @@
 <template>
-  <div class="pt-28 md:pt-32 pb-20 bg-bg min-h-screen">
-    <div class="container mx-auto px-6">
+  <div class="pt-16 md:pt-20 pb-16">
+    <div class="container-wide">
       <slot name="header">
-        <div class="mb-10">
-          <NuxtLink
-            to="/#process"
-            aria-label="Back to process section"
-            class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-text-muted hover:text-text transition-colors"
-          >
-            <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
-            <span>Back to process</span>
-          </NuxtLink>
-        </div>
+        <NuxtLink
+          to="/#process"
+          class="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-text transition-colors mb-8"
+        >
+          <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
+          Back to home
+        </NuxtLink>
       </slot>
 
-      <!-- Page header -->
-      <div class="mb-14 pb-6 border-b-[1.5px] border-ink">
-        <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-3">
-          § Blueprints / Engineering process
+      <header class="mb-10 max-w-2xl">
+        <h1 class="text-xl font-semibold text-text mb-2">Architecture notes</h1>
+        <p class="text-[15px] text-text-secondary leading-[1.65]">
+          Short write-ups of real systems I've shipped — the business problem,
+          the trade-off, the outcome.
         </p>
-        <h1 class="font-serif text-5xl md:text-7xl text-text leading-[0.95] mb-6">
-          System architecture,<br /><em class="italic text-text-secondary">in detail.</em>
-        </h1>
-        <p class="font-sans text-[15px] text-text-secondary leading-relaxed max-w-2xl">
-          Systems that are secure by design, concurrent by default, and scalable
-          by necessity. Each case below explains the business problem, the
-          trade-off, and the measured outcome.
-        </p>
-      </div>
+      </header>
 
       <!-- Tabs -->
-      <div class="mb-10 border-y-[1.5px] border-ink">
-        <div class="hidden md:flex flex-nowrap overflow-x-auto hide-scrollbar">
+      <div class="mb-8">
+        <div class="hidden md:flex flex-nowrap gap-x-1 gap-y-1 flex-wrap pb-2 border-b border-border">
           <button
             v-for="(section, index) in sections"
             :key="index"
             @click="activeTab = index"
             :class="[
-              'whitespace-nowrap px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] border-r-[1.5px] border-ink transition-colors',
+              'px-3 py-1.5 text-sm rounded-md transition-colors',
               activeTab === index
-                ? 'bg-ink text-bg'
-                : 'bg-bg text-text-muted hover:text-text hover:bg-bg-secondary',
+                ? 'bg-bg-secondary text-text font-medium'
+                : 'text-text-muted hover:text-text hover:bg-bg-secondary/60',
             ]"
           >
-            {{ (index + 1).toString().padStart(2, '0') }} · {{ section.title }}
+            {{ section.title }}
           </button>
         </div>
-        <div class="md:hidden p-3">
+        <div class="md:hidden">
           <select
             v-model="activeTab"
-            class="w-full px-4 py-3 border-[1.5px] border-ink bg-bg text-text font-mono text-xs focus:outline-none"
+            class="w-full px-3 py-2 border border-border bg-bg text-text text-sm rounded-md focus:outline-none focus:border-ink"
           >
             <option v-for="(section, index) in sections" :key="index" :value="index">
               {{ (index + 1).toString().padStart(2, '0') }} — {{ section.title }}
@@ -59,202 +49,149 @@
       </div>
 
       <transition name="fade" mode="out-in">
-        <div :key="activeTab" class="border-[1.5px] border-ink">
-          <div class="grid lg:grid-cols-2 divide-y-[1.5px] lg:divide-y-0 lg:divide-x-[1.5px] divide-ink">
-            <!-- Narrative column -->
-            <div class="p-8 md:p-10 flex flex-col">
-              <div class="flex items-start justify-between mb-6">
-                <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
-                  Entry {{ (activeTab + 1).toString().padStart(2, '0') }} / {{ sections.length.toString().padStart(2, '0') }}
-                </span>
-                <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
-                  {{ sections[activeTab]?.code ? 'Has code' : 'Diagram only' }}
-                </span>
+        <div :key="activeTab" class="grid lg:grid-cols-2 gap-8 lg:gap-10">
+          <!-- Narrative -->
+          <div>
+            <h2 class="text-lg font-semibold text-text mb-4">
+              {{ sections[activeTab]?.title }}
+            </h2>
+
+            <div
+              v-if="sections[activeTab]?.title === 'Production Systems'"
+              class="flex items-center gap-2 text-xs text-text-muted mb-5"
+            >
+              <Icon name="lucide:award" class="w-3.5 h-3.5" />
+              <span>$5,000 Pre-Seed · Ilorin Innovation Challenge</span>
+            </div>
+
+            <p class="text-[15px] text-text-secondary leading-[1.7] mb-7">
+              {{ sections[activeTab]?.description }}
+            </p>
+
+            <div v-if="sections[activeTab]?.features" class="space-y-5 mb-8">
+              <div v-for="(feature, idx) in sections[activeTab]?.features" :key="idx">
+                <h3 class="text-sm font-semibold text-text mb-2">{{ feature.title }}</h3>
+                <ul class="space-y-1.5 text-[14px] text-text-secondary leading-[1.6]">
+                  <li
+                    v-for="(item, i) in feature.items"
+                    :key="i"
+                    class="flex items-start gap-2"
+                  >
+                    <span class="text-text-muted mt-0.5">·</span>
+                    <span class="flex-1" v-html="item"></span>
+                  </li>
+                </ul>
               </div>
+            </div>
 
-              <h2 class="font-serif text-3xl md:text-5xl text-text leading-[1.05] mb-6">
-                {{ sections[activeTab]?.title }}
-              </h2>
-
-              <div
-                v-if="sections[activeTab]?.title === 'Production Systems'"
-                class="flex items-center gap-3 px-4 py-3 border-[1.5px] border-ink bg-bg-secondary mb-6"
+            <div class="flex justify-between items-center pt-4 border-t border-border gap-4">
+              <button
+                @click="previousTab"
+                :disabled="activeTab === 0"
+                :class="[
+                  'inline-flex items-center gap-1.5 text-sm transition-colors',
+                  activeTab === 0 ? 'opacity-30 cursor-not-allowed' : 'text-text-muted hover:text-text',
+                ]"
               >
-                <span class="inline-block w-1.5 h-1.5 bg-success"></span>
-                <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-text">
-                  $5,000 Pre-Seed · Ilorin Innovation Challenge winner
-                </span>
-              </div>
+                <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
+                Previous
+              </button>
+              <button
+                @click="nextTab"
+                :disabled="activeTab === sections.length - 1"
+                :class="[
+                  'inline-flex items-center gap-1.5 text-sm transition-colors',
+                  activeTab === sections.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-text-muted hover:text-text',
+                ]"
+              >
+                Next
+                <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
 
-              <p class="font-sans text-[15px] text-text-secondary leading-relaxed mb-8">
-                {{ sections[activeTab]?.description }}
-              </p>
-
-              <h3 class="font-mono text-[10px] text-text uppercase tracking-[0.22em] mb-4 pb-2 border-b-[1.5px] border-ink">
-                / Key decisions
-              </h3>
-
-              <div v-if="sections[activeTab]?.features" class="space-y-6 mb-8">
-                <div
-                  v-for="(feature, idx) in sections[activeTab]?.features"
-                  :key="idx"
-                  class="border-[1.5px] border-ink"
-                >
-                  <div class="px-4 py-2 border-b-[1.5px] border-ink bg-bg-secondary">
-                    <h4 class="font-serif text-lg text-text">{{ feature.title }}</h4>
-                  </div>
-                  <ul class="p-4 space-y-2 text-sm text-text-secondary">
-                    <li
-                      v-for="(item, i) in feature.items"
-                      :key="i"
-                      class="flex items-start gap-3"
-                    >
-                      <span class="font-mono text-[10px] text-text-muted mt-1">·</span>
-                      <span class="flex-1" v-html="item"></span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="flex justify-between items-center pt-6 border-t-[1.5px] border-ink mt-auto gap-4">
+          <!-- Diagram / code -->
+          <div>
+            <div class="mb-3 flex justify-between items-center">
+              <span class="text-xs text-text-muted">
+                {{ showCode && sections[activeTab]?.code ? 'Source' : 'Diagram' }}
+              </span>
+              <div v-if="sections[activeTab]?.code" class="inline-flex bg-bg-secondary rounded-md p-0.5 border border-border">
                 <button
-                  @click="previousTab"
-                  :disabled="activeTab === 0"
+                  @click="showCode = false"
                   :class="[
-                    'inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] transition-colors',
-                    activeTab === 0 ? 'opacity-30 cursor-not-allowed' : 'text-text-muted hover:text-text',
+                    'px-2.5 py-1 text-xs rounded transition-colors',
+                    !showCode ? 'bg-bg text-text shadow-sm' : 'text-text-muted hover:text-text',
                   ]"
                 >
-                  <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
-                  Previous
+                  Diagram
                 </button>
                 <button
-                  @click="nextTab"
-                  :disabled="activeTab === sections.length - 1"
+                  @click="showCode = true"
                   :class="[
-                    'inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] transition-colors',
-                    activeTab === sections.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-text-muted hover:text-text',
+                    'px-2.5 py-1 text-xs rounded transition-colors',
+                    showCode ? 'bg-bg text-text shadow-sm' : 'text-text-muted hover:text-text',
                   ]"
                 >
-                  Next
-                  <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
+                  Code
                 </button>
               </div>
             </div>
 
-            <!-- Diagram / code column -->
-            <div class="p-8 md:p-10 flex flex-col bg-bg-secondary">
-              <div class="mb-4 flex justify-between items-center" v-if="sections[activeTab]?.code">
-                <p class="font-mono text-[10px] text-text uppercase tracking-[0.22em]">
-                  / Implementation
-                </p>
-                <div class="inline-flex border-[1.5px] border-ink">
-                  <button
-                    @click="showCode = false"
-                    :class="[
-                      'px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors border-r-[1.5px] border-ink',
-                      !showCode ? 'bg-ink text-bg' : 'bg-bg text-text-muted hover:text-text',
-                    ]"
-                  >
-                    Diagram
-                  </button>
-                  <button
-                    @click="showCode = true"
-                    :class="[
-                      'px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors',
-                      showCode ? 'bg-ink text-bg' : 'bg-bg text-text-muted hover:text-text',
-                    ]"
-                  >
-                    Source
-                  </button>
-                </div>
-              </div>
-              <p v-else class="font-mono text-[10px] text-text uppercase tracking-[0.22em] mb-4">
-                / Architecture diagram
-              </p>
-
+            <div
+              v-show="!showCode"
+              class="mermaid-container relative border border-border rounded-md overflow-hidden flex items-center justify-center min-h-[480px] bg-bg-secondary/40 cursor-grab"
+              @mousedown="startPan"
+              @mousemove="doPan"
+              @mouseup="endPan"
+              @mouseleave="endPan"
+            >
               <div
-                v-show="!showCode"
-                class="mermaid-container relative grow border-[1.5px] border-ink overflow-hidden flex items-center justify-center min-h-[520px] bg-bg cursor-move"
-                @mousedown="startPan"
-                @mousemove="doPan"
-                @mouseup="endPan"
-                @mouseleave="endPan"
+                class="mermaid-content w-full h-full flex items-center justify-center transition-transform duration-75 ease-linear"
+                :style="{ transform: `translate(${panX}px, ${panY}px) scale(${scale})` }"
               >
                 <div
-                  class="mermaid-content w-full h-full flex items-center justify-center transition-transform duration-75 ease-linear"
-                  :style="{ transform: `translate(${panX}px, ${panY}px) scale(${scale})` }"
-                >
-                  <div
-                    class="mermaid w-full h-full flex items-center justify-center select-none pointer-events-none"
-                    v-html="currentSvg"
-                  ></div>
-                </div>
-
-                <div class="absolute bottom-3 right-3 flex border-[1.5px] border-ink z-10 bg-bg">
-                  <button
-                    @click.stop="zoomIn"
-                    class="p-2 border-r-[1.5px] border-ink hover:bg-bg-secondary text-text transition-colors"
-                    title="Zoom in"
-                  >
-                    <Icon name="lucide:plus" class="w-4 h-4" />
-                  </button>
-                  <button
-                    @click.stop="zoomOut"
-                    class="p-2 border-r-[1.5px] border-ink hover:bg-bg-secondary text-text transition-colors"
-                    title="Zoom out"
-                  >
-                    <Icon name="lucide:minus" class="w-4 h-4" />
-                  </button>
-                  <button
-                    @click.stop="resetZoom"
-                    class="p-2 hover:bg-bg-secondary text-text transition-colors"
-                    title="Reset"
-                  >
-                    <Icon name="lucide:rotate-ccw" class="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div class="absolute top-3 left-3 pointer-events-none">
-                  <span class="px-2 py-1 bg-ink text-bg font-mono text-[9px] uppercase tracking-[0.2em]">
-                    Drag · scroll to zoom
-                  </span>
-                </div>
+                  class="mermaid w-full h-full flex items-center justify-center select-none pointer-events-none p-6"
+                  v-html="currentSvg"
+                ></div>
               </div>
 
-              <div v-if="showCode && sections[activeTab]?.code" class="relative grow min-h-[520px] border-[1.5px] border-ink">
-                <div class="absolute top-0 right-0 px-2 py-1 bg-ink text-bg font-mono text-[9.5px] uppercase tracking-[0.2em] z-10">
-                  {{ sections[activeTab]?.code?.filename }}
-                </div>
-                <pre class="h-full bg-bg text-text p-6 overflow-x-auto text-[13px] font-mono leading-relaxed"><code>{{ sections[activeTab]?.code?.content }}</code></pre>
+              <div class="absolute bottom-3 right-3 flex rounded-md overflow-hidden border border-border bg-bg shadow-sm">
+                <button @click.stop="zoomIn" class="p-1.5 border-r border-border hover:bg-bg-secondary transition-colors" title="Zoom in">
+                  <Icon name="lucide:plus" class="w-3.5 h-3.5" />
+                </button>
+                <button @click.stop="zoomOut" class="p-1.5 border-r border-border hover:bg-bg-secondary transition-colors" title="Zoom out">
+                  <Icon name="lucide:minus" class="w-3.5 h-3.5" />
+                </button>
+                <button @click.stop="resetZoom" class="p-1.5 hover:bg-bg-secondary transition-colors" title="Reset">
+                  <Icon name="lucide:rotate-ccw" class="w-3.5 h-3.5" />
+                </button>
               </div>
+            </div>
+
+            <div v-if="showCode && sections[activeTab]?.code" class="relative min-h-[480px] border border-border rounded-md overflow-hidden">
+              <div class="flex items-center justify-between px-3 py-2 border-b border-border bg-bg-secondary text-xs text-text-muted font-mono">
+                <span>{{ sections[activeTab]?.code?.filename }}</span>
+                <span>{{ sections[activeTab]?.code?.language }}</span>
+              </div>
+              <pre class="bg-bg text-text p-4 overflow-x-auto text-[12.5px] font-mono leading-[1.6]"><code>{{ sections[activeTab]?.code?.content }}</code></pre>
             </div>
           </div>
         </div>
       </transition>
 
       <!-- CTA -->
-      <div class="mt-20 pt-10 border-t-[1.5px] border-ink flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-        <h3 class="font-serif text-3xl md:text-4xl text-text leading-tight max-w-xl">
-          Ready to build<br /><em class="italic text-text-secondary">something robust?</em>
-        </h3>
+      <div class="mt-14 pt-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <p class="text-sm text-text-secondary">
+          Want to talk about a system like these?
+        </p>
         <NuxtLink to="/#contact" class="btn-primary">
-          Discuss your system
+          Get in touch
           <Icon name="lucide:arrow-right" class="w-4 h-4" />
         </NuxtLink>
       </div>
     </div>
   </div>
-
-  <NuxtLink
-    to="/#process"
-    aria-label="Back to process section"
-    title="Back to process"
-    class="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-11 h-11 border-[1.5px] border-ink bg-bg text-text hover:bg-ink hover:text-bg transition-colors"
-  >
-    <Icon name="lucide:arrow-up" class="w-4 h-4" aria-hidden="true" />
-    <span class="sr-only">Back to process</span>
-  </NuxtLink>
 </template>
 
 <script lang="ts" setup>
@@ -931,8 +868,8 @@ const initMermaid = () => {
       lineColor: dark ? '#94a3b8' : '#64748b',
       secondaryColor: dark ? '#0f172a' : '#f1f5f9',
       tertiaryColor: dark ? '#020617' : '#ffffff',
-      fontSize: '14px',
-      fontFamily: '"JetBrains Mono", "SF Mono", monospace',
+      fontSize: '13px',
+      fontFamily: '"Inter", system-ui, sans-serif',
     },
     flowchart: {
       htmlLabels: true,
@@ -977,10 +914,10 @@ watch(() => colorMode.value, async () => {
 :deep(.nodes text),
 :deep(.edgeLabel text),
 :deep(.label text) {
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 500 !important;
   fill: var(--color-text) !important;
-  font-family: "JetBrains Mono", "SF Mono", monospace !important;
+  font-family: "Inter", system-ui, sans-serif !important;
 }
 
 :deep(.edgeLabel) {

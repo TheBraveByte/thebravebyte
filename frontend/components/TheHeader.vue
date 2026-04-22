@@ -1,71 +1,47 @@
 <template>
   <header
-    class="fixed top-0 left-0 right-0 z-50 transition-colors duration-200"
-    :class="[
-      scrolled
-        ? 'bg-bg/95 backdrop-blur-sm border-b-[1.5px] border-ink'
-        : 'bg-transparent',
-    ]"
+    class="sticky top-0 z-50 transition-colors duration-150"
+    :class="scrolled ? 'bg-bg/85 backdrop-blur border-b border-border' : 'bg-bg border-b border-transparent'"
   >
-    <div class="container mx-auto px-6">
-      <div class="flex items-center justify-between h-18 md:h-20">
-        <!-- Wordmark -->
-        <NuxtLink to="/" class="flex items-center gap-3 group">
-          <span
-            class="inline-flex items-center justify-center w-8 h-8 border-[1.5px] border-ink bg-bg font-serif text-lg leading-none pt-0.5"
-          >
-            Y
-          </span>
-          <div class="hidden sm:flex flex-col leading-tight">
-            <span class="font-serif text-[1.05rem] text-text">
-              Yusuf Akinleye
-            </span>
-            <span
-              class="font-mono text-[9.5px] font-medium text-text-muted uppercase tracking-[0.22em] mt-0.5"
-            >
-              Backend / Systems
-            </span>
-          </div>
+    <div class="container-wide">
+      <div class="flex items-center justify-between h-14">
+        <NuxtLink to="/" class="flex items-center gap-2.5 group">
+          <img src="/img/yusuf.jpg" alt="" class="w-7 h-7 rounded-full object-cover" />
+          <span class="text-sm font-medium text-text">Yusuf Akinleye</span>
         </NuxtLink>
 
-        <!-- Desktop Nav -->
-        <nav class="hidden lg:flex items-center gap-10">
+        <nav class="hidden sm:flex items-center gap-6 text-sm">
           <NuxtLink
             v-for="item in navItems"
             :key="item.to"
             :to="item.to"
-            class="nav-link font-mono text-[11px] font-medium tracking-[0.18em] uppercase"
+            class="nav-link text-text-muted hover:text-text transition-colors"
           >
             {{ item.label }}
           </NuxtLink>
         </nav>
 
-        <!-- Actions -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1">
           <button
             @click="toggleTheme"
-            class="w-10 h-10 border-[1.5px] border-ink bg-bg text-text hover:bg-ink hover:text-bg transition-colors flex items-center justify-center"
+            class="w-8 h-8 flex items-center justify-center text-text-muted hover:text-text transition-colors rounded-md"
             aria-label="Toggle theme"
           >
             <Icon :name="themeIcon" class="w-4 h-4" />
           </button>
 
-          <div v-if="isAuthenticated" class="hidden sm:flex items-center gap-2">
-            <NuxtLink to="/admin/dashboard" class="btn-primary py-2! px-4! text-xs!">
-              Dashboard
-            </NuxtLink>
-            <button
-              @click="logout"
-              class="w-10 h-10 border-[1.5px] border-ink bg-bg text-text hover:bg-ink hover:text-bg transition-colors flex items-center justify-center"
-              aria-label="Logout"
-            >
-              <Icon name="lucide:log-out" class="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            v-if="isAuthenticated"
+            @click="logout"
+            class="hidden sm:flex w-8 h-8 items-center justify-center text-text-muted hover:text-error transition-colors rounded-md"
+            aria-label="Logout"
+          >
+            <Icon name="lucide:log-out" class="w-4 h-4" />
+          </button>
 
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="lg:hidden w-10 h-10 border-[1.5px] border-ink bg-bg text-text flex items-center justify-center"
+            class="sm:hidden w-8 h-8 flex items-center justify-center text-text-muted hover:text-text rounded-md"
             aria-label="Toggle menu"
           >
             <Icon :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" class="w-4 h-4" />
@@ -73,40 +49,29 @@
         </div>
       </div>
 
-      <!-- Mobile Menu -->
       <transition name="slide-down">
-        <div
+        <nav
           v-if="mobileMenuOpen"
-          class="lg:hidden py-6 border-t-[1.5px] border-ink bg-bg absolute left-0 right-0 top-full px-6"
+          class="sm:hidden flex flex-col gap-1 pb-4 pt-1"
         >
-          <nav class="flex flex-col gap-1">
-            <NuxtLink
-              v-for="item in navItems"
-              :key="item.to"
-              :to="item.to"
-              @click="mobileMenuOpen = false"
-              class="mobile-nav-link font-mono text-xs tracking-[0.18em] uppercase py-3 border-b border-ink/20"
-            >
-              {{ item.label }}
-            </NuxtLink>
-
-            <template v-if="isAuthenticated">
-              <NuxtLink
-                to="/admin/dashboard"
-                @click="mobileMenuOpen = false"
-                class="mobile-nav-link font-mono text-xs tracking-[0.18em] uppercase py-3 border-b border-ink/20"
-              >
-                Dashboard
-              </NuxtLink>
-              <button
-                @click="logout"
-                class="mobile-nav-link font-mono text-xs tracking-[0.18em] uppercase py-3 text-left"
-              >
-                Logout
-              </button>
-            </template>
-          </nav>
-        </div>
+          <NuxtLink
+            v-for="item in navItems"
+            :key="item.to"
+            :to="item.to"
+            @click="mobileMenuOpen = false"
+            class="py-2 text-sm text-text-secondary hover:text-text transition-colors"
+          >
+            {{ item.label }}
+          </NuxtLink>
+          <NuxtLink
+            v-if="isAuthenticated"
+            to="/admin/dashboard"
+            @click="mobileMenuOpen = false"
+            class="py-2 text-sm text-text-secondary hover:text-text"
+          >
+            Dashboard
+          </NuxtLink>
+        </nav>
       </transition>
     </div>
   </header>
@@ -128,22 +93,18 @@ const themeIcon = computed(() => {
 });
 
 const navItems = [
-  { to: "/", label: "Index" },
-  { to: "/#about", label: "About" },
+  { to: "/", label: "Home" },
   { to: "/#work", label: "Work" },
-  { to: "/process", label: "Process" },
   { to: "/blog", label: "Writing" },
-  { to: "/#contact", label: "Contact" },
+  { to: "/process", label: "Process" },
 ];
 
 const scrolled = ref(false);
-const handleScroll = () => {
-  scrolled.value = window.scrollY > 20;
-};
+const handleScroll = () => { scrolled.value = window.scrollY > 8; };
 
 onMounted(() => {
   hasMounted.value = true;
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll, { passive: true });
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -160,7 +121,6 @@ const logout = async () => {
   await useApiFetch("/auth/logout", { method: "POST" });
   isAuthenticated.value = false;
   await navigateTo("/");
-  mobileMenuOpen.value = false;
 };
 
 onMounted(async () => {
@@ -177,41 +137,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.nav-link {
-  color: var(--color-text-secondary);
-  transition: color 0.15s ease;
-  position: relative;
-  padding: 4px 0;
-}
-.nav-link:hover {
-  color: var(--color-text);
-}
 .nav-link.router-link-active {
   color: var(--color-text);
-}
-.nav-link.router-link-active::after {
-  content: "";
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--color-ink);
-}
-.mobile-nav-link {
-  color: var(--color-text);
-  transition: color 0.15s ease;
-}
-.mobile-nav-link:hover {
-  color: var(--color-text-muted);
+  font-weight: 500;
 }
 .slide-down-enter-active,
 .slide-down-leave-active {
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 .slide-down-enter-from,
 .slide-down-leave-to {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(-4px);
 }
 </style>

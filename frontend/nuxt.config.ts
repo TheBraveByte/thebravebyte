@@ -39,9 +39,8 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      "Instrument Serif": [400],
-      "JetBrains Mono": [400, 500, 600, 700],
-      Inter: [400, 500, 600, 700],
+      Inter: [400, 500, 600],
+      "JetBrains Mono": [400, 500],
     },
     display: "swap",
     prefetch: true,

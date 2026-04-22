@@ -1,11 +1,11 @@
 <template>
   <div class="portfolio-page">
     <PortfolioHero />
-    <PortfolioTestimonials />
     <PortfolioAbout />
     <PortfolioSkills />
-    <PortfolioProcess />
     <PortfolioProjects />
+    <PortfolioProcess />
+    <PortfolioTestimonials />
     <PortfolioContact />
   </div>
 </template>

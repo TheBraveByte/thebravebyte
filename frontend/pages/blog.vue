@@ -1,46 +1,32 @@
 <template>
-  <div class="min-h-screen bg-bg pt-28 md:pt-32 pb-20">
-    <div class="container mx-auto px-6 max-w-4xl">
-      <!-- Header -->
-      <header class="mb-16 pb-6 border-b-[1.5px] border-ink">
-        <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] mb-3">
-          § Archive / Writing
-        </p>
-        <h1 class="font-serif text-5xl md:text-7xl text-text leading-[0.95] mb-6">
-          Notes on <em class="italic text-text-secondary">backend</em><br />engineering.
-        </h1>
-        <p class="font-sans text-[15px] text-text-secondary leading-relaxed max-w-xl">
-          Field notes on distributed systems, Go concurrency, database
-          internals, and the trade-offs behind production software. Long
-          pieces live on Hashnode; this page mirrors them.
+  <div class="pt-16 md:pt-20 pb-16">
+    <div class="container">
+      <header class="mb-10">
+        <h1 class="text-xl font-semibold text-text mb-2">Writing</h1>
+        <p class="text-[15px] text-text-secondary leading-[1.65]">
+          Notes on backend engineering, Go concurrency, and systems design.
         </p>
       </header>
 
-      <!-- Filters -->
-      <nav class="mb-12 border-y-[1.5px] border-ink">
-        <div class="flex gap-0 overflow-x-auto hide-scrollbar">
-          <button
-            v-for="(cat, i) in categories"
-            :key="cat"
-            @click="selectedCategory = cat"
-            :class="[
-              'whitespace-nowrap px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] transition-colors',
-              i < categories.length - 1 ? 'border-r-[1.5px] border-ink' : '',
-              selectedCategory === cat
-                ? 'bg-ink text-bg'
-                : 'bg-bg text-text-muted hover:text-text hover:bg-bg-secondary',
-            ]"
-          >
-            {{ cat }}
-          </button>
-        </div>
+      <nav class="flex gap-4 mb-8 pb-3 border-b border-border overflow-x-auto hide-scrollbar">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          @click="selectedCategory = cat"
+          :class="[
+            'shrink-0 text-sm transition-colors',
+            selectedCategory === cat
+              ? 'text-text font-medium'
+              : 'text-text-muted hover:text-text',
+          ]"
+        >
+          {{ cat }}
+        </button>
       </nav>
 
-      <div v-if="loading" class="py-12 font-mono text-xs text-text-muted uppercase tracking-[0.22em]">
-        Loading archive…
-      </div>
+      <div v-if="loading" class="py-8 text-sm text-text-muted">Loading…</div>
 
-      <ul v-else class="border-t-[1.5px] border-ink divide-y-[1.5px] divide-ink">
+      <ul v-else class="divide-y divide-border">
         <template
           v-for="(article, index) in filteredArticles"
           :key="article?._id || article?.slug || `idx-${index}`"
@@ -49,74 +35,60 @@
             <NuxtLink
               v-if="!article?.isExternal"
               :to="`/article/${article.slug}`"
-              class="article-row group flex flex-col md:flex-row md:items-baseline md:gap-6 py-6 hover:bg-bg-secondary transition-colors px-3 -mx-3"
+              class="block py-4 group"
             >
-              <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] md:w-36 shrink-0 mb-2 md:mb-0">
-                {{ formatDate(article.createdAt) }}
-              </span>
-              <div class="flex-1">
-                <h2 class="font-serif text-2xl text-text leading-snug mb-2 group-hover:italic transition-all">
+              <div class="flex items-baseline justify-between gap-4 mb-1">
+                <h2 class="text-[15px] font-medium text-text group-hover:underline underline-offset-3">
                   {{ article.title }}
                 </h2>
-                <p class="font-sans text-sm text-text-secondary leading-relaxed line-clamp-2 max-w-2xl">
-                  {{ article.excerpt }}
-                </p>
+                <span class="text-xs text-text-muted shrink-0 tabular-nums">
+                  {{ formatDate(article.createdAt) }}
+                </span>
               </div>
-              <span class="hidden md:inline font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] ml-4 shrink-0">
-                {{ article.readTime || '5 min' }} →
-              </span>
+              <p class="text-sm text-text-secondary leading-[1.6] line-clamp-2">
+                {{ article.excerpt }}
+              </p>
             </NuxtLink>
 
             <a
-              v-else-if="article?.isExternal"
+              v-else
               :href="article.externalUrl"
               target="_blank"
               rel="noopener noreferrer"
-              class="article-row group flex flex-col md:flex-row md:items-baseline md:gap-6 py-6 hover:bg-bg-secondary transition-colors px-3 -mx-3"
+              class="block py-4 group"
             >
-              <span class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] md:w-36 shrink-0 mb-2 md:mb-0">
-                {{ article.date || formatDate(article.createdAt) }}
-              </span>
-              <div class="flex-1">
-                <h2 class="font-serif text-2xl text-text leading-snug mb-2 group-hover:italic transition-all flex items-baseline gap-2 flex-wrap">
-                  <span>{{ article.title }}</span>
-                  <Icon name="lucide:arrow-up-right" class="w-4 h-4 text-text-muted" />
+              <div class="flex items-baseline justify-between gap-4 mb-1">
+                <h2 class="text-[15px] font-medium text-text group-hover:underline underline-offset-3 inline-flex items-center gap-1.5">
+                  {{ article.title }}
+                  <Icon name="lucide:arrow-up-right" class="w-3.5 h-3.5 text-text-muted" />
                 </h2>
-                <p class="font-sans text-sm text-text-secondary leading-relaxed line-clamp-2 max-w-2xl">
-                  {{ article.excerpt }}
-                </p>
+                <span class="text-xs text-text-muted shrink-0 tabular-nums">
+                  {{ article.date || formatDate(article.createdAt) }}
+                </span>
               </div>
-              <span class="hidden md:inline font-mono text-[10px] text-text-muted uppercase tracking-[0.22em] ml-4 shrink-0">
-                {{ article.readTime || '5 min' }}
-              </span>
+              <p class="text-sm text-text-secondary leading-[1.6] line-clamp-2">
+                {{ article.excerpt }}
+              </p>
             </a>
           </li>
         </template>
 
-        <li v-if="filteredArticles.length === 0" class="py-16">
-          <p class="font-mono text-xs text-text-muted uppercase tracking-[0.22em]">
-            — No entries in this category.
-          </p>
+        <li v-if="!loading && filteredArticles.length === 0" class="py-8">
+          <p class="text-sm text-text-muted">No articles in this category yet.</p>
         </li>
       </ul>
 
-      <div class="mt-16 pt-8 border-t-[1.5px] border-ink flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <p class="font-mono text-[10px] text-text-muted uppercase tracking-[0.22em]">
-          More on
-          <a
-            href="https://ayaacodes.hashnode.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-text underline underline-offset-4 decoration-[1.5px]"
-          >
-            Hashnode ↗
-          </a>
-        </p>
-        <NuxtLink to="/#contact" class="btn-secondary py-2! px-4! text-xs!">
-          Say hello
-          <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
-        </NuxtLink>
-      </div>
+      <p class="mt-10 pt-6 border-t border-border text-sm text-text-muted">
+        More writing on
+        <a
+          href="https://ayaacodes.hashnode.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-text prose-link"
+        >
+          Hashnode
+        </a>.
+      </p>
     </div>
   </div>
 </template>
@@ -128,12 +100,12 @@ const config = useRuntimeConfig();
 const { data: apiData, pending: loading } = await useFetch(`${config.public.apiBase}/articles`);
 
 const externalArticles = [
-  { title: "Understanding Fan-Out Concurrency Pattern in Go", excerpt: "The Fan-Out Pattern involves a single producer distributing tasks to multiple workers, enabling parallel processing for efficiency and scalability.", date: "Mar 7, 2025", slug: "fan-out-concurrency-pattern", readTime: "7 min", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go", isExternal: true },
-  { title: "Concurrency Patterns in Go: Wait for Results", excerpt: "Learn about the Wait for Results pattern using sync.WaitGroup with real-world exam invigilation examples.", date: "Feb 13, 2025", slug: "wait-for-results-pattern", readTime: "4 min", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/concurrency-patterns-in-go-wait-for-results", isExternal: true },
-  { title: "Concurrency Patterns in Go: A Practical Guide", excerpt: "Explore how Go makes concurrency possible, elegant and efficient. Learn about goroutines, channels, and synchronization primitives.", date: "Jan 30, 2025", slug: "concurrency-patterns-practical-guide", readTime: "5 min", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/concurrency-patterns-in-go-a-practical-guide", isExternal: true },
-  { title: "Creating a Scalable API with Go, Gin, and MongoDB II", excerpt: "Setting handlers for user requests, creating routes for API endpoints, and establishing a secure dashboard endpoint.", date: "Mar 28, 2023", slug: "scalable-api-go-gin-mongodb-2", readTime: "18 min", category: "Backend", externalUrl: "https://ayaacodes.hashnode.dev/creating-a-scalable-api-with-go-gin-and-mongodb-ii", isExternal: true },
-  { title: "Merging Maps in Go: A Step-by-Step Guide", excerpt: "Learn the basics of data type declaration and appropriate usage of maps using generics features for added flexibility.", date: "Feb 8, 2023", slug: "merging-maps-go", readTime: "6 min", category: "Go Fundamentals", externalUrl: "https://ayaacodes.hashnode.dev/merging-maps-in-go-a-step-by-step-guide", isExternal: true },
-  { title: "Creating a Scalable API with Go, Gin, and MongoDB Atlas", excerpt: "Set up a project with the Gin framework, create a structured model, and integrate MongoDB Atlas.", date: "Feb 8, 2023", slug: "scalable-api-go-gin-mongodb", readTime: "15 min", category: "Backend", externalUrl: "https://ayaacodes.hashnode.dev/creating-a-scalable-api-with-go-gin-and-mongodb-atlas", isExternal: true },
+  { title: "Understanding Fan-Out Concurrency Pattern in Go", excerpt: "A single producer distributes tasks to multiple workers for parallel processing. Practical examples included.", date: "Mar 7, 2025", slug: "fan-out-concurrency-pattern", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go", isExternal: true },
+  { title: "Concurrency Patterns in Go: Wait for Results", excerpt: "The Wait for Results pattern using sync.WaitGroup, with a real-world exam invigilation example.", date: "Feb 13, 2025", slug: "wait-for-results-pattern", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/concurrency-patterns-in-go-wait-for-results", isExternal: true },
+  { title: "Concurrency Patterns in Go: A Practical Guide", excerpt: "Goroutines, channels, and synchronization primitives — what they are and when to use them.", date: "Jan 30, 2025", slug: "concurrency-patterns-practical-guide", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/concurrency-patterns-in-go-a-practical-guide", isExternal: true },
+  { title: "Creating a Scalable API with Go, Gin, and MongoDB II", excerpt: "Handlers, routes, sign-up and sign-in, and a secure dashboard endpoint.", date: "Mar 28, 2023", slug: "scalable-api-go-gin-mongodb-2", category: "Backend", externalUrl: "https://ayaacodes.hashnode.dev/creating-a-scalable-api-with-go-gin-and-mongodb-ii", isExternal: true },
+  { title: "Merging Maps in Go: A Step-by-Step Guide", excerpt: "Using generics to merge maps cleanly in Go.", date: "Feb 8, 2023", slug: "merging-maps-go", category: "Go Fundamentals", externalUrl: "https://ayaacodes.hashnode.dev/merging-maps-in-go-a-step-by-step-guide", isExternal: true },
+  { title: "Creating a Scalable API with Go, Gin, and MongoDB Atlas", excerpt: "Project setup with Gin, structured models, and MongoDB Atlas integration.", date: "Feb 8, 2023", slug: "scalable-api-go-gin-mongodb", category: "Backend", externalUrl: "https://ayaacodes.hashnode.dev/creating-a-scalable-api-with-go-gin-and-mongodb-atlas", isExternal: true },
 ];
 
 const selectedCategory = ref('All');
@@ -166,9 +138,7 @@ const filteredArticles = computed(() => {
 
 const formatDate = (date: string | Date) => {
   if (!date) return '';
-  return new Date(date)
-    .toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
-    .toUpperCase();
+  return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 </script>
 
@@ -179,4 +149,5 @@ const formatDate = (date: string | Date) => {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.underline-offset-3 { text-underline-offset: 3px; }
 </style>
