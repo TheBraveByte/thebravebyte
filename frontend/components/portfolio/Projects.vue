@@ -1,6 +1,9 @@
 <template>
   <section id="work" class="py-10">
     <div class="container">
+      <p class="text-sm text-text-muted mb-6">
+        Six systems I've built, two still in flight. Stack tells the rest.
+      </p>
       <ul class="divide-y divide-border">
         <li
           v-for="p in projects"
@@ -51,9 +54,9 @@ const projects: Project[] = [
   {
     id: 1,
     title: "RIXL",
-    year: "2024",
+    year: "2025",
     description:
-      "Usage-based billing pipeline on Stripe Meters for a media optimization platform. Idempotent writes, nightly reconciliation, zero revenue leakage.",
+      "Usage-based billing pipeline on Stripe Meters for a media platform. Idempotent writes and nightly reconciliation against Stripe keep the ledger consistent.",
     tags: ["Go", "Stripe", "Cloudflare"],
     href: "https://docs.rixl.com",
   },
@@ -69,31 +72,31 @@ const projects: Project[] = [
   {
     id: 3,
     title: "OmonAI",
-    year: "2024",
+    year: "2025",
     description:
-      "Ten-feature ML model for behavioral fraud scoring. Sub-50ms inference, 60% drop in false positives.",
+      "Behavioural fraud scoring with a ten-feature model, served behind a FastAPI/TensorFlow microservice that scales independently of the core API.",
     tags: ["Python", "TensorFlow", "FastAPI"],
   },
   {
     id: 4,
     title: "BiTraq",
-    year: "2023",
+    year: "2025",
     description:
-      "Real-time crypto arbitrage across 10+ exchanges. Fan-out and fan-in workers cap latency at 300ms worst case.",
+      "Real-time crypto arbitrage across 10+ exchanges. Fan-out/fan-in workers fetch quotes concurrently, so total latency tracks the slowest exchange rather than their sum.",
     tags: ["Go", "Redis", "gRPC"],
   },
   {
     id: 5,
     title: "Unified Campus",
-    year: "2023",
+    year: "2025",
     description:
-      "Multi-tenant attendance platform with hierarchical tenants and immutable audit logs. Cleared enterprise security review.",
+      "Multi-tenant attendance platform with hierarchical tenants, PostgreSQL row-level security, and immutable audit logs.",
     tags: ["PostgreSQL", "RLS", "Audit"],
   },
   {
     id: 6,
     title: "Forex Bot",
-    year: "2023",
+    year: "2025",
     description:
       "Subscription and payments embedded in Telegram. 250+ cryptos via NOWPayments, card rails via Stripe.",
     tags: ["Telegram", "Webhooks", "Security"],

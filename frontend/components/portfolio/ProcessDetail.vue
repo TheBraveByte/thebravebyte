@@ -600,17 +600,17 @@ const fraudDetectionDiagram = computed(() => {
 const sections = computed(() => [
   {
     title: 'Distributed Job Processing',
-    description: 'In BiTraq (crypto arbitrage platform), synchronous processing of price alerts, wallet syncing, and notification delivery would block the trading API, causing users to miss time-sensitive arbitrage windows. I decoupled these into persistent background queues, ensuring the main API responds in <50ms even under 10x traffic spikes.',
+    description: 'In BiTraq (crypto arbitrage platform), synchronous processing of price alerts, wallet syncing, and notification delivery would block the trading API, causing users to miss time-sensitive arbitrage windows. I decoupled these into persistent background queues so the API stays responsive under load while the work happens out of band.',
     features: [
       {
         title: 'Problem Solved',
         icon: 'lucide:target',
-        items: ['<strong>Business Need:</strong> Traders need instant alert delivery for fleeting arbitrage opportunities', '<strong>Technical Challenge:</strong> Synchronous processing caused 3-5s API timeouts during peak hours', '<strong>Trade-off:</strong> Eventual consistency for non-critical paths vs. immediate consistency for trades']
+        items: ['<strong>Business Need:</strong> Traders need instant alert delivery for fleeting arbitrage opportunities', '<strong>Technical Challenge:</strong> Synchronous processing tied request latency to slow downstream work during peak hours', '<strong>Trade-off:</strong> Eventual consistency for non-critical paths vs. immediate consistency for trades']
       },
       {
         title: 'Architecture Decision',
         icon: 'lucide:lightbulb',
-        items: ['Durable job queues with at-least-once delivery guarantees', 'Worker pool auto-scaling based on queue depth', 'Dead letter queues for failed jobs with exponential backoff', '<strong>Impact:</strong> 99.9% alert delivery rate, API latency reduced from 3s to <50ms']
+        items: ['Durable job queues with at-least-once delivery guarantees', 'Worker pool sized against queue depth', 'Dead letter queues for failed jobs with exponential backoff', '<strong>Impact:</strong> alert and sync work moved off the request path, so API latency no longer depends on it']
       }
     ],
     diagram: jobProcessingDiagram.value,
@@ -657,34 +657,34 @@ func (wp *WorkerPool) Run() {
   },
   {
     title: 'Concurrency Patterns',
-    description: 'In BiTraq\'s arbitrage engine, we fetch prices from 10+ exchanges simultaneously. Sequential fetching would take 5-10 seconds. By then, arbitrage windows close. Using Fan-Out/Fan-In, total latency equals only the slowest exchange (~300ms), capturing opportunities that competitors miss.',
+    description: 'In BiTraq\'s arbitrage engine, prices are fetched from 10+ exchanges at once. Fetching them sequentially adds up the latency of every exchange, and by then the arbitrage window has closed. Using Fan-Out/Fan-In, total latency tracks only the slowest exchange instead of the sum.',
     features: [
       {
         title: 'Why This Pattern?',
         icon: 'lucide:target',
-        items: ['<strong>Business Context:</strong> Arbitrage windows last 200-500ms; speed is revenue', '<strong>The Problem:</strong> Sequential API calls = 10 exchanges × 500ms = 5s total latency', '<strong>Trade-off:</strong> Higher memory usage for concurrent goroutines vs. capturing 98.5% of opportunities']
+        items: ['<strong>Business Context:</strong> Arbitrage windows are short-lived; speed is revenue', '<strong>The Problem:</strong> Sequential calls sum the latency of every exchange', '<strong>Trade-off:</strong> More concurrent goroutines and memory vs. catching more windows before they close']
       },
       {
         title: 'Engineering Decision',
         icon: 'lucide:zap',
-        items: ['Fan-out to N workers, fan-in via buffered channels', 'Context-based cancellation for graceful timeout handling', 'Per-exchange circuit breakers to isolate failures', '<strong>Result:</strong> Latency reduced from 5s → max(T) = 300ms, 98.5% opportunity capture rate']
+        items: ['Fan-out to N workers, fan-in via buffered channels', 'Context-based cancellation for graceful timeout handling', 'Per-exchange circuit breakers to isolate failures', '<strong>Result:</strong> total latency bounded by the slowest exchange, not the sum of all of them']
       }
     ],
     diagram: concurrencyDiagram.value
   },
   {
     title: 'AI Fraud Detection',
-    description: 'For OmonAI (AML compliance platform), financial institutions needed real-time fraud detection without blocking legitimate transactions. Rule-based systems had 40% false positives, frustrating genuine customers. Our 10-dimensional ML model (CiferAI) analyzes behavioral patterns in <50ms, blocking sophisticated fraud while reducing false positives by 60%.',
+    description: 'For OmonAI (AML compliance platform), financial institutions needed real-time fraud detection without blocking legitimate transactions. Rule-based systems flag too many genuine customers. A ten-feature ML model scores behavioural patterns and returns its contributing factors, so a decision can be explained rather than just asserted.',
     features: [
       {
         title: 'Business Problem',
         icon: 'lucide:target',
-        items: ['<strong>Who:</strong> Financial institutions losing $50K+/month to fraud and chargebacks', '<strong>Challenge:</strong> Rule-based detection blocked 40% legitimate high-value transactions', '<strong>Trade-off:</strong> Model complexity vs. inference latency; chose lightweight TensorFlow for <50ms response']
+        items: ['<strong>Who:</strong> Financial institutions exposed to fraud and chargebacks', '<strong>Challenge:</strong> Rule-based detection blocks legitimate high-value transactions', '<strong>Trade-off:</strong> Model complexity vs. inference latency; chose a lightweight model kept off the request path']
       },
       {
         title: 'Technical Approach',
         icon: 'lucide:brain-circuit',
-        items: ['<strong>Model:</strong> CiferAI 10-feature vector analysis (amount, balance deltas, account age, velocity)', '<strong>Stack:</strong> Python FastAPI + TensorFlow, Go orchestration layer', '<strong>Architecture:</strong> Separate ML microservice for independent scaling', '<strong>Impact:</strong> 60% reduction in false positives, <50ms latency, $30K/month fraud prevented']
+        items: ['<strong>Model:</strong> 10-feature vector analysis (amount, balance deltas, account age, velocity)', '<strong>Stack:</strong> Python FastAPI + TensorFlow, Go orchestration layer', '<strong>Architecture:</strong> Separate ML microservice for independent scaling', '<strong>Explainability:</strong> scores return contributing factors, with thresholds for allow / review / block']
       }
     ],
     diagram: fraudDetectionDiagram.value,
@@ -733,24 +733,24 @@ async def predict(tx: TransactionFeatures):
   },
   {
     title: 'Production Systems',
-    description: 'Eazyfit connects fashion customers with verified designers in Nigeria. A monolithic architecture meant chat traffic surges during peak hours degraded checkout reliability. I isolated Chat, Payments, and Core into separate domains, so a 10x chat spike no longer affects payment success rates. This modular design helped secure $5K pre-seed funding.',
+    description: 'Eazyfit connects fashion customers with verified designers in Nigeria. A single monolith meant chat traffic surges during peak hours could degrade checkout reliability. I isolated Chat, Payments, and Core into separate domains so a spike in chat no longer touches the payment path. This modular design helped secure $5K pre-seed funding.',
     features: [
       {
         title: 'Business Context',
         icon: 'lucide:target',
-        items: ['<strong>Users:</strong> Fashion-conscious customers seeking personalized styling services', '<strong>Problem:</strong> Peak chat load (order discussions) was crashing checkout flow', '<strong>Trade-off:</strong> Operational complexity of multiple services vs. independent scaling and fault isolation']
+        items: ['<strong>Users:</strong> Fashion-conscious customers seeking personalized styling services', '<strong>Problem:</strong> Peak chat load (order discussions) contended with the checkout flow', '<strong>Trade-off:</strong> Operational complexity of multiple services vs. independent scaling and fault isolation']
       },
       {
         title: 'Architecture Decisions',
         icon: 'lucide:check-circle',
-        items: ['<strong>Domain Isolation:</strong> Chat (WebSocket), Payments (Paystack), Core (Orders/Users)', '<strong>AI Monitoring:</strong> Real-time content moderation to prevent off-platform transactions', '<strong>Impact:</strong> 99.99% uptime, payment success unaffected by chat load, won Ilorin Innovation Challenge']
+        items: ['<strong>Domain Isolation:</strong> Chat (WebSocket), Payments (Paystack), Core (Orders/Users)', '<strong>AI Monitoring:</strong> Real-time content moderation to prevent off-platform transactions', '<strong>Outcome:</strong> chat load isolated from payments; won the Ilorin Innovation Challenge']
       }
     ],
     diagram: eazyfitDiagram.value
   },
   {
     title: 'Usage-Based Billing',
-    description: 'For RIXL (a media optimization platform with global edge delivery), traditional seat-based pricing did not fit. Customers pay for what they use: storage, bandwidth, transcoding. I designed an idempotent webhook system with nightly reconciliation against Stripe Meters. This ensures zero revenue leakage even during payment network failures.',
+    description: 'For RIXL (a media platform with global edge delivery), traditional seat-based pricing did not fit. Customers pay for what they use: storage, bandwidth, transcoding. I designed an idempotent webhook system with nightly reconciliation against Stripe Meters, so retries and transient payment-network failures do not double-count or drop usage.',
     features: [
       {
         title: 'Business Model',
@@ -760,7 +760,7 @@ async def predict(tx: TransactionFeatures):
       {
         title: 'Engineering Approach',
         icon: 'lucide:check-circle',
-        items: ['<strong>Metrics Tracked:</strong> Uploads, transcoding minutes, storage GB/month, bandwidth GB', '<strong>Aggregation:</strong> Background jobs snapshot usage every hour, report to Stripe Meters', '<strong>Reconciliation:</strong> Nightly jobs compare internal ledger with Stripe to catch discrepancies', '<strong>Result:</strong> 100% billing accuracy, zero disputes, seamless Stripe integration']
+        items: ['<strong>Metrics Tracked:</strong> Uploads, transcoding minutes, storage GB/month, bandwidth GB', '<strong>Aggregation:</strong> Background jobs snapshot usage every hour, report to Stripe Meters', '<strong>Reconciliation:</strong> Nightly jobs compare the internal ledger with Stripe to catch discrepancies', '<strong>Result:</strong> the internal ledger and Stripe stay reconciled, with retries handled idempotently']
       }
     ],
     diagram: billingDiagram.value
@@ -777,14 +777,14 @@ async def predict(tx: TransactionFeatures):
       {
         title: 'Design Decisions',
         icon: 'lucide:building-2',
-        items: ['<strong>Tenant Model:</strong> Organization ID in every query, PostgreSQL RLS for enforcement', '<strong>Hierarchy:</strong> Parent-child relationships (School → Faculty → Department → Class)', '<strong>Audit Trail:</strong> Immutable event log for every state change (passed enterprise security audits)', '<strong>RBAC:</strong> Super Admin → Org Admin → Department Admin → User cascade']
+        items: ['<strong>Tenant Model:</strong> Organization ID in every query, PostgreSQL RLS for enforcement', '<strong>Hierarchy:</strong> Parent-child relationships (School → Faculty → Department → Class)', '<strong>Audit Trail:</strong> Immutable event log for every state change', '<strong>RBAC:</strong> Super Admin → Org Admin → Department Admin → User cascade']
       }
     ],
     diagram: multiTenantDiagram.value
   },
   {
     title: 'Clean Architecture',
-    description: 'Across all my projects, I apply package-oriented design: Handlers (HTTP), Services (business logic), Repositories (data access). This is not academic. It enables testing business logic without databases, swapping Stripe for PayStack without touching services, and onboarding new developers in days, not weeks.',
+    description: 'Across all my projects, I apply package-oriented design: Handlers (HTTP), Services (business logic), Repositories (data access). This is not academic. It lets me test business logic without a database, swap Stripe for Paystack without touching services, and keep boundaries clear enough for new developers to find their way around.',
     features: [
       {
         title: 'Why This Structure?',
@@ -794,7 +794,7 @@ async def predict(tx: TransactionFeatures):
       {
         title: 'Practical Benefits',
         icon: 'lucide:check-circle',
-        items: ['<strong>Testability:</strong> Mock repository interface to test service logic without DB', '<strong>Flexibility:</strong> Swap MongoDB for PostgreSQL by implementing same Repository interface', '<strong>Maintainability:</strong> New team members understand boundaries immediately', '<strong>Result:</strong> 80%+ code coverage achievable, confident deployments']
+        items: ['<strong>Testability:</strong> Mock repository interface to test service logic without DB', '<strong>Flexibility:</strong> Swap MongoDB for PostgreSQL by implementing same Repository interface', '<strong>Maintainability:</strong> New team members understand boundaries immediately', '<strong>Result:</strong> business logic is unit-testable in isolation, so deploys are lower-risk']
       }
     ],
     diagram: architectureDiagram.value
@@ -806,12 +806,12 @@ async def predict(tx: TransactionFeatures):
       {
         title: 'Business Problem',
         icon: 'lucide:target',
-        items: ['<strong>Users:</strong> Forex traders wanting premium signals via Telegram', '<strong>Challenge:</strong> External payment pages caused 70% checkout abandonment', '<strong>Trade-off:</strong> Telegram UI limitations vs. zero-friction in-app payments']
+        items: ['<strong>Users:</strong> Forex traders wanting premium signals via Telegram', '<strong>Challenge:</strong> Sending users to external payment pages adds friction and drops conversions', '<strong>Trade-off:</strong> Telegram UI limitations vs. zero-friction in-app payments']
       },
       {
         title: 'Technical Decisions',
         icon: 'lucide:check-circle',
-        items: ['<strong>Multi-Gateway:</strong> NOWPayments (250+ cryptos) + Stripe/Paystack (cards)', '<strong>Session State:</strong> Redis-backed conversation state for multi-step payment flows', '<strong>Webhook Security:</strong> Signature verification + idempotent processing', '<strong>Impact:</strong> Checkout completion increased from 30% to 85%']
+        items: ['<strong>Multi-Gateway:</strong> NOWPayments (250+ cryptos) + Stripe/Paystack (cards)', '<strong>Session State:</strong> Redis-backed conversation state for multi-step payment flows', '<strong>Webhook Security:</strong> Signature verification + idempotent processing', '<strong>Impact:</strong> the whole subscribe-and-pay flow stays inside Telegram, with no external checkout page']
       }
     ],
     diagram: telegramBotDiagram.value,
