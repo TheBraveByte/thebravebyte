@@ -24,7 +24,7 @@
               </a>
               <template v-else>{{ p.title }}</template>
             </h3>
-            <span class="text-xs text-text-muted tabular-nums shrink-0">{{ p.year }}</span>
+            <span class="font-mono text-xs text-text-muted tabular-nums shrink-0">{{ p.year }}</span>
           </div>
           <p class="text-[14px] text-text-secondary leading-[1.6] mb-2.5 transition-colors group-hover:text-text">
             {{ p.description }}
