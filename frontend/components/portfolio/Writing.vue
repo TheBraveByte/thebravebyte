@@ -19,7 +19,7 @@
               {{ featured.title }}
               <Icon name="lucide:arrow-up-right" class="w-4 h-4 text-text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </h3>
-            <span class="text-xs text-text-muted shrink-0 tabular-nums mt-1">
+            <span class="font-mono text-xs text-text-muted shrink-0 tabular-nums mt-1">
               {{ featured.date || formatDate(featured.createdAt) }}
             </span>
           </div>
@@ -37,7 +37,7 @@
             <h3 class="text-[17px] font-semibold text-text leading-snug group-hover:underline underline-offset-4 decoration-border group-hover:decoration-text">
               {{ featured.title }}
             </h3>
-            <span class="text-xs text-text-muted shrink-0 tabular-nums mt-1">
+            <span class="font-mono text-xs text-text-muted shrink-0 tabular-nums mt-1">
               {{ formatDate(featured.createdAt) }}
             </span>
           </div>
@@ -60,7 +60,7 @@
                 <span class="truncate">{{ a.title }}</span>
                 <Icon name="lucide:arrow-up-right" class="w-3 h-3 text-text-muted shrink-0" />
               </span>
-              <span class="text-xs text-text-muted shrink-0 tabular-nums">
+              <span class="font-mono text-xs text-text-muted shrink-0 tabular-nums">
                 {{ a.date || formatDate(a.createdAt) }}
               </span>
             </a>
@@ -72,7 +72,7 @@
               <span class="text-[14px] text-text min-w-0 truncate group-hover:underline underline-offset-3 decoration-border group-hover:decoration-text">
                 {{ a.title }}
               </span>
-              <span class="text-xs text-text-muted shrink-0 tabular-nums">
+              <span class="font-mono text-xs text-text-muted shrink-0 tabular-nums">
                 {{ formatDate(a.createdAt) }}
               </span>
             </NuxtLink>
