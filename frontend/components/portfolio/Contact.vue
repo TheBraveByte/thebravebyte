@@ -2,7 +2,7 @@
   <section id="contact" class="py-10">
     <div class="container">
       <p class="text-[15px] text-text-secondary leading-[1.7] mb-5">
-        Best reached by email. I read everything and reply within a day.
+        Best reached by email, or find me here.
       </p>
 
       <ul class="space-y-2 text-[15px]">

@@ -36,6 +36,14 @@
           </div>
         </li>
       </ul>
+
+      <NuxtLink
+        to="/process"
+        class="mt-6 inline-flex items-center gap-1.5 text-sm text-text prose-link group"
+      >
+        Architecture notes
+        <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+      </NuxtLink>
     </div>
   </section>
 </template>
