@@ -5,9 +5,12 @@
   >
     <div class="container-wide">
       <div class="flex items-center justify-between h-14">
-        <NuxtLink to="/" class="flex items-center gap-2.5 group">
-          <img src="/img/yusuf.jpg" alt="" class="w-7 h-7 rounded-full object-cover" />
-          <span class="text-sm font-medium text-text">Yusuf Akinleye</span>
+        <NuxtLink
+          to="/"
+          class="inline-flex items-baseline text-[15px] font-semibold text-text tracking-tight hover:opacity-80 transition-opacity"
+          aria-label="Yusuf Akinleye — home"
+        >
+          ya<span class="text-text-muted">.</span>
         </NuxtLink>
 
         <nav class="hidden sm:flex items-center gap-6 text-sm">
@@ -93,10 +96,10 @@ const themeIcon = computed(() => {
 });
 
 const navItems = [
-  { to: "/", label: "Home" },
-  { to: "/#work", label: "Work" },
-  { to: "/blog", label: "Writing" },
-  { to: "/process", label: "Process" },
+  { to: "/#work", label: "work" },
+  { to: "/blog", label: "writing" },
+  { to: "/process", label: "process" },
+  { to: "/#contact", label: "contact" },
 ];
 
 const scrolled = ref(false);

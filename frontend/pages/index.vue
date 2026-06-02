@@ -2,11 +2,8 @@
   <div class="portfolio-page">
     <PortfolioHero />
     <div data-reveal><PortfolioAbout /></div>
-    <div data-reveal><PortfolioSkills /></div>
     <div data-reveal><PortfolioProjects /></div>
-    <div data-reveal><PortfolioProcess /></div>
     <div data-reveal><PortfolioWriting /></div>
-    <div data-reveal><PortfolioTestimonials /></div>
     <div data-reveal><PortfolioContact /></div>
   </div>
 </template>
@@ -20,10 +17,10 @@
 const config = useRuntimeConfig();
 
 useSeoMeta({
-  title: 'Yusuf Akinleye | Software Engineer & Backend Architect',
-  ogTitle: 'Yusuf Akinleye | Software Engineer & Backend Architect',
-  description: 'Portfolio of Yusuf Akinleye (The Brave Byte). Specializing in high-performance backend systems, distributed architectures, Go, and Python.',
-  ogDescription: 'Portfolio of Yusuf Akinleye (The Brave Byte). Specializing in high-performance backend systems, distributed architectures, Go, and Python.',
+  title: 'Yusuf Akinleye | Backend Engineer',
+  ogTitle: 'Yusuf Akinleye | Backend Engineer',
+  description: 'Yusuf Akinleye (The Brave Byte) — backend engineer building APIs and distributed systems in Go and Python.',
+  ogDescription: 'Yusuf Akinleye (The Brave Byte) — backend engineer building APIs and distributed systems in Go and Python.',
   ogImage: `${config.public.siteUrl}/og-image.jpg`,
   twitterCard: 'summary_large_image',
   twitterImage: `${config.public.siteUrl}/og-image.jpg`,
