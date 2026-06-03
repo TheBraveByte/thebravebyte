@@ -20,27 +20,25 @@ const props = defineProps({
 
 const container = ref<HTMLElement | null>(null);
 
-// Configure marked
+// Configure marked. In marked v8+ custom renderers must be registered via
+// use({ renderer }) — passing `renderer` to parse() is no longer honored.
 marked.use(mangle());
 marked.use(gfmHeadingId());
-
-const renderer = new marked.Renderer();
-
-// Custom code block renderer for mermaid and highlighting
-renderer.code = function ({ text, lang, escaped }) {
-  if (lang === 'mermaid') {
-    return `<pre class="mermaid">${text}</pre>`;
-  }
-  
-  const validLanguage = lang && hljs.getLanguage(lang) ? lang : 'plaintext';
-  const highlighted = hljs.highlight(text, { language: validLanguage }).value;
-  
-  return `<pre><code class="hljs language-${validLanguage}">${highlighted}</code></pre>`;
-};
-
-const renderedHtml = computed(() => {
-  return marked.parse(props.content, { renderer });
+marked.use({
+  renderer: {
+    // Custom code block renderer for mermaid and syntax highlighting
+    code({ text, lang }) {
+      if (lang === 'mermaid') {
+        return `<pre class="mermaid">${text}</pre>`;
+      }
+      const validLanguage = lang && hljs.getLanguage(lang) ? lang : 'plaintext';
+      const highlighted = hljs.highlight(text, { language: validLanguage }).value;
+      return `<pre><code class="hljs language-${validLanguage}">${highlighted}</code></pre>`;
+    },
+  },
 });
+
+const renderedHtml = computed(() => marked.parse(props.content) as string);
 
 const colorMode = useColorMode();
 
