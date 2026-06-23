@@ -3,8 +3,9 @@
     class="sticky top-0 z-50 transition-colors duration-150"
     :class="scrolled ? 'bg-bg/85 backdrop-blur border-b border-border' : 'bg-bg border-b border-transparent'"
   >
-    <div class="container-wide">
+    <CollapsibleRoot v-model:open="mobileMenuOpen" class="container-wide">
       <div class="flex items-center justify-between h-14">
+        <!-- Logo -->
         <NuxtLink
           to="/"
           class="inline-flex items-baseline text-[15px] font-semibold text-text tracking-tight hover:opacity-80 transition-opacity"
@@ -13,6 +14,7 @@
           ya<span class="text-text-muted">.</span>
         </NuxtLink>
 
+        <!-- Desktop nav -->
         <nav class="hidden sm:flex items-center gap-6 text-sm">
           <NuxtLink
             v-for="item in navItems"
@@ -24,7 +26,20 @@
           </NuxtLink>
         </nav>
 
+        <!-- Right controls -->
         <div class="flex items-center gap-1">
+          <!-- Search / Command Palette trigger -->
+          <button
+            @click="$emit('open-palette')"
+            class="hidden sm:flex items-center gap-2 px-2.5 py-1.5 text-xs text-text-muted hover:text-text border border-border rounded-md transition-colors hover:border-text-muted"
+            aria-label="Search"
+          >
+            <Icon name="lucide:search" class="w-3.5 h-3.5" />
+            <span>Search</span>
+            <kbd class="font-mono text-[10px] px-1 py-px border border-border rounded bg-bg-secondary leading-none">⌘K</kbd>
+          </button>
+
+          <!-- Theme toggle -->
           <button
             @click="toggleTheme"
             class="w-8 h-8 flex items-center justify-center text-text-muted hover:text-text transition-colors rounded-md"
@@ -33,30 +48,19 @@
             <Icon :name="themeIcon" class="w-4 h-4" />
           </button>
 
-          <button
-            v-if="isAuthenticated"
-            @click="logout"
-            class="hidden sm:flex w-8 h-8 items-center justify-center text-text-muted hover:text-error transition-colors rounded-md"
-            aria-label="Logout"
-          >
-            <Icon name="lucide:log-out" class="w-4 h-4" />
-          </button>
-
-          <button
-            @click="mobileMenuOpen = !mobileMenuOpen"
+          <!-- Mobile menu toggle -->
+          <CollapsibleTrigger
             class="sm:hidden w-8 h-8 flex items-center justify-center text-text-muted hover:text-text rounded-md"
             aria-label="Toggle menu"
           >
             <Icon :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" class="w-4 h-4" />
-          </button>
+          </CollapsibleTrigger>
         </div>
       </div>
 
-      <transition name="slide-down">
-        <nav
-          v-if="mobileMenuOpen"
-          class="sm:hidden flex flex-col gap-1 pb-4 pt-1"
-        >
+      <!-- Mobile nav -->
+      <CollapsibleContent class="mobile-collapsible sm:hidden">
+        <nav class="flex flex-col gap-1 pb-4 pt-1">
           <NuxtLink
             v-for="item in navItems"
             :key="item.to"
@@ -66,22 +70,22 @@
           >
             {{ item.label }}
           </NuxtLink>
-          <NuxtLink
-            v-if="isAuthenticated"
-            to="/admin/dashboard"
-            @click="mobileMenuOpen = false"
-            class="py-2 text-sm text-text-secondary hover:text-text"
+          <button
+            @click="$emit('open-palette'); mobileMenuOpen = false"
+            class="py-2 text-sm text-text-secondary hover:text-text transition-colors text-left"
           >
-            Dashboard
-          </NuxtLink>
+            Search…
+          </button>
         </nav>
-      </transition>
-    </div>
+      </CollapsibleContent>
+    </CollapsibleRoot>
   </header>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
+
+defineEmits(['open-palette']);
 
 const colorMode = useColorMode();
 const hasMounted = ref(false);
@@ -96,10 +100,10 @@ const themeIcon = computed(() => {
 });
 
 const navItems = [
-  { to: "/#work", label: "work" },
-  { to: "/blog", label: "writing" },
-  { to: "/process", label: "process" },
-  { to: "/#contact", label: "contact" },
+  { to: "/", label: "Home" },
+  { to: "/blog", label: "Writing" },
+  { to: "/about", label: "About" },
+  { to: "/cv", label: "CV" },
 ];
 
 const scrolled = ref(false);
@@ -114,29 +118,6 @@ onUnmounted(() => {
 });
 
 const mobileMenuOpen = ref(false);
-const isAuthenticated = ref(false);
-
-const { useApiFetch } = await import("~/composables/useApi");
-
-const logout = async () => {
-  const token = useCookie("auth_token");
-  token.value = null;
-  await useApiFetch("/auth/logout", { method: "POST" });
-  isAuthenticated.value = false;
-  await navigateTo("/");
-};
-
-onMounted(async () => {
-  const token = useCookie("auth_token");
-  if (token.value) {
-    try {
-      const { data } = await useApiFetch("/auth/me");
-      if (data.value) isAuthenticated.value = true;
-    } catch (err) {
-      isAuthenticated.value = false;
-    }
-  }
-});
 </script>
 
 <style scoped>
@@ -144,13 +125,21 @@ onMounted(async () => {
   color: var(--color-text);
   font-weight: 500;
 }
-.slide-down-enter-active,
-.slide-down-leave-active {
-  transition: all 0.15s ease;
+.mobile-collapsible {
+  overflow: hidden;
 }
-.slide-down-enter-from,
-.slide-down-leave-to {
-  opacity: 0;
-  transform: translateY(-4px);
+.mobile-collapsible[data-state="open"] {
+  animation: collapsible-down 0.18s ease-out;
+}
+.mobile-collapsible[data-state="closed"] {
+  animation: collapsible-up 0.15s ease-out;
+}
+@keyframes collapsible-down {
+  from { height: 0; }
+  to { height: var(--reka-collapsible-content-height); }
+}
+@keyframes collapsible-up {
+  from { height: var(--reka-collapsible-content-height); }
+  to { height: 0; }
 }
 </style>

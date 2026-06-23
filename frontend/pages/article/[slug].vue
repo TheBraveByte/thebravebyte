@@ -87,8 +87,9 @@ const formatDate = (date) => {
 
 <style scoped>
 .content {
+  font-family: var(--font-serif);
   font-size: 15px;
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--color-text-secondary);
 }
 
@@ -96,9 +97,10 @@ const formatDate = (date) => {
 .prose-content :deep(h1),
 .prose-content :deep(h2),
 .prose-content :deep(h3) {
+  font-family: var(--font-sans);
   font-weight: 600;
   color: var(--color-text);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 .prose-content :deep(h1) { font-size: 1.5rem; margin: 2em 0 0.5em; }
 .prose-content :deep(h2) { font-size: 1.25rem; margin: 1.75em 0 0.5em; }
@@ -126,6 +128,7 @@ const formatDate = (date) => {
   border-radius: 6px;
   border: 1px solid var(--color-border);
   overflow-x: auto;
+  font-family: var(--font-mono);
   font-size: 13px;
   margin-bottom: 1.25em;
 }
@@ -149,10 +152,14 @@ const formatDate = (date) => {
   margin: 2em 0;
 }
 
-:deep(.ProseMirror) { outline: none; }
+:deep(.ProseMirror) {
+  outline: none;
+  font-family: var(--font-serif);
+}
 :deep(.ProseMirror p) { margin-bottom: 1.2em; }
 :deep(.ProseMirror h2),
 :deep(.ProseMirror h3) {
+  font-family: var(--font-sans);
   font-weight: 600;
   color: var(--color-text);
 }
@@ -174,6 +181,7 @@ const formatDate = (date) => {
   border-radius: 6px;
   border: 1px solid var(--color-border);
   overflow-x: auto;
+  font-family: var(--font-mono);
   font-size: 13px;
 }
 </style>

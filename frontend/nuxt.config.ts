@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxtjs/google-fonts",
     "@nuxtjs/color-mode",
+    "reka-ui/nuxt",
   ],
 
   icon: {
@@ -39,8 +40,9 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Inter: [400, 500, 600],
+      Inter: [400, 500, 600, 700],
       "JetBrains Mono": [400, 500],
+      Merriweather: [400, 700],
     },
     display: "swap",
     prefetch: true,
@@ -62,7 +64,7 @@ export default defineNuxtConfig({
       apiBase:
         process.env.NUXT_PUBLIC_API_BASE ||
         "https://thebravebyte.onrender.com/api",
-      siteUrl: "https://thebravebyte.com",
+      siteUrl: "https://thebravebyte.pages.dev",
     },
   },
 
@@ -79,7 +81,7 @@ export default defineNuxtConfig({
         {
           name: "description",
           content:
-            "Engineering the future with code. A premium blog by Yusuf Akinleye.",
+            "Yusuf Akinleye — backend engineer building APIs and distributed systems in Go and Python.",
         },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { property: "og:title", content: "The Brave Byte | Yusuf Akinleye" },
@@ -90,13 +92,13 @@ export default defineNuxtConfig({
         },
         {
           property: "og:image",
-          content: "https://thebravebyte.com/logo-ya-light.png",
+          content: "https://thebravebyte.pages.dev/logo-ya-light.png",
         },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary" },
         {
           name: "twitter:image",
-          content: "https://thebravebyte.com/logo-ya-light.png",
+          content: "https://thebravebyte.pages.dev/logo-ya-light.png",
         },
       ],
     },
