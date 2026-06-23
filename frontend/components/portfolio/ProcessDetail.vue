@@ -20,22 +20,21 @@
       </header>
 
       <!-- Tabs -->
-      <div class="mb-8">
-        <div class="hidden md:flex flex-nowrap gap-x-1 gap-y-1 flex-wrap pb-2 border-b border-border">
-          <button
+      <TabsRoot
+        :model-value="String(activeTab)"
+        @update:model-value="(v) => (activeTab = Number(v))"
+        class="mb-8"
+      >
+        <TabsList class="hidden md:flex flex-nowrap gap-1 flex-wrap pb-2 border-b border-border">
+          <TabsTrigger
             v-for="(section, index) in sections"
             :key="index"
-            @click="activeTab = index"
-            :class="[
-              'px-3 py-1.5 text-sm rounded-md transition-colors',
-              activeTab === index
-                ? 'bg-bg-secondary text-text font-medium'
-                : 'text-text-muted hover:text-text hover:bg-bg-secondary/60',
-            ]"
+            :value="String(index)"
+            class="px-3 py-1.5 text-sm rounded-md transition-colors text-text-muted hover:text-text hover:bg-bg-secondary/60 data-[state=active]:bg-bg-secondary data-[state=active]:text-text data-[state=active]:font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
           >
             {{ section.title }}
-          </button>
-        </div>
+          </TabsTrigger>
+        </TabsList>
         <div class="md:hidden">
           <select
             v-model="activeTab"
@@ -46,7 +45,7 @@
             </option>
           </select>
         </div>
-      </div>
+      </TabsRoot>
 
       <transition name="fade" mode="out-in">
         <div :key="activeTab" class="grid lg:grid-cols-2 gap-8 lg:gap-10">
@@ -196,7 +195,15 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, watch, nextTick, computed } from 'vue';
-import mermaid from 'mermaid';
+
+// Lazy-load mermaid (heavy) only when this page mounts — keeps it out of the main bundle.
+let mermaidInstance: any = null;
+const loadMermaid = async () => {
+  if (!mermaidInstance) {
+    mermaidInstance = (await import('mermaid')).default;
+  }
+  return mermaidInstance;
+};
 
 const colorMode = useColorMode();
 const isDarkMode = computed(() => colorMode.value === 'dark');
@@ -269,6 +276,7 @@ const renderDiagram = async () => {
     const element = document.querySelector('.mermaid');
     if (element) {
       const id = `mermaid-${Date.now()}`;
+      const mermaid = await loadMermaid();
       const { svg } = await mermaid.render(id, sections.value[activeTab.value]?.diagram || '');
       currentSvg.value = svg;
     }
@@ -411,53 +419,6 @@ style Aggregator ${s.primaryAccent}
 style DB ${s.secondaryMuted}`;
 });
 
-const jobProcessingDiagram = computed(() => {
-  const s = diagramStyles.value;
-  return `graph TB
-Source["API / Scheduler"] -->|Enqueue| JobService["Job Service"]
-JobService -->|Persist| Queue["Job Queue"]
-Queue -->|Poll| Manager["Worker Manager"]
-Manager -->|Dispatch| W1["Alert Worker"]
-Manager -->|Dispatch| W2["Wallet Worker"]
-Manager -->|Dispatch| W3["Notification Worker"]
-W1 -->|Process| P1["Alert Processor"]
-W2 -->|Process| P2["Wallet Sync"]
-W3 -->|Process| P3["Email/Push"]
-P1 -->|Result| JobService
-P2 -->|Result| JobService
-P3 -->|Result| JobService
-style Queue ${s.secondaryWarning}
-style JobService ${s.primaryAccent}
-style Manager ${s.primaryInfo}
-style W1 ${s.primaryAccent}
-style W2 ${s.primaryAccent}
-style W3 ${s.primaryAccent}`;
-});
-
-const bitraqDiagram = computed(() => {
-  const s = diagramStyles.value;
-  return `graph TB
-User((User)) -->|Configure| API[API Gateway]
-API --> AutoTrade[AutoTrading Service]
-API --> Analytics[Analytics Service]
-AutoTrade --> Risk[Risk Manager]
-AutoTrade --> ArbEngine[Arbitrage Engine]
-ArbEngine --> Jobs[Job Queue]
-Jobs --> Workers[Worker Pool]
-Workers --> MarketData[Market Data Service]
-Workers --> ExchangeAdapter[Exchange Adapter]
-ExchangeAdapter <-->|Orders| Exchanges[Exchanges]
-MarketData <-->|Prices| Exchanges
-Workers --> DB[(Database)]
-Analytics --> DB
-style API ${s.primaryAccent}
-style AutoTrade ${s.primaryInfo}
-style ArbEngine ${s.secondaryWarning}
-style Workers ${s.primaryAccent}
-style Exchanges ${s.secondaryInfo}
-style DB ${s.secondaryMuted}`;
-});
-
 const multiTenantDiagram = computed(() => {
   const s = diagramStyles.value;
   return `graph TB
@@ -481,26 +442,6 @@ const multiTenantDiagram = computed(() => {
     style DB ${s.secondaryMuted}`;
 });
 
-const concurrencyDiagram = computed(() => {
-  const s = diagramStyles.value;
-  return `graph TB
-Job[Job Queue] -->|Distribute| Dispatcher[Dispatcher]
-Dispatcher -->|Spawn| W1[Worker 1]
-Dispatcher -->|Spawn| W2[Worker 2]
-Dispatcher -->|Spawn| W3[Worker 3]
-W1 -->|Result| Aggregator[Aggregator]
-W2 -->|Result| Aggregator
-W3 -->|Result| Aggregator
-Aggregator -->|Finalize| Response[Response]
-style Job ${s.secondaryWarning}
-style Dispatcher ${s.primaryAccent}
-style W1 ${s.primaryInfo}
-style W2 ${s.primaryInfo}
-style W3 ${s.primaryInfo}
-style Aggregator ${s.primaryAccent}
-style Response ${s.secondaryInfo}`;
-});
-
 const architectureDiagram = computed(() => {
   const s = diagramStyles.value;
   return `graph TB
@@ -520,59 +461,6 @@ style Repo ${s.primaryAccent}
 style DB ${s.secondaryInfo}
 style Redis ${s.secondaryWarning}
 style Backend ${s.tertiaryDashed}`;
-});
-
-const telegramBotDiagram = computed(() => {
-  const s = diagramStyles.value;
-  return `graph TB
-User((User)) -->|/start| Bot[Telegram Bot]
-Bot --> Commands[Command Router]
-Commands -->|/subscribe| SubFlow[Subscription Flow]
-Commands -->|/status| Status[Check Status]
-Commands -->|/admin| Admin[Admin Panel]
-
-SubFlow --> TierSelect[Select Tier]
-TierSelect -->|Tier 1 $50| PaymentSelect[Payment Method]
-TierSelect -->|Tier 2 $1500| PaymentSelect
-
-PaymentSelect -->|Crypto| CryptoHandler[Crypto Handler]
-PaymentSelect -->|Card| CardHandler[Card Handler]
-
-CryptoHandler --> NOWPayments[NOWPayments API]
-CardHandler --> Stripe[Stripe/Paystack]
-
-NOWPayments -->|Webhook| WebhookServer[Webhook Server]
-Stripe -->|Webhook| WebhookServer
-
-WebhookServer --> Verify[Signature Verification]
-Verify --> PaymentDB[(Payments DB)]
-
-Admin --> Pending[Pending Payments]
-Pending --> Approve[Approve/Reject]
-Approve --> SubDB[(Subscriptions DB)]
-Approve --> Notify[Notify User]
-
-Status --> SubDB
-SubDB --> AccessControl[Access Control]
-AccessControl -->|Active| Signals[Forex Signals Channel]
-
-Bot --> UserDB[(Users DB)]
-CryptoHandler --> CoinGecko[CoinGecko API]
-
-style Bot ${s.primaryAccent}
-style Commands ${s.primaryInfo}
-style SubFlow ${s.secondaryWarning}
-style CryptoHandler ${s.primarySuccess}
-style CardHandler ${s.primarySuccess}
-style Admin ${s.primaryError}
-style WebhookServer ${s.primaryAccent}
-style UserDB ${s.secondaryMuted}
-style SubDB ${s.secondaryMuted}
-style PaymentDB ${s.secondaryMuted}
-style NOWPayments ${s.secondarySuccess}
-style Stripe ${s.secondaryPurple}
-style CoinGecko ${s.secondaryWarning}
-style Signals ${s.secondaryOrange}`;
 });
 
 const fraudDetectionDiagram = computed(() => {
@@ -598,80 +486,6 @@ const fraudDetectionDiagram = computed(() => {
 });
 
 const sections = computed(() => [
-  {
-    title: 'Distributed Job Processing',
-    description: 'In BiTraq (crypto arbitrage platform), synchronous processing of price alerts, wallet syncing, and notification delivery would block the trading API, causing users to miss time-sensitive arbitrage windows. I decoupled these into persistent background queues so the API stays responsive under load while the work happens out of band.',
-    features: [
-      {
-        title: 'Problem Solved',
-        icon: 'lucide:target',
-        items: ['<strong>Business Need:</strong> Traders need instant alert delivery for fleeting arbitrage opportunities', '<strong>Technical Challenge:</strong> Synchronous processing tied request latency to slow downstream work during peak hours', '<strong>Trade-off:</strong> Eventual consistency for non-critical paths vs. immediate consistency for trades']
-      },
-      {
-        title: 'Architecture Decision',
-        icon: 'lucide:lightbulb',
-        items: ['Durable job queues with at-least-once delivery guarantees', 'Worker pool sized against queue depth', 'Dead letter queues for failed jobs with exponential backoff', '<strong>Impact:</strong> alert and sync work moved off the request path, so API latency no longer depends on it']
-      }
-    ],
-    diagram: jobProcessingDiagram.value,
-    code: {
-      language: 'go',
-      filename: 'worker/pool.go',
-      content: `type WorkerPool struct {
-    maxWorkers int
-    jobQueue   chan Job
-    quit       chan bool
-}
-
-func NewWorkerPool(maxWorkers int) *WorkerPool {
-    return &WorkerPool{
-        maxWorkers: maxWorkers,
-        jobQueue:   make(chan Job),
-        quit:       make(chan bool),
-    }
-}
-
-func (wp *WorkerPool) Run() {
-    for i := 0; i < wp.maxWorkers; i++ {
-        go func(workerID int) {
-            for {
-                select {
-                case job := <-wp.jobQueue:
-                    // Process job with panic recovery
-                    func() {
-                        defer func() {
-                            if r := recover(); r != nil {
-                                log.Printf("Worker %d panic: %v", workerID, r)
-                            }
-                        }()
-                        job.Process()
-                    }()
-                case <-wp.quit:
-                    return
-                }
-            }
-        }(i)
-    }
-}`
-    }
-  },
-  {
-    title: 'Concurrency Patterns',
-    description: 'In BiTraq\'s arbitrage engine, prices are fetched from 10+ exchanges at once. Fetching them sequentially adds up the latency of every exchange, and by then the arbitrage window has closed. Using Fan-Out/Fan-In, total latency tracks only the slowest exchange instead of the sum.',
-    features: [
-      {
-        title: 'Why This Pattern?',
-        icon: 'lucide:target',
-        items: ['<strong>Business Context:</strong> Arbitrage windows are short-lived; speed is revenue', '<strong>The Problem:</strong> Sequential calls sum the latency of every exchange', '<strong>Trade-off:</strong> More concurrent goroutines and memory vs. catching more windows before they close']
-      },
-      {
-        title: 'Engineering Decision',
-        icon: 'lucide:zap',
-        items: ['Fan-out to N workers, fan-in via buffered channels', 'Context-based cancellation for graceful timeout handling', 'Per-exchange circuit breakers to isolate failures', '<strong>Result:</strong> total latency bounded by the slowest exchange, not the sum of all of them']
-      }
-    ],
-    diagram: concurrencyDiagram.value
-  },
   {
     title: 'AI Fraud Detection',
     description: 'For OmonAI (AML compliance platform), financial institutions needed real-time fraud detection without blocking legitimate transactions. Rule-based systems flag too many genuine customers. A ten-feature ML model scores behavioural patterns and returns its contributing factors, so a decision can be explained rather than just asserted.',
@@ -799,64 +613,10 @@ async def predict(tx: TransactionFeatures):
     ],
     diagram: architectureDiagram.value
   },
-  {
-    title: 'Forex Signals Bot',
-    description: 'For a forex signals service, I embedded the entire subscription and payment flow inside Telegram, so users never leave the app. Supporting 250+ cryptocurrencies via NOWPayments plus traditional cards maximized conversion. Admin approval workflow ensures payment verification before granting channel access.',
-    features: [
-      {
-        title: 'Business Problem',
-        icon: 'lucide:target',
-        items: ['<strong>Users:</strong> Forex traders wanting premium signals via Telegram', '<strong>Challenge:</strong> Sending users to external payment pages adds friction and drops conversions', '<strong>Trade-off:</strong> Telegram UI limitations vs. zero-friction in-app payments']
-      },
-      {
-        title: 'Technical Decisions',
-        icon: 'lucide:check-circle',
-        items: ['<strong>Multi-Gateway:</strong> NOWPayments (250+ cryptos) + Stripe/Paystack (cards)', '<strong>Session State:</strong> Redis-backed conversation state for multi-step payment flows', '<strong>Webhook Security:</strong> Signature verification + idempotent processing', '<strong>Impact:</strong> the whole subscribe-and-pay flow stays inside Telegram, with no external checkout page']
-      }
-    ],
-    diagram: telegramBotDiagram.value,
-    code: {
-      language: 'go',
-      filename: 'bot/handler.go',
-      content: `func (h *Handler) HandlePaymentWebhook(w http.ResponseWriter, r *http.Request) {
-    // Verify signature
-    if !h.verifySignature(r) {
-        http.Error(w, "Invalid signature", http.StatusUnauthorized)
-        return
-    }
-
-    var payload PaymentPayload
-    if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-        http.Error(w, "Bad request", http.StatusBadRequest)
-        return
-    }
-
-    // Process payment in transaction
-    err := h.repo.ExecTx(r.Context(), func(q *db.Queries) error {
-        // Update payment status
-        if err := q.UpdatePaymentStatus(ctx, payload.ID, "completed"); err != nil {
-            return err
-        }
-        
-        // Activate subscription
-        return q.CreateSubscription(ctx, db.CreateSubscriptionParams{
-            UserID: payload.UserID,
-            PlanID: payload.PlanID,
-            ExpiresAt: time.Now().Add(30 * 24 * time.Hour),
-        })
-    })
-
-    if err != nil {
-        h.logger.Error("Payment processing failed", "error", err)
-        http.Error(w, "Internal error", http.StatusInternalServerError)
-        return
-    }
-}`
-    }
-  }
 ]);
 
-const initMermaid = () => {
+const initMermaid = async () => {
+  const mermaid = await loadMermaid();
   const dark = isDarkMode.value;
   mermaid.initialize({
     startOnLoad: false,
@@ -880,12 +640,12 @@ const initMermaid = () => {
 };
 
 onMounted(async () => {
-  initMermaid();
+  await initMermaid();
   await renderDiagram();
 });
 
 watch(() => colorMode.value, async () => {
-  initMermaid();
+  await initMermaid();
   await renderDiagram();
 });
 </script>

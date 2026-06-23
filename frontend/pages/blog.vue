@@ -45,7 +45,7 @@
                   {{ formatDate(article.createdAt) }}
                 </span>
               </div>
-              <p class="text-sm text-text-secondary leading-[1.6] line-clamp-2">
+              <p class="text-sm text-text-secondary font-serif leading-[1.65] line-clamp-2">
                 {{ article.excerpt }}
               </p>
             </NuxtLink>
@@ -66,7 +66,7 @@
                   {{ article.date || formatDate(article.createdAt) }}
                 </span>
               </div>
-              <p class="text-sm text-text-secondary leading-[1.6] line-clamp-2">
+              <p class="text-sm text-text-secondary font-serif leading-[1.65] line-clamp-2">
                 {{ article.excerpt }}
               </p>
             </a>
@@ -97,7 +97,7 @@
 import { ref, computed } from 'vue';
 
 const config = useRuntimeConfig();
-const { data: apiData, pending: loading } = await useFetch(`${config.public.apiBase}/articles`);
+const { data: apiData, pending: loading } = await useFetch(`${config.public.apiBase}/articles`, { lazy: true, default: () => ({ articles: [] }) });
 
 const externalArticles = [
   { title: "Understanding Fan-Out Concurrency Pattern in Go", excerpt: "A single producer distributes tasks to multiple workers for parallel processing. Practical examples included.", date: "Mar 7, 2025", slug: "fan-out-concurrency-pattern", category: "Concurrency", externalUrl: "https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go", isExternal: true },

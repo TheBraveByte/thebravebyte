@@ -23,7 +23,7 @@
               {{ featured.date || formatDate(featured.createdAt) }}
             </span>
           </div>
-          <p class="text-[14px] text-text-secondary leading-[1.65] transition-colors group-hover:text-text">
+          <p class="text-[14px] text-text-secondary font-serif leading-[1.65] transition-colors group-hover:text-text">
             {{ featured.excerpt }}
           </p>
         </a>
@@ -41,7 +41,7 @@
               {{ formatDate(featured.createdAt) }}
             </span>
           </div>
-          <p class="text-[14px] text-text-secondary leading-[1.65] transition-colors group-hover:text-text">
+          <p class="text-[14px] text-text-secondary font-serif leading-[1.65] transition-colors group-hover:text-text">
             {{ featured.excerpt }}
           </p>
         </NuxtLink>
@@ -93,7 +93,7 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig();
-const { data: apiData } = await useFetch(`${config.public.apiBase}/articles`, { default: () => ({ articles: [] }) });
+const { data: apiData } = await useFetch(`${config.public.apiBase}/articles`, { default: () => ({ articles: [] }), lazy: true });
 
 const externalArticles = [
   { title: "Understanding Fan-Out Concurrency Pattern in Go", excerpt: "A single producer distributes tasks to multiple workers for parallel processing. Practical examples included.", date: "Mar 7, 2025", slug: "fan-out-concurrency-pattern", externalUrl: "https://ayaacodes.hashnode.dev/understanding-fan-out-concurrency-pattern-in-go", isExternal: true },

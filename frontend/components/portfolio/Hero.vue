@@ -24,7 +24,7 @@
         </span>
       </div>
 
-      <p class="text-[15px] text-text-secondary leading-[1.7]">
+      <p class="text-[15px] text-text-secondary font-serif leading-[1.75]">
         Backend engineer shipping APIs and distributed systems in Go and Python.
         Currently building usage-based billing and media infra at
         <a href="https://docs.rixl.com" target="_blank" rel="noopener noreferrer" class="text-text prose-link">RIXL</a>.
