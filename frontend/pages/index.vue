@@ -1,110 +1,92 @@
 <template>
-  <div class="page pt-14 md:pt-20">
+  <div class="page pt-14 md:pt-24">
     <div class="offset">
-      <h1 class="text-[18px] font-semibold text-text">Yusuf Akinleye</h1>
-      <div class="mt-5 space-y-4 text-text-secondary">
-        <p>
-          <span class="text-text">Backend and platform engineer</span> in Lagos, Nigeria. I build
-          systems in Go for payments, ledgers and job queues, and design them for the moment things
-          stop going to plan.
-        </p>
-        <p>
-          I own backend features end to end, from the first schema to production. I run
-          <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>.
-        </p>
-      </div>
+      <p class="font-mono text-[13px] text-text-muted">Yusuf Akinleye</p>
+      <h1 class="mt-4 max-w-[16ch] text-[36px] font-semibold leading-[1.08] tracking-[-0.02em] md:text-[48px]">
+        Backend Software &amp; Platform Engineer
+      </h1>
+      <p class="mt-4 text-[21px] text-text-secondary md:text-[24px]">I build reliable systems.</p>
+      <NuxtLink to="/work" class="mt-6 inline-block font-mono text-[13px] text-text hover:text-accent">Work →</NuxtLink>
     </div>
 
-    <section class="rail mt-14" aria-labelledby="public">
-      <h2 id="public" class="rail-label">Public work</h2>
-      <ul class="space-y-7">
+    <section class="rail mt-20" aria-labelledby="selected">
+      <h2 id="selected" class="rail-label">Selected work</h2>
+      <ul class="space-y-9">
         <li v-for="w in publicWork" :key="w.slug">
-          <NuxtLink :to="`/work/${w.slug}`" class="group block">
+          <p class="flex flex-wrap items-baseline gap-x-3">
+            <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[19px] font-semibold text-text">{{ w.name }}</NuxtLink>
+            <span class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span>
+          </p>
+          <p class="mt-1 text-text">{{ w.what }}</p>
+          <p class="mt-1 text-[17px] text-text-secondary">{{ w.myRole }}</p>
+          <p class="mt-2 flex flex-wrap gap-x-5 font-mono text-[13px]">
+            <NuxtLink :to="`/work/${w.slug}`" class="text-text-muted hover:text-text">View project →</NuxtLink>
+            <a v-for="l in w.links.slice(0, 1)" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text">{{ l.label === 'Code' ? 'GitHub' : l.label }} ↗</a>
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="rail mt-16" aria-labelledby="experience">
+      <h2 id="experience" class="rail-label">Experience</h2>
+      <ul class="space-y-9">
+        <li v-for="w in experience" :key="w.slug">
+          <p class="flex items-baseline justify-between gap-4">
             <span class="flex flex-wrap items-baseline gap-x-3">
-              <span class="quiet-link font-semibold text-text">{{ w.name }}</span>
-              <span class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span>
+              <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[19px] font-semibold text-text">{{ w.name }}</NuxtLink>
+              <span v-if="w.status" class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span>
             </span>
-            <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ w.description }}</span>
-            <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ w.role }}<template v-if="w.duration"> · {{ w.duration }}</template> · {{ w.years }}</span>
+            <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years }}</span>
+          </p>
+          <p class="mt-1 text-[17px] text-text-secondary">{{ w.myRole }}</p>
+          <ul v-if="w.owned" class="mt-3 space-y-1 text-[16px] text-text-secondary">
+            <li v-for="o in w.owned.slice(0, 4)" :key="o" class="grid grid-cols-[1rem_1fr]"><span class="text-text-muted" aria-hidden="true">–</span><span>{{ o }}</span></li>
+          </ul>
+          <p v-if="w.status" class="mt-3 flex flex-wrap gap-x-5 font-mono text-[13px]">
+            <a v-for="l in w.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text">{{ l.label }} ↗</a>
+          </p>
+        </li>
+      </ul>
+      <p class="mt-8 text-[16px] text-text-muted md:col-start-2">
+        I've also built private systems for clients: payments, compliance, trading and commerce.
+      </p>
+    </section>
+
+    <section class="rail mt-16" aria-labelledby="stories">
+      <h2 id="stories" class="rail-label">Developer stories</h2>
+      <ul class="space-y-4">
+        <li v-for="n in notes.slice(0, 3)" :key="n.slug">
+          <NuxtLink :to="`/writing/${n.slug}`" class="group block">
+            <span class="quiet-link text-text">{{ n.short }}</span>
+            <span class="mt-0.5 block text-[16px] text-text-secondary">{{ n.lesson }}</span>
           </NuxtLink>
         </li>
-        <li class="text-[16px] text-text-secondary">
-          Also public:
-          <a href="https://github.com/TheBraveByte/snackbox" target="_blank" rel="noopener noreferrer" class="quiet-link">snackbox</a>,
-          a reference payments integration with signed webhooks, idempotency keys and rate limiting.
-        </li>
       </ul>
     </section>
 
-    <section class="rail mt-12" aria-labelledby="experience">
-      <h2 id="experience" class="rail-label">Experience</h2>
-      <ul class="space-y-6">
-        <li v-for="r in experience" :key="r.org">
-          <component :is="r.slug ? NuxtLink : 'div'" v-bind="r.slug ? { to: `/work/${r.slug}` } : {}" class="group block">
-            <span class="flex items-baseline justify-between gap-4">
-              <span><span :class="r.slug ? 'quiet-link' : ''" class="font-semibold text-text">{{ r.org }}</span><span class="text-text-secondary">, {{ r.title }}</span></span>
-              <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ r.when }}</span>
-            </span>
-            <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ r.text }}</span>
-          </component>
-        </li>
-      </ul>
-    </section>
-
-    <section class="rail mt-12" aria-labelledby="client">
-      <h2 id="client" class="rail-label">Client work</h2>
-      <div>
-        <p class="text-[16px] text-text-muted">Private systems built for clients. Not publicly launched, so no links.</p>
-        <ul class="mt-3 space-y-1.5">
-          <li v-for="c in clientWork" :key="c.what" class="flex items-baseline justify-between gap-4 text-[17px]">
-            <span class="text-text-secondary">{{ c.what }}<span class="text-text-muted">, {{ c.role.toLowerCase() }}</span></span>
-            <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ c.years.split(' ')[0] }}</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="rail mt-12" aria-labelledby="writing">
-      <h2 id="writing" class="rail-label">Writing</h2>
-      <ul class="space-y-2.5">
-        <li v-for="n in notes.slice(0, 3)" :key="n.slug">
-          <NuxtLink :to="`/writing/${n.slug}`" class="quiet-link">{{ n.short }}</NuxtLink>
-        </li>
-      </ul>
-    </section>
-
-    <section class="rail mt-12" aria-labelledby="contact">
+    <section class="rail mt-16" aria-labelledby="contact">
       <h2 id="contact" class="rail-label">Contact</h2>
       <p class="text-text-secondary">
         <a href="mailto:ayaaakinleye@gmail.com" class="quiet-link">ayaaakinleye@gmail.com</a><br>
         <a href="https://github.com/TheBraveByte" target="_blank" rel="noopener noreferrer" class="quiet-link">GitHub</a>
         <span class="text-text-muted"> · </span>
         <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank" rel="noopener noreferrer" class="quiet-link">LinkedIn</a>
-        <span class="text-text-muted"> · Lagos, Nigeria</span>
       </p>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NuxtLink } from '#components'
-import { work, clientWork } from '~/data/work'
+import { work } from '~/data/work'
 import { notes } from '~/utils/notes'
 
-const publicWork = work.filter(w => w.kind === 'public')
-
-// Employment, newest first. Facts checked against the repositories on 2026-10-03.
-const experience = [
-  { org: 'FoldLabs', title: 'founder', when: '2026', text: 'A studio that designs and builds products for clients. I lead the engineering.' },
-  { org: 'Rixl', title: 'software engineer, backend', when: '2025 to 2026', slug: 'rixl', text: 'Owned billing and client authentication in a video and media platform\'s core API; the largest contributor to its backend.' },
-  { org: 'Eazyfit', title: 'principal backend engineer', when: '2025 to 2026', slug: 'eazyfit', text: 'Wrote 90 percent of the main API, including escrow payouts I took from design to deployment.' },
-  { org: 'Paymax', title: 'backend engineer', when: '2025 to 2026', slug: 'paymax', text: 'One of the two largest contributors to a multi-domain platform; owned four of its domains.' },
-]
+const publicWork = work.filter(w => w.kind === 'public' && w.slug !== 'eazyfit')
+const experience = ['rixl', 'eazyfit'].map(slug => work.find(w => w.slug === slug)!)
 
 useSeoMeta({
-  title: 'Yusuf Akinleye, backend and platform engineer',
-  description: 'Backend and platform engineer in Lagos, Nigeria. Go systems for payments, ledgers and job queues, owned end to end.',
-  ogTitle: 'Yusuf Akinleye, backend and platform engineer',
-  ogDescription: 'Backend and platform engineer in Lagos, Nigeria. Go systems for payments, ledgers and job queues, owned end to end.',
+  title: 'Yusuf Akinleye, backend software and platform engineer',
+  description: 'Backend software and platform engineer. I build reliable systems.',
+  ogTitle: 'Yusuf Akinleye, backend software and platform engineer',
+  ogDescription: 'Backend software and platform engineer. I build reliable systems.',
 })
 </script>

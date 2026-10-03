@@ -26,6 +26,9 @@ export interface WorkItem {
   note?: string
   featured?: boolean
   kind: 'public' | 'experience'
+  what: string // one plain sentence: what it is
+  myRole: string // one or two sentences: what I did
+  owned?: string[] // selected ownership, one feature per line, no technology names
   status?: string // shown as a badge: Live, Open source, Live demo
   ownership?: { feature: string, chain: string[], evidence: string }
 }
@@ -44,11 +47,23 @@ export const clientWork: ClientWork[] = [
 export const work: WorkItem[] = [
   {
     slug: 'rixl',
+    what: 'A video and media platform other products build on.',
+    myRole: 'Backend software engineer and the largest contributor to its backend. I owned billing, passkey sign-in, authorization policies and canary releases.',
+    owned: [
+      'Billing and subscriptions.',
+      'Passkey sign-in, across the auth service, API and gateway.',
+      'Authorization policies.',
+      'Canary releases, with metrics labelled by cohort so a canary can be judged before rollout.',
+      'Request tracing across the services.',
+      'Subtitle and audio tracks: upload, authoring and processing.',
+      'The authentication layer every service uses to call another.',
+      'The move of the core services to gRPC, and all eight SDKs.',
+    ],
     kind: 'experience',
     ownership: {
       feature: 'Billing in the core API',
       chain: ['Stripe checkout and subscriptions', 'Usage meters', 'Invoices', 'Webhooks', 'Plan quotas', 'Tests'],
-      evidence: 'I wrote 409 of the 615 commits to the billing package, which carries 108 test files.',
+      evidence: 'I wrote most of the billing code and its tests.',
     },
     name: 'Rixl',
     years: '2025 to 2026',
@@ -56,10 +71,10 @@ export const work: WorkItem[] = [
     role: 'Software engineer, backend',
     duration: '16 months',
     description: 'The largest contributor to the backend of a video and media platform, and owner of its billing and client authentication.',
-    about: 'Rixl handles the media side of other products: uploading and delivering images and video, feeds, engagement analytics, accounts and billing. I wrote about 60 percent of the commits in the core API, auth, gateway and analytics services, and started all eight SDKs: about 3,900 commits across 26 repositories.',
+    about: 'Rixl handles the media side of other products: uploading and delivering images and video, feeds, engagement analytics, accounts and billing. I was the largest contributor to the core API, auth, gateway and analytics services, and started all eight SDKs.',
     contribution: [
-      'Owned billing in the core API, 409 of its 615 commits: Stripe checkout and subscriptions, usage meters, invoices, webhooks and plan quotas.',
-      'Wrote most of client-credentials auth (91 percent of its commits) and platform auth (81 percent).',
+      'Owned billing in the core API: Stripe checkout and subscriptions, usage meters, invoices, webhooks and plan quotas.',
+      'Wrote most of client-credentials auth and platform auth.',
       'Moved the core API, auth and analytics services to gRPC behind a REST gateway, and started all eight SDK repositories.',
     ],
     impact: 'The billing and auth code I owned ships in Rixl\'s public API, 210 operations documented at docs.rixl.com.',
@@ -79,12 +94,19 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'eazyfit',
+    what: 'A marketplace where people in Nigeria order custom outfits from verified stylists, measured from phone photos.',
+    myRole: 'Principal backend engineer. I built most of the API, including escrow payouts and the photo measurement engine.',
+    owned: [
+      'Most of the main API.',
+      'Escrow payouts, from the design runbook to deployment.',
+      'The measurement engine that turns phone photos into measurements.',
+    ],
     kind: 'public',
     status: 'Live',
     ownership: {
       feature: 'Two-stage escrow payouts',
       chain: ['Design runbook', 'Data model and indexes', 'Release service', 'Paystack transfers', 'Tests', 'CI deploy', 'Structured logging'],
-      evidence: 'I wrote the runbook, the release service and its tests, the deploy workflow and the Compose config, and 74 of the payment package\'s 78 commits.',
+      evidence: 'I wrote the runbook, the release service and its tests, the deploy workflow and the Compose config, and almost all of the payment code.',
     },
     name: 'Eazyfit',
     years: '2025 to 2026',
@@ -94,7 +116,7 @@ export const work: WorkItem[] = [
     description: 'Built most of the backend for a tailoring marketplace, including staged escrow payouts and a measurement engine that turns front, side and back photos into tailor-ready measurements.',
     about: 'Customers book tailors and stylists and get measured from photos instead of a tape.',
     contribution: [
-      'Wrote 627 of the 694 commits on the main API, and 74 of the 78 commits to its payment package.',
+      'Wrote most of the main API and almost all of its payment code.',
       'Built two-stage escrow payouts: 70 percent to the stylist on acceptance, 30 percent on delivery.',
       'Built the measurement engine, 94 Python files that the Go API runs as a separate process.',
     ],
@@ -110,17 +132,19 @@ export const work: WorkItem[] = [
       { label: 'App Store', href: 'https://apps.apple.com/ng/app/eazyfit/id6749547417' },
       { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.anonymous.eazyfit' },
     ],
-    media: { name: 'eazyfit', alt: 'Three screens from the Eazyfit mobile app', width: 1400, height: 956, widths: [800, 1400] },
+    media: { name: 'eazyfit-site', alt: 'The Eazyfit website: custom outfits from verified stylists, with the app on three phones', width: 1400, height: 875, widths: [800, 1400] },
     featured: true,
   },
   {
     slug: 'babit',
+    what: 'Proof of what an AI agent did, and who allowed it.',
+    myRole: 'I designed and built it on my own, from the architecture to the live demo.',
     kind: 'public',
     status: 'Live demo',
     ownership: {
       feature: 'The whole system',
       chain: ['Architecture doc', 'Schema and migrations', 'gRPC services', 'REST gateway', 'React console', 'End-to-end tests', 'Deployed demo'],
-      evidence: 'Sole author of all 185 commits, from the architecture document to the live demo.',
+      evidence: 'Sole author, from the architecture document to the live demo.',
     },
     name: 'babit',
     years: '2026',
@@ -128,7 +152,7 @@ export const work: WorkItem[] = [
     role: 'Sole author',
     duration: 'About a month',
     description: 'Built a system that records what an AI agent did, binds it to the signed permission that allowed it, and issues receipts anyone can verify without the server.',
-    about: 'When an agent drives a browser, runs code or acts on a desktop, babit records each action against the grant that permitted it and seals it into a ledger. I wrote all 185 commits.',
+    about: 'When an agent drives a browser, runs code or acts on a desktop, babit records each action against the grant that permitted it and seals it into a ledger. I built all of it.',
     contribution: [
       'Designed signed capability grants where each delegated grant can only narrow its parent, checked for expiry and revocation on every action.',
       'Built a notary that seals actions into an append-only ledger, with a Postgres trigger that rejects any update or delete.',
@@ -149,6 +173,8 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'paymax',
+    what: 'One platform for delivery, transport, voting and health insurance.',
+    myRole: 'Backend engineer and one of its two largest contributors. I owned four of its domains.',
     kind: 'experience',
     name: 'Paymax',
     years: '2025 to 2026',
@@ -156,9 +182,9 @@ export const work: WorkItem[] = [
     role: 'Backend engineer',
     duration: '14 months',
     description: 'One of the two largest contributors to a multi-domain platform built by about 20 engineers, and moved its delivery service into the main application.',
-    about: 'Delivery, transport, voting, elections, project management and health insurance on one platform. I wrote 571 of its 1,937 commits.',
+    about: 'Delivery, transport, voting, elections, project management and health insurance on one platform. I was one of its two largest contributors.',
     contribution: [
-      'Wrote every commit to the transport, medical, election and project-management packages, 140 in all, and 88 of the 95 in delivery.',
+      'Wrote the transport, medical, election and project-management domains, and most of delivery.',
       'Moved the delivery service into the main application in one change, dropping its Kafka, OPA and Elasticsearch dependencies.',
     ],
     impact: 'Owned four of the platform\'s domains outright and led two more.',
@@ -171,6 +197,8 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'bloom-parser',
+    what: 'A service that turns images, PDFs and spreadsheets into one structured document.',
+    myRole: 'I built it and published it as open source.',
     kind: 'public',
     status: 'Open source',
     name: 'bloom-parser',

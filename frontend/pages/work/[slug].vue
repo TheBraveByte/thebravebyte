@@ -3,7 +3,8 @@
     <div class="offset">
       <p v-if="item.status" class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ item.status }}</p>
       <h1 class="mt-1 text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">{{ item.name }}</h1>
-      <p class="mt-4 text-[19px] leading-snug text-text">{{ item.description }}</p>
+      <p class="mt-4 text-[19px] leading-snug text-text">{{ item.what }}</p>
+      <p class="mt-3 text-text-secondary">{{ item.myRole }}</p>
       <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
         <a v-for="l in item.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="quiet-link">{{ l.label }} ↗</a>
       </p>
@@ -16,10 +17,10 @@
       </div>
     </dl>
 
-    <section v-if="item.contribution?.length" class="rail mt-10" aria-labelledby="did">
-      <h2 id="did" class="rail-label">What I did</h2>
+    <section v-if="(item.owned ?? item.contribution)?.length" class="rail mt-10" aria-labelledby="did">
+      <h2 id="did" class="rail-label">{{ item.owned ? 'What I owned' : 'What I did' }}</h2>
       <ul class="space-y-2 text-text-secondary">
-        <li v-for="c in item.contribution" :key="c" class="grid grid-cols-[1rem_1fr]"><span class="text-text-muted" aria-hidden="true">–</span><span>{{ c }}</span></li>
+        <li v-for="c in (item.owned ?? item.contribution)" :key="c" class="grid grid-cols-[1rem_1fr]"><span class="text-text-muted" aria-hidden="true">–</span><span>{{ c }}</span></li>
       </ul>
     </section>
 
@@ -91,8 +92,8 @@ const facts = [
 
 useSeoMeta({
   title: `${item.name} | Yusuf Akinleye`,
-  description: item.description,
+  description: item.what,
   ogTitle: item.name,
-  ogDescription: item.description,
+  ogDescription: item.what,
 })
 </script>

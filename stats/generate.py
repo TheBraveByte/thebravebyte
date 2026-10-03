@@ -1,11 +1,12 @@
 """Generate the profile stats card (light and dark SVG) from real GitHub data.
 
 Contributions and streaks come from the public contribution calendar, which includes
-private work because the profile shows private contributions. Language shares come from
-stats/languages.json, measured across every repository, private ones included, which a
-workflow token can't see, so that file is refreshed by hand.
+private work because the profile shows private contributions. Language shares are
+measured across every repository I own or contribute to, private ones included, when
+STATS_TOKEN (a token that can read those repositories) is set; otherwise the last
+measurement in stats/languages.json is used.
 
-Usage: GITHUB_TOKEN=... python3 stats/generate.py
+Usage: GITHUB_TOKEN=... [STATS_TOKEN=...] python3 stats/generate.py
 """
 import datetime
 import json
@@ -38,11 +39,65 @@ SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-se
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
 
-def calendar():
-    body = json.dumps({"query": QUERY, "variables": {"login": LOGIN}}).encode()
+def gql(token, query, **variables):
+    body = json.dumps({"query": query, "variables": variables}).encode()
     req = urllib.request.Request("https://api.github.com/graphql", data=body, headers={
-        "Authorization": f"bearer {os.environ['GITHUB_TOKEN']}", "Content-Type": "application/json"})
-    data = json.load(urllib.request.urlopen(req))["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+        "Authorization": f"bearer {token}", "Content-Type": "application/json"})
+    out = json.load(urllib.request.urlopen(req))
+    if "errors" in out and not out.get("data"):
+        raise RuntimeError(out["errors"])
+    return out["data"]
+
+
+# Rixl repositories owned by teammates; my few commits there aren't my work.
+TEAMMATE_REPOS = {"rixlhq/zipsy-api", "rixlhq/zipsy-miniapp", "rixlhq/dashboard", "rixlhq/videosdk",
+                  "rixlhq/auth-lib-js", "rixlhq/core-infra", "rixlhq/blog-posts"}
+# Four Rixl services were split from one repository and share its history, so these
+# commits appear in each of them. Measured once on 2026-10-03; the history is fixed.
+SHARED_HISTORY_GO_COMMITS = 1242
+
+
+def languages(token):
+    me = gql(token, '{ viewer { id login } }')["viewer"]
+    repos = set()
+    for field, args in [("repositories", "ownerAffiliations: OWNER, isFork: false"),
+                        ("repositoriesContributedTo", "includeUserRepositories: false, contributionTypes: [COMMIT]")]:
+        cursor = None
+        while True:
+            after = f', after: "{cursor}"' if cursor else ""
+            page = gql(token, f'{{ viewer {{ {field}(first: 100, {args}{after}) {{ nodes {{ nameWithOwner }} pageInfo {{ hasNextPage endCursor }} }} }} }}')["viewer"][field]
+            repos.update(n["nameWithOwner"] for n in page["nodes"])
+            if not page["pageInfo"]["hasNextPage"]:
+                break
+            cursor = page["pageInfo"]["endCursor"]
+    counts = {}
+    query = """query($o: String!, $n: String!, $id: ID!) { repository(owner: $o, name: $n) {
+      isFork primaryLanguage { name }
+      defaultBranchRef { target { ... on Commit { history(author: {id: $id}) { totalCount } } } } } }"""
+    for full in sorted(repos - TEAMMATE_REPOS):
+        owner, name = full.split("/")
+        try:
+            r = gql(token, query, o=owner, n=name, id=me["id"])["repository"]
+        except Exception:
+            continue
+        if not r or r["isFork"] or not r["defaultBranchRef"]:
+            continue
+        n = r["defaultBranchRef"]["target"]["history"]["totalCount"]
+        if n:
+            lang = (r["primaryLanguage"] or {}).get("name", "Other")
+            counts[lang] = counts.get(lang, 0) + n
+    counts["Go"] = counts.get("Go", 0) - SHARED_HISTORY_GO_COMMITS
+    total = sum(counts.values())
+    top = [l for l, _ in sorted(counts.items(), key=lambda kv: -kv[1]) if l != "Other"][:4]
+    shares = [{"name": l, "share": round(100 * counts[l] / total, 1)} for l in top]
+    shares.append({"name": "Other", "share": round(100 - sum(x["share"] for x in shares), 1)})
+    return {"measured": datetime.date.today().isoformat(),
+            "method": "Commits on the default branch of every repository I own or contribute to, by the repository's primary language, with history shared between split Rixl services counted once.",
+            "total_commits": total, "languages": shares}
+
+
+def calendar():
+    data = gql(os.environ["GITHUB_TOKEN"], QUERY, login=LOGIN)["user"]["contributionsCollection"]["contributionCalendar"]
     days = [d for w in data["weeks"] for d in w["contributionDays"]]
     return data["totalContributions"], days
 
@@ -106,7 +161,7 @@ def card(theme, total, days, langs):
     updated = fmt_day(days[-1]["date"])
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200" role="img" aria-labelledby="t d">
 <title id="t">Yusuf Akinleye on GitHub</title>
-<desc id="d">{total:,} contributions in the last year, active on {active} of {len(days)} days. Current streak {current} days, longest {best} days. Commits by language: {", ".join(f'{l["name"]} {l["share"]:.0f}%' for l in langs["languages"])}.</desc>
+<desc id="d">{total:,} contributions in the last year, active on {active} of {len(days)} days. Current streak {current} days, longest {best} days. Languages: {", ".join(f'{l["name"]} {l["share"]:.0f}%' for l in langs["languages"])}.</desc>
 <rect x="0.5" y="0.5" width="799" height="199" rx="8" fill="{t["bg"]}" stroke="{t["edge"]}"/>
 <text x="32" y="44" font-family="{SANS}" font-size="12" fill="{t["muted"]}">Contributions, last 12 months</text>
 <text x="32" y="86" font-family="{SANS}" font-size="38" font-weight="600" fill="{t["ink"]}" letter-spacing="-1">{total:,}</text>
@@ -119,8 +174,8 @@ def card(theme, total, days, langs):
 <text x="328" y="148" font-family="{SANS}" font-size="20" font-weight="600" fill="{t["ink"]}">{best} <tspan font-size="13" font-weight="400" fill="{t["muted"]}">days</tspan></text>
 <text x="328" y="166" font-family="{MONO}" font-size="10.5" fill="{t["muted"]}">{fmt_day(bs)} to {fmt_day(be)}</text>
 <line x1="532" y1="32" x2="532" y2="168" stroke="{t["edge"]}"/>
-<text x="560" y="44" font-family="{SANS}" font-size="12" fill="{t["muted"]}">Commits by language</text>
-<text x="560" y="60" font-family="{MONO}" font-size="10.5" fill="{t["muted"]}">{langs["total_commits"]:,} commits, all repositories</text>
+<text x="560" y="44" font-family="{SANS}" font-size="12" fill="{t["muted"]}">Languages</text>
+<text x="560" y="60" font-family="{MONO}" font-size="10.5" fill="{t["muted"]}">all repositories, private included</text>
 {segs}
 {legend}
 <text x="768" y="186" text-anchor="end" font-family="{MONO}" font-size="9.5" fill="{t["muted"]}">updated {updated}</text>
@@ -130,7 +185,11 @@ def card(theme, total, days, langs):
 
 def main():
     total, days = calendar()
-    langs = json.loads((HERE / "languages.json").read_text())
+    if os.environ.get("STATS_TOKEN"):
+        langs = languages(os.environ["STATS_TOKEN"])
+        (HERE / "languages.json").write_text(json.dumps(langs, indent=2) + "\n")
+    else:
+        langs = json.loads((HERE / "languages.json").read_text())
     for theme in THEMES:
         (HERE / f"card-{theme}.svg").write_text(card(theme, total, days, langs))
     print(f"{total:,} contributions; cards written")

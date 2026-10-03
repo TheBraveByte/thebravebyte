@@ -16,7 +16,7 @@
               <span><span class="quiet-link text-text">{{ w.name }}</span><span v-if="w.status" class="ml-3 font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span></span>
               <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years }}</span>
             </span>
-            <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ w.description }}</span>
+            <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ w.what }}</span>
             <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ w.role }}<template v-if="w.duration"> · {{ w.duration }}</template></span>
           </NuxtLink>
         </li>

@@ -10,8 +10,8 @@
 
     <div class="mt-8 space-y-4 text-text-secondary">
       <p class="text-[19px] leading-snug text-text">
-        I'm a backend and platform engineer in Lagos, Nigeria. I've written production software
-        since 2019, mostly Go services for payments, billing, ledgers and background jobs.
+        I'm a backend software and platform engineer. I've written production software since 2019,
+        most of it the backend of payment and media products.
       </p>
       <p>
         I like the part of a system that has to stay correct when something goes wrong: a payment
@@ -61,6 +61,6 @@ const roles = [
 
 useSeoMeta({
   title: 'About | Yusuf Akinleye',
-  description: 'Backend and platform engineer in Lagos, Nigeria. Go services for payments, billing, ledgers and background jobs.',
+  description: 'Backend software and platform engineer. I build reliable systems.',
 })
 </script>
