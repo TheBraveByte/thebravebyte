@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif: "Merriweather", "Georgia", serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Kept as an alias so older components (admin, article renderer) still resolve. */
+  --font-serif: "Geist", ui-sans-serif, system-ui, sans-serif;
 
   --color-bg: var(--color-bg);
   --color-bg-secondary: var(--color-bg-secondary);
@@ -14,68 +15,93 @@
   --color-text-muted: var(--color-text-muted);
   --color-accent: var(--color-accent);
   --color-accent-hover: var(--color-accent-hover);
+  --color-on-accent: var(--color-on-accent);
+  --color-warn: var(--color-warn);
+  --color-danger: var(--color-danger);
   --color-ink: var(--color-ink);
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
   --color-error: var(--color-error);
 }
 
+/* Dark ink ground, one signal-green accent ("settled"). Amber and red exist only as
+   real states inside the payout simulation. See docs/DESIGN.md. */
 :root {
-  --color-bg: #fafaf7;
-  --color-bg-secondary: #f2f1ea;
-  --color-bg-tertiary: #e8e6dd;
-  --color-border: #d8d6cd;
-  --color-text: #1a1a1a;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #777777;
-  --color-ink: #1a1a1a;
+  --color-bg: #f5f6f8;
+  --color-bg-secondary: #eceef2;
+  --color-bg-tertiary: #e2e5ea;
+  --color-border: #d5d9e0;
+  --color-text: #12141a;
+  --color-text-secondary: #424854;
+  --color-text-muted: #5f6672;
+  --color-ink: #12141a;
 
-  --color-accent: #1a1a1a;
-  --color-accent-hover: #000000;
-  --color-accent-glow: rgba(26, 26, 26, 0.08);
+  --color-accent: #0a7d52;
+  --color-accent-hover: #08643f;
+  --color-on-accent: #ffffff;
+  --color-accent-glow: rgba(10, 125, 82, 0.16);
+  --color-warn: #a35a0b;
+  --color-danger: #b42318;
+  --glow-a: rgba(10, 125, 82, 0.14);
+  --glow-b: rgba(36, 69, 201, 0.08);
+  --dot: rgba(18, 20, 26, 0.10);
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-edge: rgba(18, 20, 26, 0.08);
+  --glass-hi: rgba(255, 255, 255, 0.9);
 
-  --color-success: #2f7d32;
-  --color-warning: #b45309;
-  --color-error: #b91c1c;
+  --color-success: #0a7d52;
+  --color-warning: #a35a0b;
+  --color-error: #b42318;
 
-  --color-code-bg: #f2f1ea;
-  --color-code-text: #1a1a1a;
-  --hljs-comment: #6b6b6b;
-  --hljs-keyword: #7c3aed;
-  --hljs-string: #166534;
-  --hljs-title: #1a1a1a;
-  --hljs-variable: #b45309;
-  --hljs-built_in: #1e3a8a;
-  --hljs-deletion: #b91c1c;
+  --color-code-bg: #eceef2;
+  --color-code-text: #12141a;
+  --hljs-comment: #5f6672;
+  --hljs-keyword: #0a7d52;
+  --hljs-string: #2445c9;
+  --hljs-title: #12141a;
+  --hljs-variable: #a35a0b;
+  --hljs-built_in: #08643f;
+  --hljs-deletion: #b42318;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dark {
-  --color-bg: #161613;
-  --color-bg-secondary: #1f1f1b;
-  --color-bg-tertiary: #2a2a26;
-  --color-border: #2f2f2a;
-  --color-text: #ececec;
-  --color-text-secondary: #b8b6ac;
-  --color-text-muted: #7f7d74;
-  --color-ink: #ececec;
+  --color-bg: #0a0c10;
+  --color-bg-secondary: #11141a;
+  --color-bg-tertiary: #181c24;
+  --color-border: #232834;
+  --color-text: #eceef2;
+  --color-text-secondary: #a9afbb;
+  --color-text-muted: #808794;
+  --color-ink: #eceef2;
 
-  --color-accent: #ececec;
-  --color-accent-hover: #ffffff;
-  --color-accent-glow: rgba(236, 236, 236, 0.08);
+  --color-accent: #3fe0a0;
+  --color-accent-hover: #7aecc0;
+  --color-on-accent: #05130d;
+  --color-accent-glow: rgba(63, 224, 160, 0.16);
+  --color-warn: #f2b450;
+  --color-danger: #ff7a6e;
+  --glow-a: rgba(63, 224, 160, 0.13);
+  --glow-b: rgba(70, 110, 255, 0.10);
+  --dot: rgba(236, 238, 242, 0.08);
+  --glass: rgba(17, 20, 26, 0.55);
+  --glass-edge: rgba(236, 238, 242, 0.09);
+  --glass-hi: rgba(255, 255, 255, 0.07);
 
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-error: #f87171;
+  --color-success: #3fe0a0;
+  --color-warning: #f2b450;
+  --color-error: #ff7a6e;
 
-  --color-code-bg: #1f1f1b;
-  --color-code-text: #ececec;
-  --hljs-comment: #7f7d74;
-  --hljs-keyword: #c084fc;
-  --hljs-string: #86efac;
-  --hljs-title: #ececec;
-  --hljs-variable: #fbbf24;
-  --hljs-built_in: #93c5fd;
-  --hljs-deletion: #f87171;
+  --color-code-bg: #11141a;
+  --color-code-text: #eceef2;
+  --hljs-comment: #808794;
+  --hljs-keyword: #3fe0a0;
+  --hljs-string: #8ea2ff;
+  --hljs-title: #eceef2;
+  --hljs-variable: #f2b450;
+  --hljs-built_in: #7aecc0;
+  --hljs-deletion: #ff7a6e;
 }
 
 @layer base {
@@ -86,7 +112,7 @@
     font-family: var(--font-sans);
     background-color: var(--color-bg);
     color: var(--color-text);
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.6;
     transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-font-smoothing: antialiased;
@@ -130,7 +156,13 @@
     transition: text-decoration-color 0.15s ease;
   }
   .prose-link:hover {
-    text-decoration-color: var(--color-ink);
+    text-decoration-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   [data-reveal] {
@@ -158,33 +190,87 @@
 
 @layer components {
   .container-wide {
-    max-width: 1040px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-wide { padding: 0 2rem; }
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium transition-colors;
-    background-color: var(--color-ink);
-    color: var(--color-bg);
-    border: 1px solid var(--color-ink);
-    border-radius: 6px;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 120ms var(--ease-out);
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
   }
-  .btn-primary:hover { background-color: var(--color-accent-hover); }
+  .btn-primary:hover { background-color: var(--color-accent-hover); border-color: var(--color-accent-hover); }
+  .btn-primary:active, .btn-secondary:active { transform: translateY(1px); }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium transition-colors;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 120ms var(--ease-out);
     background-color: transparent;
     color: var(--color-text);
     border: 1px solid var(--color-border);
-    border-radius: 6px;
+    border-radius: 999px;
   }
   .btn-secondary:hover {
-    border-color: var(--color-ink);
+    border-color: var(--color-text-muted);
     background-color: var(--color-bg-secondary);
   }
 }
 
 :root {
   --header-height: 3.5rem;
+}
+
+/* Ambient ground: two soft lights, a dot matrix that fades out, and grain on a fixed
+   layer. Transform-only drift, paused under reduced motion. */
+@layer components {
+  .ambient { position: relative; isolation: isolate; }
+  .ambient::before {
+    content: ""; position: absolute; inset: -10% -10% auto -10%; height: 120%; z-index: -1;
+    background:
+      radial-gradient(40% 45% at 72% 38%, var(--glow-a), transparent 70%),
+      radial-gradient(35% 40% at 20% 10%, var(--glow-b), transparent 70%);
+    pointer-events: none;
+  }
+  .ambient::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(70% 60% at 70% 30%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(70% 60% at 70% 30%, #000 20%, transparent 75%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ambient::before { animation: drift 18s ease-in-out infinite alternate; }
+  }
+  @keyframes drift { to { transform: translate3d(-3%, 2%, 0) scale(1.04); } }
+
+  .grain {
+    position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Glass: header and the simulation bezel only, always over the ambient light. */
+  .glass {
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--glass-edge);
+    box-shadow: inset 0 1px 0 var(--glass-hi), 0 30px 80px -30px rgba(0, 0, 0, 0.45);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass { background: var(--color-bg-secondary); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+
+  /* Media frames: the image moves on hover, never the card. */
+  .media-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--color-border); background: var(--color-bg-secondary); }
+  .media-frame img { transition: transform 600ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .media-frame img { transform: scale(1.03); }
+  }
 }

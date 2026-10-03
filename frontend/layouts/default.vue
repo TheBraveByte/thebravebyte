@@ -1,48 +1,33 @@
 <template>
-  <div class="app-layout">
-    <TheHeader @open-palette="showCommandPalette = true" />
-    <main class="main-content">
+  <div class="flex min-h-[100dvh] flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-bg focus:px-3 focus:py-2 focus:text-sm"
+    >
+      Skip to content
+    </a>
+    <div class="grain" aria-hidden="true" />
+    <TheHeader />
+    <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="border-t border-border mt-20">
-      <div class="container-wide py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-text-muted">
-        <span>© {{ new Date().getFullYear() }} Yusuf Akinleye</span>
-        <span class="flex items-center gap-2">
-          <span class="inline-block w-1.5 h-1.5 rounded-full bg-success"></span>
-          Available · Remote · UTC+1
-        </span>
+    <footer class="border-t border-border">
+      <div class="container-wide flex flex-col gap-4 py-10 text-sm text-text-muted md:flex-row md:items-center md:justify-between">
+        <span>© {{ year }} Yusuf Akinleye</span>
+        <nav aria-label="Elsewhere" class="flex flex-wrap gap-x-6 gap-y-2">
+          <a v-for="l in links" :key="l.href" :href="l.href" class="hover:text-text transition-colors" :rel="l.external ? 'noopener noreferrer' : undefined" :target="l.external ? '_blank' : undefined">{{ l.label }}</a>
+        </nav>
       </div>
     </footer>
-    <CommandPalette v-if="showCommandPalette" @close="showCommandPalette = false" />
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-
-const showCommandPalette = ref(false);
-
-const handleKeydown = (e) => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    showCommandPalette.value = !showCommandPalette.value;
-  }
-};
-
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown);
-});
+<script setup lang="ts">
+const year = new Date().getFullYear()
+const links = [
+  { label: 'Email', href: 'mailto:ayaaakinleye@gmail.com', external: false },
+  { label: 'GitHub', href: 'https://github.com/TheBraveByte', external: true },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/', external: true },
+  { label: 'FoldLabs', href: 'https://foldlabs.pro', external: true },
+]
 </script>
-
-<style scoped>
-.app-layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.main-content { flex: 1; }
-</style>

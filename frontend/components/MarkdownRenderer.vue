@@ -215,8 +215,8 @@ function addZoomPanToMermaid() {
 <style scoped>
 /* ─── Base ─────────────────────────────────────────────────── */
 .markdown-body {
-  color: var(--color-text, #e2e8f0);
-  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-size: inherit;
   line-height: 1.75;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -235,7 +235,6 @@ function addZoomPanToMermaid() {
   line-height: 1.25;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  text-align: center;
 }
 
 .markdown-body :deep(h1) { font-size: 2rem; margin-top: 0; }
@@ -266,14 +265,14 @@ function addZoomPanToMermaid() {
 
 /* ─── Links ─────────────────────────────────────────────────── */
 .markdown-body :deep(a) {
-  color: #38bdf8;
+  color: var(--color-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: color 0.15s;
 }
 
 .markdown-body :deep(a:hover) {
-  color: #7dd3fc;
+  color: var(--color-accent-hover);
 }
 
 /* ─── Lists ─────────────────────────────────────────────────── */
@@ -326,14 +325,14 @@ function addZoomPanToMermaid() {
 
 /* ─── Code (inline) ─────────────────────────────────────────── */
 .markdown-body :deep(code:not(.hljs)) {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 5px;
   padding: 0.15em 0.45em;
-  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-family: var(--font-mono);
   font-size: 0.88em;
-  color: #f472b6;
-  word-break: break-all;
+  color: var(--color-text);
+  word-break: normal; overflow-wrap: anywhere;
 }
 
 /* ─── Code blocks (fenced) ──────────────────────────────────── */
@@ -356,7 +355,7 @@ function addZoomPanToMermaid() {
   border: none;
   padding: 0;
   border-radius: 0;
-  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-family: var(--font-mono);
   font-size: 11.5px;
   line-height: 1.65;
   color: var(--color-code-text, #e2e8f0);

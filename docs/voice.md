@@ -58,8 +58,9 @@ where readers may not be engineers.
 - "Postgres" in prose; "PostgreSQL" in stack lines and technical specs.
 - Digits for every number. Every number must be traceable to the
   engineering-contributions claim store; if it isn't, leave it out.
-- Name employers only where they are already public (Rixl). Describe client and
-  employer work by domain ("a remittance platform, client project").
+- Name employers that are already listed publicly (Rixl, Paymax, Eazyfit). Describe
+  client projects by domain ("a remittance platform, client project"). Scholnet is
+  under NDA and never appears. Busha stays off every surface for now.
 
 ## Paired examples
 

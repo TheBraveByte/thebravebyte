@@ -8,6 +8,10 @@ export default defineNuxtConfig({
     preset: process.env.VERCEL ? "vercel" : "cloudflare-pages",
     routeRules: {
       "/api/_nuxt_icon/**": {},
+      "/blog": { redirect: { to: "/writing", statusCode: 301 } },
+      "/article/**": { redirect: { to: "/writing/**", statusCode: 301 } },
+      "/process": { redirect: { to: "/work", statusCode: 301 } },
+      "/cv": { redirect: { to: "/about", statusCode: 301 } },
       "/api/**": {
         proxy: process.env.NUXT_PUBLIC_API_BASE
           ? `${process.env.NUXT_PUBLIC_API_BASE}/**`
@@ -34,15 +38,14 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: "",
-    preference: "light",
+    preference: "dark",
     fallback: "light",
   },
 
   googleFonts: {
     families: {
-      Inter: [400, 500, 600, 700],
-      "JetBrains Mono": [400, 500],
-      Merriweather: [400, 700],
+      Geist: [400, 500, 600],
+      "Geist Mono": [400, 500],
     },
     display: "swap",
     prefetch: true,
@@ -51,6 +54,8 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    // Engineering notes live in ../../stories so GitHub and the site share one source.
+    server: { fs: { allow: [".."] } },
     build: {
       sourcemap: false,
     },
@@ -72,7 +77,7 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
     head: {
       htmlAttrs: { lang: "en" },
-      title: "The Brave Byte | Yusuf Akinleye",
+      title: "Yusuf Akinleye",
       link: [
         { rel: "icon", type: "image/svg+xml", href: "/logo-ya.svg" },
         { rel: "icon", type: "image/png", href: "/logo-ya-light.png" },
@@ -81,14 +86,14 @@ export default defineNuxtConfig({
         {
           name: "description",
           content:
-            "Yusuf Akinleye — backend engineer building APIs and distributed systems in Go and Python.",
+            "Yusuf Akinleye, software engineer. Backend systems in Go: payments, APIs and background jobs.",
         },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { property: "og:title", content: "The Brave Byte | Yusuf Akinleye" },
+        { property: "og:title", content: "Yusuf Akinleye" },
         {
           property: "og:description",
           content:
-            "Backend engineer building high-performance systems, APIs, and distributed architectures.",
+            "Software engineer. Backend systems in Go: payments, APIs and background jobs.",
         },
         {
           property: "og:image",
