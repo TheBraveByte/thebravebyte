@@ -1,0 +1,27 @@
+{
+  "measured": "2026-10-03",
+  "method": "Commits on the default branch of every repository I own or contribute to, by the repository's primary language, with history shared between split Rixl services counted once.",
+  "total_commits": 10380,
+  "languages": [
+    {
+      "name": "Go",
+      "share": 68.7
+    },
+    {
+      "name": "TypeScript",
+      "share": 14.1
+    },
+    {
+      "name": "Vue",
+      "share": 7.4
+    },
+    {
+      "name": "Python",
+      "share": 3.0
+    },
+    {
+      "name": "Other",
+      "share": 6.8
+    }
+  ]
+}

@@ -5,23 +5,27 @@
       <div class="media aspect-square w-14 shrink-0 rounded-full">
         <Media name="yusuf" alt="Yusuf Akinleye" :width="800" :height="758" :widths="[480]" sizes="56px" position="object-[50%_18%]" eager />
       </div>
-      <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">It started with a fire alarm</h1>
+      <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">About</h1>
     </div>
 
     <div class="mt-8 space-y-4 text-text-secondary">
-      <p>
-        My final-year engineering project at the University of Ilorin was a fire detector on an
-        8-bit board. The hard part wasn't the model. It was deciding when to sound the alarm,
-        because a missed fire costs far more than a false one.
-      </p>
-      <p class="text-text">
-        I've been answering the same question since, with more at stake: what should a system
-        do when it isn't sure?
+      <p class="text-[19px] leading-snug text-text">
+        I'm a backend and platform engineer in Lagos, Nigeria. I've written production software
+        since 2019, mostly Go services for payments, billing, ledgers and background jobs.
       </p>
       <p>
-        In payments it means a payout with no answer is marked unsure, so nobody is paid twice.
-        I've written production code since 2019, Go backends for most of it. I'm based in
-        Lagos, Nigeria, and run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>.
+        I like the part of a system that has to stay correct when something goes wrong: a payment
+        provider that never answers, a worker that dies halfway through a job, a request that
+        arrives twice. I design for those cases first, not after the first incident.
+      </p>
+      <p>
+        That habit started with my final-year project in Electrical and Electronics Engineering at
+        the University of Ilorin: a fire detector on an 8-bit board, where the hardest decision was
+        when to raise the alarm.
+      </p>
+      <p>
+        I run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>,
+        a small studio that designs and builds products for clients, and I'm currently learning Zig.
       </p>
     </div>
     </div>
@@ -57,6 +61,6 @@ const roles = [
 
 useSeoMeta({
   title: 'About | Yusuf Akinleye',
-  description: 'From a fire detector on an 8-bit board to payment systems: what a system should do when it isn\'t sure.',
+  description: 'Backend and platform engineer in Lagos, Nigeria. Go services for payments, billing, ledgers and background jobs.',
 })
 </script>
