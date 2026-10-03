@@ -4,7 +4,7 @@
       When {{ risk.when }},
     </p>
     <p class="mt-1 grid grid-cols-[1.25rem_1fr] text-[16px] leading-relaxed text-text-secondary">
-      <span class="text-accent" aria-hidden="true">→</span>
+      <span class="when-arrow text-accent" aria-hidden="true">→</span>
       <span>
         {{ risk.then }}
         <NuxtLink

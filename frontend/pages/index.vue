@@ -1,25 +1,25 @@
 <template>
   <div class="page pt-14 md:pt-24">
     <div class="offset">
-      <p class="font-mono text-[13px] text-text-muted">Yusuf Akinleye</p>
-      <h1 class="mt-4 max-w-[16ch] text-[38px] font-semibold leading-[1.05] tracking-[-0.045em] md:text-[56px]">
-        Backend Software &amp; Platform Engineer
+      <p class="enter font-mono text-[13px] text-text-muted">Yusuf Akinleye</p>
+      <h1 class="rise-words mt-4 max-w-[16ch] text-[38px] font-semibold leading-[1.05] tracking-[-0.045em] md:text-[56px]" aria-label="Backend Software & Platform Engineer">
+        <template v-for="(word, i) in headline" :key="i"><span class="w" aria-hidden="true"><span :style="{ '--i': i }">{{ word }}</span></span>{{ ' ' }}</template>
       </h1>
-      <p class="mt-5 text-[18px] text-text-secondary md:text-[20px]">I build reliable systems.</p>
-      <p class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[13px]">
+      <p class="enter mt-5 text-[18px] text-text-secondary md:text-[20px]" style="--i: 6">I build reliable systems.</p>
+      <p class="enter mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[13px]" style="--i: 7">
         <NuxtLink to="/work" class="inline-flex items-center gap-1.5 text-text hover:text-accent">
-          Work <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" aria-hidden="true" />
+          Work <Icon name="lucide:arrow-right" class="arrow-r h-3.5 w-3.5" aria-hidden="true" />
         </NuxtLink>
         <a href="https://foldlabs.pro" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-text-muted hover:text-text">
-          Building with FoldLabs <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
+          Building with FoldLabs <Icon name="lucide:arrow-up-right" class="arrow-ur h-3.5 w-3.5 opacity-60" aria-hidden="true" />
         </a>
       </p>
     </div>
 
     <section class="rail mt-20" aria-labelledby="selected">
-      <h2 id="selected" class="rail-label">Selected work</h2>
+      <h2 id="selected" class="rail-label" data-reveal>Selected work</h2>
       <ul class="space-y-9">
-        <li v-for="w in publicWork" :key="w.slug">
+        <li v-for="(w, i) in publicWork" :key="w.slug" data-reveal :style="{ '--i': i + 1 }">
           <p class="flex flex-wrap items-baseline gap-x-3">
             <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[17px] font-semibold text-text">{{ w.name }}</NuxtLink>
             <span class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span>
@@ -27,7 +27,7 @@
           <p class="mt-1 text-[15px] text-text">{{ w.what }}</p>
           <p class="mt-1 text-[15px] text-text-secondary">{{ w.myRole }}</p>
           <p class="mt-2 flex flex-wrap gap-x-5 font-mono text-[13px]">
-            <NuxtLink :to="`/work/${w.slug}`" class="inline-flex items-center gap-1.5 text-text-muted hover:text-text">View project <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" aria-hidden="true" /></NuxtLink>
+            <NuxtLink :to="`/work/${w.slug}`" class="inline-flex items-center gap-1.5 text-text-muted hover:text-text">View project <Icon name="lucide:arrow-right" class="arrow-r h-3.5 w-3.5" aria-hidden="true" /></NuxtLink>
             <OutLink v-for="l in w.links.slice(0, 1)" :key="l.href" :href="l.href" :label="l.label === 'Code' ? 'GitHub' : l.label" class="text-text-muted hover:text-text" />
           </p>
         </li>
@@ -35,9 +35,9 @@
     </section>
 
     <section class="rail mt-16" aria-labelledby="experience">
-      <h2 id="experience" class="rail-label">Experience</h2>
+      <h2 id="experience" class="rail-label" data-reveal>Experience</h2>
       <ul class="space-y-9">
-        <li v-for="w in experience" :key="w.slug">
+        <li v-for="(w, i) in experience" :key="w.slug" data-reveal :style="{ '--i': i + 1 }">
           <p class="flex items-baseline justify-between gap-4">
             <span class="flex flex-wrap items-baseline gap-x-3">
               <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[17px] font-semibold text-text">{{ w.name }}</NuxtLink>
@@ -54,15 +54,15 @@
           </p>
         </li>
       </ul>
-      <p class="mt-8 text-[16px] text-text-muted md:col-start-2">
+      <p class="mt-8 text-[16px] text-text-muted md:col-start-2" data-reveal>
         I've also built private systems for clients: payments, compliance, trading and commerce.
       </p>
     </section>
 
     <section class="rail mt-16" aria-labelledby="stories">
-      <h2 id="stories" class="rail-label">Developer stories</h2>
+      <h2 id="stories" class="rail-label" data-reveal>Developer stories</h2>
       <ul class="space-y-4">
-        <li v-for="n in notes.slice(0, 3)" :key="n.slug">
+        <li v-for="(n, i) in notes.slice(0, 3)" :key="n.slug" data-reveal :style="{ '--i': i + 1 }">
           <NuxtLink :to="`/writing/${n.slug}`" class="group block">
             <span class="quiet-link text-text">{{ n.short }}</span>
             <span class="mt-0.5 block text-[16px] text-text-secondary">{{ n.lesson }}</span>
@@ -72,8 +72,8 @@
     </section>
 
     <section class="rail mt-16" aria-labelledby="contact">
-      <h2 id="contact" class="rail-label">Contact</h2>
-      <SocialLinks class="font-mono text-[13px] text-text-secondary" />
+      <h2 id="contact" class="rail-label" data-reveal>Contact</h2>
+      <SocialLinks class="font-mono text-[13px] text-text-secondary" data-reveal style="--i: 1" />
     </section>
   </div>
 </template>
@@ -82,6 +82,7 @@
 import { work } from '~/data/work'
 import { notes } from '~/utils/notes'
 
+const headline = ['Backend', 'Software', '&', 'Platform', 'Engineer']
 const publicWork = work.filter(w => w.kind === 'public' && w.slug !== 'eazyfit')
 const experience = ['rixl', 'eazyfit'].map(slug => work.find(w => w.slug === slug)!)
 

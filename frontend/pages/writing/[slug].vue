@@ -1,13 +1,14 @@
 <template>
   <div class="page pt-14 md:pt-20">
+    <div class="read-progress" aria-hidden="true" />
     <div class="offset">
       <!-- Engineering note, from the repo's stories/ folder -->
       <article>
-        <header>
+        <header class="enter">
           <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.035em] md:text-[34px]">{{ note.title }}</h1>
           <p class="mt-3 font-mono text-[13px] text-text-muted">{{ note.context }}</p>
         </header>
-        <div class="prose-content mt-10">
+        <div class="prose-content enter mt-10" style="--i: 2">
           <MarkdownRenderer :content="note.body" />
         </div>
       </article>

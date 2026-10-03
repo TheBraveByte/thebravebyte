@@ -1,6 +1,6 @@
 <template>
   <div class="page pt-14 md:pt-20">
-    <div class="offset">
+    <div class="offset enter">
       <h1 class="text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">Work</h1>
       <p class="mt-4 text-text-secondary">
         Public and live work first, then the companies I've built for. Private client systems are
@@ -8,9 +8,9 @@
       </p>
     </div>
     <section v-for="g in groups" :key="g.label" class="rail mt-12" :aria-label="g.label">
-      <h2 class="rail-label">{{ g.label }}</h2>
+      <h2 class="rail-label" data-reveal>{{ g.label }}</h2>
       <ul class="space-y-7">
-        <li v-for="w in g.items" :key="w.slug">
+        <li v-for="(w, i) in g.items" :key="w.slug" data-reveal :style="{ '--i': i + 1 }">
           <NuxtLink :to="`/work/${w.slug}`" class="group block">
             <span class="flex items-baseline justify-between gap-4">
               <span><span class="quiet-link text-text">{{ w.name }}</span><span v-if="w.status" class="ml-3 font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span></span>

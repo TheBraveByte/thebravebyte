@@ -228,3 +228,73 @@
   .quiet-link:hover { text-decoration-color: currentColor; }
   .media { overflow: hidden; border-radius: 6px; background: var(--color-bg-secondary); box-shadow: 0 0 0 1px var(--color-border); }
 }
+
+/* ─── Motion ─────────────────────────────────────────────────────────────────
+   One curve (--ease-out), short durations, transform and opacity only.
+   - .enter: plays once on load (hero), staggered by --i.
+   - .rise-words: headline words lift out of a mask.
+   - [data-reveal]: hidden until scrolled into view (plugins/reveal.client.ts adds
+     [data-in]). Hidden only when html has .js-reveal, which an inline head script
+     sets, so without JS or with reduced motion everything is simply visible.
+   - Scroll progress on notes uses a scroll-driven animation where supported. */
+@keyframes enter { from { opacity: 0; transform: translateY(12px); } }
+@keyframes word-rise { from { transform: translateY(105%); } }
+
+.enter { animation: enter 800ms var(--ease-out) both; animation-delay: calc(120ms + var(--i, 0) * 80ms); }
+
+.rise-words .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.rise-words .w > span { display: inline-block; animation: word-rise 900ms var(--ease-out) both; animation-delay: calc(80ms + var(--i, 0) * 70ms); }
+
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js-reveal [data-reveal][data-in] { opacity: 1; transform: none; }
+
+/* Images wipe open from the bottom edge instead of fading. The clip sits on the child:
+   an element clipped to nothing never counts as visible to IntersectionObserver. */
+.js-reveal [data-reveal="wipe"] { opacity: 1; transform: none; }
+.js-reveal [data-reveal="wipe"] > * { clip-path: inset(100% 0 0 0); transition: clip-path 1100ms var(--ease-out); }
+.js-reveal [data-reveal="wipe"][data-in] > * { clip-path: inset(0 0 0 0); }
+.js-reveal [data-reveal="wipe"] img { transform: scale(1.06); transition: transform 1400ms var(--ease-out); }
+.js-reveal [data-reveal="wipe"][data-in] img { transform: none; }
+
+/* Chains (an ownership trail): each step lands in turn. */
+.js-reveal [data-reveal="chain"] { opacity: 1; transform: none; }
+.js-reveal [data-reveal="chain"] > * { opacity: 0; transform: translateX(-8px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
+.js-reveal [data-reveal="chain"][data-in] > * { opacity: 1; transform: none; }
+
+/* Arrows lean toward where they go. */
+.arrow-r, .arrow-ur, .arrow-l { transition: transform 220ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  a:hover .arrow-r { transform: translateX(3px); }
+  a:hover .arrow-l { transform: translateX(-3px); }
+  a:hover .arrow-ur { transform: translate(2px, -2px); }
+}
+
+/* Route changes: a quick crossfade so pages don't snap. */
+.page-enter-active, .page-leave-active { transition: opacity 200ms ease, transform 260ms var(--ease-out); }
+.page-enter-from { opacity: 0; transform: translateY(6px); }
+.page-leave-to { opacity: 0; }
+
+/* Reading progress on notes: a hairline in the signal colour. */
+.read-progress { position: fixed; inset: 0 0 auto 0; height: 2px; background: var(--color-accent); transform-origin: 0 50%; transform: scaleX(0); z-index: 40; pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  .read-progress { animation: read-progress linear both; animation-timeline: scroll(root); }
+}
+@supports not (animation-timeline: scroll()) { .read-progress { display: none; } }
+@keyframes read-progress { to { transform: scaleX(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .enter, .rise-words .w > span { animation: none; }
+  .page-enter-active, .page-leave-active { transition: opacity 120ms ease; }
+  .page-enter-from { transform: none; }
+  .read-progress { display: none; }
+}
+
+/* "When X, → then Y": the arrow arrives just after its line, so the eye reads the turn. */
+.when-arrow { display: inline-block; }
+.js-reveal [data-reveal] .when-arrow { opacity: 0; transform: translateX(-8px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms + 260ms); }
+.js-reveal [data-reveal][data-in] .when-arrow { opacity: 1; transform: none; }

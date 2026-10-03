@@ -74,9 +74,14 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: "en" },
       title: "Yusuf Akinleye",
+      // Opt in to scroll reveals before first paint; skipped for reduced motion. If the
+      // app hasn't started within 3s, show everything rather than leave content hidden.
+      script: [{ innerHTML: "(function(d){if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver'in window))return;d.classList.add('js-reveal');setTimeout(function(){if(!window.__reveal)d.classList.remove('js-reveal')},3000)})(document.documentElement)" }],
       link: [
-        { rel: "icon", type: "image/svg+xml", href: "/logo-ya.svg" },
-        { rel: "icon", type: "image/png", href: "/logo-ya-light.png" },
+        { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+        { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+        { rel: "manifest", href: "/site.webmanifest" },
         { rel: "alternate", type: "application/rss+xml", title: "Yusuf Akinleye on Hashnode", href: "https://ayaacodes.hashnode.dev/rss.xml" },
       ],
       meta: [
