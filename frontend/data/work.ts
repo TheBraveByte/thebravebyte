@@ -129,7 +129,6 @@ export const work: WorkItem[] = [
     stack: 'Go, chi, Python, MongoDB, Paystack, WebSockets',
     links: [
       { label: 'Website', href: 'https://www.eazyfitfashion.com' },
-      { label: 'App Store', href: 'https://apps.apple.com/ng/app/eazyfit/id6749547417' },
       { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.anonymous.eazyfit' },
     ],
     media: { name: 'eazyfit-site', alt: 'The Eazyfit website: custom outfits from verified stylists, with the app on three phones', width: 1400, height: 875, widths: [800, 1400] },
