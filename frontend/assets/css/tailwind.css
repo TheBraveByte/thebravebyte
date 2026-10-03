@@ -274,11 +274,6 @@
   a:hover .arrow-ur { transform: translate(2px, -2px); }
 }
 
-/* Route changes: a quick crossfade so pages don't snap. */
-.page-enter-active, .page-leave-active { transition: opacity 200ms ease, transform 260ms var(--ease-out); }
-.page-enter-from { opacity: 0; transform: translateY(6px); }
-.page-leave-to { opacity: 0; }
-
 /* Reading progress on notes: a hairline in the signal colour. */
 .read-progress { position: fixed; inset: 0 0 auto 0; height: 2px; background: var(--color-accent); transform-origin: 0 50%; transform: scaleX(0); z-index: 40; pointer-events: none; }
 @supports (animation-timeline: scroll()) {
@@ -289,8 +284,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .enter, .rise-words .w > span { animation: none; }
-  .page-enter-active, .page-leave-active { transition: opacity 120ms ease; }
-  .page-enter-from { transform: none; }
   .read-progress { display: none; }
 }
 
@@ -298,3 +291,8 @@
 .when-arrow { display: inline-block; }
 .js-reveal [data-reveal] .when-arrow { opacity: 0; transform: translateX(-8px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms + 260ms); }
 .js-reveal [data-reveal][data-in] .when-arrow { opacity: 1; transform: none; }
+
+/* After the first page of a visit: no replayed entrances, and content already on screen
+   appears without a transition (plugins/reveal.client.ts). */
+.is-nav .enter, .is-nav .rise-words .w > span { animation: none; }
+.js-reveal [data-reveal][data-instant], .js-reveal [data-reveal][data-instant] > *, .js-reveal [data-reveal][data-instant] img, .js-reveal [data-reveal][data-instant] .when-arrow { transition: none; }
