@@ -6,7 +6,14 @@
         Backend Software &amp; Platform Engineer
       </h1>
       <p class="mt-5 text-[18px] text-text-secondary md:text-[20px]">I build reliable systems.</p>
-      <NuxtLink to="/work" class="mt-6 inline-block font-mono text-[13px] text-text hover:text-accent">Work →</NuxtLink>
+      <p class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[13px]">
+        <NuxtLink to="/work" class="inline-flex items-center gap-1.5 text-text hover:text-accent">
+          Work <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" aria-hidden="true" />
+        </NuxtLink>
+        <a href="https://foldlabs.pro" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-text-muted hover:text-text">
+          Building with FoldLabs <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
+        </a>
+      </p>
     </div>
 
     <section class="rail mt-20" aria-labelledby="selected">
@@ -20,8 +27,8 @@
           <p class="mt-1 text-[15px] text-text">{{ w.what }}</p>
           <p class="mt-1 text-[15px] text-text-secondary">{{ w.myRole }}</p>
           <p class="mt-2 flex flex-wrap gap-x-5 font-mono text-[13px]">
-            <NuxtLink :to="`/work/${w.slug}`" class="text-text-muted hover:text-text">View project →</NuxtLink>
-            <a v-for="l in w.links.slice(0, 1)" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text">{{ l.label === 'Code' ? 'GitHub' : l.label }} ↗</a>
+            <NuxtLink :to="`/work/${w.slug}`" class="inline-flex items-center gap-1.5 text-text-muted hover:text-text">View project <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" aria-hidden="true" /></NuxtLink>
+            <OutLink v-for="l in w.links.slice(0, 1)" :key="l.href" :href="l.href" :label="l.label === 'Code' ? 'GitHub' : l.label" class="text-text-muted hover:text-text" />
           </p>
         </li>
       </ul>
@@ -43,7 +50,7 @@
             <li v-for="o in w.owned.slice(0, 4)" :key="o" class="grid grid-cols-[1rem_1fr]"><span class="text-text-muted" aria-hidden="true">–</span><span>{{ o }}</span></li>
           </ul>
           <p v-if="w.status" class="mt-3 flex flex-wrap gap-x-5 font-mono text-[13px]">
-            <a v-for="l in w.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text">{{ l.label }} ↗</a>
+            <OutLink v-for="l in w.links" :key="l.href" v-bind="l" class="text-text-muted hover:text-text" />
           </p>
         </li>
       </ul>
@@ -66,12 +73,7 @@
 
     <section class="rail mt-16" aria-labelledby="contact">
       <h2 id="contact" class="rail-label">Contact</h2>
-      <p class="text-text-secondary">
-        <a href="mailto:ayaaakinleye@gmail.com" class="quiet-link">ayaaakinleye@gmail.com</a><br>
-        <a href="https://github.com/TheBraveByte" target="_blank" rel="noopener noreferrer" class="quiet-link">GitHub</a>
-        <span class="text-text-muted"> · </span>
-        <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank" rel="noopener noreferrer" class="quiet-link">LinkedIn</a>
-      </p>
+      <SocialLinks class="font-mono text-[13px] text-text-secondary" />
     </section>
   </div>
 </template>

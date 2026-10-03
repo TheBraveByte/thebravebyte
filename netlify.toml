@@ -1,7 +1,0 @@
-[build]
-  base = "frontend"
-  command = "npm run generate"
-  publish = "dist"
-
-[dev]
-  command = "npm run dev"

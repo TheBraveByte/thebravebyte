@@ -1,33 +1,33 @@
 import tailwindcss from "@tailwindcss/vite";
+import { published } from "./utils/note-dates";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 
   nitro: {
-    preset: process.env.VERCEL ? "vercel" : "cloudflare-pages",
-    // Ship every public page as real HTML; the crawler follows links from the home page.
-    prerender: { routes: ["/", "/work", "/writing", "/about"], crawlLinks: true, failOnError: false },
-    routeRules: {
-      "/api/_nuxt_icon/**": {},
-      "/blog": { redirect: { to: "/writing", statusCode: 301 } },
-      "/article/**": { redirect: { to: "/writing/**", statusCode: 301 } },
-      "/process": { redirect: { to: "/work", statusCode: 301 } },
-      "/cv": { redirect: { to: "/about", statusCode: 301 } },
-      "/api/**": {
-        proxy: process.env.NUXT_PUBLIC_API_BASE
-          ? `${process.env.NUXT_PUBLIC_API_BASE}/**`
-          : "https://thebravebyte.onrender.com/api/**",
-      },
-    },
+    // Every page is prerendered except /writing, which Vercel regenerates hourly so new
+    // Hashnode posts appear without a redeploy.
+    prerender: { routes: ["/", "/work", "/about", "/sitemap.xml", ...Object.keys(published).map(s => `/writing/${s}`)], crawlLinks: true, ignore: [/^\/writing$/], failOnError: false },
+  },
+
+  routeRules: {
+    "/writing": { isr: 3600 },
+    // Old URLs from the previous site.
+    "/blog": { redirect: { to: "/writing", statusCode: 301 } },
+    "/cv": { redirect: { to: "/about", statusCode: 301 } },
+    "/process": { redirect: { to: "/work", statusCode: 301 } },
+    "/article/river-postgres-video-pipeline": { redirect: { to: "https://ayaacodes.hashnode.dev/river-postgres-video-pipeline", statusCode: 301 } },
+    "/writing/river-postgres-video-pipeline": { redirect: { to: "https://ayaacodes.hashnode.dev/river-postgres-video-pipeline", statusCode: 301 } },
+    "/article/simple-telegram-bot": { redirect: { to: "https://ayaacodes.hashnode.dev/simple-telegram-bot", statusCode: 301 } },
+    "/writing/simple-telegram-bot": { redirect: { to: "https://ayaacodes.hashnode.dev/simple-telegram-bot", statusCode: 301 } },
+    "/article/**": { redirect: { to: "/writing", statusCode: 301 } },
   },
 
   modules: [
     "@nuxt/icon",
-    "@nuxt/image",
     "@nuxtjs/google-fonts",
     "@nuxtjs/color-mode",
-    "reka-ui/nuxt",
   ],
 
   icon: {
@@ -66,13 +66,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/tailwind.css"],
 
   runtimeConfig: {
-    jwtSecret: process.env.JWT_SECRET || "super-secret-key-change-me",
-    public: {
-      apiBase:
-        process.env.NUXT_PUBLIC_API_BASE ||
-        "https://thebravebyte.onrender.com/api",
-      siteUrl: "https://thebravebyte.pages.dev",
-    },
+    public: { siteUrl: "https://yusuf.foldlabs.pro" },
   },
 
   app: {
@@ -83,30 +77,23 @@ export default defineNuxtConfig({
       link: [
         { rel: "icon", type: "image/svg+xml", href: "/logo-ya.svg" },
         { rel: "icon", type: "image/png", href: "/logo-ya-light.png" },
+        { rel: "alternate", type: "application/rss+xml", title: "Yusuf Akinleye on Hashnode", href: "https://ayaacodes.hashnode.dev/rss.xml" },
       ],
       meta: [
-        {
-          name: "description",
-          content:
-            "Yusuf Akinleye, software engineer. Backend systems in Go: payments, APIs and background jobs.",
-        },
+        { name: "description", content: "Yusuf Akinleye, backend software and platform engineer. I build reliable systems." },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "theme-color", content: "#fafaf9", media: "(prefers-color-scheme: light)" },
+        { name: "theme-color", content: "#0e0e0d", media: "(prefers-color-scheme: dark)" },
+        { property: "og:site_name", content: "Yusuf Akinleye" },
         { property: "og:title", content: "Yusuf Akinleye" },
-        {
-          property: "og:description",
-          content:
-            "Software engineer. Backend systems in Go: payments, APIs and background jobs.",
-        },
-        {
-          property: "og:image",
-          content: "https://thebravebyte.pages.dev/logo-ya-light.png",
-        },
+        { property: "og:description", content: "Backend software and platform engineer. I build reliable systems." },
+        { property: "og:image", content: "https://yusuf.foldlabs.pro/og.png" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: "Yusuf Akinleye, backend software and platform engineer" },
         { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary" },
-        {
-          name: "twitter:image",
-          content: "https://thebravebyte.pages.dev/logo-ya-light.png",
-        },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: "https://yusuf.foldlabs.pro/og.png" },
       ],
     },
   },

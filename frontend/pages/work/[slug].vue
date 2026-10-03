@@ -5,8 +5,8 @@
       <h1 class="mt-1 text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">{{ item.name }}</h1>
       <p class="mt-4 text-[17px] leading-snug text-text">{{ item.what }}</p>
       <p class="mt-3 text-text-secondary">{{ item.myRole }}</p>
-      <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-        <a v-for="l in item.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="quiet-link">{{ l.label }} ↗</a>
+      <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[13px] text-text-secondary">
+        <OutLink v-for="l in item.links" :key="l.href" v-bind="l" class="hover:text-text" />
       </p>
     </div>
 
@@ -66,8 +66,8 @@
     </section>
 
     <nav class="offset mt-14 flex justify-between gap-6 font-mono text-[13px] text-text-muted" aria-label="More work">
-      <NuxtLink to="/work" class="hover:text-text">← All systems</NuxtLink>
-      <NuxtLink :to="`/work/${next.slug}`" class="text-right hover:text-text">{{ next.name }} →</NuxtLink>
+      <NuxtLink to="/work" class="inline-flex items-center gap-1.5 hover:text-text"><Icon name="lucide:arrow-left" class="h-3.5 w-3.5" aria-hidden="true" />All work</NuxtLink>
+      <NuxtLink :to="`/work/${next.slug}`" class="inline-flex items-center gap-1.5 text-right hover:text-text">{{ next.name }}<Icon name="lucide:arrow-right" class="h-3.5 w-3.5" aria-hidden="true" /></NuxtLink>
     </nav>
   </article>
 </template>

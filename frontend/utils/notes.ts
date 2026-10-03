@@ -7,13 +7,7 @@ const files = import.meta.glob('../../stories/*.md', {
   eager: true,
 }) as Record<string, string>
 
-// Publication dates, in display order (newest first). Add a line when a note is added.
-const published: Record<string, string> = {
-  'unsure-is-not-failed': '2026-10-03',
-  'explicit-work-not-polling': '2026-10-03',
-  'collapsing-early-microservices': '2026-10-03',
-  'a-small-bot-that-takes-money': '2026-10-03',
-}
+import { published } from './note-dates'
 
 export interface Note {
   slug: string

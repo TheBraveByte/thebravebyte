@@ -1,7 +1,7 @@
 # Voice: Yusuf Akinleye
 
 How the GitHub profile, repository READMEs, engineering notes and
-thebravebyte.pages.dev should sound. Read the paired examples first; they teach
+yusuf.foldlabs.pro should sound. Read the paired examples first; they teach
 more than the rules.
 
 ## Voice attributes

@@ -1,4 +1,4 @@
-# Information architecture: thebravebyte.pages.dev
+# Information architecture: yusuf.foldlabs.pro
 
 ## Summary
 
@@ -27,30 +27,35 @@ Flat. Everything is one click from home.
 ```
 /                     Home: intro, selected work, recent writing, contact
 /work                 All projects, grouped: products I own · client and employer work
-/writing              Engineering notes and articles, newest first
-/writing/[slug]       One note or article
+/writing              Engineering notes, plus articles listed from Hashnode
+/writing/[slug]       One note (articles open on Hashnode)
 /about                Short bio, timeline, CV download
-/admin/*              CMS (unchanged, not linked)
 ```
 
 Removed: `/process` (its useful content moves into `/work` entries and notes),
 `/blog` and `/article/[slug]` (renamed, see redirects), `/cv` (merged into
 `/about` with a PDF link).
 
+Articles live on Hashnode (ayaacodes.hashnode.dev), the only article CMS. The site
+reads the blog's RSS feed and links straight to each post; the old Go/Mongo CMS and
+its admin were removed on 2026-10-03.
+
 ## URL rules
 
 - One pattern per type: `/writing/[slug]`, lowercase, hyphenated, no dates.
 - Note slugs match the filenames in the repo's `stories/` folder, so GitHub and
   the site point to the same piece by the same name.
-- Redirects (301): `/blog` → `/writing`, `/article/:slug` → `/writing/:slug`,
-  `/process` → `/work`, `/cv` → `/about`.
+- Redirects (301, in nuxt.config routeRules): `/blog` → `/writing`, `/process` → `/work`,
+  `/cv` → `/about`; the two articles that lived here (`/article/` and `/writing/`
+  slugs) → their Hashnode posts; any other `/article/*` → `/writing`.
 
 ## Navigation
 
 - **Primary:** Work · Writing · About. Three items; the name links home.
 - **Utility:** theme toggle. Search is dropped: with about ten pages, it adds
   chrome without helping anyone find anything.
-- **Footer:** email, GitHub, LinkedIn, FoldLabs. One line.
+- **Footer:** email, GitHub, LinkedIn, Hashnode, with brand icons. One line.
+- **FoldLabs:** one quiet link under the home intro, "Building with FoldLabs".
 - No breadcrumbs; the hierarchy is never more than two levels deep.
 
 ## Content types and metadata
