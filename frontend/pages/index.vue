@@ -1,132 +1,56 @@
 <template>
   <div>
-    <!-- Hero: the claim on the left, the claim working on the right -->
-    <section class="ambient -mt-16 overflow-hidden pt-16">
-      <div class="container-wide grid items-center gap-12 pt-14 pb-20 lg:grid-cols-12 lg:gap-10 lg:pt-20 lg:pb-28">
-        <div class="lg:col-span-6">
-          <div class="flex items-center gap-3">
-            <picture>
-              <source type="image/avif" srcset="/img/work/yusuf-480.avif" />
-              <img src="/img/work/yusuf-480.webp" alt="" width="480" height="455" class="h-10 w-10 rounded-full object-cover object-top" />
-            </picture>
-            <p class="text-sm text-text-secondary">Yusuf Akinleye, software engineer</p>
-          </div>
-          <h1 class="mt-7 text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-[3.4rem]">
-            I build backend systems that stay correct when things fail.
-          </h1>
-          <p class="mt-6 max-w-[44ch] text-lg leading-relaxed text-text-secondary">
-            Payments, ledgers and background jobs in Go. Switch the simulation to naive retry to see why that matters.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <NuxtLink to="/work" class="btn-primary">See work</NuxtLink>
-            <a href="mailto:ayaaakinleye@gmail.com" class="btn-secondary">Email</a>
-          </div>
-        </div>
-        <div class="lg:col-span-6">
-          <PayoutSim />
-        </div>
+    <section class="mx-auto max-w-[736px] px-4 pt-16 pb-20 md:px-8 md:pt-24 md:pb-24">
+      <p class="label">Software engineer / Go</p>
+      <h1 class="mt-5 text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.045em] sm:text-5xl md:text-[60px]">
+        I build backend systems that stay correct when things fail.
+      </h1>
+      <p class="mt-6 max-w-[58ch] text-text-secondary">
+        Payments, ledgers, job queues and APIs, mostly in Go and Postgres. Founder of
+        <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="text-text underline decoration-border underline-offset-4 hover:decoration-text">FoldLabs</a>.
+      </p>
+      <div class="mt-8 flex gap-5">
+        <a href="#work" class="text-link">View work ↓</a>
+        <a href="mailto:ayaaakinleye@gmail.com" class="text-link">Email ↗</a>
       </div>
     </section>
 
-    <!-- Selected work: media first -->
-    <section class="relative border-t border-border bg-bg-secondary/60 py-20 lg:py-28" aria-labelledby="selected-work">
-      <div class="container-wide">
-        <div class="flex flex-wrap items-end justify-between gap-4">
-          <h2 id="selected-work" class="text-3xl font-semibold tracking-tight sm:text-4xl">Selected work</h2>
-          <NuxtLink to="/work" class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover">
-            See all work
-            <Icon name="lucide:arrow-right" class="h-4 w-4" />
+    <section id="work" class="scroll-mt-20 border-t border-border" aria-label="Project index">
+      <div class="mx-auto max-w-[736px] px-4 pt-14 md:px-8">
+        <WorkIndex :items="work" />
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[736px] px-4 pt-20 md:px-8" aria-labelledby="notes">
+      <div class="grid grid-cols-[3.5rem_1fr_auto] items-end gap-x-4 border-b border-border pb-3 sm:grid-cols-[4rem_1fr_auto]">
+        <span class="label">Notes</span>
+        <h2 id="notes" class="label">What I learned, and how</h2>
+        <span class="label tabular-nums">{{ String(notes.length).padStart(2, '0') }}</span>
+      </div>
+      <ol>
+        <li v-for="(note, i) in notes" :key="note.slug" class="border-b border-border">
+          <NuxtLink :to="`/writing/${note.slug}`" class="group grid grid-cols-[3.5rem_1fr_auto] gap-x-4 py-6 sm:grid-cols-[4rem_1fr_auto]">
+            <span class="pt-0.5 font-mono text-[13px] tabular-nums text-text-muted">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span>
+              <span class="block text-[17px] leading-snug text-text">{{ note.lesson }}</span>
+              <span class="mt-2 block font-mono text-[12px] text-text-muted">{{ note.title }}</span>
+            </span>
+            <span class="pt-0.5 font-mono text-[13px] text-text-muted transition-transform duration-200 group-hover:translate-x-1 group-hover:text-text" aria-hidden="true">→</span>
           </NuxtLink>
-        </div>
-        <div class="mt-12 grid items-start gap-x-10 gap-y-16 lg:grid-cols-12">
-          <WorkTile
-            v-for="(item, i) in featuredWork"
-            :key="item.slug"
-            :item="item"
-            :wide="i === 0 || i === 3"
-            :class="layout[i]"
-            data-reveal
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- What the notes taught: the lesson leads, the story follows -->
-    <section class="py-20 lg:py-28" aria-labelledby="notes">
-      <div class="container-wide">
-        <h2 id="notes" class="text-3xl font-semibold tracking-tight sm:text-4xl">Things I've learned the hard way</h2>
-        <p class="mt-4 max-w-[52ch] text-text-secondary">
-          Each line comes from a problem I worked through. Open one for the decision, the
-          trade-offs and what was built.
-        </p>
-        <ol class="mt-12 grid gap-px overflow-hidden rounded-[14px] border border-border bg-border md:grid-cols-2">
-          <li v-for="note in notes" :key="note.slug" class="bg-bg" data-reveal>
-            <NuxtLink :to="`/writing/${note.slug}`" class="group flex h-full flex-col justify-between gap-8 p-7 transition-colors duration-200 hover:bg-bg-secondary sm:p-9">
-              <p class="text-xl font-medium leading-snug tracking-tight text-text sm:text-2xl">{{ note.lesson }}</p>
-              <span class="flex items-end justify-between gap-4">
-                <span>
-                  <span class="block text-sm font-medium text-text-secondary group-hover:text-accent">{{ note.title }}</span>
-                  <span class="mt-1 block font-mono text-xs text-text-muted">{{ note.context.split('.')[0] }}</span>
-                </span>
-                <Icon name="lucide:arrow-up-right" class="h-4 w-4 shrink-0 text-text-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
-              </span>
-            </NuxtLink>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- About, briefly -->
-    <section class="border-t border-border py-20 lg:py-28" aria-labelledby="about-short">
-      <div class="container-wide grid items-center gap-10 md:grid-cols-12">
-        <div class="md:col-span-4">
-          <div class="media-frame aspect-[4/5] max-w-xs">
-            <Media name="yusuf" alt="Yusuf Akinleye" :width="800" :height="758" :widths="[480, 800]" sizes="(min-width: 768px) 320px, 80vw" position="object-[50%_20%]" />
-          </div>
-        </div>
-        <div class="md:col-span-7 md:col-start-6">
-          <h2 id="about-short" class="text-3xl font-semibold tracking-tight sm:text-4xl">More than five years of production code.</h2>
-          <p class="mt-5 max-w-[56ch] text-lg leading-relaxed text-text-secondary">
-            Paid Python work from 2019, Go backends since. I've led backend development at Rixl,
-            wrote most of Eazyfit's API, and now run FoldLabs, a small studio that designs and
-            builds products for clients.
-          </p>
-          <NuxtLink to="/about" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover">
-            Experience and background
-            <Icon name="lucide:arrow-right" class="h-4 w-4" />
-          </NuxtLink>
-        </div>
-      </div>
-    </section>
-
-    <!-- Closing: the hero's light returns -->
-    <section class="ambient overflow-hidden border-t border-border" aria-labelledby="contact">
-      <div class="container-wide py-24 text-left lg:py-32">
-        <h2 id="contact" class="max-w-[20ch] text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl lg:text-6xl">
-          If your product moves money, I'd like to hear about it.
-        </h2>
-        <p class="mt-6 max-w-[52ch] text-lg text-text-secondary">
-          Email me at
-          <a href="mailto:ayaaakinleye@gmail.com" class="prose-link text-text">ayaaakinleye@gmail.com</a>.
-          For a full product team, FoldLabs is at
-          <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="prose-link text-text">foldlabs.pro</a>.
-        </p>
-      </div>
+        </li>
+      </ol>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { featuredWork } from '~/data/work'
+import { work } from '~/data/work'
 import { notes } from '~/utils/notes'
-
-// Wide and narrow alternate so the grid has rhythm; the narrow column sits lower.
-const layout = ['lg:col-span-7', 'lg:col-span-5 lg:mt-20', 'lg:col-span-5', 'lg:col-span-7 lg:mt-20']
 
 useSeoMeta({
   title: 'Yusuf Akinleye, software engineer',
-  description: 'Backend systems in Go that stay correct when things fail: payments, ledgers and background jobs.',
+  description: 'Backend systems in Go that stay correct when things fail: payments, ledgers, job queues and APIs.',
   ogTitle: 'Yusuf Akinleye, software engineer',
-  ogDescription: 'Backend systems in Go that stay correct when things fail: payments, ledgers and background jobs.',
+  ogDescription: 'Backend systems in Go that stay correct when things fail: payments, ledgers, job queues and APIs.',
 })
 </script>

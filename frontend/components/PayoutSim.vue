@@ -1,9 +1,9 @@
 <template>
-  <div class="glass rounded-[14px] p-4 sm:p-5" aria-labelledby="sim-title">
+  <div class="border border-border bg-bg p-4 sm:p-6" aria-labelledby="sim-title">
     <!-- Header: what is being simulated, and the two policies -->
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div class="min-w-0">
-        <p id="sim-title" class="font-mono text-xs text-text-muted">payout simulation</p>
+        <p id="sim-title" class="label">Payout simulation</p>
         <p class="mt-0.5 text-[15px] font-medium text-text">$120.00 to an M-Pesa wallet</p>
       </div>
       <div class="flex items-center gap-2">
@@ -30,8 +30,8 @@
         <li
           v-for="s in visible"
           :key="s.key"
-          class="grid grid-cols-[3.25rem_0.75rem_1fr] items-start gap-2 rounded-lg px-2 py-2"
-          :class="s.tone === 'bad' ? 'bg-[color-mix(in_srgb,var(--color-danger)_9%,transparent)]' : s.tone === 'good' ? 'bg-[color-mix(in_srgb,var(--color-accent)_9%,transparent)]' : ''"
+          class="grid grid-cols-[3.25rem_0.75rem_1fr] items-start gap-2 rounded-md px-2 py-2"
+          :class="s.tone === 'bad' ? 'bg-[color-mix(in_srgb,var(--color-danger)_9%,transparent)]' : s.tone === 'good' ? 'bg-[color-mix(in_srgb,var(--color-good)_9%,transparent)]' : ''"
         >
           <span class="pt-0.5 font-mono text-[11px] tabular-nums text-text-muted">{{ s.at }}</span>
           <span class="mt-1.5 h-2 w-2 rounded-full" :class="dot[s.tone]" aria-hidden="true" />
@@ -68,10 +68,9 @@
         The payout path from a remittance system I built. Simulated; nothing is sent.
       </p>
       <div class="flex items-center gap-3">
-        <NuxtLink to="/writing/unsure-is-not-failed" class="text-xs font-medium text-accent hover:text-accent-hover">Why</NuxtLink>
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 text-xs font-medium text-on-accent transition-transform duration-100 active:translate-y-px disabled:opacity-60"
+          class="inline-flex items-center gap-1.5 rounded-md bg-text px-3.5 py-1.5 font-mono text-xs text-bg transition-transform duration-100 active:translate-y-px disabled:opacity-60"
           :disabled="running"
           @click="run()"
         >
@@ -116,7 +115,7 @@ const dot: Record<Tone, string> = {
   neutral: 'bg-text-muted',
   warn: 'bg-warn',
   bad: 'bg-danger',
-  good: 'bg-accent',
+  good: 'bg-good',
 }
 
 const mode = ref<Mode>('confirm')
@@ -136,7 +135,7 @@ const pill = computed(() => {
     timeout: { label: 'no answer', cls: 'border-warn/40 text-warn' },
     unsure: { label: 'unsure', cls: 'border-warn/40 text-warn' },
     twice: { label: 'paid twice', cls: 'border-danger/40 text-danger' },
-    settled: { label: 'settled', cls: 'border-accent/40 text-accent' },
+    settled: { label: 'settled', cls: 'border-good/40 text-good' },
   }
   return map[state.value]
 })

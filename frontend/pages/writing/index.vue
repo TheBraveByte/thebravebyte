@@ -1,51 +1,55 @@
 <template>
-  <div class="container-wide pt-12 pb-24 md:pt-20 md:pb-32">
-    <header class="max-w-[60ch]">
-      <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">Writing</h1>
-      <p class="mt-5 text-lg leading-relaxed text-text-secondary">
-        Engineering notes on specific decisions, and longer articles on Go and backend systems.
-      </p>
-    </header>
+  <div class="mx-auto max-w-[736px] px-4 pt-16 md:px-8 md:pt-24">
+    <p class="label">Writing</p>
+    <h1 class="mt-5 text-4xl font-semibold tracking-[-0.04em] md:text-5xl">Notes and articles</h1>
+    <p class="mt-5 max-w-[58ch] text-text-secondary">
+      Notes are short records of one engineering decision. Articles are longer pieces on Go
+      and backend systems.
+    </p>
 
-    <section class="mt-16 grid gap-6 md:grid-cols-12" aria-labelledby="w-notes">
-      <h2 id="w-notes" class="text-xl font-semibold tracking-tight md:col-span-4">Engineering notes</h2>
-      <ol class="md:col-span-8">
-        <li v-for="note in notes" :key="note.slug" class="border-t border-border">
-          <NuxtLink :to="`/writing/${note.slug}`" class="group block py-5">
-            <span class="block text-lg font-medium leading-snug group-hover:text-accent transition-colors">{{ note.title }}</span>
-            <span class="mt-1 block text-sm text-text-muted">{{ note.context }}</span>
+    <section class="mt-14" aria-labelledby="w-notes">
+      <div class="grid grid-cols-[1fr_auto] border-b border-border pb-3">
+        <h2 id="w-notes" class="label">Notes</h2>
+        <span class="label tabular-nums">{{ String(notes.length).padStart(2, '0') }}</span>
+      </div>
+      <ol>
+        <li v-for="note in notes" :key="note.slug" class="border-b border-border">
+          <NuxtLink :to="`/writing/${note.slug}`" class="group grid grid-cols-[1fr_auto] gap-4 py-5">
+            <span>
+              <span class="font-mono text-[14px] font-medium text-text">{{ note.title }}</span>
+              <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ note.context }}</span>
+            </span>
+            <span class="font-mono text-[13px] text-text-muted transition-transform duration-200 group-hover:translate-x-1 group-hover:text-text" aria-hidden="true">→</span>
           </NuxtLink>
         </li>
       </ol>
     </section>
 
-    <section class="mt-16 grid gap-6 md:grid-cols-12" aria-labelledby="w-articles">
-      <h2 id="w-articles" class="text-xl font-semibold tracking-tight md:col-span-4">Articles</h2>
-      <div class="md:col-span-8">
-        <div v-if="pending" class="space-y-3 py-5" aria-hidden="true">
-          <div v-for="n in 3" :key="n" class="h-14 animate-pulse rounded-lg bg-bg-secondary motion-reduce:animate-none" />
-        </div>
-        <ol v-else>
-          <li v-for="a in articles" :key="a.href" class="border-t border-border">
-            <component
-              :is="a.external ? 'a' : NuxtLink"
-              v-bind="a.external ? { href: a.href, target: '_blank', rel: 'noopener noreferrer' } : { to: a.href }"
-              class="group grid gap-1 py-5 sm:grid-cols-[1fr_auto] sm:gap-6"
-            >
-              <span>
-                <span class="block text-lg font-medium leading-snug group-hover:text-accent transition-colors">
-                  {{ a.title }}
-                  <Icon v-if="a.external" name="lucide:arrow-up-right" class="ml-0.5 inline h-4 w-4 text-text-muted" />
-                </span>
-              </span>
-              <time class="font-mono text-xs text-text-muted sm:pt-1.5" :datetime="a.iso">{{ a.label }}</time>
-            </component>
-          </li>
-        </ol>
-        <p v-if="!pending && fetchFailed" class="border-t border-border py-5 text-sm text-text-muted">
-          Articles hosted on this site couldn't be loaded just now. The ones above are on Hashnode.
-        </p>
+    <section class="mt-14" aria-labelledby="w-articles">
+      <div class="grid grid-cols-[4.5rem_1fr_auto] gap-x-4 border-b border-border pb-3">
+        <span class="label">Date</span>
+        <h2 id="w-articles" class="label">Articles</h2>
+        <span class="label tabular-nums">{{ String(articles.length).padStart(2, '0') }}</span>
       </div>
+      <div v-if="pending" class="space-y-px py-2" aria-hidden="true">
+        <div v-for="n in 3" :key="n" class="h-12 animate-pulse bg-bg-secondary motion-reduce:animate-none" />
+      </div>
+      <ol v-else>
+        <li v-for="a in articles" :key="a.href" class="border-b border-border">
+          <component
+            :is="a.external ? 'a' : NuxtLink"
+            v-bind="a.external ? { href: a.href, target: '_blank', rel: 'noopener noreferrer' } : { to: a.href }"
+            class="group grid grid-cols-[4.5rem_1fr_auto] gap-x-4 py-5"
+          >
+            <time class="font-mono text-[12px] tabular-nums text-text-muted" :datetime="a.iso">{{ a.label }}</time>
+            <span class="font-mono text-[14px] text-text">{{ a.title }}</span>
+            <span class="font-mono text-[13px] text-text-muted group-hover:text-text" aria-hidden="true">{{ a.external ? '↗' : '→' }}</span>
+          </component>
+        </li>
+      </ol>
+      <p v-if="!pending && fetchFailed" class="border-b border-border py-5 font-mono text-[12px] text-text-muted">
+        Articles hosted on this site couldn't be loaded just now.
+      </p>
     </section>
   </div>
 </template>

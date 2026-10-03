@@ -1,16 +1,14 @@
 <template>
-  <div class="container-wide pt-12 pb-24 md:pt-16 md:pb-32">
-    <div class="mx-auto max-w-[68ch]">
-      <NuxtLink to="/writing" class="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-text transition-colors">
-        <Icon name="lucide:arrow-left" class="h-4 w-4" />
-        Writing
-      </NuxtLink>
+  <div class="mx-auto max-w-[736px] px-4 pt-12 md:px-8 md:pt-16">
+    <div>
+      <NuxtLink to="/writing" class="text-link">← Writing</NuxtLink>
 
       <!-- Engineering note, from the repo's stories/ folder -->
-      <article v-if="note" class="mt-8">
+      <article v-if="note" class="mt-10">
         <header>
-          <h1 class="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">{{ note.title }}</h1>
-          <p class="mt-3 text-text-muted">{{ note.context }}</p>
+          <div class="border-b border-border pb-3"><span class="label">Note</span></div>
+          <h1 class="mt-6 text-4xl font-semibold leading-[1.08] tracking-[-0.04em] md:text-[44px]">{{ note.title }}</h1>
+          <p class="mt-4 font-mono text-[13px] text-text-muted">{{ note.context }}</p>
         </header>
         <div class="prose-content mt-10">
           <MarkdownRenderer :content="note.body" />
@@ -33,11 +31,11 @@
         </div>
         <article v-else class="mt-8">
           <header>
-            <h1 class="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">{{ article.title }}</h1>
-            <p class="mt-3 text-text-muted">
+            <h1 class="text-4xl font-semibold leading-[1.08] tracking-[-0.04em] md:text-[44px]">{{ article.title }}</h1>
+            <p class="mt-4 font-mono text-[13px] text-text-muted">
               <time :datetime="article.publishedAt || article.createdAt">{{ formatDate(article.publishedAt || article.createdAt) }}</time>
             </p>
-            <img v-if="article.coverImage" :src="article.coverImage" :alt="''" class="mt-8 w-full rounded-xl border border-border" />
+            <img v-if="article.coverImage" :src="article.coverImage" :alt="''" class="mt-8 w-full border border-border" />
           </header>
           <div class="prose-content mt-10">
             <MarkdownRenderer v-if="isMarkdown" :content="parsedContent.markdown" />
@@ -97,11 +95,16 @@ useSeoMeta({
 <style>
 .prose-content { font-size: 17px; line-height: 1.75; color: var(--color-text-secondary); }
 .prose-content p { margin-bottom: 1.2em; }
-.prose-content h2, .prose-content h3, .prose-content h4 {
+.prose-content h2, .prose-content h4 {
   color: var(--color-text); font-weight: 600; letter-spacing: -0.01em; line-height: 1.3;
 }
+/* Notes use h3 for Problem, Context, Decision...: render them as record labels. */
+.prose-content h3 {
+  font-family: var(--font-mono) !important; font-size: 11px !important; font-weight: 400 !important;
+  letter-spacing: 0.14em !important; text-transform: uppercase !important; color: var(--color-text-muted) !important;
+  border-top: 1px solid var(--color-border); padding-top: 1rem; margin: 2.4em 0 0.9em !important;
+}
 .prose-content h2 { font-size: 1.4rem; margin: 2em 0 0.6em; }
-.prose-content h3 { font-size: 1.15rem; margin: 1.8em 0 0.5em; }
 .prose-content > div > h3:first-child, .prose-content h3:first-child { margin-top: 0; }
 .prose-content ul, .prose-content ol { margin-bottom: 1.2em; padding-left: 1.3em; }
 .prose-content ul { list-style: disc; }
@@ -109,10 +112,10 @@ useSeoMeta({
 .prose-content li { margin-bottom: 0.4em; }
 .prose-content li::marker { color: var(--color-text-muted); }
 .prose-content strong { color: var(--color-text); font-weight: 600; }
-.prose-content a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
-.prose-content a:hover { color: var(--color-accent-hover); }
+.prose-content a { color: var(--color-text); text-decoration: underline; text-decoration-color: var(--color-border); text-underline-offset: 4px; }
+.prose-content a:hover { text-decoration-color: var(--color-text); }
 .prose-content blockquote { border-left: 2px solid var(--color-border); padding-left: 1em; margin: 1.5em 0; }
-.prose-content img { max-width: 100%; border-radius: 12px; margin: 1.5em 0; border: 1px solid var(--color-border); }
+.prose-content img { max-width: 100%; border-radius: 0; margin: 1.5em 0; border: 1px solid var(--color-border); }
 .prose-content pre {
   background: var(--color-code-bg); padding: 1rem; border-radius: 10px; border: 1px solid var(--color-border);
   overflow-x: auto; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; margin-bottom: 1.4em;

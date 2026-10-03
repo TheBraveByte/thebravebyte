@@ -17,6 +17,7 @@
   --color-accent-hover: var(--color-accent-hover);
   --color-on-accent: var(--color-on-accent);
   --color-warn: var(--color-warn);
+  --color-good: var(--color-good);
   --color-danger: var(--color-danger);
   --color-ink: var(--color-ink);
   --color-success: var(--color-success);
@@ -24,84 +25,73 @@
   --color-error: var(--color-error);
 }
 
-/* Dark ink ground, one signal-green accent ("settled"). Amber and red exist only as
-   real states inside the payout simulation. See docs/DESIGN.md. */
+/* Monochrome zinc. Colour appears only as a real state (the simulation's settled,
+   unsure and paid-twice). See docs/DESIGN.md. */
 :root {
-  --color-bg: #f5f6f8;
-  --color-bg-secondary: #eceef2;
-  --color-bg-tertiary: #e2e5ea;
-  --color-border: #d5d9e0;
-  --color-text: #12141a;
-  --color-text-secondary: #424854;
-  --color-text-muted: #5f6672;
-  --color-ink: #12141a;
+  --color-bg: #fcfcfc;
+  --color-bg-secondary: #f4f4f5;
+  --color-bg-tertiary: #e4e4e7;
+  --color-border: #e4e4e7;
+  --color-text: #09090b;
+  --color-text-secondary: #52525b;
+  --color-text-muted: #71717a;
+  --color-ink: #09090b;
 
-  --color-accent: #0a7d52;
-  --color-accent-hover: #08643f;
-  --color-on-accent: #ffffff;
-  --color-accent-glow: rgba(10, 125, 82, 0.16);
-  --color-warn: #a35a0b;
-  --color-danger: #b42318;
-  --glow-a: rgba(10, 125, 82, 0.14);
-  --glow-b: rgba(36, 69, 201, 0.08);
-  --dot: rgba(18, 20, 26, 0.10);
-  --glass: rgba(255, 255, 255, 0.62);
-  --glass-edge: rgba(18, 20, 26, 0.08);
-  --glass-hi: rgba(255, 255, 255, 0.9);
+  --color-accent: #09090b;
+  --color-accent-hover: #3f3f46;
+  --color-on-accent: #fcfcfc;
+  --color-accent-glow: transparent;
+  --color-good: #15803d;
+  --color-warn: #a16207;
+  --color-danger: #b91c1c;
 
-  --color-success: #0a7d52;
-  --color-warning: #a35a0b;
-  --color-error: #b42318;
+  --color-success: #15803d;
+  --color-warning: #a16207;
+  --color-error: #b91c1c;
 
-  --color-code-bg: #eceef2;
-  --color-code-text: #12141a;
-  --hljs-comment: #5f6672;
-  --hljs-keyword: #0a7d52;
-  --hljs-string: #2445c9;
-  --hljs-title: #12141a;
-  --hljs-variable: #a35a0b;
-  --hljs-built_in: #08643f;
-  --hljs-deletion: #b42318;
+  --color-code-bg: #f4f4f5;
+  --color-code-text: #09090b;
+  --hljs-comment: #71717a;
+  --hljs-keyword: #09090b;
+  --hljs-string: #15803d;
+  --hljs-title: #09090b;
+  --hljs-variable: #a16207;
+  --hljs-built_in: #3f3f46;
+  --hljs-deletion: #b91c1c;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dark {
-  --color-bg: #0a0c10;
-  --color-bg-secondary: #11141a;
-  --color-bg-tertiary: #181c24;
-  --color-border: #232834;
-  --color-text: #eceef2;
-  --color-text-secondary: #a9afbb;
-  --color-text-muted: #808794;
-  --color-ink: #eceef2;
+  --color-bg: #09090b;
+  --color-bg-secondary: #111113;
+  --color-bg-tertiary: #27272a;
+  --color-border: #27272a;
+  --color-text: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #8b8b94;
+  --color-ink: #fafafa;
 
-  --color-accent: #3fe0a0;
-  --color-accent-hover: #7aecc0;
-  --color-on-accent: #05130d;
-  --color-accent-glow: rgba(63, 224, 160, 0.16);
-  --color-warn: #f2b450;
-  --color-danger: #ff7a6e;
-  --glow-a: rgba(63, 224, 160, 0.13);
-  --glow-b: rgba(70, 110, 255, 0.10);
-  --dot: rgba(236, 238, 242, 0.08);
-  --glass: rgba(17, 20, 26, 0.55);
-  --glass-edge: rgba(236, 238, 242, 0.09);
-  --glass-hi: rgba(255, 255, 255, 0.07);
+  --color-accent: #fafafa;
+  --color-accent-hover: #d4d4d8;
+  --color-on-accent: #09090b;
+  --color-good: #4ade80;
+  --color-warn: #fbbf24;
+  --color-danger: #f87171;
 
-  --color-success: #3fe0a0;
-  --color-warning: #f2b450;
-  --color-error: #ff7a6e;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
 
-  --color-code-bg: #11141a;
-  --color-code-text: #eceef2;
-  --hljs-comment: #808794;
-  --hljs-keyword: #3fe0a0;
-  --hljs-string: #8ea2ff;
-  --hljs-title: #eceef2;
-  --hljs-variable: #f2b450;
-  --hljs-built_in: #7aecc0;
-  --hljs-deletion: #ff7a6e;
+  --color-code-bg: #111113;
+  --color-code-text: #fafafa;
+  --hljs-comment: #8b8b94;
+  --hljs-keyword: #fafafa;
+  --hljs-string: #4ade80;
+  --hljs-title: #fafafa;
+  --hljs-variable: #fbbf24;
+  --hljs-built_in: #d4d4d8;
+  --hljs-deletion: #f87171;
 }
 
 @layer base {
@@ -112,7 +102,7 @@
     font-family: var(--font-sans);
     background-color: var(--color-bg);
     color: var(--color-text);
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.6;
     transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-font-smoothing: antialiased;
@@ -227,50 +217,24 @@
   --header-height: 3.5rem;
 }
 
-/* Ambient ground: two soft lights, a dot matrix that fades out, and grain on a fixed
-   layer. Transform-only drift, paused under reduced motion. */
+/* Records: mono labels for genuine metadata only. */
 @layer components {
-  .ambient { position: relative; isolation: isolate; }
-  .ambient::before {
-    content: ""; position: absolute; inset: -10% -10% auto -10%; height: 120%; z-index: -1;
-    background:
-      radial-gradient(40% 45% at 72% 38%, var(--glow-a), transparent 70%),
-      radial-gradient(35% 40% at 20% 10%, var(--glow-b), transparent 70%);
-    pointer-events: none;
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--color-text-muted);
   }
-  .ambient::after {
-    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
-    background-size: 22px 22px;
-    mask-image: radial-gradient(70% 60% at 70% 30%, #000 20%, transparent 75%);
-    -webkit-mask-image: radial-gradient(70% 60% at 70% 30%, #000 20%, transparent 75%);
+  .text-link {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2px;
+    transition: border-color 150ms ease;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .ambient::before { animation: drift 18s ease-in-out infinite alternate; }
-  }
-  @keyframes drift { to { transform: translate3d(-3%, 2%, 0) scale(1.04); } }
-
-  .grain {
-    position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  /* Glass: header and the simulation bezel only, always over the ambient light. */
-  .glass {
-    background: var(--glass);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border: 1px solid var(--glass-edge);
-    box-shadow: inset 0 1px 0 var(--glass-hi), 0 30px 80px -30px rgba(0, 0, 0, 0.45);
-  }
-  @media (prefers-reduced-transparency: reduce) {
-    .glass { background: var(--color-bg-secondary); backdrop-filter: none; -webkit-backdrop-filter: none; }
-  }
-
-  /* Media frames: the image moves on hover, never the card. */
-  .media-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--color-border); background: var(--color-bg-secondary); }
-  .media-frame img { transition: transform 600ms var(--ease-out); }
-  @media (hover: hover) and (pointer: fine) {
-    .group:hover .media-frame img { transform: scale(1.03); }
-  }
+  .text-link:hover { border-color: var(--color-text); }
+  .media-frame { overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-secondary); }
 }

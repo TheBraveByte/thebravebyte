@@ -1,61 +1,45 @@
 # Design: thebravebyte.pages.dev
 
-Structure lives in [information-architecture.md](information-architecture.md), copy rules
-in [voice.md](voice.md). This file is the visual and motion direction, written to the
-byte.ai `PREMIUM.md` standard: would this pass as an agency-built site?
+Structure: [information-architecture.md](information-architecture.md). Copy:
+[voice.md](voice.md).
 
 ## Stance
 
-A backend engineer's work is invisible: nobody screenshots a retry policy. So the site
-shows the thinking working. The hero is not a claim about reliability; it is a small
-system you can break. Everything else follows the studio rule: media leads, type follows.
+Simplicity, held to a high standard. The site is a record of work, read like an index.
+Typography and structure carry it; there is nothing decorative to look past. References
+the owner chose: hammedarowosegbe.com and developer-story.vercel.app.
 
 ## System
 
-- **Ground:** dark ink by default (`#0a0c10`), a cool light theme as the alternative.
-  Ambient light comes from layered radial gradients and a faint dot matrix that fades
-  out, plus SVG grain at 4 percent on a fixed layer.
-- **Accent:** one signal green (`#3fe0a0` dark, `#0b8a5a` light). It means "settled"
-  in the simulation and is used for links, focus and the primary button. Amber and red
-  appear only as real states in the simulation (unsure, paid twice).
-- **Type:** Geist for everything, Geist Mono for data, states and metadata. Display
-  sizes tight (`-0.035em`), body at 17px.
-- **Shape:** 14px radius on panels and media, 999px on pills and buttons. Nothing else.
-- **Glass:** only the header and the simulation bezel, each over something real (the
-  glow). Blur + saturate + hairline + inner highlight, solid fallback under
-  `prefers-reduced-transparency`.
+- **Column:** one reading column, 736px. Header and footer sit wider at 1040px.
+- **Colour:** monochrome zinc. Light `#fcfcfc` on `#09090b`, dark inverted. Colour
+  appears only as a real state in the payout simulation (settled, unsure, paid twice).
+- **Type:** Geist for prose and headings, Geist Mono for records: index rows, metadata,
+  labels, links. Headings are tight (`-0.045em`). Labels are 11px mono uppercase and are
+  used only for genuine metadata (Date, Role, Stack, Outcome).
+- **Lines:** 1px borders between rows. No cards, no shadows, no radius on media.
+- **Links:** mono text with an underline rule and an arrow (↓ ↗ →).
+
+## Pages
+
+- **Home:** label, headline, one line, two text links. Then the project index (year,
+  name, selected flag, one line, tags and duration, arrow) and the notes index, each note
+  shown by its lesson.
+- **Record (`/work/[slug]`):** tags and year, title, summary, lead media, then rows for
+  context, role, timeline and date; overview with outcome; numbered engineering points;
+  hardest problem; stack; links; next.
+- **About:** profile record with a small greyscale portrait, fact rows, practice, the
+  experience index.
+- **Writing:** notes and articles as indexes; a note renders its seven sections as
+  labelled records.
 
 ## Imagery
 
-Real media only, from the projects themselves. No stock: a photo of a server rack
-would be the exact generic signal this site is arguing against.
-
-| Placement | Media | Why |
-|---|---|---|
-| Hero | The payout simulation | The work is behaviour, so the hero is behaviour |
-| Selected work | babit landing, Rixl docs, Eazyfit app, BiTraq landing | Real products, real screenshots |
-| bloom-parser | Its pipeline as a drawn diagram | Backend work is better shown as its shape |
-| About | Portrait | People hire people |
-| Closing | The hero's glow returns behind the contact line | The page ends instead of stopping |
-
-All images are AVIF + WebP at 800/1400/2000 in `public/img/work/`, originals in
-`assets/originals/`. `<picture>` with width and height everywhere.
+Only on record pages, and only real: screenshots of babit, Rixl's docs, Eazyfit and
+BiTraq (AVIF + WebP in `public/img/work/`), the bloom-parser pipeline drawn from its
+README, and the payout simulation on the remittance record. The home page has no images.
 
 ## Motion
 
-- **Signature move (one):** the simulation. Each step of the payout path appears on a
-  timeline as it happens (enter 280ms, `cubic-bezier(0.22, 1, 0.36, 1)`), the ledger
-  numbers count, the state pill changes colour. It runs once on load in "confirm
-  first" mode, then waits for the visitor.
-- **Handovers (two):** a vertical ledger rule on the left edge that runs from the hero
-  through the work section; the hero glow reappearing under the closing section.
-- **Reveals:** below the fold only, 400ms, fall back to visible. The hero headline and
-  simulation paint immediately.
-- **Hover:** project media scales 1.03 inside its frame; the caption arrow moves 2px.
-- **Reduced motion:** the simulation renders its final state instantly, ambient
-  gradients stop, reveals are instant.
-
-## Not doing
-
-Smooth-scroll libraries, 3D, cursor effects, marquees, stat counters, logo walls,
-typing animations, a skills grid.
+Almost none: the arrow on a hovered row moves 4px; the simulation steps in at 240ms;
+the diagram's dash flows. All of it stops under reduced motion.
