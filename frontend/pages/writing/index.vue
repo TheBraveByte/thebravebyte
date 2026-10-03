@@ -1,7 +1,7 @@
 <template>
   <div class="page pt-14 md:pt-20">
     <div class="offset">
-    <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">Writing</h1>
+    <h1 class="text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">Writing</h1>
     <p class="mt-4 text-text-secondary">
       Notes are short write-ups of one engineering decision. Articles are longer pieces on Go
       and backend systems.
@@ -14,7 +14,7 @@
         <li v-for="note in notes" :key="note.slug">
           <NuxtLink :to="`/writing/${note.slug}`" class="group block">
             <span class="quiet-link text-text">{{ note.title }}</span>
-            <span class="mt-0.5 block text-[17px] leading-snug text-text-secondary">{{ note.lesson }}</span>
+            <span class="mt-0.5 block text-[15px] leading-snug text-text-secondary">{{ note.lesson }}</span>
           </NuxtLink>
         </li>
       </ul>

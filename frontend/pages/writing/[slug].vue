@@ -5,7 +5,7 @@
       <!-- Engineering note, from the repo's stories/ folder -->
       <article v-if="note">
         <header>
-          <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.015em] md:text-[34px]">{{ note.title }}</h1>
+          <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.035em] md:text-[34px]">{{ note.title }}</h1>
           <p class="mt-3 font-mono text-[13px] text-text-muted">{{ note.context }}</p>
         </header>
         <div class="prose-content mt-10">
@@ -29,7 +29,7 @@
         </div>
         <article v-else class="mt-8">
           <header>
-            <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.015em] md:text-[34px]">{{ article.title }}</h1>
+            <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.035em] md:text-[34px]">{{ article.title }}</h1>
             <p class="mt-3 font-mono text-[13px] text-text-muted">
               <time :datetime="article.publishedAt || article.createdAt">{{ formatDate(article.publishedAt || article.createdAt) }}</time>
             </p>

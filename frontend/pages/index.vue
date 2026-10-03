@@ -2,10 +2,10 @@
   <div class="page pt-14 md:pt-24">
     <div class="offset">
       <p class="font-mono text-[13px] text-text-muted">Yusuf Akinleye</p>
-      <h1 class="mt-4 max-w-[16ch] text-[36px] font-semibold leading-[1.08] tracking-[-0.02em] md:text-[48px]">
+      <h1 class="mt-4 max-w-[16ch] text-[38px] font-semibold leading-[1.05] tracking-[-0.045em] md:text-[56px]">
         Backend Software &amp; Platform Engineer
       </h1>
-      <p class="mt-4 text-[21px] text-text-secondary md:text-[24px]">I build reliable systems.</p>
+      <p class="mt-5 text-[18px] text-text-secondary md:text-[20px]">I build reliable systems.</p>
       <NuxtLink to="/work" class="mt-6 inline-block font-mono text-[13px] text-text hover:text-accent">Work →</NuxtLink>
     </div>
 
@@ -14,11 +14,11 @@
       <ul class="space-y-9">
         <li v-for="w in publicWork" :key="w.slug">
           <p class="flex flex-wrap items-baseline gap-x-3">
-            <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[19px] font-semibold text-text">{{ w.name }}</NuxtLink>
+            <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[17px] font-semibold text-text">{{ w.name }}</NuxtLink>
             <span class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span>
           </p>
-          <p class="mt-1 text-text">{{ w.what }}</p>
-          <p class="mt-1 text-[17px] text-text-secondary">{{ w.myRole }}</p>
+          <p class="mt-1 text-[15px] text-text">{{ w.what }}</p>
+          <p class="mt-1 text-[15px] text-text-secondary">{{ w.myRole }}</p>
           <p class="mt-2 flex flex-wrap gap-x-5 font-mono text-[13px]">
             <NuxtLink :to="`/work/${w.slug}`" class="text-text-muted hover:text-text">View project →</NuxtLink>
             <a v-for="l in w.links.slice(0, 1)" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text">{{ l.label === 'Code' ? 'GitHub' : l.label }} ↗</a>
@@ -33,12 +33,12 @@
         <li v-for="w in experience" :key="w.slug">
           <p class="flex items-baseline justify-between gap-4">
             <span class="flex flex-wrap items-baseline gap-x-3">
-              <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[19px] font-semibold text-text">{{ w.name }}</NuxtLink>
+              <NuxtLink :to="`/work/${w.slug}`" class="quiet-link text-[17px] font-semibold text-text">{{ w.name }}</NuxtLink>
               <span v-if="w.status" class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span>
             </span>
             <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years }}</span>
           </p>
-          <p class="mt-1 text-[17px] text-text-secondary">{{ w.myRole }}</p>
+          <p class="mt-1 text-[15px] text-text-secondary">{{ w.myRole }}</p>
           <ul v-if="w.owned" class="mt-3 space-y-1 text-[16px] text-text-secondary">
             <li v-for="o in w.owned.slice(0, 4)" :key="o" class="grid grid-cols-[1rem_1fr]"><span class="text-text-muted" aria-hidden="true">–</span><span>{{ o }}</span></li>
           </ul>

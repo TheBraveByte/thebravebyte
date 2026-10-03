@@ -5,11 +5,11 @@
       <div class="media aspect-square w-14 shrink-0 rounded-full">
         <Media name="yusuf" alt="Yusuf Akinleye" :width="800" :height="758" :widths="[480]" sizes="56px" position="object-[50%_18%]" eager />
       </div>
-      <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">About</h1>
+      <h1 class="text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">About</h1>
     </div>
 
     <div class="mt-8 space-y-4 text-text-secondary">
-      <p class="text-[19px] leading-snug text-text">
+      <p class="text-[17px] leading-snug text-text">
         I'm a backend software and platform engineer. I've written production software since 2019,
         most of it the backend of payment and media products.
       </p>
@@ -33,7 +33,7 @@
     <section class="rail mt-12" aria-labelledby="experience">
       <h2 id="experience" class="rail-label">Where I've worked</h2>
       <ul>
-        <li v-for="r in roles" :key="r.org + r.title" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[17px] sm:grid-cols-[7.5rem_1fr]">
+        <li v-for="r in roles" :key="r.org + r.title" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[15px] sm:grid-cols-[7.5rem_1fr]">
           <span class="pt-1 font-mono text-[12px] tabular-nums text-text-muted">{{ r.when }}</span>
           <span class="text-text">{{ r.title }}, <span class="text-text-secondary">{{ r.org }}</span></span>
         </li>

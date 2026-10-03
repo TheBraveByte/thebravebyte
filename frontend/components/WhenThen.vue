@@ -1,6 +1,6 @@
 <template>
   <li class="py-4 first:pt-0">
-    <p class="text-[17px] font-semibold leading-snug text-text">
+    <p class="text-[15px] font-semibold leading-snug text-text">
       When {{ risk.when }},
     </p>
     <p class="mt-1 grid grid-cols-[1.25rem_1fr] text-[16px] leading-relaxed text-text-secondary">

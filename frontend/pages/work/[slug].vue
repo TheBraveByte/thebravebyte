@@ -2,8 +2,8 @@
   <article v-if="item" class="page pt-14 md:pt-20">
     <div class="offset">
       <p v-if="item.status" class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ item.status }}</p>
-      <h1 class="mt-1 text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">{{ item.name }}</h1>
-      <p class="mt-4 text-[19px] leading-snug text-text">{{ item.what }}</p>
+      <h1 class="mt-1 text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">{{ item.name }}</h1>
+      <p class="mt-4 text-[17px] leading-snug text-text">{{ item.what }}</p>
       <p class="mt-3 text-text-secondary">{{ item.myRole }}</p>
       <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
         <a v-for="l in item.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="quiet-link">{{ l.label }} ↗</a>

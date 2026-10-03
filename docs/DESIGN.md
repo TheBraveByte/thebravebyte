@@ -25,7 +25,7 @@ on a phone. Measure with the scratch `measure.mjs` before adding anything.
 ## System
 
 - **Column:** one 680px column, left aligned, generous space. Header and footer share it.
-- **Type:** Geist only. Body 18px, lists 16px, metadata 15px muted, page titles 28 to 32px.
+- **Type:** Inter for reading, Roboto Mono for labels and metadata (the owner chose the type of hammedarowosegbe.com). Body 16px, lists 15px, page titles 28 to 32px, home headline 56px at -0.045em.
   Mono appears only inside code and the simulation's timestamps.
 - **Colour:** ink on paper-white, inverted in dark mode. One signal orange, an alarm
   colour, used only for the "then" arrows and the diagram's flow.

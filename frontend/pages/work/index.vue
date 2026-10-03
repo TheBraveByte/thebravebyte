@@ -1,7 +1,7 @@
 <template>
   <div class="page pt-14 md:pt-20">
     <div class="offset">
-      <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">Work</h1>
+      <h1 class="text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">Work</h1>
       <p class="mt-4 text-text-secondary">
         Public and live work first, then the companies I've built for. Private client systems are
         listed on the home page by what they are, without links.
@@ -16,7 +16,7 @@
               <span><span class="quiet-link text-text">{{ w.name }}</span><span v-if="w.status" class="ml-3 font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span></span>
               <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years }}</span>
             </span>
-            <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ w.what }}</span>
+            <span class="mt-1 block text-[15px] leading-snug text-text-secondary">{{ w.what }}</span>
             <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ w.role }}<template v-if="w.duration"> · {{ w.duration }}</template></span>
           </NuxtLink>
         </li>
