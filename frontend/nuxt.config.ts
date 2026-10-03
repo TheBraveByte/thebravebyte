@@ -6,6 +6,8 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: process.env.VERCEL ? "vercel" : "cloudflare-pages",
+    // Ship every public page as real HTML; the crawler follows links from the home page.
+    prerender: { routes: ["/", "/work", "/writing", "/about"], crawlLinks: true, failOnError: false },
     routeRules: {
       "/api/_nuxt_icon/**": {},
       "/blog": { redirect: { to: "/writing", statusCode: 301 } },

@@ -59,7 +59,8 @@ const note = findNote(slug)
 
 const { data: article, pending, error } = note
   ? { data: ref<any>(null), pending: ref(false), error: ref(null) }
-  : await useFetch<any>(`${config.public.apiBase}/articles/${slug}`)
+  // server: false keeps CMS articles live: edits in the admin show without a redeploy.
+  : await useFetch<any>(`${config.public.apiBase}/articles/${slug}`, { server: false })
 
 const parsedContent = computed(() => parseArticleContent(article.value?.content))
 const isMarkdown = computed(() => parsedContent.value.mode === 'markdown')

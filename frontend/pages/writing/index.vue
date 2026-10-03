@@ -52,6 +52,7 @@ import { notes } from '~/utils/notes'
 const config = useRuntimeConfig()
 const { data, pending, error } = await useFetch<{ articles?: any[] }>(`${config.public.apiBase}/articles`, {
   lazy: true,
+  server: false, // the article list stays live, like the articles themselves
   default: () => ({ articles: [] }),
 })
 const fetchFailed = computed(() => !!error.value)
