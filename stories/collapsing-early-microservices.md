@@ -1,46 +1,40 @@
-# One process instead of a cluster: collapsing early microservices
+# Folding a service back in: moving delivery into the main process
 
 *Multi-domain platform, team project, February 2025. Go, Gin, MongoDB, Redis.*
 
 ### Problem
 
-An early-stage product had started life as microservices: a Kafka event bus,
-Open Policy Agent for authorization and an Elasticsearch cluster. The product
-was young, and the team judged that running and coordinating that
-infrastructure cost more than the traffic needed.
+The delivery service ran on its own with a Kafka event bus, Open Policy Agent for
+authorization and Elasticsearch. For a young product, that meant more systems to
+run and coordinate than the traffic needed.
 
 ### Context
 
-The platform covered a dozen business domains (delivery, transport, school
-management, voting, health insurance and more), worked on by a team of 30+
-engineers. The team decided to consolidate. I carried out the migration, in one
-of my first changes on the codebase.
+One platform covering delivery, transport, voting, elections, project management
+and health insurance, worked on by about 20 engineers. The team chose to
+consolidate, and I carried out the move early in my time on the codebase.
 
 ### Decision
 
-Move to a modular monolith: one Gin process, one MongoDB database, with each
-domain kept as a separate module inside it.
+Bring delivery into the main application as a module, keeping its boundaries in
+the code so it could be split out again.
 
 ### Trade-offs
 
-Microservices let each domain scale and deploy on its own and use its own
-technology. The team gave that up in exchange for one deploy unit, in-process
-calls, and the ability to change related data on a single database. Splitting a
-service back out later is possible because the domain boundaries stay in the code.
+A separate service can scale and deploy on its own. Giving that up bought one
+deploy unit, in-process calls, and one fewer set of infrastructure to keep alive.
 
 ### Implementation
 
-- One change of 83 files moved the services into a single process.
-- Kafka was replaced with a Redis-backed task queue (asynq).
-- OPA was replaced with JWT and role-based access middleware in the process.
-- Elasticsearch was removed.
-- Every endpoint was tested as part of the same change.
+- Moved the delivery service into the main application in one change of 83 files.
+- Dropped its dependencies on Kafka, OPA and Elasticsearch; the Kafka producer
+  stayed in the code, switched off, in case it was needed again.
+- Tested every endpoint as part of the same change.
 
 ### Result
 
-The domains I went on to own (delivery, transport, voting, health insurance) were
-built on this foundation without the operational overhead of the original
-topology.
+Delivery, and the domains I went on to own, ran in one process instead of
+alongside a cluster of supporting systems.
 
 ### What I learned
 

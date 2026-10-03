@@ -1,7 +1,7 @@
 <template>
   <header class="page flex h-16 items-center justify-between pt-6 md:pt-8">
-    <NuxtLink to="/" class="text-[15px] font-medium text-text" aria-label="Home">YA</NuxtLink>
-    <nav aria-label="Main" class="flex items-center gap-5 text-[15px] text-text-muted">
+    <NuxtLink to="/" class="font-mono text-[13px] text-text" aria-label="Home">YA</NuxtLink>
+    <nav aria-label="Main" class="flex items-center gap-5 font-mono text-[13px] text-text-muted">
       <NuxtLink v-for="item in navItems" :key="item.to" :to="item.to" class="nav-link hover:text-text">{{ item.label }}</NuxtLink>
       <button
         type="button"

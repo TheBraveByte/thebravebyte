@@ -5,10 +5,9 @@ Longer write-up: [How a "simple" Telegram bot turned into a payment system](http
 
 ### Problem
 
-A friend asked for a "simple" Telegram bot that sells subscriptions. Within days
-it was taking real payments. It ended up with three payment providers, whose
-webhooks could arrive twice, late, or not at all, and one of which returned
-inconsistent JSON.
+A friend asked for a "simple" Telegram bot that sells subscriptions. I built it in
+three days, and it ended up with three payment providers, whose webhooks could
+arrive twice, late, or not at all, and one of which returned inconsistent JSON.
 
 ### Context
 
@@ -17,24 +16,20 @@ paid access or takes money without delivering anything. I built it alone.
 
 ### Decision
 
-Treat it as a payment system from the start: one internal state machine for
-subscriptions, with each payment provider behind a common interface.
+Treat it as a payment system from the start: one payment manager in front of every
+provider, with each provider verifying its own webhooks.
 
 ### Trade-offs
 
-A single hard-coded provider would have been quicker. A common interface takes
-more code up front, but each rail checks payments its own way while the
+A single hard-coded provider would have been quicker. A manager in front of all
+three takes more code up front, but each rail checks payments its own way while the
 subscription logic stays in one place.
 
 ### Implementation
 
-- Stripe, Paystack and NOWPayments sit behind one interface, chosen at checkout
-  by a factory, and all lead to the same local state machine.
-- Webhooks are checked with a keyed hash compared in constant time. The raw body
-  is stored before anything acts on it, so a disputed payment can be
-  reconstructed.
-- Marking an invoice paid and activating the subscription happen in one database
-  transaction.
+- Stripe, Paystack and NOWPayments sit behind one payment manager.
+- Webhooks are checked with a keyed hash compared in constant time, and the raw
+  payload is kept, so a disputed payment can be reconstructed.
 - Database calls retry with exponential backoff and jitter, behind a circuit
   breaker.
 - A flexible string type parses the fields where one provider returned
@@ -44,8 +39,8 @@ subscription logic stays in one place.
 
 ### Result
 
-A forged or replayed webhook cannot activate a subscription, and a duplicate
-cannot activate one twice.
+A forged webhook is rejected before it can activate anything, and every payment
+event is kept for later checking.
 
 ### What I learned
 

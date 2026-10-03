@@ -18,7 +18,7 @@ and employer repositories, so the projects below are the parts I can show.
   verify without the server. Go, gRPC, PostgreSQL.
   [Demo](https://babit-inky.vercel.app)
 - **[rixl-go](https://github.com/rixlhq/rixl-go)**: the Go SDK for Rixl's media
-  API. I led backend development at Rixl, including its SDKs in eight languages.
+  API. I was the largest contributor to Rixl's backend and started its SDKs in eight languages.
 - **[snackbox](https://github.com/TheBraveByte/snackbox)**: reference integration
   for a hosted-checkout payments API, with signed webhooks, idempotency keys and
   rate limiting.
@@ -29,8 +29,8 @@ Short write-ups of problems I've worked through: the decision, the trade-offs
 and what I'd keep.
 
 - ["Unsure" is not "failed": handling unknown payout responses](stories/unsure-is-not-failed.md)
-- [Explicit work, not polling: rebuilding a video pipeline on River and Postgres](stories/explicit-work-not-polling.md)
-- [One process instead of a cluster: collapsing early microservices](stories/collapsing-early-microservices.md)
+- [Explicit work, not polling: making Rixl's upload pipeline start and recover on its own](stories/explicit-work-not-polling.md)
+- [Folding a service back in: moving delivery into the main process](stories/collapsing-early-microservices.md)
 - [A small bot that takes money](stories/a-small-bot-that-takes-money.md)
 
 ---

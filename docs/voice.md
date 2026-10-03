@@ -112,9 +112,9 @@ Taken from the copy this replaced.
 - *Same idea, everyday words.*
 
 **Role statement**
-- Off: "Co-led the platform as principal engineer…"
-- On: "I led backend development at Rixl, including its SDKs in eight languages."
-- *Use the agreed title wording; give the scope that can be checked.*
+- Off: "Development Lead at Rixl" (a title the contribution can't establish)
+- On: "Software engineer, backend. The largest contributor to the backend: about 60 percent of the commits in the core services."
+- *Use the real title; let the checked scope show the level.*
 
 **Engineering-note result**
 - Off: "Zero duplicate payments, zero lost data, zero panics."

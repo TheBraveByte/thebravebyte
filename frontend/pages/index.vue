@@ -1,47 +1,55 @@
 <template>
   <div class="page pt-14 md:pt-20">
-    <h1 class="text-[17px] font-medium text-text">Yusuf Akinleye</h1>
-    <div class="mt-6 space-y-4 text-text-secondary">
-      <p>
-        <span class="text-text">Software engineer.</span> I build backend systems in Go for
-        payments, ledgers and job queues, and I design them for the moment things stop going to plan.
-      </p>
-      <p>
-        I run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>,
-        and I've led backend development at Rixl and built most of Eazyfit's API.
-      </p>
-    </div>
-
-    <section class="mt-14" aria-labelledby="selected">
-      <h2 id="selected" class="text-[15px] text-text-muted">Selected work</h2>
-      <ul class="mt-4 grid gap-x-10 gap-y-6 sm:grid-cols-2">
-        <li v-for="w in featured" :key="w.slug">
-          <NuxtLink :to="`/work/${w.slug}`" class="group block">
-            <span class="quiet-link">{{ w.name }}</span>
-            <span class="mt-1 block text-[16px] leading-snug text-text-secondary">{{ w.line }}</span>
-          </NuxtLink>
-        </li>
-      </ul>
-      <NuxtLink to="/work" class="mt-6 inline-block text-[15px] text-text-muted hover:text-text">All {{ work.length }} systems →</NuxtLink>
-    </section>
-
-    <section class="mt-14 grid gap-12 sm:grid-cols-2" aria-label="Writing and contact">
-      <div>
-        <h2 class="text-[15px] text-text-muted">Writing</h2>
-        <ul class="mt-4 space-y-3">
-          <li v-for="n in notes.slice(0, 3)" :key="n.slug">
-            <NuxtLink :to="`/writing/${n.slug}`" class="quiet-link text-[16px] leading-snug">{{ n.short }}</NuxtLink>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="text-[15px] text-text-muted">Contact</h2>
-        <p class="mt-4 text-[16px] leading-relaxed text-text-secondary">
-          <a href="mailto:ayaaakinleye@gmail.com" class="quiet-link">ayaaakinleye@gmail.com</a><br>
-          <a href="https://github.com/TheBraveByte" target="_blank" rel="noopener noreferrer" class="quiet-link">GitHub</a> ·
-          <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank" rel="noopener noreferrer" class="quiet-link">LinkedIn</a>
+    <div class="offset">
+      <h1 class="text-[18px] font-semibold text-text">Yusuf Akinleye</h1>
+      <div class="mt-5 space-y-4 text-text-secondary">
+        <p>
+          <span class="text-text">Software engineer.</span> I build backend systems in Go for
+          payments, ledgers and job queues, and I design them for the moment things stop going to plan.
+        </p>
+        <p>
+          I run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>,
+          and I've been the largest backend contributor at Rixl and built most of Eazyfit's API.
         </p>
       </div>
+    </div>
+
+    <section class="rail mt-14" aria-labelledby="selected">
+      <h2 id="selected" class="rail-label">Selected work</h2>
+      <div>
+        <ul class="space-y-7">
+          <li v-for="w in featured" :key="w.slug">
+            <NuxtLink :to="`/work/${w.slug}`" class="group block">
+              <span class="flex items-baseline justify-between gap-4">
+                <span class="quiet-link font-semibold text-text">{{ w.name }}</span>
+                <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years.split(' ')[0] }}</span>
+              </span>
+              <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ w.description }}</span>
+              <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ w.role }} · {{ w.context }}<template v-if="w.duration"> · {{ w.duration }}</template></span>
+            </NuxtLink>
+          </li>
+        </ul>
+        <NuxtLink to="/work" class="mt-5 inline-block font-mono text-[13px] text-text-muted hover:text-text">All {{ work.length }} systems →</NuxtLink>
+      </div>
+    </section>
+
+    <section class="rail mt-12" aria-labelledby="writing">
+      <h2 id="writing" class="rail-label">Writing</h2>
+      <ul class="space-y-2.5">
+        <li v-for="n in notes.slice(0, 3)" :key="n.slug">
+          <NuxtLink :to="`/writing/${n.slug}`" class="quiet-link">{{ n.short }}</NuxtLink>
+        </li>
+      </ul>
+    </section>
+
+    <section class="rail mt-12" aria-labelledby="contact">
+      <h2 id="contact" class="rail-label">Contact</h2>
+      <p class="text-text-secondary">
+        <a href="mailto:ayaaakinleye@gmail.com" class="quiet-link">ayaaakinleye@gmail.com</a><br>
+        <a href="https://github.com/TheBraveByte" target="_blank" rel="noopener noreferrer" class="quiet-link">GitHub</a>
+        <span class="text-text-muted"> · </span>
+        <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank" rel="noopener noreferrer" class="quiet-link">LinkedIn</a>
+      </p>
     </section>
   </div>
 </template>

@@ -1,54 +1,49 @@
-# Explicit work, not polling: rebuilding a video pipeline on River and Postgres
+# Explicit work, not polling: making Rixl's upload pipeline start and recover on its own
 
-*Rixl, video platform, March 2026. Go, PostgreSQL, River, FFmpeg.*
-Longer write-up: [How I rebuilt Rixl's video pipeline](https://thebravebyte.pages.dev/article/river-postgres-video-pipeline).
+*Rixl, video platform, December 2025 to July 2026. Go, PostgreSQL, River.*
 
 ### Problem
 
-Uploaded videos sat in `pending` until a timer-driven job found them. Worse, the
-handoff between stages could break silently: rendition rows could exist in
-Postgres with no encode job behind them, and nothing would ever pick them up.
+Uploaded videos waited for a timer-driven job to find them, and failed renditions
+had no structured way back into the pipeline. Work that went wrong tended to stay
+wrong until someone noticed.
 
 ### Context
 
-Each upload is preprocessed, encoded into several renditions and packaged as an
-HLS stream. The platform ran on one database with a small team. This was the
-third version of the pipeline I worked on, after a chunked splitter and a fixed
-rendition ladder.
+Each upload is preprocessed, encoded into several renditions and packaged for
+streaming. The platform ran on one Postgres database with a small team.
 
 ### Decision
 
-Replace the scheduler with River, a job queue that stores its jobs in the same
-Postgres database as the application data. An upload enqueues work immediately,
-and each stage enqueues the next one.
+Treat each step as explicit work with a home in the database: queue it when the
+event happens, record failures on the row, and give stalled work a way back.
 
 ### Trade-offs
 
-A dedicated broker scales workers further, but it is another system to run, and
-it cannot share a transaction with the rows it is about. River on Postgres gives
-transactional job insertion and queue state that survives restarts, at the cost
-of making Postgres carry both application state and job orchestration. If upload
-volume ever needs many worker machines, that choice gets revisited.
+A dedicated message broker scales workers further, but it is another system to run.
+River keeps its queue in the same Postgres the application already uses, so jobs
+survive restarts and there is nothing new to operate. The cost is that Postgres
+carries both application data and job orchestration.
 
 ### Implementation
 
-- Rendition rows and their encode jobs are inserted in one transaction
-  (`InsertManyTx`), so it is impossible to have one without the other.
-- Pending renditions are fetched and marked in one atomic step, so two workers
-  cannot process the same rendition.
-- A reconciler runs on startup and every minute, putting renditions stuck in
-  `processing` back into the queue with a set-based SQL update.
-- Failed renditions retry with exponential backoff, and the failure is stored on
-  the row, where it can be queried.
+- Failed renditions retry with exponential backoff, and the retry count and next
+  attempt time are stored on the row, where they can be queried.
+- Finishing an upload enqueues a preprocessing job on River straight away, instead
+  of waiting for a timer to find it. The queue later moved into the shared library
+  so other services could use it.
+- Upload completion became event-driven, with a reconciler that finds stalled
+  uploads and moves them on.
+- Renditions are claimed with `FOR UPDATE SKIP LOCKED`, so two workers never take
+  the same one.
 
 ### Result
 
-Work starts when an upload finishes, not when a timer fires. A finished
-preprocessing step always has its encode jobs. A crashed worker's renditions
-recover on their own.
+Work starts when an upload finishes, failures carry their own retry schedule, and
+stalled uploads recover without anyone stepping in.
 
 ### What I learned
 
-Model a pipeline as explicit work, not periodic discovery. Most of the
-reliability came from putting the job and the data it describes in one
-transaction.
+Model a pipeline as explicit work, not periodic discovery: a job that exists as a
+row can be retried, inspected and recovered; a job that only exists when a timer
+fires cannot.

@@ -10,8 +10,8 @@ The first version of the code treated anything unrecognised as a permanent decli
 
 ### Context
 
-The platform moves money from senders in the US, UK and EU to recipients in Africa,
-mostly over mobile-money rails. A payout is the last irreversible step: once the
+The platform moves money from senders in the US and UK to recipients in Africa and
+Asia, over bank and mobile-money rails. A payout is the last irreversible step: once the
 vendor has paid a wallet, the money is gone. I was the sole engineer on the
 backend.
 

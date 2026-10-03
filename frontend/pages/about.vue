@@ -1,10 +1,11 @@
 <template>
-  <div class="page pt-16 md:pt-24">
+  <div class="page pt-14 md:pt-20">
+    <div class="offset">
     <div class="flex items-center gap-4">
       <div class="media aspect-square w-14 shrink-0 rounded-full">
         <Media name="yusuf" alt="Yusuf Akinleye" :width="800" :height="758" :widths="[480]" sizes="56px" position="object-[50%_18%]" eager />
       </div>
-      <h1 class="text-[28px] font-semibold tracking-[-0.025em] md:text-[32px]">It started with a fire alarm</h1>
+      <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">It started with a fire alarm</h1>
     </div>
 
     <div class="mt-8 space-y-4 text-text-secondary">
@@ -24,12 +25,13 @@
         from the United Kingdom.
       </p>
     </div>
+    </div>
 
-    <section class="mt-12" aria-labelledby="experience">
-      <h2 id="experience" class="text-[15px] font-medium text-text-muted">Where I've worked</h2>
-      <ul class="mt-4">
-        <li v-for="r in roles" :key="r.org + r.title" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[16px] sm:grid-cols-[8rem_1fr]">
-          <span class="text-[15px] tabular-nums text-text-muted">{{ r.when }}</span>
+    <section class="rail mt-12" aria-labelledby="experience">
+      <h2 id="experience" class="rail-label">Where I've worked</h2>
+      <ul>
+        <li v-for="r in roles" :key="r.org + r.title" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[17px] sm:grid-cols-[7.5rem_1fr]">
+          <span class="pt-1 font-mono text-[12px] tabular-nums text-text-muted">{{ r.when }}</span>
           <span class="text-text">{{ r.title }}, <span class="text-text-secondary">{{ r.org }}</span></span>
         </li>
       </ul>
@@ -42,7 +44,7 @@
 // engineering-contributions claim store only.
 const roles = [
   { when: '2026 to now', title: 'Founder', org: 'FoldLabs' },
-  { when: '2025 to 2026', title: 'Development Lead (contract)', org: 'Rixl' },
+  { when: '2025 to 2026', title: 'Software engineer, backend (contract)', org: 'Rixl' },
   { when: '2025 to 2026', title: 'Principal backend engineer', org: 'Eazyfit' },
   { when: '2025 to 2026', title: 'Backend engineer (contract)', org: 'Paymax' },
   { when: '2024', title: 'Backend engineer (contract)', org: 'Volomn' },

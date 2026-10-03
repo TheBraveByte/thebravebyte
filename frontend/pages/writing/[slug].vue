@@ -1,12 +1,12 @@
 <template>
-  <div class="page pt-16 md:pt-24">
-    <div>
+  <div class="page pt-14 md:pt-20">
+    <div class="offset">
 
       <!-- Engineering note, from the repo's stories/ folder -->
       <article v-if="note">
         <header>
-          <h1 class="text-[34px] font-semibold leading-[1.1] tracking-[-0.03em] md:text-[44px]">{{ note.title }}</h1>
-          <p class="mt-4 text-[15px] text-text-muted">{{ note.context }}</p>
+          <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.015em] md:text-[34px]">{{ note.title }}</h1>
+          <p class="mt-3 font-mono text-[13px] text-text-muted">{{ note.context }}</p>
         </header>
         <div class="prose-content mt-10">
           <MarkdownRenderer :content="note.body" />
@@ -29,8 +29,8 @@
         </div>
         <article v-else class="mt-8">
           <header>
-            <h1 class="text-[34px] font-semibold leading-[1.1] tracking-[-0.03em] md:text-[44px]">{{ article.title }}</h1>
-            <p class="mt-4 text-[15px] text-text-muted">
+            <h1 class="text-[28px] font-semibold leading-[1.15] tracking-[-0.015em] md:text-[34px]">{{ article.title }}</h1>
+            <p class="mt-3 font-mono text-[13px] text-text-muted">
               <time :datetime="article.publishedAt || article.createdAt">{{ formatDate(article.publishedAt || article.createdAt) }}</time>
             </p>
             <img v-if="article.coverImage" :src="article.coverImage" :alt="''" class="mt-8 w-full border border-border" />
@@ -98,8 +98,8 @@ useSeoMeta({
 }
 /* Notes use h3 for Problem, Context, Decision...: render them as record labels. */
 .prose-content h3 {
-  font-family: var(--font-sans) !important; font-size: 15px !important; font-weight: 600 !important;
-  letter-spacing: 0 !important; text-transform: none !important; color: var(--color-text) !important;
+  font-family: var(--font-mono) !important; font-size: 13px !important; font-weight: 400 !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: var(--color-text-muted) !important;
   margin: 2.2em 0 0.5em !important;
 }
 .prose-content h2 { font-size: 1.4rem; margin: 2em 0 0.6em; }

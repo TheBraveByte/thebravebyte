@@ -1,29 +1,32 @@
 <template>
-  <div class="page pt-16 md:pt-24">
-    <h1 class="text-[40px] font-semibold leading-[1.05] tracking-[-0.035em] md:text-[52px]">Writing</h1>
-    <p class="mt-5 text-text-secondary">
+  <div class="page pt-14 md:pt-20">
+    <div class="offset">
+    <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">Writing</h1>
+    <p class="mt-4 text-text-secondary">
       Notes are short write-ups of one engineering decision. Articles are longer pieces on Go
       and backend systems.
     </p>
+    </div>
 
-    <section class="mt-14" aria-labelledby="w-notes">
-      <h2 id="w-notes" class="text-[15px] font-medium text-text-muted">Notes</h2>
-      <ul class="mt-4">
+    <section class="rail mt-12" aria-labelledby="w-notes">
+      <h2 id="w-notes" class="rail-label">Notes</h2>
+      <ul class="space-y-4">
         <li v-for="note in notes" :key="note.slug">
-          <NuxtLink :to="`/writing/${note.slug}`" class="group block py-3">
-            <span class="text-text group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{{ note.title }}</span>
-            <span class="mt-0.5 block text-[15px] text-text-muted">{{ note.lesson }}</span>
+          <NuxtLink :to="`/writing/${note.slug}`" class="group block">
+            <span class="quiet-link text-text">{{ note.title }}</span>
+            <span class="mt-0.5 block text-[17px] leading-snug text-text-secondary">{{ note.lesson }}</span>
           </NuxtLink>
         </li>
       </ul>
     </section>
 
-    <section class="mt-14" aria-labelledby="w-articles">
-      <h2 id="w-articles" class="text-[15px] font-medium text-text-muted">Articles</h2>
-      <div v-if="pending" class="mt-4 space-y-3" aria-hidden="true">
+    <section class="rail mt-12" aria-labelledby="w-articles">
+      <h2 id="w-articles" class="rail-label">Articles</h2>
+      <div>
+      <div v-if="pending" class="space-y-3" aria-hidden="true">
         <div v-for="n in 3" :key="n" class="h-6 w-4/5 animate-pulse rounded bg-bg-secondary motion-reduce:animate-none" />
       </div>
-      <ul v-else class="mt-4">
+      <ul v-else>
         <li v-for="a in articles" :key="a.href">
           <component
             :is="a.external ? 'a' : NuxtLink"
@@ -31,13 +34,14 @@
             class="group grid grid-cols-[1fr_auto] gap-4 py-2.5"
           >
             <span class="text-text group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{{ a.title }}<span v-if="a.external" class="text-text-muted"> ↗</span></span>
-            <time class="pt-0.5 text-[14px] tabular-nums text-text-muted" :datetime="a.iso">{{ a.label }}</time>
+            <time class="pt-1 font-mono text-[12px] tabular-nums text-text-muted" :datetime="a.iso">{{ a.label }}</time>
           </component>
         </li>
       </ul>
       <p v-if="!pending && fetchFailed" class="mt-2 text-[15px] text-text-muted">
         Articles hosted on this site couldn't be loaded just now.
       </p>
+      </div>
     </section>
   </div>
 </template>

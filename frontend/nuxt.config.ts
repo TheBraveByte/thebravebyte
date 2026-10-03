@@ -44,8 +44,8 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Geist: [400, 500, 600],
-      "Geist Mono": [400, 500],
+      "Source Serif 4": { wght: [400, 600], ital: [400] },
+      "IBM Plex Mono": [400, 500],
     },
     display: "swap",
     prefetch: true,

@@ -10,13 +10,13 @@
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer v-if="route.path !== '/'" class="page mt-24 pb-12 text-[15px] text-text-muted">
+    <footer v-if="route.path !== '/'" class="page mt-20 pb-12 font-mono text-[13px] text-text-muted"><div class="offset">
       <a href="mailto:ayaaakinleye@gmail.com" class="hover:text-text">ayaaakinleye@gmail.com</a>
       <span class="mx-2">·</span>
       <a href="https://github.com/TheBraveByte" target="_blank" rel="noopener noreferrer" class="hover:text-text">GitHub</a>
       <span class="mx-2">·</span>
       <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank" rel="noopener noreferrer" class="hover:text-text">LinkedIn</a>
-    </footer>
+    </div></footer>
     <div v-else class="pb-16" />
   </div>
 </template>
