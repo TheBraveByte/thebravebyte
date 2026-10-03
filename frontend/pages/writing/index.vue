@@ -1,59 +1,46 @@
 <template>
-  <div class="mx-auto max-w-[736px] px-4 pt-16 md:px-8 md:pt-24">
-    <p class="label">Writing</p>
-    <h1 class="mt-5 text-4xl font-semibold tracking-[-0.04em] md:text-5xl">Notes and articles</h1>
-    <p class="mt-5 max-w-[58ch] text-text-secondary">
-      Notes are short records of one engineering decision. Articles are longer pieces on Go
+  <div class="page pt-16 md:pt-24">
+    <h1 class="text-[40px] font-semibold leading-[1.05] tracking-[-0.035em] md:text-[52px]">Writing</h1>
+    <p class="mt-5 text-text-secondary">
+      Notes are short write-ups of one engineering decision. Articles are longer pieces on Go
       and backend systems.
     </p>
 
     <section class="mt-14" aria-labelledby="w-notes">
-      <div class="grid grid-cols-[1fr_auto] border-b border-border pb-3">
-        <h2 id="w-notes" class="label">Notes</h2>
-        <span class="label tabular-nums">{{ String(notes.length).padStart(2, '0') }}</span>
-      </div>
-      <ol>
-        <li v-for="note in notes" :key="note.slug" class="border-b border-border">
-          <NuxtLink :to="`/writing/${note.slug}`" class="group grid grid-cols-[1fr_auto] gap-4 py-5">
-            <span>
-              <span class="font-mono text-[14px] font-medium text-text">{{ note.title }}</span>
-              <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ note.context }}</span>
-            </span>
-            <span class="font-mono text-[13px] text-text-muted transition-transform duration-200 group-hover:translate-x-1 group-hover:text-text" aria-hidden="true">→</span>
+      <h2 id="w-notes" class="text-[15px] font-medium text-text-muted">Notes</h2>
+      <ul class="mt-4">
+        <li v-for="note in notes" :key="note.slug">
+          <NuxtLink :to="`/writing/${note.slug}`" class="group block py-3">
+            <span class="text-text group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{{ note.title }}</span>
+            <span class="mt-0.5 block text-[15px] text-text-muted">{{ note.lesson }}</span>
           </NuxtLink>
         </li>
-      </ol>
+      </ul>
     </section>
 
     <section class="mt-14" aria-labelledby="w-articles">
-      <div class="grid grid-cols-[4.5rem_1fr_auto] gap-x-4 border-b border-border pb-3">
-        <span class="label">Date</span>
-        <h2 id="w-articles" class="label">Articles</h2>
-        <span class="label tabular-nums">{{ String(articles.length).padStart(2, '0') }}</span>
+      <h2 id="w-articles" class="text-[15px] font-medium text-text-muted">Articles</h2>
+      <div v-if="pending" class="mt-4 space-y-3" aria-hidden="true">
+        <div v-for="n in 3" :key="n" class="h-6 w-4/5 animate-pulse rounded bg-bg-secondary motion-reduce:animate-none" />
       </div>
-      <div v-if="pending" class="space-y-px py-2" aria-hidden="true">
-        <div v-for="n in 3" :key="n" class="h-12 animate-pulse bg-bg-secondary motion-reduce:animate-none" />
-      </div>
-      <ol v-else>
-        <li v-for="a in articles" :key="a.href" class="border-b border-border">
+      <ul v-else class="mt-4">
+        <li v-for="a in articles" :key="a.href">
           <component
             :is="a.external ? 'a' : NuxtLink"
             v-bind="a.external ? { href: a.href, target: '_blank', rel: 'noopener noreferrer' } : { to: a.href }"
-            class="group grid grid-cols-[4.5rem_1fr_auto] gap-x-4 py-5"
+            class="group grid grid-cols-[1fr_auto] gap-4 py-2.5"
           >
-            <time class="font-mono text-[12px] tabular-nums text-text-muted" :datetime="a.iso">{{ a.label }}</time>
-            <span class="font-mono text-[14px] text-text">{{ a.title }}</span>
-            <span class="font-mono text-[13px] text-text-muted group-hover:text-text" aria-hidden="true">{{ a.external ? '↗' : '→' }}</span>
+            <span class="text-text group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{{ a.title }}<span v-if="a.external" class="text-text-muted"> ↗</span></span>
+            <time class="pt-0.5 text-[14px] tabular-nums text-text-muted" :datetime="a.iso">{{ a.label }}</time>
           </component>
         </li>
-      </ol>
-      <p v-if="!pending && fetchFailed" class="border-b border-border py-5 font-mono text-[12px] text-text-muted">
+      </ul>
+      <p v-if="!pending && fetchFailed" class="mt-2 text-[15px] text-text-muted">
         Articles hosted on this site couldn't be loaded just now.
       </p>
     </section>
   </div>
 </template>
-
 <script setup lang="ts">
 import { NuxtLink } from '#components'
 import { notes } from '~/utils/notes'

@@ -1,9 +1,9 @@
 <template>
-  <div class="border border-border bg-bg p-4 sm:p-6" aria-labelledby="sim-title">
+  <div class="media bg-bg p-4 sm:p-6" aria-labelledby="sim-title">
     <!-- Header: what is being simulated, and the two policies -->
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div class="min-w-0">
-        <p id="sim-title" class="label">Payout simulation</p>
+        <p id="sim-title" class="text-[14px] text-text-muted">Payout simulation</p>
         <p class="mt-0.5 text-[15px] font-medium text-text">$120.00 to an M-Pesa wallet</p>
       </div>
       <div class="flex items-center gap-2">

@@ -10,29 +10,19 @@
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="mt-24 border-t border-border">
-      <div class="mx-auto max-w-[1040px] px-4 pt-14 pb-8 md:px-8">
-        <p class="label">Contact</p>
-        <div class="mt-4 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <a
-            href="mailto:ayaaakinleye@gmail.com"
-            class="break-all font-mono text-xl text-text hover:text-text-secondary sm:text-2xl md:text-[28px]"
-          >ayaaakinleye@gmail.com ↗</a>
-          <nav aria-label="Elsewhere" class="flex gap-5 font-mono text-[13px] text-text-secondary">
-            <a v-for="l in links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="hover:text-text">{{ l.label }}</a>
-          </nav>
-        </div>
-        <div class="mt-12 flex justify-between border-t border-border pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-text-muted">
-          <span>© {{ year }} Yusuf Akinleye</span>
-          <span>Go · Payments · APIs</span>
-        </div>
-      </div>
+    <footer class="page mt-28 pb-12">
+      <p class="text-text-secondary">
+        If your product moves money or can't afford to drop work, write to me at
+        <a href="mailto:ayaaakinleye@gmail.com" class="quiet-link">ayaaakinleye@gmail.com</a>.
+      </p>
+      <nav aria-label="Elsewhere" class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-text-muted">
+        <a v-for="l in links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="hover:text-text">{{ l.label }}</a>
+      </nav>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-const year = new Date().getFullYear()
 const links = [
   { label: 'GitHub', href: 'https://github.com/TheBraveByte' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/' },

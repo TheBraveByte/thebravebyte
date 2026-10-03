@@ -25,73 +25,73 @@
   --color-error: var(--color-error);
 }
 
-/* Monochrome zinc. Colour appears only as a real state (the simulation's settled,
-   unsure and paid-twice). See docs/DESIGN.md. */
+/* Ink on paper-white, one signal colour. The orange is an alarm colour, a nod to where
+   this started (a fire detector), and it marks only the "then": what the system does
+   when things go wrong. See docs/DESIGN.md. */
 :root {
-  --color-bg: #fcfcfc;
-  --color-bg-secondary: #f4f4f5;
-  --color-bg-tertiary: #e4e4e7;
-  --color-border: #e4e4e7;
-  --color-text: #09090b;
-  --color-text-secondary: #52525b;
-  --color-text-muted: #71717a;
-  --color-ink: #09090b;
+  --color-bg: #fafaf9;
+  --color-bg-secondary: #f1f1ef;
+  --color-bg-tertiary: #e7e6e3;
+  --color-border: #e2e1dd;
+  --color-text: #111110;
+  --color-text-secondary: #4d4c48;
+  --color-text-muted: #75746f;
+  --color-ink: #111110;
 
-  --color-accent: #09090b;
-  --color-accent-hover: #3f3f46;
-  --color-on-accent: #fcfcfc;
-  --color-accent-glow: transparent;
-  --color-good: #15803d;
-  --color-warn: #a16207;
-  --color-danger: #b91c1c;
+  --color-accent: #d9480f;
+  --color-accent-hover: #b53a0b;
+  --color-on-accent: #ffffff;
+  --color-good: #2f7d4a;
+  --color-warn: #a86207;
+  --color-danger: #c42b1c;
 
-  --color-success: #15803d;
-  --color-warning: #a16207;
-  --color-error: #b91c1c;
+  --color-success: #2f7d4a;
+  --color-warning: #a86207;
+  --color-error: #c42b1c;
 
-  --color-code-bg: #f4f4f5;
-  --color-code-text: #09090b;
-  --hljs-comment: #71717a;
-  --hljs-keyword: #09090b;
-  --hljs-string: #15803d;
-  --hljs-title: #09090b;
-  --hljs-variable: #a16207;
-  --hljs-built_in: #3f3f46;
-  --hljs-deletion: #b91c1c;
+  --color-code-bg: #f1f1ef;
+  --color-code-text: #111110;
+  --hljs-comment: #75746f;
+  --hljs-keyword: #b53a0b;
+  --hljs-string: #2f7d4a;
+  --hljs-title: #111110;
+  --hljs-variable: #a86207;
+  --hljs-built_in: #4d4c48;
+  --hljs-deletion: #c42b1c;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dark {
-  --color-bg: #09090b;
-  --color-bg-secondary: #111113;
-  --color-bg-tertiary: #27272a;
-  --color-border: #27272a;
-  --color-text: #fafafa;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #8b8b94;
-  --color-ink: #fafafa;
+  --color-bg: #0e0e0d;
+  --color-bg-secondary: #171716;
+  --color-bg-tertiary: #222220;
+  --color-border: #292927;
+  --color-text: #ededeb;
+  --color-text-secondary: #b3b2ad;
+  --color-text-muted: #8a8984;
+  --color-ink: #ededeb;
 
-  --color-accent: #fafafa;
-  --color-accent-hover: #d4d4d8;
-  --color-on-accent: #09090b;
-  --color-good: #4ade80;
-  --color-warn: #fbbf24;
-  --color-danger: #f87171;
+  --color-accent: #ff8a4c;
+  --color-accent-hover: #ffa778;
+  --color-on-accent: #0e0e0d;
+  --color-good: #5fcf86;
+  --color-warn: #f2b25c;
+  --color-danger: #ff7b6b;
 
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-error: #f87171;
+  --color-success: #5fcf86;
+  --color-warning: #f2b25c;
+  --color-error: #ff7b6b;
 
-  --color-code-bg: #111113;
-  --color-code-text: #fafafa;
-  --hljs-comment: #8b8b94;
-  --hljs-keyword: #fafafa;
-  --hljs-string: #4ade80;
-  --hljs-title: #fafafa;
-  --hljs-variable: #fbbf24;
-  --hljs-built_in: #d4d4d8;
-  --hljs-deletion: #f87171;
+  --color-code-bg: #171716;
+  --color-code-text: #ededeb;
+  --hljs-comment: #8a8984;
+  --hljs-keyword: #ff8a4c;
+  --hljs-string: #5fcf86;
+  --hljs-title: #ededeb;
+  --hljs-variable: #f2b25c;
+  --hljs-built_in: #b3b2ad;
+  --hljs-deletion: #ff7b6b;
 }
 
 @layer base {
@@ -102,7 +102,7 @@
     font-family: var(--font-sans);
     background-color: var(--color-bg);
     color: var(--color-text);
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
     transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-font-smoothing: antialiased;
@@ -217,24 +217,17 @@
   --header-height: 3.5rem;
 }
 
-/* Records: mono labels for genuine metadata only. */
 @layer components {
-  .label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--color-text-muted);
-  }
-  .text-link {
-    font-family: var(--font-mono);
-    font-size: 13px;
+  .page { width: 100%; max-width: 680px; margin-inline: auto; padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .page { padding-inline: 2rem; } }
+  .quiet-link {
     color: var(--color-text);
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 2px;
-    transition: border-color 150ms ease;
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 5px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 150ms ease;
   }
-  .text-link:hover { border-color: var(--color-text); }
-  .media-frame { overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-secondary); }
+  .quiet-link:hover { text-decoration-color: currentColor; }
+  .media { overflow: hidden; border-radius: 6px; background: var(--color-bg-secondary); box-shadow: 0 0 0 1px var(--color-border); }
 }
