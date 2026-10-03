@@ -1,7 +1,8 @@
 <template>
   <article v-if="item" class="page pt-14 md:pt-20">
     <div class="offset">
-      <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">{{ item.name }}</h1>
+      <p v-if="item.status" class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ item.status }}</p>
+      <h1 class="mt-1 text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">{{ item.name }}</h1>
       <p class="mt-4 text-[19px] leading-snug text-text">{{ item.description }}</p>
       <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
         <a v-for="l in item.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="quiet-link">{{ l.label }} ↗</a>
@@ -22,14 +23,27 @@
       </ul>
     </section>
 
+    <section v-if="item.ownership" class="rail mt-10" aria-labelledby="owned">
+      <h2 id="owned" class="rail-label">Owned end to end</h2>
+      <div>
+        <p class="font-semibold text-text">{{ item.ownership.feature }}</p>
+        <ol class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-[12px] text-text-secondary">
+          <li v-for="(step, i) in item.ownership.chain" :key="step" class="flex items-center gap-2">
+            <span class="rounded border border-border px-2 py-0.5">{{ step }}</span>
+            <span v-if="i < item.ownership.chain.length - 1" class="text-accent" aria-hidden="true">→</span>
+          </li>
+        </ol>
+        <p class="mt-3 text-[16px] text-text-secondary">{{ item.ownership.evidence }}</p>
+      </div>
+    </section>
+
     <section v-if="item.impact" class="rail mt-8" aria-labelledby="impact">
       <h2 id="impact" class="rail-label">Impact</h2>
       <p class="text-text">{{ item.impact }}</p>
     </section>
 
-    <div v-if="item.media || item.diagram || item.simulation" class="offset mt-12">
-      <PayoutSim v-if="item.simulation" />
-      <div v-else-if="item.diagram" class="media flex aspect-[16/10] items-center justify-center p-6 md:p-10"><PipelineDiagram /></div>
+    <div v-if="item.media || item.diagram" class="offset mt-12">
+      <div v-if="item.diagram" class="media flex aspect-[16/10] items-center justify-center p-6 md:p-10"><PipelineDiagram /></div>
       <div v-else-if="item.media" class="media aspect-[16/10]">
         <Media v-bind="item.media" sizes="(min-width: 840px) 600px, 100vw" />
       </div>

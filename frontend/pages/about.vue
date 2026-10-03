@@ -20,9 +20,8 @@
       </p>
       <p>
         In payments it means a payout with no answer is marked unsure, so nobody is paid twice.
-        I've written production code since 2019, Go backends for most of it, and I now run
-        <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>
-        from the United Kingdom.
+        I've written production code since 2019, Go backends for most of it. I'm based in
+        Lagos, Nigeria, and run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>.
       </p>
     </div>
     </div>

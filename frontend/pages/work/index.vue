@@ -3,8 +3,8 @@
     <div class="offset">
       <h1 class="text-[28px] font-semibold tracking-[-0.015em] md:text-[32px]">Work</h1>
       <p class="mt-4 text-text-secondary">
-        Systems I've built, for myself, for clients and for employers. Most live in private
-        repositories, so code and demos are linked only where they're public.
+        Public and live work first, then the companies I've built for. Private client systems are
+        listed on the home page by what they are, without links.
       </p>
     </div>
     <section v-for="g in groups" :key="g.label" class="rail mt-12" :aria-label="g.label">
@@ -13,7 +13,7 @@
         <li v-for="w in g.items" :key="w.slug">
           <NuxtLink :to="`/work/${w.slug}`" class="group block">
             <span class="flex items-baseline justify-between gap-4">
-              <span class="quiet-link text-text">{{ w.name }}</span>
+              <span><span class="quiet-link text-text">{{ w.name }}</span><span v-if="w.status" class="ml-3 font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span></span>
               <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years }}</span>
             </span>
             <span class="mt-1 block text-[17px] leading-snug text-text-secondary">{{ w.description }}</span>
@@ -28,10 +28,9 @@
 <script setup lang="ts">
 import { work } from '~/data/work'
 
-const own = (w: { context: string }) => w.context.startsWith('Personal')
 const groups = [
-  { label: 'For clients and employers', items: work.filter(w => !own(w)) },
-  { label: 'My own', items: work.filter(own) },
+  { label: 'Public work', items: work.filter(w => w.kind === 'public') },
+  { label: 'Experience', items: work.filter(w => w.kind === 'experience') },
 ]
 
 useSeoMeta({

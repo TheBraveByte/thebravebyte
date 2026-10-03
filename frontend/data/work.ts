@@ -23,55 +23,46 @@ export interface WorkItem {
   links: WorkLink[]
   media?: WorkMedia
   diagram?: 'pipeline'
-  simulation?: boolean
   note?: string
   featured?: boolean
+  kind: 'public' | 'experience'
+  status?: string // shown as a badge: Live, Open source, Live demo
+  ownership?: { feature: string, chain: string[], evidence: string }
 }
+
+// Client work: real, private, never publicly launched. Named by what it is, never by
+// client or product name, and never given a project page.
+export interface ClientWork { what: string, role: string, years: string }
+export const clientWork: ClientWork[] = [
+  { what: 'Cross-border remittance platform', role: 'Sole backend engineer', years: '2026' },
+  { what: 'Anti-money-laundering and compliance platform', role: 'Sole engineer', years: '2025 to 2026' },
+  { what: 'Crypto arbitrage and trading platform', role: 'Sole engineer', years: '2025 to 2026' },
+  { what: 'WhatsApp commerce assistant with AI product matching', role: 'Lead engineer', years: '2026' },
+  { what: 'Multi-tenant attendance and access-card platform', role: 'Lead backend engineer', years: '2025 to 2026' },
+]
 
 export const work: WorkItem[] = [
   {
-    slug: 'remittance',
-    name: 'Remittance platform',
-    years: '2026',
-    context: 'Client project',
-    role: 'Sole engineer',
-    duration: '6 days',
-    description: 'Designed and built a cross-border remittance platform end to end, from corridor pricing to vendor reconciliation, moving money from the US and UK to bank accounts and mobile-money wallets in Africa and Asia.',
-    about: 'It prices a corridor, collects the sender\'s money, screens the sender, confirms the payee\'s name with the payout network, holds the funds in a double-entry ledger, pays out and reconciles the vendor\'s answer.',
-    contribution: [
-      'Wrote all 169 commits: 50 gRPC services with 196 methods, each also served as REST, and 48 database migrations.',
-      'Put balances in a TigerBeetle double-entry ledger mirrored to Postgres, with a replay path and fault-tolerance tests.',
-      'Built swappable adapters for collection, payout, identity checks, screening and bank linking, with failover between vendors.',
-    ],
-    impact: 'Every transfer is held in the ledger before the sender is charged, and a payout with an unknown answer is never sent again until the vendor confirms it was missed.',
-    risks: [
-      { when: 'the payout vendor never answers', then: 'the payout is parked as unknown, and the vendor is asked for its status before anything is sent again.' },
-      { when: 'money could move before the books agree', then: 'every transfer takes a pending ledger hold before the sender\'s card or bank is charged.' },
-      { when: 'the ledger and its copy drift apart', then: 'TigerBeetle is the source of truth; the Postgres mirror has a replay path and its own fault tests.' },
-      { when: 'a compliance check errors', then: 'risk rules run before the hold and the charge, and an error stops the transfer.' },
-    ],
-    stack: 'Go, gRPC, PostgreSQL, sqlc, TigerBeetle',
-    links: [],
-    simulation: true,
-    note: 'unsure-is-not-failed',
-    featured: true,
-  },
-  {
     slug: 'rixl',
+    kind: 'experience',
+    ownership: {
+      feature: 'Billing in the core API',
+      chain: ['Stripe checkout and subscriptions', 'Usage meters', 'Invoices', 'Webhooks', 'Plan quotas', 'Tests'],
+      evidence: 'I wrote 409 of the 615 commits to the billing package, which carries 108 test files.',
+    },
     name: 'Rixl',
     years: '2025 to 2026',
     context: 'Employer, contract',
     role: 'Software engineer, backend',
     duration: '16 months',
-    description: 'The largest contributor to the backend of a video and media platform: moved its core services to gRPC behind a REST gateway, defined its API and shipped SDKs in eight languages from it.',
+    description: 'The largest contributor to the backend of a video and media platform, and owner of its billing and client authentication.',
     about: 'Rixl handles the media side of other products: uploading and delivering images and video, feeds, engagement analytics, accounts and billing. I wrote about 60 percent of the commits in the core API, auth, gateway and analytics services, and started all eight SDKs: about 3,900 commits across 26 repositories.',
     contribution: [
-      'Moved the core API, auth and analytics services to gRPC behind a REST gateway, and switched the media processors to gRPC reporting.',
-      'Defined 237 gRPC methods across 42 services, which produce a public REST API of 210 operations.',
-      'Started all eight SDK repositories and set them to regenerate automatically whenever the API spec changes.',
-      'Added rendition retries with exponential backoff, a River queue for post-upload work, and a reconciler for stalled uploads.',
+      'Owned billing in the core API, 409 of its 615 commits: Stripe checkout and subscriptions, usage meters, invoices, webhooks and plan quotas.',
+      'Wrote most of client-credentials auth (91 percent of its commits) and platform auth (81 percent).',
+      'Moved the core API, auth and analytics services to gRPC behind a REST gateway, and started all eight SDK repositories.',
     ],
-    impact: 'The service definitions now produce the public API spec, the docs and all eight SDKs.',
+    impact: 'The billing and auth code I owned ships in Rixl\'s public API, 210 operations documented at docs.rixl.com.',
     risks: [
       { when: 'a transcoding job fails or stalls', then: 'renditions are claimed with row locks and retried with backoff, and a reconciler recovers uploads that stall.' },
       { when: 'the SDKs could drift from the API', then: 'the spec is generated from the service definitions, and every change regenerates all eight SDKs.' },
@@ -88,6 +79,13 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'eazyfit',
+    kind: 'public',
+    status: 'Live',
+    ownership: {
+      feature: 'Two-stage escrow payouts',
+      chain: ['Design runbook', 'Data model and indexes', 'Release service', 'Paystack transfers', 'Tests', 'CI deploy', 'Structured logging'],
+      evidence: 'I wrote the runbook, the release service and its tests, the deploy workflow and the Compose config, and 74 of the payment package\'s 78 commits.',
+    },
     name: 'Eazyfit',
     years: '2025 to 2026',
     context: 'Startup',
@@ -96,7 +94,7 @@ export const work: WorkItem[] = [
     description: 'Built most of the backend for a tailoring marketplace, including staged escrow payouts and a measurement engine that turns front, side and back photos into tailor-ready measurements.',
     about: 'Customers book tailors and stylists and get measured from photos instead of a tape.',
     contribution: [
-      'Wrote 627 of the 694 commits on the main API, and 48 of the 52 commits to its payment package.',
+      'Wrote 627 of the 694 commits on the main API, and 74 of the 78 commits to its payment package.',
       'Built two-stage escrow payouts: 70 percent to the stylist on acceptance, 30 percent on delivery.',
       'Built the measurement engine, 94 Python files that the Go API runs as a separate process.',
     ],
@@ -107,12 +105,23 @@ export const work: WorkItem[] = [
       { when: 'the measurement engine crashes', then: 'each run is its own subprocess with a timeout, so the API returns an error instead of going down.' },
     ],
     stack: 'Go, chi, Python, MongoDB, Paystack, WebSockets',
-    links: [{ label: 'Website', href: 'https://www.eazyfitfashion.com' }],
+    links: [
+      { label: 'Website', href: 'https://www.eazyfitfashion.com' },
+      { label: 'App Store', href: 'https://apps.apple.com/ng/app/eazyfit/id6749547417' },
+      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.anonymous.eazyfit' },
+    ],
     media: { name: 'eazyfit', alt: 'Three screens from the Eazyfit mobile app', width: 1400, height: 956, widths: [800, 1400] },
     featured: true,
   },
   {
     slug: 'babit',
+    kind: 'public',
+    status: 'Live demo',
+    ownership: {
+      feature: 'The whole system',
+      chain: ['Architecture doc', 'Schema and migrations', 'gRPC services', 'REST gateway', 'React console', 'End-to-end tests', 'Deployed demo'],
+      evidence: 'Sole author of all 185 commits, from the architecture document to the live demo.',
+    },
     name: 'babit',
     years: '2026',
     context: 'Personal project, source-available',
@@ -140,6 +149,7 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'paymax',
+    kind: 'experience',
     name: 'Paymax',
     years: '2025 to 2026',
     context: 'Employer, contract',
@@ -160,94 +170,9 @@ export const work: WorkItem[] = [
     note: 'collapsing-early-microservices',
   },
   {
-    slug: 'omonai',
-    name: 'omonai',
-    years: '2025 to 2026',
-    context: 'Personal project',
-    role: 'Sole author',
-    duration: '5 months',
-    description: 'Built an anti-money-laundering and fraud-detection platform on my own: transaction monitoring, sanctions screening and case management across four jurisdictions.',
-    about: 'A compliance platform of the kind banks and payment companies run, covering the US, Nigeria, Angola and the Republic of the Congo.',
-    contribution: [
-      'Wrote all 375 commits: 29 Go service modules, a Python scoring service and a Nuxt front end.',
-      'Synced sanctions screening against four official lists (OFAC, UN, UK and EU) with fuzzy name matching.',
-      'Exported suspicious-activity reports in each regulator\'s format: FinCEN XML, goAML and ANIF.',
-    ],
-    impact: 'Every customer risk rating comes with the factors and points that produced it.',
-    risks: [
-      { when: 'an analyst has to defend a customer\'s rating', then: 'the rating comes with the factors and points that produced it.' },
-      { when: 'a new country\'s rules arrive', then: 'thresholds, regulators and report formats live in one compliance package, so a country is added in one place.' },
-      { when: 'thousands of transactions need checking for a pattern', then: 'four laundering patterns are detected with database aggregations, not in memory.' },
-    ],
-    stack: 'Go, Python, FastAPI, MongoDB, Redis, Nuxt',
-    links: [],
-  },
-  {
-    slug: 'bitraq',
-    name: 'BiTraq',
-    years: '2025 to 2026',
-    context: 'Personal project',
-    role: 'Sole author',
-    duration: '9 months',
-    description: 'Built an arbitrage and automated-trading platform on my own that prices each trade\'s true cost and puts a risk manager in front of every automated order.',
-    about: 'Compares prices across exchanges and on-chain markets, decides whether a gap is worth acting on, then alerts or trades under a rules engine. I wrote 389 of the 390 commits on main; the other is a bot\'s.',
-    contribution: [
-      'Wrote a cost model over venue fees, slippage, gas and bridge fees, and a backtester that replays stored market data through it.',
-      'Built a risk manager with daily loss limits, a drawdown breaker and exposure caps per asset and per exchange.',
-    ],
-    impact: 'The docs list what the engine does not do yet, including order-book depth and live exchange execution.',
-    risks: [
-      { when: 'a price gap looks like free money', then: 'fees, slippage, gas and bridge costs are subtracted before it counts.' },
-      { when: 'an automated strategy starts losing', then: 'daily loss limits and a drawdown breaker stop it.' },
-      { when: 'the same order is submitted twice', then: 'a repeat within 30 minutes returns the original order instead of placing a second trade.' },
-    ],
-    stack: 'Go, MongoDB, Redis, Stripe',
-    links: [{ label: 'Website', href: 'https://bitraq.netlify.app' }],
-    media: { name: 'bitraq', alt: 'The BiTraq landing page', width: 1400, height: 995, widths: [800, 1400] },
-  },
-  {
-    slug: 'attendance',
-    name: 'Attendance platform',
-    years: '2025 to 2026',
-    context: 'Client project',
-    role: 'Lead engineer',
-    duration: '9 months',
-    description: 'Led the backend for a multi-tenant attendance and access-card platform, writing about 94 percent of it.',
-    about: 'Access cards, location check-ins, attendance sessions and audit logs for many organisations on one backend.',
-    contribution: [
-      'Built every core subsystem: auth, access control, attendance, audit, uploads and notifications, across 141 API routes and 29 migrations.',
-      'Scoped every request to the caller\'s organisation in the application layer.',
-    ],
-    impact: 'Took the platform from an empty repository to 141 API routes in nine months, writing 173 of its 183 commits.',
-    risks: [
-      { when: 'face matching is down', then: 'it is a separate staff check, so check-in never depends on it.' },
-    ],
-    stack: 'Go, PostgreSQL, sqlc, goose',
-    links: [],
-  },
-  {
-    slug: 'lura',
-    name: 'Lura',
-    years: '2026',
-    context: 'Personal project',
-    role: 'Lead engineer',
-    duration: '2 months',
-    description: 'Built WhatsApp commerce for small vendors, with a Go AI gateway that reads text, voice notes and photos against a vendor\'s catalogue.',
-    about: 'A dashboard for selling over WhatsApp and a stateless gateway that drafts replies. I wrote 119 of the 121 commits across the two.',
-    contribution: [
-      'Built the merchant dashboard and a Go gateway that routes text, voice notes and photos through one endpoint.',
-      'Mapped each WhatsApp business number to its vendor, so one service serves many shops.',
-    ],
-    impact: 'When a match is uncertain, buyers get alternatives and a question instead of the wrong product.',
-    risks: [
-      { when: 'the model isn\'t sure', then: 'below a match threshold it offers the closest alternatives and asks, instead of naming the wrong product.' },
-      { when: 'a model is unavailable', then: 'each capability is checked on its own: a photo falls back to text matching, and a voice note fails cleanly.' },
-    ],
-    stack: 'Go, chi, Nuxt, Hugging Face',
-    links: [],
-  },
-  {
     slug: 'bloom-parser',
+    kind: 'public',
+    status: 'Open source',
     name: 'bloom-parser',
     years: '2026',
     context: 'Personal project, open source',
