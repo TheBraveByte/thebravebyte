@@ -10,18 +10,13 @@
 
     <div class="enter mt-8 space-y-4 text-text-secondary" style="--i: 2">
       <p class="text-[17px] leading-snug text-text">
-        I'm a backend software and platform engineer. I've written production software since 2019,
-        most of it the backend of payment and media products.
+        I'm a backend software and platform engineer, building production systems since 2019, mostly
+        for payment and media products. I design for what goes wrong first: a provider that never
+        answers, a worker that dies mid-job, a request that arrives twice.
       </p>
       <p>
-        I like the part of a system that has to stay correct when something goes wrong: a payment
-        provider that never answers, a worker that dies halfway through a job, a request that
-        arrives twice. I design for those cases first, not after the first incident.
-      </p>
-      <p>
-        That habit started with my final-year project in Electrical and Electronics Engineering at
-        the University of Ilorin: a fire detector on an 8-bit board, where the hardest decision was
-        when to raise the alarm.
+        I also do research in AI, robotics and automation. It's where I started: one of the first
+        systems I built was an automated fire detector on an 8-bit microcontroller.
       </p>
       <p>
         I run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>,
