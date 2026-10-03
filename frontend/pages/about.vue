@@ -5,8 +5,9 @@
         <h1 class="text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">About</h1>
         <div class="mt-6 space-y-4 text-text-secondary">
           <p class="text-[17px] leading-snug text-text">
-            I build reliable software for startups and businesses. Since 2019, I've built the systems
-            their products depend on, and made sure they keep working as they grow.
+            I build the back end of products for startups and businesses: the part that takes the
+            payment, saves the order and sends the receipt. My job is to make sure it still does that
+            on a bad day.
           </p>
           <p>
             I also research AI, robotics and automation. I built a machine-learning fire detection
@@ -65,7 +66,7 @@ const roles = [
 
 useSeoMeta({
   title: 'About | Yusuf Akinleye',
-  description: 'I build reliable software for startups and businesses.',
+  description: 'I build the back end of products for startups and businesses, and make sure it still works on a bad day.',
 })
 </script>
 
