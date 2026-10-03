@@ -1,9 +1,9 @@
 <template>
-  <li class="py-7 first:pt-0">
-    <p class="text-[22px] font-medium leading-snug tracking-[-0.015em] text-text md:text-[26px]">
+  <li class="py-4 first:pt-0">
+    <p class="text-[17px] font-medium leading-snug text-text">
       When {{ risk.when }},
     </p>
-    <p class="mt-2 grid grid-cols-[1.25rem_1fr] text-text-secondary">
+    <p class="mt-1 grid grid-cols-[1.25rem_1fr] text-[16px] leading-relaxed text-text-secondary">
       <span class="text-accent" aria-hidden="true">→</span>
       <span>
         {{ risk.then }}

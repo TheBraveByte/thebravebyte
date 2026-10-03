@@ -22,6 +22,8 @@ export interface Note {
   body: string
   // First sentence of the note's "What I learned" section.
   lesson: string
+  // Title before the colon: "Unsure" is not "failed", for short lists.
+  short: string
   date: string
 }
 
@@ -40,7 +42,7 @@ function parse(slug: string, raw: string): Note {
     .trim()
   const learned = raw.split(/^### What I learned\s*$/m)[1]?.trim().replace(/\s+/g, ' ') ?? ''
   const lesson = learned.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? learned
-  return { slug, title, context, body, lesson, date: published[slug] ?? '2026-10-03' }
+  return { slug, title, context, body, lesson, short: title.split(':')[0], date: published[slug] ?? '2026-10-03' }
 }
 
 export const notes: Note[] = Object.entries(files)

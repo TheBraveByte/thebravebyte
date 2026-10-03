@@ -10,22 +10,17 @@
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="page mt-28 pb-12">
-      <p class="text-text-secondary">
-        If your product moves money or can't afford to drop work, write to me at
-        <a href="mailto:ayaaakinleye@gmail.com" class="quiet-link">ayaaakinleye@gmail.com</a>.
-      </p>
-      <nav aria-label="Elsewhere" class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-text-muted">
-        <a v-for="l in links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="hover:text-text">{{ l.label }}</a>
-      </nav>
+    <footer v-if="route.path !== '/'" class="page mt-24 pb-12 text-[15px] text-text-muted">
+      <a href="mailto:ayaaakinleye@gmail.com" class="hover:text-text">ayaaakinleye@gmail.com</a>
+      <span class="mx-2">·</span>
+      <a href="https://github.com/TheBraveByte" target="_blank" rel="noopener noreferrer" class="hover:text-text">GitHub</a>
+      <span class="mx-2">·</span>
+      <a href="https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/" target="_blank" rel="noopener noreferrer" class="hover:text-text">LinkedIn</a>
     </footer>
+    <div v-else class="pb-16" />
   </div>
 </template>
 
 <script setup lang="ts">
-const links = [
-  { label: 'GitHub', href: 'https://github.com/TheBraveByte' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yusuf-akinleye-bb35981b4/' },
-  { label: 'FoldLabs', href: 'https://foldlabs.pro' },
-]
+const route = useRoute()
 </script>

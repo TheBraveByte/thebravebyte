@@ -1,44 +1,34 @@
 <template>
   <div class="page pt-16 md:pt-24">
-    <div class="media aspect-square w-24 rounded-full">
-      <Media name="yusuf" alt="Yusuf Akinleye" :width="800" :height="758" :widths="[480]" sizes="96px" position="object-[50%_18%]" eager />
+    <div class="flex items-center gap-4">
+      <div class="media aspect-square w-14 shrink-0 rounded-full">
+        <Media name="yusuf" alt="Yusuf Akinleye" :width="800" :height="758" :widths="[480]" sizes="56px" position="object-[50%_18%]" eager />
+      </div>
+      <h1 class="text-[28px] font-semibold tracking-[-0.025em] md:text-[32px]">It started with a fire alarm</h1>
     </div>
-    <h1 class="mt-8 text-[40px] font-semibold leading-[1.05] tracking-[-0.035em] md:text-[52px]">It started with a fire alarm.</h1>
 
-    <div class="mt-8 space-y-5 text-text-secondary">
+    <div class="mt-8 space-y-4 text-text-secondary">
       <p>
-        My final-year project in Electrical and Electronics Engineering at the University of
-        Ilorin was a fire detector: smoke, temperature and gas sensors, a small model, and an
-        8-bit board to run it on.
+        My final-year engineering project at the University of Ilorin was a fire detector on an
+        8-bit board. The hard part wasn't the model. It was deciding when to sound the alarm,
+        because a missed fire costs far more than a false one.
+      </p>
+      <p class="text-text">
+        I've been answering the same question since, with more at stake: what should a system
+        do when it isn't sure?
       </p>
       <p>
-        The model was the easy part. The hard part was deciding when to sound the alarm. A
-        missed fire costs far more than a false alarm, so the threshold had to be set by what
-        each mistake costs, and the model had to be one I could explain afterwards.
-      </p>
-      <p class="text-[21px] leading-snug text-text md:text-[22px]">
-        I've been answering the same question ever since, with more at stake: what should a
-        system do when it isn't sure?
-      </p>
-      <p>
-        In a payment system it means a payout that never answers is marked unsure, not failed,
-        so nobody is paid twice. In a job queue it means work a dead worker was holding goes
-        back on the queue. In a model it means asking a question instead of guessing. The
-        rule underneath is the same: a system that acts on uncertain input owes its operator
-        an account of why, and a defined behaviour when it isn't sure.
-      </p>
-      <p>
-        I've written production code since 2019, Python first and then Go backends: payments,
-        ledgers, media pipelines, compliance and multi-tenant APIs. I live in the United
-        Kingdom and run <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>,
-        a small studio that designs and builds products for clients.
+        In payments it means a payout with no answer is marked unsure, so nobody is paid twice.
+        I've written production code since 2019, Go backends for most of it, and I now run
+        <a href="https://foldlabs.pro" target="_blank" rel="noopener noreferrer" class="quiet-link">FoldLabs</a>
+        from the United Kingdom.
       </p>
     </div>
 
-    <section class="mt-16" aria-labelledby="experience">
+    <section class="mt-12" aria-labelledby="experience">
       <h2 id="experience" class="text-[15px] font-medium text-text-muted">Where I've worked</h2>
       <ul class="mt-4">
-        <li v-for="r in roles" :key="r.org + r.title" class="grid grid-cols-[6.5rem_1fr] gap-4 py-2.5 sm:grid-cols-[8rem_1fr]">
+        <li v-for="r in roles" :key="r.org + r.title" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[16px] sm:grid-cols-[8rem_1fr]">
           <span class="text-[15px] tabular-nums text-text-muted">{{ r.when }}</span>
           <span class="text-text">{{ r.title }}, <span class="text-text-secondary">{{ r.org }}</span></span>
         </li>

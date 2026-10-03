@@ -9,15 +9,23 @@ Yusuf's work has one through-line, and it started with a fire detector: deciding
 sound the alarm when a missed fire costs more than a false one. Every system since answers
 the same question with more at stake: what should a system do when it isn't sure?
 
-So the site is organised around what goes wrong, not around a project list. The home page
-is a list of situations ("When the payout vendor never answers,") each followed by what the
-system does about it and the system where it was built. Projects sit one click down and
-are described the same way. About tells the fire-alarm story.
+The idea is carried, not lectured: one sentence on the home page ("I design them for the
+moment things stop going to plan"), one-line pitches that encode it ("Cross-border payouts
+that can't go out twice"), and a compact "When things go wrong" list on each system page.
+About tells the fire-alarm story in three short paragraphs.
+
+## Length budget
+
+People scan: they read 20 to 28 percent of a page's words (NN/g), and recruiters give a
+first pass about 7 seconds (Ladders eye-tracking, 2018). Measured on 2026-10-03, the home
+pages of leerob, paco.me, brandur and rauchg run 1.1 to 2.2 screens and 74 to 208 words.
+Budget here: home about one screen and under 150 words; any other page under two screens
+on a phone. Measure with the scratch `measure.mjs` before adding anything.
 
 ## System
 
 - **Column:** one 680px column, left aligned, generous space. Header and footer share it.
-- **Type:** Geist only. Situations at 22 to 26px, body at 18px, metadata at 15px muted.
+- **Type:** Geist only. Body 18px, lists 16px, metadata 15px muted, page titles 28 to 32px.
   Mono appears only inside code and the simulation's timestamps.
 - **Colour:** ink on paper-white, inverted in dark mode. One signal orange, an alarm
   colour, used only for the "then" arrows and the diagram's flow.

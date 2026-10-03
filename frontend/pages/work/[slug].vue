@@ -1,26 +1,25 @@
 <template>
   <article v-if="item" class="pt-16 md:pt-24">
     <div class="page">
-      <h1 class="text-[40px] font-semibold leading-[1.05] tracking-[-0.035em] md:text-[52px]">{{ item.name }}</h1>
+      <h1 class="text-[28px] font-semibold tracking-[-0.025em] md:text-[32px]">{{ item.name }}</h1>
       <p class="mt-4 text-[15px] text-text-muted">{{ item.context }} · {{ item.role }} · {{ item.years }}</p>
-      <p class="mt-6 text-[21px] leading-snug text-text md:text-[22px]">{{ item.summary }}</p>
-      <p class="mt-4 text-text-secondary">{{ item.about }}</p>
+      <p class="mt-5 text-text-secondary">{{ item.about }}</p>
       <p v-if="item.links.length" class="mt-5 flex flex-wrap gap-x-5 gap-y-2">
         <a v-for="l in item.links" :key="l.href" :href="l.href" target="_blank" rel="noopener noreferrer" class="quiet-link">{{ l.label }}</a>
       </p>
     </div>
 
-    <div v-if="item.media || item.diagram || item.simulation" class="mx-auto mt-12 max-w-[880px] px-5 md:px-8">
-      <div v-if="item.simulation" class="mx-auto max-w-[680px]"><PayoutSim /></div>
+    <div v-if="item.media || item.diagram || item.simulation" class="mx-auto mt-10 max-w-[680px] px-5 md:px-8">
+      <div v-if="item.simulation"><PayoutSim /></div>
       <div v-else-if="item.diagram" class="media flex aspect-[16/10] items-center justify-center p-6 md:p-12"><PipelineDiagram /></div>
       <div v-else-if="item.media" class="media aspect-[16/10]">
-        <Media v-bind="item.media" sizes="(min-width: 900px) 880px, 100vw" eager />
+        <Media v-bind="item.media" sizes="(min-width: 700px) 620px, 100vw" eager />
       </div>
     </div>
 
     <div class="page">
-      <h2 class="mt-16 text-[15px] font-medium text-text-muted">What could go wrong, and what I built for it</h2>
-      <ol class="mt-6">
+      <h2 class="mt-12 text-[15px] text-text-muted">When things go wrong</h2>
+      <ol class="mt-4">
         <WhenThen v-for="r in item.risks" :key="r.when" :risk="r" />
       </ol>
 
@@ -30,7 +29,7 @@
         <NuxtLink :to="`/writing/${item.note}`" class="quiet-link">{{ noteTitle }}</NuxtLink>.
       </p>
 
-      <nav class="mt-16 flex justify-between gap-6 text-[15px]" aria-label="More work">
+      <nav class="mt-12 flex justify-between gap-6 text-[15px]" aria-label="More work">
         <NuxtLink to="/work" class="text-text-muted hover:text-text">All systems</NuxtLink>
         <NuxtLink :to="`/work/${next.slug}`" class="text-right text-text-muted hover:text-text">Next: <span class="text-text">{{ next.name }}</span></NuxtLink>
       </nav>

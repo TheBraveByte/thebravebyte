@@ -23,11 +23,15 @@ export interface WorkItem {
   diagram?: 'pipeline'
   simulation?: boolean
   note?: string
+  line?: string // the one-line pitch used on the home page
+  featured?: boolean
 }
 
 export const work: WorkItem[] = [
   {
     slug: 'remittance',
+    line: "Cross-border payouts that can't go out twice.",
+    featured: true,
     name: 'Remittance platform',
     years: '2026',
     context: 'Client project',
@@ -47,6 +51,8 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'rixl',
+    line: "Led backend for a video platform. Jobs survive dead workers.",
+    featured: true,
     name: 'Rixl',
     years: '2025 to 2026',
     context: 'Employer, contract',
@@ -68,6 +74,8 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'eazyfit',
+    line: "Marketplace payouts that are safe to retry.",
+    featured: true,
     name: 'Eazyfit',
     years: '2025 to 2026',
     context: 'Startup',
@@ -85,6 +93,8 @@ export const work: WorkItem[] = [
   },
   {
     slug: 'babit',
+    line: "Receipts that prove what an AI agent did, and who allowed it.",
+    featured: true,
     name: 'babit',
     years: '2026',
     context: 'Personal project',
