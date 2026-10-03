@@ -1,6 +1,6 @@
 ### Yusuf Akinleye
 
-Backend software and platform engineer. I build reliable systems. Founder of [FoldLabs](https://foldlabs.pro). Currently learning Zig.
+Backend software and platform engineer. I build reliable systems. Founder of [FoldLabs](https://foldlabs.pro). Currently learning [Zig](https://ziglang.org/learn/).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="stats/card-dark.svg">
