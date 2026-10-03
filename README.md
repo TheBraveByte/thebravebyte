@@ -4,7 +4,7 @@ Software engineer. I build backend systems in Go: payments, APIs, and the
 background work that has to stay correct when a vendor times out or a worker
 dies. Founder of [FoldLabs](https://foldlabs.pro).
 
-Most of what I build is a modular monolith on PostgreSQL, split into services
+Most of what I build is a modular monolith on Postgres, split into services
 only when the workload calls for it. Much of my production work lives in client
 and employer repositories, so the projects below are the parts I can show.
 

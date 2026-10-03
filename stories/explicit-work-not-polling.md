@@ -19,7 +19,7 @@ rendition ladder.
 ### Decision
 
 Replace the scheduler with River, a job queue that stores its jobs in the same
-PostgreSQL database as the application data. An upload enqueues work immediately,
+Postgres database as the application data. An upload enqueues work immediately,
 and each stage enqueues the next one.
 
 ### Trade-offs

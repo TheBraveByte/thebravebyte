@@ -6,8 +6,8 @@
 
 An early-stage product had started life as microservices: a Kafka event bus,
 Open Policy Agent for authorization and an Elasticsearch cluster. The product
-was young, the team was large, and most of the cost was running and coordinating
-that infrastructure, not serving traffic.
+was young, and the team judged that running and coordinating that
+infrastructure cost more than the traffic needed.
 
 ### Context
 
