@@ -31,6 +31,13 @@ export interface WorkItem {
   owned?: string[] // selected ownership, one feature per line, no technology names
   status?: string // shown as a badge: Live, Open source, Live demo
   ownership?: { feature: string, chain: string[], evidence: string }
+  // Home page brief for selected work: the problem, what I built, what a visitor can check.
+  problem?: string
+  built?: string
+  evidence?: string
+  shot?: WorkMedia // a real screen of the product, for the featured slot on the home page
+  shotDark?: WorkMedia // the same screen in the product's dark theme, shown when the site is dark
+  shotCaption?: string
 }
 
 // Client work: real, private, never publicly launched. Named by what it is, never by
@@ -48,9 +55,9 @@ export const work: WorkItem[] = [
   {
     slug: 'rixl',
     what: 'A video and media platform other products build on.',
-    myRole: 'Backend software engineer and the largest contributor to its backend. I owned billing, passkey sign-in, authorization policies and canary releases.',
+    myRole: 'I was a backend software engineer across its core API, auth, gateway and analytics services.',
     owned: [
-      'Billing and subscriptions.',
+      'Billing: checkout and subscriptions, usage meters, invoices, webhooks and plan quotas.',
       'Passkey sign-in, across the auth service, API and gateway.',
       'Authorization policies.',
       'Canary releases, with metrics labelled by cohort so a canary can be judged before rollout.',
@@ -86,7 +93,7 @@ export const work: WorkItem[] = [
     stack: 'Go, gRPC, PostgreSQL, River, ClickHouse, FFmpeg',
     links: [
       { label: 'Go SDK', href: 'https://github.com/rixlhq/rixl-go' },
-      { label: 'Docs', href: 'https://docs.rixl.com' },
+      { label: 'API docs', href: 'https://docs.rixl.com' },
     ],
     media: { name: 'rixl', alt: 'The Rixl documentation home page', width: 2000, height: 1344, widths: [800, 1400, 2000] },
     note: 'explicit-work-not-polling',
@@ -95,11 +102,11 @@ export const work: WorkItem[] = [
   {
     slug: 'eazyfit',
     what: 'A marketplace where people in Nigeria order custom outfits from verified stylists, measured from phone photos.',
-    myRole: 'Principal backend engineer. I built most of the API, including escrow payouts and the photo measurement engine.',
+    myRole: 'I was principal backend engineer, across its API, payments and measurement.',
     owned: [
-      'Most of the main API.',
-      'Escrow payouts, from the design runbook to deployment.',
-      'The measurement engine that turns phone photos into measurements.',
+      'Two-stage escrow payouts: 70 percent to the stylist on acceptance, 30 percent on delivery.',
+      'The payout release service, from the design runbook to its tests and deploy workflow.',
+      'The measurement engine that turns front, side and back photos into measurements.',
     ],
     kind: 'public',
     status: 'Live',
@@ -128,7 +135,7 @@ export const work: WorkItem[] = [
     ],
     stack: 'Go, chi, Python, MongoDB, Paystack, WebSockets',
     links: [
-      { label: 'Website', href: 'https://www.eazyfitfashion.com' },
+      { label: 'Visit the website', href: 'https://www.eazyfitfashion.com' },
       { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.anonymous.eazyfit' },
     ],
     media: { name: 'eazyfit-site', alt: 'The Eazyfit website: custom outfits from verified stylists, with the app on three phones', width: 1400, height: 875, widths: [800, 1400] },
@@ -138,6 +145,12 @@ export const work: WorkItem[] = [
     slug: 'babit',
     what: 'Proof of what an AI agent did, and who allowed it.',
     myRole: 'I designed and built it on my own, from the architecture to the live demo.',
+    problem: 'When an agent drives a browser, runs code or acts on a desktop, someone will ask who allowed it.',
+    built: 'All of it, alone. Each action is recorded against the signed grant that permitted it and sealed into an append-only ledger. A delegated grant can only narrow its parent.',
+    evidence: 'A live demo and public source. Receipts verify offline with the babit verify command, and an end-to-end test tampers with a receipt to prove verification fails.',
+    shot: { name: 'babit-console', alt: 'A sealed receipt in the babit console: the action an agent took, its session and grant, and the chain of grants that authorized it', width: 2000, height: 1100, widths: [800, 1440, 2000] },
+    shotDark: { name: 'babit-console-dark', alt: 'A sealed receipt in the babit console: the action an agent took, its session and grant, and the chain of grants that authorized it', width: 2000, height: 1100, widths: [800, 1440, 2000] },
+    shotCaption: 'A sealed receipt in the babit console: the action, and the grants that authorized it.',
     kind: 'public',
     status: 'Live demo',
     ownership: {
@@ -164,8 +177,8 @@ export const work: WorkItem[] = [
     ],
     stack: 'Go, gRPC, PostgreSQL, React, TypeScript',
     links: [
-      { label: 'Demo', href: 'https://babit-inky.vercel.app' },
-      { label: 'Code', href: 'https://github.com/TheBraveByte/babit' },
+      { label: 'Try the demo', href: 'https://babit-inky.vercel.app' },
+      { label: 'View source', href: 'https://github.com/TheBraveByte/babit' },
     ],
     media: { name: 'babit', alt: 'The babit landing page', width: 2000, height: 1250, widths: [800, 1400, 2000] },
     featured: true,
@@ -215,7 +228,10 @@ export const work: WorkItem[] = [
       { when: 'the OCR engine isn\'t installed', then: 'OCR requests get a clear per-page error and every other path keeps working.' },
     ],
     stack: 'Go, gRPC, Python, Tesseract, Vue',
-    links: [{ label: 'Code', href: 'https://github.com/TheBraveByte/bloom-parser' }],
+    links: [
+      { label: 'Try the demo', href: 'https://bloom-parser.onrender.com' },
+      { label: 'View source', href: 'https://github.com/TheBraveByte/bloom-parser' },
+    ],
     diagram: 'pipeline',
   },
 ]

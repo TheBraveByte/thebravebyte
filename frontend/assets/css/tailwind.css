@@ -15,6 +15,7 @@
   --color-text-muted: var(--color-text-muted);
   --color-accent: var(--color-accent);
   --color-accent-hover: var(--color-accent-hover);
+  --color-accent-text: var(--color-accent-text);
   --color-on-accent: var(--color-on-accent);
   --color-warn: var(--color-warn);
   --color-good: var(--color-good);
@@ -35,11 +36,13 @@
   --color-border: #e2e1dd;
   --color-text: #111110;
   --color-text-secondary: #4d4c48;
-  --color-text-muted: #75746f;
+  --color-text-muted: #6c6b66;
   --color-ink: #111110;
 
   --color-accent: #d9480f;
   --color-accent-hover: #b53a0b;
+  /* The accent for small text: 4.9:1 on the canvas, where --color-accent is 4.1:1. */
+  --color-accent-text: #c2410c;
   --color-on-accent: #ffffff;
   --color-good: #2f7d4a;
   --color-warn: #a86207;
@@ -74,6 +77,7 @@
 
   --color-accent: #ff8a4c;
   --color-accent-hover: #ffa778;
+  --color-accent-text: #ff8a4c;
   --color-on-accent: #0e0e0d;
   --color-good: #5fcf86;
   --color-warn: #f2b25c;
@@ -211,7 +215,7 @@
   /* The label rail: section names in a narrow left column, content on the right.
      People scan down the left edge first (F-pattern), so that is where the anchors go. */
   .rail { display: block; }
-  .rail-label { font-family: var(--font-mono); font-size: 13px; font-weight: 400; color: var(--color-text-muted); margin-bottom: 0.75rem; }
+  .rail-label { font-family: var(--font-mono); font-size: 14px; scroll-margin-top: 1.5rem; font-weight: 400; color: var(--color-text-muted); margin-bottom: 0.75rem; }
   @media (min-width: 768px) {
     .rail { display: grid; grid-template-columns: 9rem minmax(0, 1fr); column-gap: 2.5rem; }
     .rail-label { margin-bottom: 0; padding-top: 0.3rem; }
@@ -226,6 +230,32 @@
     transition: text-decoration-color 150ms ease;
   }
   .quiet-link:hover { text-decoration-color: currentColor; }
+  /* Actions: links a visitor is meant to take. Ink, underlined, a full-height tap target. */
+  .act, .act-quiet {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+  .act { color: var(--color-text); text-decoration-color: var(--color-text-muted); }
+  .act:hover { color: var(--color-accent-text); text-decoration-color: currentColor; }
+  .act-quiet { color: var(--color-text-secondary); text-decoration-color: var(--color-border); }
+  .act-quiet:hover { color: var(--color-text); text-decoration-color: currentColor; }
+  .status { font-family: var(--font-mono); font-size: 14px; color: var(--color-accent-text); }
+  /* Problem / what I built / evidence: a label column from 640px, stacked below it. */
+  .brief dt { font-family: var(--font-mono); font-size: 14px; color: var(--color-text-muted); }
+  .brief dd { color: var(--color-text-secondary); }
+  @media (min-width: 640px) {
+    .brief { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); column-gap: 1rem; }
+    .brief dt { padding-top: 0.15rem; }
+  }
+  /* A screenshot with a dark twin: each shows only in its own theme. */
+  .shot-dark, .dark .shot-light { display: none; }
+  .dark .shot-dark { display: inline; }
   .media { overflow: hidden; border-radius: 6px; background: var(--color-bg-secondary); box-shadow: 0 0 0 1px var(--color-border); }
 }
 
@@ -283,6 +313,8 @@
 @keyframes read-progress { to { transform: scaleX(1); } }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .arrow-r, .arrow-ur, .arrow-l { transition: none; }
   .enter, .rise-words .w > span { animation: none; }
   .read-progress { display: none; }
 }

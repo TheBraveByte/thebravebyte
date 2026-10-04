@@ -13,11 +13,11 @@
         <li v-for="(w, i) in g.items" :key="w.slug" data-reveal :style="{ '--i': i + 1 }">
           <NuxtLink :to="`/work/${w.slug}`" class="group block">
             <span class="flex items-baseline justify-between gap-4">
-              <span><span class="quiet-link text-text">{{ w.name }}</span><span v-if="w.status" class="ml-3 font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ w.status }}</span></span>
-              <span class="shrink-0 font-mono text-[12px] tabular-nums text-text-muted">{{ w.years }}</span>
+              <span><span class="quiet-link text-text">{{ w.name }}</span><span v-if="w.status" class="ml-3 status">{{ w.status }}</span></span>
+              <span class="shrink-0 font-mono text-[14px] tabular-nums text-text-muted">{{ w.years }}</span>
             </span>
-            <span class="mt-1 block text-[15px] leading-snug text-text-secondary">{{ w.what }}</span>
-            <span class="mt-1.5 block font-mono text-[12px] text-text-muted">{{ w.role }}<template v-if="w.duration"> · {{ w.duration }}</template></span>
+            <span class="mt-1 block text-[16px] leading-snug text-text-secondary">{{ w.what }}</span>
+            <span class="mt-1.5 block font-mono text-[14px] text-text-muted">{{ w.role }}<template v-if="w.duration"> · {{ w.duration }}</template></span>
           </NuxtLink>
         </li>
       </ul>

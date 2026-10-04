@@ -1,11 +1,11 @@
 <template>
   <article v-if="item" class="page pt-14 md:pt-20">
     <div class="offset enter">
-      <p v-if="item.status" class="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">{{ item.status }}</p>
+      <p v-if="item.status" class="status">{{ item.status }}</p>
       <h1 class="mt-1 text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">{{ item.name }}</h1>
       <p class="mt-4 text-[17px] leading-snug text-text">{{ item.what }}</p>
       <p class="mt-3 text-text-secondary">{{ item.myRole }}</p>
-      <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[13px] text-text-secondary">
+      <p v-if="item.links.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[14px] text-text-secondary">
         <OutLink v-for="l in item.links" :key="l.href" v-bind="l" class="hover:text-text" />
       </p>
     </div>
@@ -28,10 +28,10 @@
       <h2 id="owned" class="rail-label" data-reveal>Owned end to end</h2>
       <div data-reveal>
         <p class="font-semibold text-text">{{ item.ownership.feature }}</p>
-        <ol data-reveal="chain" class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-[12px] text-text-secondary">
+        <ol data-reveal="chain" class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-[14px] text-text-secondary">
           <li v-for="(step, i) in item.ownership.chain" :key="step" :style="{ '--i': i + 2 }" class="flex items-center gap-2">
             <span class="rounded border border-border px-2 py-0.5">{{ step }}</span>
-            <span v-if="i < item.ownership.chain.length - 1" class="text-accent" aria-hidden="true">→</span>
+            <span v-if="i < item.ownership.chain.length - 1" class="text-accent-text" aria-hidden="true">→</span>
           </li>
         </ol>
         <p class="mt-3 text-[16px] text-text-secondary">{{ item.ownership.evidence }}</p>
@@ -65,7 +65,7 @@
       <NuxtLink :to="`/writing/${item.note}`" class="quiet-link">{{ noteTitle }}</NuxtLink>
     </section>
 
-    <nav class="offset mt-14 flex justify-between gap-6 font-mono text-[13px] text-text-muted" aria-label="More work">
+    <nav class="offset mt-14 flex justify-between gap-6 font-mono text-[14px] text-text-muted" aria-label="More work">
       <NuxtLink to="/work" class="inline-flex items-center gap-1.5 hover:text-text"><Icon name="lucide:arrow-left" class="arrow-l h-3.5 w-3.5" aria-hidden="true" />All work</NuxtLink>
       <NuxtLink :to="`/work/${next.slug}`" class="inline-flex items-center gap-1.5 text-right hover:text-text">{{ next.name }}<Icon name="lucide:arrow-right" class="arrow-r h-3.5 w-3.5" aria-hidden="true" /></NuxtLink>
     </nav>

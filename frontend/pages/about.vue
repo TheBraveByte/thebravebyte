@@ -11,7 +11,7 @@
             <Media name="yusuf-sq" alt="Yusuf Akinleye" :width="800" :height="800" :widths="[480, 800]" sizes="(min-width: 768px) 144px, 96px" eager />
           </div>
         </div>
-        <figcaption class="font-mono text-[13px] leading-snug text-text-muted md:mt-5">Yusuf<br class="md:hidden"> Akinleye</figcaption>
+        <figcaption class="font-mono text-[14px] leading-snug text-text-muted md:mt-5">Yusuf<br class="md:hidden"> Akinleye</figcaption>
       </figure>
       <div class="enter space-y-4 text-text-secondary" style="--i: 2">
         <p class="text-[20px] leading-snug tracking-[-0.01em] text-text md:text-[22px]">
@@ -33,8 +33,8 @@
     <section class="rail mt-14" aria-labelledby="experience">
       <h2 id="experience" class="rail-label" data-reveal>Where I've worked</h2>
       <ul>
-        <li v-for="(r, i) in roles" :key="r.org + r.title" data-reveal :style="{ '--i': Math.min(i, 8) }" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[15px] sm:grid-cols-[7.5rem_1fr]">
-          <span class="pt-1 font-mono text-[12px] tabular-nums text-text-muted">{{ r.when }}</span>
+        <li v-for="(r, i) in roles" :key="r.org + r.title" data-reveal :style="{ '--i': Math.min(i, 8) }" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[16px] sm:grid-cols-[7.5rem_1fr]">
+          <span class="pt-1 font-mono text-[14px] tabular-nums text-text-muted">{{ r.when }}</span>
           <span class="text-text">{{ r.title }}, <span class="text-text-secondary">{{ r.org }}</span></span>
         </li>
       </ul>
@@ -42,8 +42,8 @@
 
     <section class="rail mt-10" aria-labelledby="education">
       <h2 id="education" class="rail-label" data-reveal>Education</h2>
-      <p data-reveal style="--i: 1" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[15px] sm:grid-cols-[7.5rem_1fr]">
-        <span class="pt-1 font-mono text-[12px] tabular-nums text-text-muted">2018 to 2024</span>
+      <p data-reveal style="--i: 1" class="grid grid-cols-[6.5rem_1fr] gap-4 py-1.5 text-[16px] sm:grid-cols-[7.5rem_1fr]">
+        <span class="pt-1 font-mono text-[14px] tabular-nums text-text-muted">2018 to 2024</span>
         <span class="text-text">B.Eng. Electrical and Electronics Engineering, <span class="text-text-secondary">University of Ilorin</span></span>
       </p>
     </section>

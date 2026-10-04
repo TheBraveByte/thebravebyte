@@ -11,7 +11,7 @@
       <slot />
     </main>
     <footer v-if="route.path !== '/'" class="page mt-20 pb-12"><div class="offset">
-      <SocialLinks class="font-mono text-[13px] text-text-muted" />
+      <SocialLinks class="font-mono text-[14px] text-text-muted" />
     </div></footer>
     <div v-else class="pb-16" />
   </div>

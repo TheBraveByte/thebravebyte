@@ -2,7 +2,7 @@
   <NuxtLayout>
     <div class="page pt-14 md:pt-20">
       <div class="offset">
-        <p class="font-mono text-[13px] text-text-muted">{{ error?.statusCode ?? 404 }}</p>
+        <p class="font-mono text-[14px] text-text-muted">{{ error?.statusCode ?? 404 }}</p>
         <h1 class="mt-2 text-[28px] font-semibold tracking-[-0.035em] md:text-[32px]">
           {{ error?.statusCode === 404 ? 'This page isn\'t here.' : 'Something went wrong.' }}
         </h1>
