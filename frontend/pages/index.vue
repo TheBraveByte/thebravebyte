@@ -22,10 +22,17 @@
           </h3>
           <p class="mt-2 text-[18px] leading-snug text-text md:text-[20px]">{{ featured.what }}</p>
           <figure v-if="featured.shot" class="mt-5">
-            <NuxtLink :to="`/work/${featured.slug}`" class="media block aspect-[20/11]" tabindex="-1" aria-hidden="true">
+            <button type="button" class="media block aspect-[1600/969] w-full cursor-zoom-in" aria-label="Enlarge the screenshot" @click="zoom?.showModal()">
               <Media v-bind="featured.shot" :class="{ 'shot-light': featured.shotDark }" :sizes="shotSizes" />
               <Media v-if="featured.shotDark" v-bind="featured.shotDark" class="shot-dark" :sizes="shotSizes" />
-            </NuxtLink>
+            </button>
+            <dialog v-if="featured.shotFull" ref="zoom" class="zoom" aria-label="The babit console, enlarged" @click="zoom?.close()">
+              <button type="button" class="zoom-close font-mono text-[14px]" autofocus>Close</button>
+              <div class="zoom-frame">
+                <Media v-bind="featured.shotFull" :class="{ 'shot-light': featured.shotFullDark }" sizes="(min-width: 1500px) 1440px, 96vw" />
+                <Media v-if="featured.shotFullDark" v-bind="featured.shotFullDark" class="shot-dark" sizes="(min-width: 1500px) 1440px, 96vw" />
+              </div>
+            </dialog>
             <figcaption class="mt-2 font-mono text-[14px] text-text-muted">{{ featured.shotCaption }}</figcaption>
           </figure>
           <dl class="mt-6 space-y-3">
@@ -110,6 +117,7 @@
 import { work, type WorkItem } from '~/data/work'
 import { notes } from '~/utils/notes'
 
+const zoom = ref<HTMLDialogElement>()
 const headline = ['Backend', 'Software', '&', 'Platform', 'Engineer']
 const featured = work.find(w => w.slug === 'babit')!
 const secondary = [work.find(w => w.slug === 'bloom-parser')!]

@@ -256,6 +256,13 @@
   /* A screenshot with a dark twin: each shows only in its own theme. */
   .shot-dark, .dark .shot-light { display: none; }
   .dark .shot-dark { display: inline; }
+  /* The enlarged screenshot: a native dialog, closed by Esc, the button or a click anywhere.
+     Narrow screens scroll it sideways rather than shrink it back down. */
+  .zoom { margin: auto; padding: 0; border: 0; background: transparent; width: min(96vw, 1440px); max-width: none; max-height: 94dvh; overflow: visible; cursor: zoom-out; }
+  .zoom::backdrop { background: rgb(0 0 0 / 0.72); }
+  .zoom-frame { overflow: auto; max-height: calc(94dvh - 3rem); border-radius: 6px; box-shadow: 0 0 0 1px var(--color-border); background: var(--color-bg-secondary); }
+  .zoom-frame img { min-width: 900px; height: auto; }
+  .zoom-close { display: block; margin: 0 0 0.5rem auto; min-height: 40px; padding: 0 0.9rem; border-radius: 6px; color: #fff; background: rgb(0 0 0 / 0.5); cursor: pointer; }
   .media { overflow: hidden; border-radius: 6px; background: var(--color-bg-secondary); box-shadow: 0 0 0 1px var(--color-border); }
 }
 

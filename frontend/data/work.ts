@@ -37,6 +37,8 @@ export interface WorkItem {
   evidence?: string
   shot?: WorkMedia // a real screen of the product, for the featured slot on the home page
   shotDark?: WorkMedia // the same screen in the product's dark theme, shown when the site is dark
+  shotFull?: WorkMedia // the uncropped screen, opened when a visitor enlarges the shot
+  shotFullDark?: WorkMedia
   shotCaption?: string
 }
 
@@ -146,10 +148,12 @@ export const work: WorkItem[] = [
     what: 'Proof of what an AI agent did, and who allowed it.',
     myRole: 'I designed and built it on my own, from the architecture to the live demo.',
     problem: 'When an agent drives a browser, runs code or acts on a desktop, someone will ask who allowed it.',
-    built: 'All of it, alone. Each action is recorded against the signed grant that permitted it and sealed into an append-only ledger. A delegated grant can only narrow its parent.',
+    built: 'Designed and built end to end. Each action is recorded against the signed grant that permitted it and sealed into an append-only ledger. A delegated grant can only narrow its parent.',
     evidence: 'A live demo and public source. Receipts verify offline with the babit verify command, and an end-to-end test tampers with a receipt to prove verification fails.',
-    shot: { name: 'babit-console', alt: 'A sealed receipt in the babit console: the action an agent took, its session and grant, and the chain of grants that authorized it', width: 2000, height: 1100, widths: [800, 1440, 2000] },
-    shotDark: { name: 'babit-console-dark', alt: 'A sealed receipt in the babit console: the action an agent took, its session and grant, and the chain of grants that authorized it', width: 2000, height: 1100, widths: [800, 1440, 2000] },
+    shot: { name: 'babit-receipt', alt: 'A sealed receipt in the babit console: the action an agent took, its session and grant, and the chain of grants that authorized it', width: 1600, height: 969, widths: [800, 1200, 1600] },
+    shotDark: { name: 'babit-receipt-dark', alt: 'A sealed receipt in the babit console: the action an agent took, its session and grant, and the chain of grants that authorized it', width: 1600, height: 969, widths: [800, 1200, 1600] },
+    shotFull: { name: 'babit-console', alt: 'The same receipt in the full babit console', width: 2000, height: 1100, widths: [1440, 2000] },
+    shotFullDark: { name: 'babit-console-dark', alt: 'The same receipt in the full babit console', width: 2000, height: 1100, widths: [1440, 2000] },
     shotCaption: 'A sealed receipt in the babit console: the action, and the grants that authorized it.',
     kind: 'public',
     status: 'Live demo',
